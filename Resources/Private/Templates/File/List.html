@@ -1,0 +1,96 @@
+{namespace fed=Tx_Fed_ViewHelpers}
+{namespace fi=Tx_Fileman_ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<f:flashMessages />
+
+<f:link.page class="button_back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+<f:link.action action="new" controller="File" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_file_header" /></f:link.action>
+<f:link.action action="new" controller="Link" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_link_header" /></f:link.action>
+
+<table class="tx_fileman" >
+
+	<f:if condition="{files}">
+		<tr>
+			<th><f:translate key="tx_fileman_domain_model_file.file_uri" /></th>
+			<th><f:translate key="tx_fileman_domain_model_file.description" /></th>
+			<th><f:translate key="tx_fileman_domain_model_file.tstamp" /></th>
+		</tr>
+	
+		<f:for each="{files}" as="file">
+			
+			<tr>
+				<td>
+					<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file : file}">
+						<f:if condition="{file.alternateTitle}">
+							<f:then>
+								{file.alternateTitle}
+							</f:then>
+		 					<f:else>
+		 						{file.filename}
+		 					</f:else>
+		 				</f:if>
+	 				</fi:link.download>
+	 				<fed:auth.allow frontendUserGroup="{suGroup}" >
+						<f:link.action action="edit" arguments="{file : file, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+						<f:link.action action="delete" arguments="{file : file, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+					</fed:auth.allow> 
+	 				
+	 				<f:if condition="{file.links}">
+						<f:then>
+							<a href="#" class="rel_switch">&nbsp;</a>
+							<div class="rel_links">
+								<span class="rel_links_header"><f:translate key="tx_fileman_domain_model_file.links" /></span>
+								<ol>
+									<f:for each="{file.linksFormatted}" as="link">
+										<li><f:link.external uri="{link}">{link}</f:link.external></li>
+									</f:for>
+								</ol>
+							</div>
+						</f:then>
+		 			</f:if>
+	 			</td>
+				<td>{file.description}</td>
+				<td><f:format.date format="d/m/Y - H:i">@{file.tstamp}</f:format.date></td>
+			</tr>
+		 	
+		</f:for>
+	</f:if>
+	
+	<f:if condition="{links}">
+		<tr>
+			<th><f:translate key="tx_fileman_domain_model_link.link_uri" /></th>
+			<th><f:translate key="tx_fileman_domain_model_link.description" /></th>
+			<th><f:translate key="tx_fileman_domain_model_link.tstamp" /></th>
+		</tr>
+	
+		<f:for each="{links}" as="link">
+			
+			<tr>
+				<td>
+					<f:link.external uri="{link.linkUri}" >
+						<f:if condition="{link.linkName}">
+							<f:then>
+								{link.linkName}
+							</f:then>
+		 					<f:else>
+		 						{link.linkUri}
+		 					</f:else>
+		 				</f:if>
+	 				</f:link.external>
+	 				<fed:auth.allow frontendUserGroup="{suGroup}" >
+						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+						<f:link.action action="delete" controller="Link" arguments="{link : link, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+					</fed:auth.allow> 
+	 			</td>
+	 			<td>{link.description}</td>
+				<td><f:format.date format="d/m/Y - H:i">@{link.tstamp}</f:format.date></td>
+			</tr>
+		 	
+		</f:for>
+	</f:if>
+</table>
+
+</f:section>

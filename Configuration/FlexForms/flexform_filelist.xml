@@ -1,0 +1,27 @@
+<T3DataStructure>
+ <sheets>
+  <sDEF>
+   <ROOT>
+     <TCEforms>
+      <sheetTitle>Function</sheetTitle>
+     </TCEforms>
+     <type>array</type>
+     <el>
+      <settings.suGroup>
+			<TCEforms>
+				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_suGroup</label>
+				<config>
+					<type>select</type>
+					<foreign_table>fe_groups</foreign_table>
+					<foreign_table_where>ORDER BY fe_groups.title</foreign_table_where>
+					<size>1</size>
+					<maxitems>1</maxitems>
+					<multiple>0</multiple>
+				</config>
+			</TCEforms>
+		</settings.suGroup>
+     </el>
+   </ROOT>
+  </sDEF>
+ </sheets>
+</T3DataStructure>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for the File Manager extension in the FRONTEND</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_fileman_filelist.required">(required)</label>
+			<label index="tx_fileman_filelist.go_back">Go back</label>
+			<label index="tx_fileman_filelist.new_category_header">New category</label>
+			<label index="tx_fileman_filelist.new_category_submit">Save</label>
+			<label index="tx_fileman_filelist.new_category_success">Category created</label>
+			<label index="tx_fileman_filelist.new_file_header">Upload new file</label>
+			<label index="tx_fileman_filelist.new_file_submit">Upload</label>
+			<label index="tx_fileman_filelist.new_file_success">File uploaded</label>
+			<label index="tx_fileman_filelist.new_link_header">Place new link</label>
+			<label index="tx_fileman_filelist.new_link_submit">Place</label>
+			<label index="tx_fileman_filelist.new_link_success">Link placed</label>
+			<label index="tx_fileman_filelist.edit_category_header">Edit category</label>
+			<label index="tx_fileman_filelist.edit_category_success">Category updated</label>
+			<label index="tx_fileman_filelist.edit_file_header">Edit file</label>
+			<label index="tx_fileman_filelist.edit_file_submit">Save</label>
+			<label index="tx_fileman_filelist.edit_file_success">File updated</label>
+			<label index="tx_fileman_filelist.edit_link_header">Edit link</label>
+			<label index="tx_fileman_filelist.edit_link_submit">Save</label>
+			<label index="tx_fileman_filelist.edit_link_success">Link updated</label>
+			<label index="tx_fileman_filelist.delete_category_success">Category deleted</label>
+			<label index="tx_fileman_filelist.delete_file_success">File deleted</label>
+			<label index="tx_fileman_filelist.delete_link_success">Link verwijderd</label>
+			<label index="tx_fileman_filelist.button_edit">Edit</label>
+			<label index="tx_fileman_filelist.button_delete">Delete</label>
+			
+			<label index="tx_fileman_validator.error_file_uri">You need to select a file for upload.</label>
+			<label index="tx_fileman_validator.error_link_uri">You need to place a valid link.</label>
+			<label index="tx_fileman_validator.error_links">One valid URL per row, or leave the field empty.</label>
+			<label index="error.category.title.1221560718">Can not be empty.</label>
+		
+			<label index="tx_fileman_domain_model_file">Files</label>
+			<label index="tx_fileman_domain_model_file.file_uri">File</label>
+			<label index="tx_fileman_domain_model_file.alternate_title">Alternate file title</label>
+			<label index="tx_fileman_domain_model_file.description">Description</label>
+			<label index="tx_fileman_domain_model_file.links">Related links</label>
+			<label index="tx_fileman_domain_model_file.link_names">Alternative name per link (one per row)</label>
+			<label index="tx_fileman_domain_model_file.category">Category</label>
+			<label index="tx_fileman_domain_model_file.tstamp">Uploaded on</label>
+			
+			<label index="tx_fileman_domain_model_category">Categories</label>
+			<label index="tx_fileman_domain_model_category.title">Category</label>
+			<label index="tx_fileman_domain_model_category.description">Description</label>
+			
+			<label index="tx_fileman_domain_model_link">Links</label>
+			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
+			<label index="tx_fileman_domain_model_link.link_name">Name</label>
+			<label index="tx_fileman_domain_model_link.description">Description</label>
+			<label index="tx_fileman_domain_model_link.tstamp">Placed on</label>
+		</languageKey>
+		<languageKey index="nl" type="array">
+			<label index="tx_fileman_filelist.required">(vereist)</label>
+			<label index="tx_fileman_filelist.go_back">Ga terug</label>
+			<label index="tx_fileman_filelist.new_category_header">Nieuwe categorie</label>
+			<label index="tx_fileman_filelist.new_category_submit">Opslaan</label>
+			<label index="tx_fileman_filelist.new_category_success">Categorie aangemaakt</label>
+			<label index="tx_fileman_filelist.new_file_header">Plaats nieuw bestand</label>
+			<label index="tx_fileman_filelist.new_file_submit">Plaats</label>
+			<label index="tx_fileman_filelist.new_file_success">Bestand geplaatst</label>
+			<label index="tx_fileman_filelist.new_link_header">Plaats nieuwe link</label>
+			<label index="tx_fileman_filelist.new_link_submit">Plaats</label>
+			<label index="tx_fileman_filelist.new_link_success">Link geplaatst</label>
+			<label index="tx_fileman_filelist.edit_category_header">Wijzig categorie</label>
+			<label index="tx_fileman_filelist.edit_category_success">Categorie gewijzigd</label>
+			<label index="tx_fileman_filelist.edit_file_header">Wijzig bestand</label>
+			<label index="tx_fileman_filelist.edit_file_submit">Opslaan</label>
+			<label index="tx_fileman_filelist.edit_file_success">Bestand gewijzigd</label>
+			<label index="tx_fileman_filelist.edit_link_header">Wijzig link</label>
+			<label index="tx_fileman_filelist.edit_link_submit">Opslaan</label>
+			<label index="tx_fileman_filelist.edit_link_success">Link gewijzigd</label>
+			<label index="tx_fileman_filelist.delete_category_success">Categorie verwijderd</label>
+			<label index="tx_fileman_filelist.delete_file_success">Bestand verwijderd</label>
+			<label index="tx_fileman_filelist.delete_link_success">Link verwijderd</label>
+			<label index="tx_fileman_filelist.button_edit">Wijzigen</label>
+			<label index="tx_fileman_filelist.button_delete">Verwijderen</label>
+			
+			<label index="tx_fileman_validator.error_file_uri">U dient een bestand te selecteren om te plaatsen.</label>
+			<label index="tx_fileman_validator.error_link_uri">U dient een geldig URL in te vullen.</label>
+			<label index="tx_fileman_validator.error_links">U mag één geldig URL per rij invullen, of het veld leeglaten.</label>
+			<label index="error.category.title.1221560718">Mag niet leeg zijn.</label>
+		
+			<label index="tx_fileman_domain_model_file">Bestanden</label>
+			<label index="tx_fileman_domain_model_file.file_uri">Bestand</label>
+			<label index="tx_fileman_domain_model_file.alternate_title">Alternatieve bestandstitel</label>
+			<label index="tx_fileman_domain_model_file.description">Omschrijving</label>
+			<label index="tx_fileman_domain_model_file.links">Gerelateerde links</label>
+			<label index="tx_fileman_domain_model_file.tstamp">Geplaatst op</label>
+			
+			<label index="tx_fileman_domain_model_category">Categorieën</label>
+			<label index="tx_fileman_domain_model_category.title">Categorie</label>
+			<label index="tx_fileman_domain_model_category.description">Omschrijving</label>
+			
+			<label index="tx_fileman_domain_model_link">Links</label>
+			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
+			<label index="tx_fileman_domain_model_link.link_name">Naam</label>
+			<label index="tx_fileman_domain_model_link.description">Omschrijving</label>
+			<label index="tx_fileman_domain_model_link.tstamp">Geplaatst op</label>
+		</languageKey>
+	</data>
+</T3locallang>

@@ -1,0 +1,202 @@
+config.tx_extbase.persistence.classes {
+	Tx_Fileman_Domain_Model_File.mapping.columns.tstamp.mapOnProperty = tstamp
+	Tx_Fileman_Domain_Model_Link.mapping.columns.tstamp.mapOnProperty = tstamp
+}
+
+plugin.tx_fileman {
+	view {
+		templateRootPath = {$plugin.tx_fileman.view.templateRootPath}
+		partialRootPath = {$plugin.tx_fileman.view.partialRootPath}
+		layoutRootPath = {$plugin.tx_fileman.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_fileman.persistence.storagePid}
+	}
+	jslib {
+		jQuery.external = 1
+		jQuery = {$plugin.tx_fileman.js.jQueryCDN}
+		#TYPO3 4.6.0, http://forge.typo3.org/issues/29695 resolved? Clearly not, so for now:
+		jQuery.disableCompression = 1
+		
+		inlineJS = FILE
+		inlineJS.file = {$plugin.tx_fileman.js.libFile}
+	}
+	settings {
+		uploadDir = {$plugin.tx_fileman.settings.uploadDir}
+	}
+	features {
+		# uncomment the following line to enable the new Property Mapper.
+		# rewrittenPropertyMapper = 1
+	}
+}
+
+[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJquery}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}] 
+page.includeJSFooterlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
+[global]
+
+[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJquery}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}] 
+page.includeJSlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
+[global]
+
+[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}]
+page.jsFooterInline.19831 < plugin.tx_fileman.jslib.inlineJS
+[global]
+
+[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}]
+page.jsInline.19831 < plugin.tx_fileman.jslib.inlineJS
+[global]
+
+plugin.tx_fileman._CSS_DEFAULT_STYLE (
+	.tx-fileman .f3-form-error {
+		background-color:#ff9f9f !important;
+		border:1px #ff0000 solid !important;
+	}
+	
+	.tx-fileman #submit {
+		border:1px solid #999;
+		background-color:#ccc;
+	}
+	
+	.tx-fileman #fileUri,
+	.tx-fileman #alternateTitle,
+	.tx-fileman #description,
+	.tx-fileman #links,
+	.tx-fileman #linkUri,
+	.tx-fileman #linkName,
+	.tx-fileman #title {
+		width:500px;
+		border:1px solid #c2c2c1;
+		background-color:#fafaf5;
+	}
+	
+	.tx-fileman #links {
+		height:100px;
+	}
+	
+	.tx-fileman table {
+		border: 2px solid #f2f2f1;
+		border-collapse: separate;
+		border-radius: 25px;
+		border-spacing: 0 4px;
+	    padding: 5px 15px 13px;
+		width: 100%;
+	}
+	
+	.tx-fileman table,
+	.tx-fileman form,
+	.tx-fileman .error {
+		clear:both;
+	}
+
+	.tx-fileman table th {
+		font-weight:bold;
+		text-align:left;
+		font-size:1.2em;
+	}
+
+	.tx-fileman table td {
+		vertical-align:top;
+		background-color:#f7f7f1;
+		padding:8px 15px;
+	}
+	
+	.tx-fileman .rel_switch {
+		margin-left:8px;
+		font-size:0.9em;
+		display:none;
+	}
+	.tx-fileman .rel_switch:before {
+		content:"[\25BC]";
+		font-size:0.8em;
+	}
+	
+	.tx-fileman .rel_links {
+		margin-top:10px;
+		font-size:0.9em;
+	}
+	
+	.tx-fileman .rel_links ol {
+		margin-top:0;
+	}
+	
+	.tx-fileman .rel_links a {
+		border-bottom:1px dotted;
+		font-style:italic;
+	}
+	
+	.tx-fileman .button_back {
+		float:left;
+		margin-left:10px;
+	}
+	
+	.tx-fileman .button_new {
+		float:right;
+		margin-right:10px;
+	}
+	
+	.tx-fileman .button_new,
+	.tx-fileman .button_back {
+		margin-bottom:10px;
+	}
+	
+	.tx-fileman .button_new,
+	.tx-fileman .button_edit,
+	.tx-fileman .button_delete,
+	.tx-fileman .button_back {
+		display: inline-block;
+	}
+	
+	.tx-fileman .button_new:before,
+	.tx-fileman .button_edit:before,
+	.tx-fileman .button_delete:before,
+	.tx-fileman .button_back:before {
+		background-image:url("/typo3conf/ext/fileman/Resources/Public/Icons/t3skin.png");
+		content:"";
+		float:left;
+		height:16px;
+		width:16px;
+		margin:2px 8px 0 0;
+	}
+	
+	.tx-fileman .button_new:before,
+	.tx-fileman .button_back:before {
+		float:left;
+	}
+	
+	.tx-fileman .button_edit,
+	.tx-fileman .button_delete {
+		overflow:hidden;
+		width:16px;
+		height:18px;	
+	}
+	
+	.tx-fileman .button_new:before {
+		background-position:-180px 0;	
+	}
+	.tx-fileman .button_edit:before {
+		background-position:-198px 0;
+	}
+	.tx-fileman .button_delete:before {
+		background-position:-162px -18px;
+	}
+	.tx-fileman .button_back:before {
+		background-position:-18px -36px;
+	}
+	
+	
+	.tx-fileman a {
+		color:#66f;
+		text-decoration:none;
+		font-size:1.1em;
+	}
+	.tx-fileman a:hover,
+	.tx-fileman a:focus,
+	.tx-fileman a:active {
+		color:#f22;
+	}
+	
+	.tx-fileman fieldset {
+		border:0;
+	}
+	
+)

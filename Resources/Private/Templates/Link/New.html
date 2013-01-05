@@ -1,0 +1,19 @@
+<f:layout name="Default" />
+
+<f:section name="main">
+<h3><f:translate key="tx_fileman_filelist.new_link_header" /></h3>
+
+<f:link.action action="list" controller="File" arguments="{category : category}" class="button_back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+
+<f:flashMessages />
+
+<f:render partial="FormErrors" arguments="{for: 'link'}" />
+
+<f:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}">
+	<fieldset>
+		<f:render partial="Link/FormFields" arguments="{link:link}" />
+			
+		<f:form.submit id="submit" value="{f:translate(key:'tx_fileman_filelist.new_link_submit')}" />
+	</fieldset>
+</f:form>
+</f:section>

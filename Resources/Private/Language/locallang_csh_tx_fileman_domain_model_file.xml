@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<description>Context Sensitive Help (CSH) for table tx_fileman_domain_model_file</description>
+		<type>CSH</type>
+		<csh_table>tx_fileman_domain_model_file</csh_table>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="file_uri.description">Upload or choose the file here</label>
+			<label index="alternate_title.description">If set, will be the file title. Otherwise, the actual filename is taken</label>
+			<label index="description.description">File description</label>
+			<label index="links.description">You can provide multiple links related to this file. One link per row, separated with enters.</label>
+			<label index="link_names.description">Alternative name per link</label>
+			<label index="category.description">The categories in which the file appears</label>
+		</languageKey>
+		<languageKey index="nl" type="array">
+			<label index="file_uri.description">Plaats of kies een bestand</label>
+			<label index="alternate_title.description">Wordt als bestandstitel getoond, indien van een waarde voorzien. Anders wordt de daadwerkelijke bestandsnaam getoond.</label>
+			<label index="description.description">Bestandsomschrijving</label>
+			<label index="links.description">U het bestand voorzien van meerdere gerelateerde links. U mag maar 1 link per rij opgeven, gescheiden door enters.</label>
+			<label index="link_names.description">Alternatieve naam per link</label>
+			<label index="category.description">De categorieën waarin het bestand wordt getoond</label>
+		</languageKey>
+	</data>
+</T3locallang>

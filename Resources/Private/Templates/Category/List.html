@@ -1,0 +1,35 @@
+{namespace fed=Tx_Fed_ViewHelpers}
+{namespace fi=Tx_Fileman_ViewHelpers}
+<f:layout name="Default" />
+
+<f:section name="main">
+
+<f:flashMessages />
+
+<f:link.action action="new" controller="Category" class="button_new"><f:translate key="tx_fileman_filelist.new_category_header" /></f:link.action>
+
+<table  class="tx_fileman" >
+	<tr>
+		<th><f:translate key="tx_fileman_domain_model_category.title" /></th>
+		<th><f:translate key="tx_fileman_domain_model_category.description" /></th>
+	</tr>
+
+	<f:for each="{categories}" as="category">
+		
+		<tr>
+			<td>
+				<f:link.action action="list" controller="File" arguments="{category : category}">{category.title}</f:link.action>
+				<fed:auth.allow frontendUserGroup="{suGroup}" >
+					<f:link.action action="edit" arguments="{category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+					<fi:isEmpty category="{category}">
+						<f:link.action action="delete" arguments="{category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+					</fi:isEmpty>
+				</fed:auth.allow>
+			</td>
+			<td>{category.description}</td>
+		</tr>
+		
+	</f:for>
+</table>
+
+</f:section>
