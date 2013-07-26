@@ -1,4 +1,4 @@
-{namespace fed=Tx_Fed_ViewHelpers}
+{namespace v=Tx_Vhs_ViewHelpers}
 {namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
@@ -33,10 +33,10 @@
 		 					</f:else>
 		 				</f:if>
 	 				</fi:link.download>
-	 				<fed:auth.allow frontendUserGroup="{suGroup}" >
+	 				<v:security.allow frontendUserGroup="{suGroup}" >
 						<f:link.action action="edit" arguments="{file : file, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 						<f:link.action action="delete" arguments="{file : file, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
-					</fed:auth.allow> 
+					</v:security.allow> 
 	 				
 	 				<f:if condition="{file.links}">
 						<f:then>
@@ -80,10 +80,10 @@
 		 					</f:else>
 		 				</f:if>
 	 				</f:link.external>
-	 				<fed:auth.allow frontendUserGroup="{suGroup}" >
+	 				<v:security.allow frontendUserGroup="{suGroup}" >
 						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 						<f:link.action action="delete" controller="Link" arguments="{link : link, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
-					</fed:auth.allow> 
+					</v:security.allow> 
 	 			</td>
 	 			<td>{link.description}</td>
 				<td><f:format.date format="d/m/Y - H:i">@{link.tstamp}</f:format.date></td>

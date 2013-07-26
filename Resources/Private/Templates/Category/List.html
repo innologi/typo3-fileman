@@ -1,4 +1,4 @@
-{namespace fed=Tx_Fed_ViewHelpers}
+{namespace v=Tx_Vhs_ViewHelpers}
 {namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
@@ -19,12 +19,12 @@
 		<tr>
 			<td>
 				<f:link.action action="list" controller="File" arguments="{category : category}">{category.title}</f:link.action>
-				<fed:auth.allow frontendUserGroup="{suGroup}" >
+				<v:security.allow frontendUserGroup="{suGroup}" >
 					<f:link.action action="edit" arguments="{category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 					<fi:isEmpty category="{category}">
 						<f:link.action action="delete" arguments="{category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
 					</fi:isEmpty>
-				</fed:auth.allow>
+				</v:security.allow>
 			</td>
 			<td>{category.description}</td>
 		</tr>
