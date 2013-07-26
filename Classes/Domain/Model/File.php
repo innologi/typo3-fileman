@@ -87,7 +87,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * User who created this appointment
 	 *
-	 * @var Tx_Extbase_Domain_Model_FrontendUser
+	 * @var Tx_Fileman_Domain_Model_FrontendUser
 	 * @lazy
 	 */
 	protected $feUser;
@@ -283,7 +283,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the feUser
 	 *
-	 * @return Tx_Extbase_Domain_Model_FrontendUser feUser
+	 * @return Tx_Fileman_Domain_Model_FrontendUser feUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -292,10 +292,10 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the feUser
 	 *
-	 * @param Tx_Extbase_Domain_Model_FrontendUser $feUser
-	 * @return Tx_Extbase_Domain_Model_FrontendUser feUser
+	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @return void
 	 */
-	public function setFeUser(Tx_Extbase_Domain_Model_FrontendUser $feUser) {
+	public function setFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
 		$this->feUser = $feUser;
 	}
 

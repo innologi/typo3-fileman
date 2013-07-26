@@ -31,7 +31,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Controller_LinkController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_ActionController {
 
 	/**
 	 * linkRepository
@@ -43,7 +43,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Extbase_MVC_Controller_Act
 	/**
 	 * frontendUserRepository
 	 *
-	 * @var Tx_Extbase_Domain_Repository_FrontendUserRepository
+	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
 	 */
 	protected $frontendUserRepository;
 
@@ -60,10 +60,10 @@ class Tx_Fileman_Controller_LinkController extends Tx_Extbase_MVC_Controller_Act
 	/**
 	 * injectFrontendUserRepository
 	 *
-	 * @param Tx_Extbase_Domain_Repository_FrontendUserRepository $frontendUserRepository
+	 * @param Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository
 	 * @return void
 	 */
-	public function injectFrontendUserRepository(Tx_Extbase_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
+	public function injectFrontendUserRepository(Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
 		$this->frontendUserRepository = $frontendUserRepository;
 	}
 

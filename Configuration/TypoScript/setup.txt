@@ -1,8 +1,3 @@
-config.tx_extbase.persistence.classes {
-	Tx_Fileman_Domain_Model_File.mapping.columns.tstamp.mapOnProperty = tstamp
-	Tx_Fileman_Domain_Model_Link.mapping.columns.tstamp.mapOnProperty = tstamp
-}
-
 plugin.tx_fileman {
 	view {
 		templateRootPath = {$plugin.tx_fileman.view.templateRootPath}
@@ -11,6 +6,24 @@ plugin.tx_fileman {
 	}
 	persistence {
 		storagePid = {$plugin.tx_fileman.persistence.storagePid}
+		classes {
+			Tx_Fileman_Domain_Model_File {
+				mapping.columns {
+					tstamp.mapOnProperty = tstamp
+				}
+			}
+			Tx_Fileman_Domain_Model_Link {
+				mapping.columns {
+					tstamp.mapOnProperty = tstamp
+				}
+			}
+			Tx_Fileman_Domain_Model_FrontendUser {
+				mapping.tableName = fe_users
+			}
+			Tx_Fileman_Domain_Model_FrontendUserGroup {
+				mapping.tableName = fe_groups
+			}
+		}
 	}
 	jslib {
 		jQuery.external = 1

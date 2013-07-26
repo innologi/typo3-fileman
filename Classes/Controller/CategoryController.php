@@ -31,7 +31,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Controller_CategoryController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller_ActionController {
 
 	/**
 	 * categoryRepository
@@ -43,14 +43,14 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Extbase_MVC_Controller
 	/**
 	 * frontendUserRepository
 	 *
-	 * @var Tx_Extbase_Domain_Repository_FrontendUserRepository
+	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
 	 */
 	protected $frontendUserRepository;
 
 	/**
 	 * frontendUserGroupRepository
 	 *
-	 * @var Tx_Extbase_Domain_Repository_FrontendUserGroupRepository
+	 * @var Tx_Fileman_Domain_Repository_FrontendUserGroupRepository
 	 */
 	protected $frontendUserGroupRepository;
 
@@ -67,20 +67,20 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Extbase_MVC_Controller
 	/**
 	 * injectFrontendUserRepository
 	 *
-	 * @param Tx_Extbase_Domain_Repository_FrontendUserRepository $frontendUserRepository
+	 * @param Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository
 	 * @return void
 	 */
-	public function injectFrontendUserRepository(Tx_Extbase_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
+	public function injectFrontendUserRepository(Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
 		$this->frontendUserRepository = $frontendUserRepository;
 	}
 
 	/**
 	 * injectFrontendUserGroupRepository
 	 *
-	 * @param Tx_Extbase_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository
+	 * @param Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository
 	 * @return void
 	 */
-	public function injectFrontendUserGroupRepository(Tx_Extbase_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository) {
+	public function injectFrontendUserGroupRepository(Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository) {
 		$this->frontendUserGroupRepository = $frontendUserGroupRepository;
 	}
 
