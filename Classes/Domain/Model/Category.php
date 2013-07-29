@@ -1,5 +1,7 @@
 <?php
 
+use TYPO3\CMS\Extbase\Property\TypeConverter\IntegerConverter;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -64,6 +66,14 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @lazy
 	 */
 	protected $link;
+
+	/**
+	 * Sum of $link and $file counts
+	 *
+	 * @var Integer
+	 * @transient
+	 */
+	protected $count;
 
 	/**
 	 * User who created this appointment
@@ -225,6 +235,16 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 */
 	public function setFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
 		$this->feUser = $feUser;
+	}
+
+	/**
+	 * Returns count
+	 *
+	 * @return integer
+	 */
+	public function getCount() {
+		$this->count = $this->file->count() + $this->link->count();
+		return $this->count;
 	}
 
 }
