@@ -1,4 +1,3 @@
-{namespace v=Tx_Vhs_ViewHelpers}
 {namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
@@ -7,8 +6,10 @@
 <f:flashMessages />
 
 <f:link.page class="button_back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
-<f:link.action action="new" controller="File" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_file_header" /></f:link.action>
-<f:link.action action="new" controller="Link" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_link_header" /></f:link.action>
+<f:if condition="{isLoggedIn}">
+	<f:link.action action="new" controller="File" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_file_header" /></f:link.action>
+	<f:link.action action="new" controller="Link" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_link_header" /></f:link.action>
+</f:if>
 
 <table class="tx_fileman" >
 
@@ -33,10 +34,10 @@
 		 					</f:else>
 		 				</f:if>
 	 				</fi:link.download>
-	 				<v:security.allow frontendUserGroup="{suGroup}" >
+	 				<f:if condition="{isSuperUser}">
 						<f:link.action action="edit" arguments="{file : file, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 						<f:link.action action="delete" arguments="{file : file, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
-					</v:security.allow> 
+					</f:if>
 	 				
 	 				<f:if condition="{file.links}">
 						<f:then>
@@ -80,10 +81,10 @@
 		 					</f:else>
 		 				</f:if>
 	 				</f:link.external>
-	 				<v:security.allow frontendUserGroup="{suGroup}" >
+	 				<f:if condition="{isSuperUser}">
 						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 						<f:link.action action="delete" controller="Link" arguments="{link : link, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
-					</v:security.allow> 
+					</f:if>
 	 			</td>
 	 			<td>{link.description}</td>
 				<td><f:format.date format="d/m/Y - H:i">@{link.tstamp}</f:format.date></td>

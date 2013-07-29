@@ -38,11 +38,35 @@
 class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controller_ErrorOnDebugController {
 
 	/**
+	 * Logged in frontend user
+	 *
+	 * @var Tx_Fileman_Domain_Model_FrontendUser
+	 */
+	protected $feUser;
+
+	/**
+	 * @var Tx_Fileman_Service_UserService
+	 */
+	protected $userService;
+
+	/**
 	 * categoryRepository
 	 *
 	 * @var Tx_Fileman_Domain_Repository_CategoryRepository
 	 */
 	protected $categoryRepository;
+
+
+
+	/**
+	 * Injects the User Service
+	 *
+	 * @param Tx_Fileman_Service_UserService $userService
+	 * @return void
+	 */
+	public function injectUserService(Tx_Fileman_Service_UserService $userService) {
+		$this->userService = $userService;
+	}
 
 	/**
 	 * injectCategoryRepository
@@ -51,10 +75,23 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	 * @return void
 	 */
 	public function injectCategoryRepository(Tx_Fileman_Domain_Repository_CategoryRepository $categoryRepository) {
+		//default sorting
 		$categoryRepository->setDefaultOrderings(array(
 				'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
 		));
 		$this->categoryRepository = $categoryRepository;
+	}
+
+
+
+	/**
+	 * Initializes the controller before invoking an action method.
+	 *
+	 * @return void
+	 */
+	protected function initializeAction() {
+		//get currently logged in user
+		$this->feUser = $this->userService->getCurrentUser();
 	}
 
 }

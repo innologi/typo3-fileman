@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -25,7 +25,7 @@
  ***************************************************************/
 
 /**
- *
+ * File controller
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -48,40 +48,6 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	protected $linkRepository;
 
 	/**
-	 * frontendUserRepository
-	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
-	 */
-	protected $frontendUserRepository;
-
-	/**
-	 * frontendUserGroupRepository
-	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserGroupRepository
-	 */
-	protected $frontendUserGroupRepository;
-
-	/**
-	 * injectFrontendUserRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository
-	 * @return void
-	 */
-	public function injectFrontendUserRepository(Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
-		$this->frontendUserRepository = $frontendUserRepository;
-	}
-
-	/**
-	 * injectFrontendUserGroupRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository
-	 * @return void
-	 */
-	public function injectFrontendUserGroupRepository(Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository) {
-		$this->frontendUserGroupRepository = $frontendUserGroupRepository;
-	}
-
-	/**
 	 * injectFileRepository
 	 *
 	 * @param Tx_Fileman_Domain_Repository_FileRepository $fileRepository
@@ -100,6 +66,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	public function injectLinkRepository(Tx_Fileman_Domain_Repository_LinkRepository $linkRepository) {
 		$this->linkRepository = $linkRepository;
 	}
+
+
 
 	/**
 	 * action list
@@ -120,8 +88,11 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->view->assign('files', $files);
 		$this->view->assign('links', $links);
 
-		$suGroup = $this->frontendUserGroupRepository->findByUid($this->settings['suGroup']);
-		$this->view->assign('suGroup', $suGroup);
+		if ($this->feUser) {
+			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+			$this->view->assign('isSuperUser', $isSuperUser);
+			$this->view->assign('isLoggedIn', TRUE);
+		}
 	}
 
 	/**
@@ -233,11 +204,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			}
 
 			//feUser
-			global $TSFE;
-			if ($TSFE->fe_user) {
-				$feUser = $this->frontendUserRepository->findByUid($TSFE->fe_user->user['uid']);
-				$file->setFeUser($feUser);
-			}
+			$file->setFeUser($this->feUser);
 
 			//finalize creation
 			$this->fileRepository->add($file);
@@ -258,7 +225,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
-		$this->view->assign('category', $category);
+		$this->view->assign('category', $category); #@FIXME why am I assigning category EVERYWHERE again?
 		$this->view->assign('file', $file);
 	}
 
@@ -304,16 +271,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->redirect('list',NULL,NULL,$arguments);
 	}
 
-	/**
-	 * A template method for displaying custom error flash messages, or to
-	 * display no flash message at all on errors. Override this to customize
-	 * the flash message in your action controller.
-	 *
-	 * @return string|boolean The flash message or FALSE if no flash message should be set
-	 */
-	protected function getErrorFlashMessage() {
-		return FALSE;
-	}
+
 
 	/**
 	 * Variation of readfile(), to read by chunks. This variation

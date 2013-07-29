@@ -41,13 +41,6 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	protected $linkRepository;
 
 	/**
-	 * frontendUserRepository
-	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
-	 */
-	protected $frontendUserRepository;
-
-	/**
 	 * injectLinkRepository
 	 *
 	 * @param Tx_Fileman_Domain_Repository_LinkRepository $linkRepository
@@ -57,15 +50,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 		$this->linkRepository = $linkRepository;
 	}
 
-	/**
-	 * injectFrontendUserRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository
-	 * @return void
-	 */
-	public function injectFrontendUserRepository(Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
-		$this->frontendUserRepository = $frontendUserRepository;
-	}
+
 
 	/**
 	 * action new
@@ -88,11 +73,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
-		global $TSFE;
-		if ($TSFE->fe_user) {
-			$feUser = $this->frontendUserRepository->findByUid($TSFE->fe_user->user['uid']);
-			$link->setFeUser($feUser);
-		}
+		$link->setFeUser($this->feUser);
 
 		//category
 		$arguments = NULL;
@@ -161,17 +142,6 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		$this->redirect('list','File',NULL,$arguments);
-	}
-
-	/**
-	 * A template method for displaying custom error flash messages, or to
-	 * display no flash message at all on errors. Override this to customize
-	 * the flash message in your action controller.
-	 *
-	 * @return string|boolean The flash message or FALSE if no flash message should be set
-	 */
-	protected function getErrorFlashMessage() {
-		return FALSE;
 	}
 
 }

@@ -34,40 +34,6 @@
 class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller_ActionController {
 
 	/**
-	 * frontendUserRepository
-	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
-	 */
-	protected $frontendUserRepository;
-
-	/**
-	 * frontendUserGroupRepository
-	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserGroupRepository
-	 */
-	protected $frontendUserGroupRepository;
-
-	/**
-	 * injectFrontendUserRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository
-	 * @return void
-	 */
-	public function injectFrontendUserRepository(Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
-		$this->frontendUserRepository = $frontendUserRepository;
-	}
-
-	/**
-	 * injectFrontendUserGroupRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository
-	 * @return void
-	 */
-	public function injectFrontendUserGroupRepository(Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository) {
-		$this->frontendUserGroupRepository = $frontendUserGroupRepository;
-	}
-
-	/**
 	 * action list
 	 *
 	 * @return void
@@ -75,8 +41,12 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	public function listAction() {
 		$categories = $this->categoryRepository->findAll();
 		$this->view->assign('categories', $categories);
-		$suGroup = $this->frontendUserGroupRepository->findByUid($this->settings['suGroup']);
-		$this->view->assign('suGroup', $suGroup);
+
+		if ($this->feUser) {
+			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+			$this->view->assign('isSuperUser', $isSuperUser);
+			$this->view->assign('isLoggedIn', TRUE);
+		}
 	}
 
 	/**
@@ -97,11 +67,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_Category $category) {
-		global $TSFE;
-		if ($TSFE->fe_user) {
-			$feUser = $this->frontendUserRepository->findByUid($TSFE->fe_user->user['uid']);
-			$category->setFeUser($feUser);
-		}
+		$category->setFeUser($this->feUser);
 		$this->categoryRepository->add($category);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
@@ -142,17 +108,6 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 		$this->redirect('list');
-	}
-
-	/**
-	 * A template method for displaying custom error flash messages, or to
-	 * display no flash message at all on errors. Override this to customize
-	 * the flash message in your action controller.
-	 *
-	 * @return string|boolean The flash message or FALSE if no flash message should be set
-	 */
-	protected function getErrorFlashMessage() {
-		return FALSE;
 	}
 
 }
