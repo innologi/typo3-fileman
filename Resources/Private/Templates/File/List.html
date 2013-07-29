@@ -5,6 +5,7 @@
 
 <f:flashMessages />
 
+<h3>{category.title}</h3>
 <f:link.page class="button_back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
 <f:if condition="{isLoggedIn}">
 	<f:link.action action="new" controller="File" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_file_header" /></f:link.action>

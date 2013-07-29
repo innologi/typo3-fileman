@@ -53,6 +53,7 @@
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
 			<label index="tx_fileman_domain_model_link.link_name">Name</label>
 			<label index="tx_fileman_domain_model_link.description">Description</label>
+			<label index="tx_fileman_domain_model_link.category">Category</label>
 			<label index="tx_fileman_domain_model_link.tstamp">Placed on</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
@@ -91,6 +92,8 @@
 			<label index="tx_fileman_domain_model_file.alternate_title">Alternatieve bestandstitel</label>
 			<label index="tx_fileman_domain_model_file.description">Omschrijving</label>
 			<label index="tx_fileman_domain_model_file.links">Gerelateerde links</label>
+			<label index="tx_fileman_domain_model_file.link_names">Alternatieve naam per link (één per rij)</label>
+			<label index="tx_fileman_domain_model_file.category">Categorie</label>
 			<label index="tx_fileman_domain_model_file.tstamp">Geplaatst op</label>
 			
 			<label index="tx_fileman_domain_model_category">Categorieën</label>
@@ -101,6 +104,7 @@
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
 			<label index="tx_fileman_domain_model_link.link_name">Naam</label>
 			<label index="tx_fileman_domain_model_link.description">Omschrijving</label>
+			<label index="tx_fileman_domain_model_link.category">Categorie</label>
 			<label index="tx_fileman_domain_model_link.tstamp">Geplaatst op</label>
 		</languageKey>
 	</data>
