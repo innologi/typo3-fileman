@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_fileman_domain_model_category'] = array(
 	'ctrl' => $TCA['tx_fileman_domain_model_category']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, fe_user',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, file, link, fe_user',
 	),
-	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+	'types' => array( #@TODO add div for content (file, link)
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,file,link,fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -122,6 +122,80 @@ $TCA['tx_fileman_domain_model_category'] = array(
 				)
 			),
 			'defaultExtras' => 'richtext[]',
+		),
+		'file' => array(
+			'exclude' => 0,
+			'label' => 'Files', #@TODO llang
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_fileman_domain_model_file',
+				'MM' => 'tx_fileman_file_category_mm',
+				'MM_opposite_field' => 'category', //this needs to be set on only ONE side, with bidirectional!
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'maxitems' => 999,
+				'multiple' => 0,
+				'wizards' => array(
+					'_PADDING' => 1,
+					'_VERTICAL' => 1,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'icon' => 'edit2.gif',
+						'popup_onlyOpenIfSelected' => 1,
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+						),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new',
+						'icon' => 'add.gif',
+						'params' => array(
+							'table' => 'tx_fileman_domain_model_file',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+							),
+						'script' => 'wizard_add.php',
+					),
+				),
+			),
+		),
+		'link' => array(
+			'exclude' => 0,
+			'label' => 'Links', #@TODO llang
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_fileman_domain_model_link',
+				'MM' => 'tx_fileman_link_category_mm',
+				'MM_opposite_field' => 'category',
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'maxitems' => 999,
+				'multiple' => 0,
+				'wizards' => array(
+					'_PADDING' => 1,
+					'_VERTICAL' => 1,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'icon' => 'edit2.gif',
+						'popup_onlyOpenIfSelected' => 1,
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+						),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new',
+						'icon' => 'add.gif',
+						'params' => array(
+							'table' => 'tx_fileman_domain_model_link',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+							),
+						'script' => 'wizard_add.php',
+					),
+				),
+			),
 		),
 		'fe_user' => array(
 				'exclude' => 0,

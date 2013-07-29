@@ -50,12 +50,47 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	protected $description;
 
 	/**
+	 * Files within this category
+	 *
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File>
+	 * @lazy
+	 */
+	protected $file;
+
+	/**
+	 * Links within this category
+	 *
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Link>
+	 * @lazy
+	 */
+	protected $link;
+
+	/**
 	 * User who created this appointment
 	 *
 	 * @var Tx_Fileman_Domain_Model_FrontendUser
 	 * @lazy
 	 */
 	protected $feUser;
+
+	/**
+	 * __construct
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->initStorageObjects();
+	}
+
+	/**
+	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 *
+	 * @return void
+	 */
+	protected function initStorageObjects() {
+		$this->file = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->link = new Tx_Extbase_Persistence_ObjectStorage();
+	}
 
 	/**
 	 * Returns the title
@@ -93,6 +128,84 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 */
 	public function setDescription($description) {
 		$this->description = trim($description);
+	}
+
+	/**
+	 * Adds a File
+	 *
+	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @return void
+	 */
+	public function addFile(Tx_Fileman_Domain_Model_File $file) {
+		$this->file->attach($file);
+	}
+
+	/**
+	 * Removes a File
+	 *
+	 * @param Tx_Fileman_Domain_Model_File $fileToRemove The File to be removed
+	 * @return void
+	 */
+	public function removeFile(Tx_Fileman_Domain_Model_File $fileToRemove) {
+		$this->file->detach($fileToRemove);
+	}
+
+	/**
+	 * Returns the file
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File> $file
+	 */
+	public function getFile() {
+		return $this->file;
+	}
+
+	/**
+	 * Sets the file
+	 *
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File> $file
+	 * @return void
+	 */
+	public function setFile(Tx_Extbase_Persistence_ObjectStorage $file) {
+		$this->file = $file;
+	}
+
+	/**
+	 * Adds a Link
+	 *
+	 * @param Tx_Fileman_Domain_Model_Link $link
+	 * @return void
+	 */
+	public function addLink(Tx_Fileman_Domain_Model_Link $link) {
+		$this->link->attach($link);
+	}
+
+	/**
+	 * Removes a Link
+	 *
+	 * @param Tx_Fileman_Domain_Model_Link $linkToRemove The Link to be removed
+	 * @return void
+	 */
+	public function removeLink(Tx_Fileman_Domain_Model_Link $linkToRemove) {
+		$this->link->detach($linkToRemove);
+	}
+
+	/**
+	 * Returns the link
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Link> $link
+	 */
+	public function getLink() {
+		return $this->link;
+	}
+
+	/**
+	 * Sets the link
+	 *
+	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Link> $link
+	 * @return void
+	 */
+	public function setLink(Tx_Extbase_Persistence_ObjectStorage $link) {
+		$this->link = $link;
 	}
 
 	/**

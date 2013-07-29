@@ -55,6 +55,8 @@ CREATE TABLE tx_fileman_domain_model_category (
 
 	title varchar(255) DEFAULT '' NOT NULL,
 	description text NOT NULL,
+	file int(11) unsigned DEFAULT '0' NOT NULL,
+	link int(11) unsigned DEFAULT '0' NOT NULL,
 	fe_user int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
