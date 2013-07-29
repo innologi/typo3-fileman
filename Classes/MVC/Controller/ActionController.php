@@ -37,5 +37,25 @@
  */
 class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controller_ErrorOnDebugController {
 
+	/**
+	 * categoryRepository
+	 *
+	 * @var Tx_Fileman_Domain_Repository_CategoryRepository
+	 */
+	protected $categoryRepository;
+
+	/**
+	 * injectCategoryRepository
+	 *
+	 * @param Tx_Fileman_Domain_Repository_CategoryRepository $categoryRepository
+	 * @return void
+	 */
+	public function injectCategoryRepository(Tx_Fileman_Domain_Repository_CategoryRepository $categoryRepository) {
+		$categoryRepository->setDefaultOrderings(array(
+				'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
+		));
+		$this->categoryRepository = $categoryRepository;
+	}
+
 }
 ?>

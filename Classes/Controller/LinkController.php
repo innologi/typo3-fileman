@@ -97,6 +97,8 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 		//category
 		$arguments = NULL;
 		if ($category !== NULL) {
+			$category->addLink($link); //this is to make the database field counter update reliably
+			$this->categoryRepository->update($category); //necessary from 6.1 and upwards
 			$link->addCategory($category);
 			$arguments = array('category'=>$category);
 		}

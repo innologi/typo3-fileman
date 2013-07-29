@@ -226,6 +226,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			//category
 			$arguments = NULL;
 			if ($category !== NULL) {
+				$category->addFile($file); //this is to make the database field counter update reliably
+				$this->categoryRepository->update($category); //necessary from 6.1 and upwards
 				$file->addCategory($category);
 				$arguments = array('category'=>$category);
 			}
