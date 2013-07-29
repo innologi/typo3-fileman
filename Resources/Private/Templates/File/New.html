@@ -11,16 +11,16 @@
 
 <f:form enctype="multipart/form-data" method="post" action="create"  name="file" object="{file}" arguments="{category : category}">
 	<fieldset>
-		<label for="fileUri">
+		<label for="fileman-fileUri">
 			<f:translate key="tx_fileman_domain_model_file.file_uri" /> <span class="required"><f:translate key="tx_fileman_filelist.required" /></span>
 		</label><br />
-		<f:form.upload id="fileUri" property="fileUri" />
+		<f:form.upload id="fileman-fileUri" property="fileUri" class="fileupload" />
 		<br />
 		<br />
 		
 		<f:render partial="File/FormFields" arguments="{file:file,category:category}" />
 			
-		<f:form.submit id="submit" value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" />
+		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" class="submit" />
 	</fieldset>
 </f:form>
 </f:section>

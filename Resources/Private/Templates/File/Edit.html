@@ -13,13 +13,13 @@
 	<fieldset>
 		<f:translate key="tx_fileman_domain_model_file.file_uri" />
 		<br />
-		{file.fileUri}
+		<input type="text" readonly="readonly" disabled="disabled" value="{file.fileUri}" class="textinput" />
 		<br />
 		<br />
 		
 		<f:render partial="File/FormFields" arguments="{file:file,category:category}" />
 			
-		<f:form.submit id="submit" value="{f:translate(key:'tx_fileman_filelist.edit_file_submit')}" />
+		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.edit_file_submit')}" class="submit" />
 	</fieldset>
 </f:form>
 </f:section>

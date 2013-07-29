@@ -1,17 +1,17 @@
 <fieldset>
-	<label for="title">
+	<label for="fileman-title">
 		<f:translate key="tx_fileman_domain_model_category.title" /> <span class="required"><f:translate key="tx_fileman_filelist.required" /></span>
 	</label><br />
-	<f:form.textfield id="title" property="title" required="TRUE"/>
+	<f:form.textfield id="fileman-title" property="title" required="TRUE" class="textinput" />
 	<br />
 	<br />
 	
-	<label for="description">
+	<label for="fileman-description">
 		<f:translate key="tx_fileman_domain_model_category.description" />
 	</label><br />
-	<f:form.textarea id="description" property="description" cols="40" rows="15" />
+	<f:form.textarea id="fileman-description" property="description" cols="40" rows="15" />
 	<br />
 	<br />
 	
-	<f:form.submit id="submit" value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" />
+	<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
 </fieldset>

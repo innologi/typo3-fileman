@@ -65,24 +65,20 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		border:1px #ff0000 solid !important;
 	}
 	
-	.tx-fileman #submit {
+	.tx-fileman .submit {
 		border:1px solid #999;
 		background-color:#ccc;
 	}
 	
-	.tx-fileman #fileUri,
-	.tx-fileman #alternateTitle,
-	.tx-fileman #description,
-	.tx-fileman #links,
-	.tx-fileman #linkUri,
-	.tx-fileman #linkName,
-	.tx-fileman #title {
+	.tx-fileman .textinput,
+	.tx-fileman textarea,
+	.tx-fileman .fileupload {
 		width:500px;
 		border:1px solid #c2c2c1;
 		background-color:#fafaf5;
 	}
 	
-	.tx-fileman #links {
+	.tx-fileman #fileman-links {
 		height:100px;
 	}
 	
