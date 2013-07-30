@@ -38,7 +38,7 @@
 		
 			<label index="tx_fileman_domain_model_file">Files</label>
 			<label index="tx_fileman_domain_model_file.file_uri">File</label>
-			<label index="tx_fileman_domain_model_file.alternate_title">Alternate file title</label>
+			<label index="tx_fileman_domain_model_file.alternate_title">Displayed title</label>
 			<label index="tx_fileman_domain_model_file.description">Description</label>
 			<label index="tx_fileman_domain_model_file.links">Related links</label>
 			<label index="tx_fileman_domain_model_file.link_names">Alternative name per link (one per row)</label>
@@ -51,7 +51,7 @@
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
-			<label index="tx_fileman_domain_model_link.link_name">Name</label>
+			<label index="tx_fileman_domain_model_link.link_name">Displayed title</label>
 			<label index="tx_fileman_domain_model_link.description">Description</label>
 			<label index="tx_fileman_domain_model_link.category">Category</label>
 			<label index="tx_fileman_domain_model_link.tstamp">Placed on</label>
@@ -89,7 +89,7 @@
 		
 			<label index="tx_fileman_domain_model_file">Bestanden</label>
 			<label index="tx_fileman_domain_model_file.file_uri">Bestand</label>
-			<label index="tx_fileman_domain_model_file.alternate_title">Alternatieve bestandstitel</label>
+			<label index="tx_fileman_domain_model_file.alternate_title">Bestandstitel</label>
 			<label index="tx_fileman_domain_model_file.description">Omschrijving</label>
 			<label index="tx_fileman_domain_model_file.links">Gerelateerde links</label>
 			<label index="tx_fileman_domain_model_file.link_names">Alternatieve naam per link (één per rij)</label>
@@ -102,7 +102,7 @@
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
-			<label index="tx_fileman_domain_model_link.link_name">Naam</label>
+			<label index="tx_fileman_domain_model_link.link_name">Titel</label>
 			<label index="tx_fileman_domain_model_link.description">Omschrijving</label>
 			<label index="tx_fileman_domain_model_link.category">Categorie</label>
 			<label index="tx_fileman_domain_model_link.tstamp">Geplaatst op</label>

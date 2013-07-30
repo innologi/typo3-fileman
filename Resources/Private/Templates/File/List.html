@@ -26,14 +26,7 @@
 			<tr>
 				<td>
 					<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file : file}">
-						<f:if condition="{file.alternateTitle}">
-							<f:then>
-								{file.alternateTitle}
-							</f:then>
-		 					<f:else>
-		 						{file.filename}
-		 					</f:else>
-		 				</f:if>
+						{file.alternateTitle}
 	 				</fi:link.download>
 	 				<f:if condition="{isSuperUser}">
 						<f:link.action action="edit" arguments="{file : file, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
@@ -73,14 +66,7 @@
 			<tr>
 				<td>
 					<f:link.external uri="{link.linkUri}" >
-						<f:if condition="{link.linkName}">
-							<f:then>
-								{link.linkName}
-							</f:then>
-		 					<f:else>
-		 						{link.linkUri}
-		 					</f:else>
-		 				</f:if>
+						{link.linkName}
 	 				</f:link.external>
 	 				<f:if condition="{isSuperUser}">
 						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>

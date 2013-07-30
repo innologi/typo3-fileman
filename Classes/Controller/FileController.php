@@ -55,6 +55,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function injectFileRepository(Tx_Fileman_Domain_Repository_FileRepository $fileRepository) {
 		$this->fileRepository = $fileRepository;
+		$fileRepository->setDefaultOrderings(array(
+				'alternateTitle' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
+		));
 	}
 
 	/**
@@ -65,6 +68,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function injectLinkRepository(Tx_Fileman_Domain_Repository_LinkRepository $linkRepository) {
 		$this->linkRepository = $linkRepository;
+		$linkRepository->setDefaultOrderings(array(
+				'linkName' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
+		));
 	}
 
 
@@ -206,6 +212,13 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			//feUser
 			$file->setFeUser($this->feUser);
 
+			//title
+			$title = $file->getAlternateTitle();
+			if (empty($title)) {
+				//note that if the above setFileUri() is changed, setAlternateTitle() should be changed as well
+				$file->setAlternateTitle($file->getFileUri());
+			}
+
 			//finalize creation
 			$this->fileRepository->add($file);
 			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
@@ -225,7 +238,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
-		$this->view->assign('category', $category); #@FIXME why am I assigning category EVERYWHERE again?
+		$this->view->assign('category', $category); //category is given for URL-consistency and redirecting afterwards
 		$this->view->assign('file', $file);
 	}
 
@@ -237,6 +250,12 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+		//title
+		$title = $file->getAlternateTitle();
+		if (empty($title)) {
+			$file->setAlternateTitle($file->getFileUri());
+		}
+
 		$this->fileRepository->update($file);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_file_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);

@@ -32,7 +32,6 @@
  *
  */
 class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
-	#@TODO edit/delete mogelijkheid voor FE?
 	#@TODO beveiliging van uploads?
 	#@TODO resterende styling
 	#@TODO flexform configuratie
@@ -51,7 +50,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @var string
 	 * @validate String
 	 */
-	protected $alternateTitle;
+	protected $alternateTitle; #@SHOULD be renamed
 
 	/**
 	 * File description
@@ -126,7 +125,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the filename
 	 *
-	 * @return string $filename
+	 * @return string
 	 */
 	public function getFilename() { #@SHOULD isn't being used right now
 		return basename($this->getFileUri());
@@ -135,7 +134,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the fileUri
 	 *
-	 * @return string $fileUri
+	 * @return string
 	 */
 	public function getFileUri() {
 		return /*t3lib_div::fixWindowsFilePath(*/$this->fileUri/*)*/; #@TODO sigh
@@ -154,7 +153,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the alternateTitle
 	 *
-	 * @return string $alternateTitle
+	 * @return string
 	 */
 	public function getAlternateTitle() {
 		return $this->alternateTitle;
@@ -167,13 +166,13 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	public function setAlternateTitle($alternateTitle) {
-		$this->alternateTitle = trim($alternateTitle);
+		$this->alternateTitle = trim($alternateTitle); #@SHOULD autofill the template field through javascript?
 	}
 
 	/**
 	 * Returns the description
 	 *
-	 * @return string $description
+	 * @return string
 	 */
 	public function getDescription() {
 		return $this->description;
@@ -192,7 +191,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the links as array
 	 *
-	 * @return string $links
+	 * @return string
 	 */
 	public function getLinks() {
 		return $this->links;
@@ -201,7 +200,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the links as array
 	 *
-	 * @return array $links
+	 * @return array
 	 */
 	public function getLinksFormatted() {
 		if (isset($this->links[0])) {
@@ -225,7 +224,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the linkNames
 	 *
-	 * @return string $linkNames
+	 * @return string
 	 */
 	public function getLinkNames() { #@SHOULD isn't being used right now
 		return $this->linkNames;
@@ -264,7 +263,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the category
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category> $category
+	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
 	 */
 	public function getCategory() {
 		return $this->category;
@@ -283,7 +282,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the feUser
 	 *
-	 * @return Tx_Fileman_Domain_Model_FrontendUser feUser
+	 * @return Tx_Fileman_Domain_Model_FrontendUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -302,7 +301,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the timestamp
 	 *
-	 * @return integer $tstamp
+	 * @return integer
 	 */
 	public function getTstamp() {
 		return $this->tstamp;

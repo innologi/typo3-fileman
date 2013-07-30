@@ -23,7 +23,7 @@
 			
 			<label index="tx_fileman_domain_model_link">Link</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link Uri</label>
-			<label index="tx_fileman_domain_model_link.link_name">Link Name</label>
+			<label index="tx_fileman_domain_model_link.link_name">Title</label>
 			<label index="tx_fileman_domain_model_link.description">Description</label>
 			<label index="tx_fileman_domain_model_link.category">Category</label>
 			<label index="tx_fileman_domain_model_link.fe_user">User</label>
@@ -46,7 +46,7 @@
 			
 			<label index="tx_fileman_domain_model_link">Link</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link Uri</label>
-			<label index="tx_fileman_domain_model_link.link_name">Link Naam</label>
+			<label index="tx_fileman_domain_model_link.link_name">Titel</label>
 			<label index="tx_fileman_domain_model_link.description">Omschrijving</label>
 			<label index="tx_fileman_domain_model_link.category">Categorie</label>
 			<label index="tx_fileman_domain_model_link.fe_user">Gebruiker</label>

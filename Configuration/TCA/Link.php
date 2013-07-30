@@ -108,7 +108,7 @@ $TCA['tx_fileman_domain_model_link'] = array(
 			'config' => array(
 				'type' => 'input',
 				'size' => 48,
-				'eval' => 'trim'
+				'eval' => 'trim,required'
 			),
 		),
 		'description' => array(

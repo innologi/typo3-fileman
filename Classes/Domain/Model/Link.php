@@ -139,7 +139,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	public function setLinkName($linkName) {
-		$this->linkName = $linkName;
+		$this->linkName = trim($linkName);
 	}
 
 	/**

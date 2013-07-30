@@ -75,6 +75,12 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
 		$link->setFeUser($this->feUser);
 
+		//title
+		$title = $link->getLinkName();
+		if (empty($title)) { #@SHOULD display the links (and files) more nicely, like with file sizes, file icons, external domain mentioned, etc. This would also make it possible to eventually merge the lists
+			$link->setLinkName($link->getLinkUri());
+		}
+
 		//category
 		$arguments = NULL;
 		if ($category !== NULL) {
@@ -110,6 +116,12 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
+		//title
+		$title = $link->getLinkName();
+		if (empty($title)) {
+			$link->setLinkName($link->getLinkUri());
+		}
+
 		$this->linkRepository->update($link);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_link_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
