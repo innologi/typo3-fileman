@@ -30,6 +30,9 @@
 			<label index="tx_fileman_filelist.delete_link_success">Link verwijderd</label>
 			<label index="tx_fileman_filelist.button_edit">Edit</label>
 			<label index="tx_fileman_filelist.button_delete">Delete</label>
+			<label index="tx_fileman_filelist.filetype_filter.allow">Allowed</label>
+			<label index="tx_fileman_filelist.filetype_filter.deny">Not allowed</label>
+			<label index="tx_fileman_filelist.filetype_filter.none">All filetypes allowed</label>
 			
 			<label index="tx_fileman_validator.error_file_uri">You need to select a file for upload.</label>
 			<label index="tx_fileman_validator.error_link_uri">You need to place a valid link.</label>
@@ -81,6 +84,9 @@
 			<label index="tx_fileman_filelist.delete_link_success">Link verwijderd</label>
 			<label index="tx_fileman_filelist.button_edit">Wijzigen</label>
 			<label index="tx_fileman_filelist.button_delete">Verwijderen</label>
+			<label index="tx_fileman_filelist.filetype_filter.allow">Toegestaan</label>
+			<label index="tx_fileman_filelist.filetype_filter.deny">Niet toegestaan</label>
+			<label index="tx_fileman_filelist.filetype_filter.none">Alle bestandstypen toegestaan</label>
 			
 			<label index="tx_fileman_validator.error_file_uri">U dient een bestand te selecteren om te plaatsen.</label>
 			<label index="tx_fileman_validator.error_link_uri">U dient een geldig URL in te vullen.</label>

@@ -6,10 +6,10 @@
 <f:flashMessages />
 
 <h3>{category.title}</h3>
-<f:link.page class="button_back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
 <f:if condition="{isLoggedIn}">
-	<f:link.action action="new" controller="File" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_file_header" /></f:link.action>
-	<f:link.action action="new" controller="Link" arguments="{category : category}" class="button_new"><f:translate key="tx_fileman_filelist.new_link_header" /></f:link.action>
+	<f:link.action action="new" controller="File" arguments="{category : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_file_header" /></f:link.action>
+	<f:link.action action="new" controller="Link" arguments="{category : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link_header" /></f:link.action>
 </f:if>
 
 <table class="tx_fileman" >
@@ -29,15 +29,15 @@
 						{file.alternateTitle}
 	 				</fi:link.download>
 	 				<f:if condition="{isSuperUser}">
-						<f:link.action action="edit" arguments="{file : file, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-						<f:link.action action="delete" arguments="{file : file, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+						<f:link.action action="edit" arguments="{file : file, category : category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+						<f:link.action action="delete" arguments="{file : file, category : category}" class="button-delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
 					</f:if>
 	 				
 	 				<f:if condition="{file.links}">
 						<f:then>
-							<a href="#" class="rel_switch">&nbsp;</a>
-							<div class="rel_links">
-								<span class="rel_links_header"><f:translate key="tx_fileman_domain_model_file.links" /></span>
+							<a href="#" class="rel-switch">&nbsp;</a>
+							<div class="rel-links">
+								<span class="rel-links-header"><f:translate key="tx_fileman_domain_model_file.links" /></span>
 								<ol>
 									<f:for each="{file.linksFormatted}" as="link">
 										<li><f:link.external uri="{link}">{link}</f:link.external></li>
@@ -69,8 +69,8 @@
 						{link.linkName}
 	 				</f:link.external>
 	 				<f:if condition="{isSuperUser}">
-						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-						<f:link.action action="delete" controller="Link" arguments="{link : link, category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+						<f:link.action action="delete" controller="Link" arguments="{link : link, category : category}" class="button-delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
 					</f:if>
 	 			</td>
 	 			<td>{link.description}</td>

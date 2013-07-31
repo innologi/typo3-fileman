@@ -5,10 +5,10 @@
 <f:flashMessages />
 
 <f:if condition="{isLoggedIn}">
-	<f:link.action action="new" controller="Category" class="button_new"><f:translate key="tx_fileman_filelist.new_category_header" /></f:link.action>
+	<f:link.action action="new" controller="Category" class="button-new"><f:translate key="tx_fileman_filelist.new_category_header" /></f:link.action>
 </f:if>
 
-<table  class="tx_fileman" >
+<table>
 	<tr>
 		<th><f:translate key="tx_fileman_domain_model_category.title" /></th>
 		<th><f:translate key="tx_fileman_domain_model_category.description" /></th>
@@ -20,9 +20,9 @@
 			<td>
 				<f:link.action action="list" controller="File" arguments="{category : category}">{category.title} ({category.count})</f:link.action>
 				<f:if condition="{isSuperUser}" >
-					<f:link.action action="edit" arguments="{category : category}" class="button_edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+					<f:link.action action="edit" arguments="{category : category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 					<f:if condition="{category.count} == 0">
-						<f:link.action action="delete" arguments="{category : category}" class="button_delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+						<f:link.action action="delete" arguments="{category : category}" class="button-delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
 					</f:if>
 				</f:if>
 			</td>

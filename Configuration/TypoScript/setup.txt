@@ -31,11 +31,20 @@ plugin.tx_fileman {
 		#TYPO3 4.6.0, http://forge.typo3.org/issues/29695 resolved? Clearly not, so for now:
 		jQuery.disableCompression = 1
 		
+		jQueryUI.external = 0
+		jQueryUI = {$plugin.tx_fileman.js.uiLibFile}
+		jQueryUI.disableCompression = 1
+		jQueryUIcss.external = 0
+		jQueryUIcss = {$plugin.tx_fileman.js.uiCssFile}
+		jQueryUIcss.disableCompression = 1
+		
 		inlineJS = FILE
 		inlineJS.file = {$plugin.tx_fileman.js.libFile}
 	}
 	settings {
 		uploadDir = {$plugin.tx_fileman.settings.uploadDir}
+		allowFileType = {$plugin.tx_fileman.settings.allowFileType}
+		denyFileType = {$plugin.tx_fileman.settings.denyFileType}
 	}
 	features {
 		# uncomment the following line to enable the new Property Mapper.
@@ -45,18 +54,23 @@ plugin.tx_fileman {
 
 [globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJquery}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}] 
 page.includeJSFooterlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
-[global]
 
 [globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJquery}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}] 
 page.includeJSlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
-[global]
+
+[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJqueryUI}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}] 
+page.includeJSFooterlibs.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUI
+page.includeCSS.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUIcss
+
+[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJqueryUI}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}] 
+page.includeJSlibs.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUI
+page.includeCSS.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUIcss
 
 [globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}]
-page.jsFooterInline.19831 < plugin.tx_fileman.jslib.inlineJS
-[global]
+page.jsFooterInline.198311310 < plugin.tx_fileman.jslib.inlineJS
 
 [globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}]
-page.jsInline.19831 < plugin.tx_fileman.jslib.inlineJS
+page.jsInline.198311310 < plugin.tx_fileman.jslib.inlineJS
 [global]
 
 plugin.tx_fileman._CSS_DEFAULT_STYLE (
@@ -81,6 +95,12 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman #fileman-links {
 		height:100px;
 	}
+	
+	
+	.tx-fileman .uploadprogress {
+		display:none;
+	}
+	
 	
 	.tx-fileman table {
 		border: 2px solid #f2f2f1;
@@ -109,56 +129,63 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		padding:8px 15px;
 	}
 	
-	.tx-fileman .rel_switch {
+	
+	.tx-fileman .file-type-info {
+		font-size:0.8em;
+		opacity:0.9;
+	}
+	
+	
+	.tx-fileman .rel-switch {
 		margin-left:8px;
 		font-size:0.9em;
 		display:none;
 	}
-	.tx-fileman .rel_switch:before {
+	.tx-fileman .rel-switch:before {
 		content:"[\25BC]";
 		font-size:0.8em;
 	}
 	
-	.tx-fileman .rel_links {
+	.tx-fileman .rel-links {
 		margin-top:10px;
 		font-size:0.9em;
 	}
 	
-	.tx-fileman .rel_links ol {
+	.tx-fileman .rel-links ol {
 		margin-top:0;
 	}
 	
-	.tx-fileman .rel_links a {
+	.tx-fileman .rel-links a {
 		border-bottom:1px dotted;
 		font-style:italic;
 	}
 	
-	.tx-fileman .button_back {
+	.tx-fileman .button-back {
 		float:left;
 		margin-left:10px;
 	}
 	
-	.tx-fileman .button_new {
+	.tx-fileman .button-new {
 		float:right;
 		margin-right:10px;
 	}
 	
-	.tx-fileman .button_new,
-	.tx-fileman .button_back {
+	.tx-fileman .button-new,
+	.tx-fileman .button-back {
 		margin-bottom:10px;
 	}
 	
-	.tx-fileman .button_new,
-	.tx-fileman .button_edit,
-	.tx-fileman .button_delete,
+	.tx-fileman .button-new,
+	.tx-fileman .button-edit,
+	.tx-fileman .button-delete,
 	.tx-fileman .button_back {
 		display: inline-block;
 	}
 	
-	.tx-fileman .button_new:before,
-	.tx-fileman .button_edit:before,
-	.tx-fileman .button_delete:before,
-	.tx-fileman .button_back:before {
+	.tx-fileman .button-new:before,
+	.tx-fileman .button-edit:before,
+	.tx-fileman .button-delete:before,
+	.tx-fileman .button-back:before {
 		background-image:url("/typo3conf/ext/fileman/Resources/Public/Icons/t3skin.png");
 		content:"";
 		float:left;
@@ -167,28 +194,28 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		margin:2px 8px 0 0;
 	}
 	
-	.tx-fileman .button_new:before,
-	.tx-fileman .button_back:before {
+	.tx-fileman .button-new:before,
+	.tx-fileman .button-back:before {
 		float:left;
 	}
 	
-	.tx-fileman .button_edit,
-	.tx-fileman .button_delete {
+	.tx-fileman .button-edit,
+	.tx-fileman .button-delete {
 		overflow:hidden;
 		width:16px;
 		height:18px;	
 	}
 	
-	.tx-fileman .button_new:before {
+	.tx-fileman .button-new:before {
 		background-position:-180px 0;	
 	}
-	.tx-fileman .button_edit:before {
+	.tx-fileman .button-edit:before {
 		background-position:-198px 0;
 	}
-	.tx-fileman .button_delete:before {
+	.tx-fileman .button-delete:before {
 		background-position:-162px -18px;
 	}
-	.tx-fileman .button_back:before {
+	.tx-fileman .button-back:before {
 		background-position:-18px -36px;
 	}
 	

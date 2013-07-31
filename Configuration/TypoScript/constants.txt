@@ -14,17 +14,25 @@ plugin.tx_fileman {
 	js {
 		# cat=plugin.tx_fileman/javascript; type=boolean; label= Enable jQuery inclusion: Will include the jQuery library through the configured CDN. If for some reason there already is a jQuery library present, you can disable fileman's here to prevent conflicts.
 		includeJquery = 1
+		# cat=plugin.tx_fileman/javascript; type=boolean; label= Enable jQuery UI inclusion: Will include the jQuery UI library for additional upload progress bar functionality.
+		includeJqueryUI = 1
 		# cat=plugin.tx_fileman/javascript; type=boolean; label= Enable Javascript inclusion: Will include fileman Javascript. It's all jQuery dependent, so make sure to have jQuery enabled through this or another extension.
 		includeJS = 1
 		# cat=plugin.tx_fileman/javascript; type=boolean; label= Place Javascript in page footer: If enabled, will move the fileman Javascript out of the header and into the footer.
 		toFooter = 1
 		# cat=plugin.tx_fileman/javascript; type=text; label= jQuery CDN url: The url from which jQuery is included. Configurable to easily allow jQuery version changes.
-		jQueryCDN = http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+		jQueryCDN = http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 		
+		uiLibFile = EXT:fileman/Resources/Public/Scripts/jquery-ui-1.10.3.custom.min.js
+		uiCssFile = EXT:fileman/Resources/Public/Styles/ui-lightness/jquery-ui-1.10.3.custom.min.css
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.js
 	}
 	settings {
 		# cat=plugin.tx_fileman/file; type=string; label=Upload dir (FE)
 		uploadDir = uploads/tx_fileman/
+		
+		# txt,doc,docx,rtf,odf,xls,xlsx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
+		allowFileType = 
+		denyFileType = php,phps,php3,php4,php5,js,html,htm,css,htaccess
 	}
 }

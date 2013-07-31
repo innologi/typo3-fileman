@@ -3,7 +3,7 @@
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.edit_link_header" /></h3>
 
-<f:link.action action="list" controller="File" arguments="{category : category}" class="button_back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 
 <f:flashMessages />
 
@@ -13,7 +13,7 @@
 	<fieldset>
 		<f:render partial="Link/FormFields" arguments="{link:link,category:category}" />
 			
-		<f:form.submit id="fileman-submit" value="{f:translate(key:'tx_fileman_filelist.edit_link_submit')}" />
+		<f:form.submit class="submit" value="{f:translate(key:'tx_fileman_filelist.edit_link_submit')}" />
 	</fieldset>
 </f:form>
 </f:section>

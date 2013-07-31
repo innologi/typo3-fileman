@@ -191,6 +191,11 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$fileName = $_FILES[$e]['name'][$i][$p];
 		$tmpPath = $_FILES[$e]['tmp_name'][$i][$p];
 
+		if (!$this->isFileTypeAllowed($fileName)) {
+			$this->fileTypeNotAllowedError();
+			//stops
+		}
+
 		$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
 		#$absDirPath = PATH_site.$this->settings['uploadDir'];
 		$absDirPath = PATH_site.'uploads/tx_fileman/'; #@SHOULD might as well do it static right now
@@ -290,6 +295,52 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->redirect('list',NULL,NULL,$arguments);
 	}
 
+
+	#@TODO doc
+	protected function isFileTypeAllowed($fileName) {
+		$fileInfo = explode('.',$fileName);
+		$fileExt = end($fileInfo);
+		$allowed = TRUE;
+
+		if (isset($this->settings['allowFileType'][0])) {
+			$fileTypes = explode(',',$this->settings['allowFileType']);
+			$allowed = in_array($fileExt,$fileTypes);
+		} elseif (isset($this->settings['denyFileType'][0])) {
+			$fileTypes = explode(',',$this->settings['denyFileType']);
+			$allowed = !in_array($fileExt,$fileTypes);
+		}
+
+		return $allowed;
+	}
+
+	#@TODO doc
+	/**
+	 * Fails validation manually based on time-related fields.
+	 * It then forwards to requested $action.
+	 *
+	 * @param string $action The action to forward to
+	 * @param integer $errorCode The errorcode
+	 * @param array $timeFields Contains formfield uids of time-related formfields
+	 * @return void
+	 */
+	protected function fileTypeNotAllowedError($action = 'new', $errorCode = 407501337) {
+		$errors = array();
+		$errorMsg = 'File type not allowed.'; #@TODO llang
+
+
+		$propertyError = new Tx_Extbase_Validation_PropertyError('fileUri');
+		$propertyError->addErrors(array(
+				new Tx_Extbase_Validation_Error($errorMsg,$errorCode)
+		));
+
+		//this adds the validation errors to the appointment argument, which identifies with a form's objectName
+		$argumentError = new Tx_Extbase_MVC_Controller_ArgumentError('file');
+		$argumentError->addErrors(array($propertyError));
+
+		//set the errors within the request, which survives the forward()
+		$this->request->setErrors(array($argumentError));
+		$this->forward($action);
+	}
 
 
 	/**

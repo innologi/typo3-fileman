@@ -3,19 +3,36 @@
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.new_file_header" /></h3>
 
-<f:link.action action="list" controller="File" arguments="{category : category}" class="button_back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 
 <f:flashMessages />
 
 <f:render partial="FormErrors" arguments="{for: 'file'}" />
 
-<f:form enctype="multipart/form-data" method="post" action="create"  name="file" object="{file}" arguments="{category : category}">
+<f:form enctype="multipart/form-data" method="post" action="create"  name="file" object="{file}" arguments="{category : category}" class="init-progressbar">
 	<fieldset>
 		<label for="fileman-fileUri">
 			<f:translate key="tx_fileman_domain_model_file.file_uri" /> <span class="required"><f:translate key="tx_fileman_filelist.required" /></span>
 		</label><br />
 		<f:form.upload id="fileman-fileUri" property="fileUri" class="fileupload" />
 		<br />
+		<div class="file-type-info">
+			<f:if condition="{settings.allowFileType}">
+				<f:then>
+					<f:translate key="tx_fileman_filelist.filetype_filter.allow" />: {settings.allowFileType}
+				</f:then>
+				<f:else>
+					<f:if condition="{settings.denyFileType}">
+						<f:then>
+							<f:translate key="tx_fileman_filelist.filetype_filter.deny" />: {settings.denyFileType}
+						</f:then>
+						<f:else>
+							<f:translate key="tx_fileman_filelist.filetype_filter.none" />
+						</f:else>
+					</f:if>
+				</f:else>
+			</f:if>
+		</div>
 		<br />
 		
 		<f:render partial="File/FormFields" arguments="{file:file,category:category}" />
@@ -23,4 +40,5 @@
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" class="submit" />
 	</fieldset>
 </f:form>
+
 </f:section>
