@@ -9,12 +9,16 @@ Tx_Extbase_Utility_Extension::registerPlugin(
 	'File Manager: List'
 );
 
-$pluginSignature = str_replace('_','',$_EXTKEY) . '_' . filelist;
+$pluginSignature = str_replace('_','',$_EXTKEY) . '_filelist';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_filelist.xml');
 
+#@TODO clean up constants
 #@TODO documenteer pageTS TCEMAIN.clearCacheCmd = pid
-
+#@TODO test in >= 6.0
+#@TODO namespaces?
+#@TODO what about FAL?
+#@TODO what about system categories instead? is that an option?
 #@TODO locallang_csh_tx_fileman_domain_model_link.xml
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'File Manager');
