@@ -193,7 +193,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			if (!$this->isFileTypeAllowed($fileName)) {
 				$this->fileTypeNotAllowedError();
 				//stops
-				#@FIXME finish this
+				#@FIXME finish this, put it in validation? What if multiple files and only one fails?
 			}
 
 			$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
@@ -204,6 +204,12 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 				$finalPath = $fileFunctions->getUniqueName($fileName, $absDirPath);
 				t3lib_div::upload_copy_move($tmpFile, $finalPath);
 				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
+
+				//title
+				$title = $file->getAlternateTitle();
+				if (empty($title)) {
+					$file->setAlternateTitle($file->getFileUri()); //should be changed if above setter is changed
+				}
 
 				//category
 				if ($category !== NULL) {

@@ -72,10 +72,6 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 					$file->setTmpFile($uploadTmpName);
 					$file->setFileUri($uploadName);
 
-					$title = $file->getAlternateTitle();
-					if (empty($title)) {
-						$file->setAlternateTitle($uploadName);
-					}
 					$valid = TRUE;
 				}
 			}
