@@ -43,13 +43,17 @@ jQuery(document).ready(function() {
 		jQuery(form).after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
 		
 		jQuery(form).on('submit', function() {
-			jQuery(this).hide();
-			jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
-			
-			updateProgressInt[i] = setInterval(function() {
+			//only if fileupload is not empty
+			var fileuploadValue = jQuery(this).find('.fileupload').val();
+			if (fileuploadValue != '') {
+				jQuery(this).hide();
+				jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
+				
+				updateProgressInt[i] = setInterval(function() {
+					updateProgress(upload_id,i);
+				}, 500); //TODO: should be configurable
 				updateProgress(upload_id,i);
-			}, 500); //TODO: should be configurable
-			updateProgress(upload_id,i);
+			}
 		});
 	});
 	
