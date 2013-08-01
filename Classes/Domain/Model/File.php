@@ -40,15 +40,21 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * Filepath
 	 *
 	 * @var string
-	 * @validate Tx_Fileman_Domain_Validator_FileUriValidator
 	 */
 	protected $fileUri; #@FIXME field is empty on validation error
+
+	/**
+	 * Temporary upload file path
+	 *
+	 * @var string
+	 * @transient
+	 */
+	protected $tmpFile;
 
 	/**
 	 * Displayed name of the file.
 	 *
 	 * @var string
-	 * @validate String
 	 */
 	protected $alternateTitle; #@SHOULD be renamed
 
@@ -148,6 +154,25 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 */
 	public function setFileUri($fileUri) {
 		$this->fileUri = $fileUri;
+	}
+
+	/**
+	 * Returns the tmpFile
+	 *
+	 * @return string
+	 */
+	public function getTmpFile() {
+		return $this->tmpFile;
+	}
+
+	/**
+	 * Sets the tmpFile
+	 *
+	 * @param string $tmpFile
+	 * @return void
+	 */
+	public function setTmpFile($tmpFile) {
+		$this->tmpFile = $tmpFile;
 	}
 
 	/**

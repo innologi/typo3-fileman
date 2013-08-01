@@ -1,15 +1,12 @@
-{namespace fileman=Tx_Fileman_ViewHelpers}
-<ul class="error">
-<f:form.errors for="{for}">
-	<!-- {error.propertyName}.{error.code}: {error.message} -->
-	<f:if condition="{error.propertyName}">
-		<f:for each="{error.errors}" as="errorDetail">
-			<li>
-				<!-- {errorDetail.code} -->
-				<strong><f:translate key="tx_fileman_domain_model_{for}.{fileman:format.camelCase(type:'camelCaseToLowerCaseUnderscored',value: error.propertyName)}" />:</strong>
-				<f:translate key="error.{for}.{error.propertyName}.{errorDetail.code}">{errorDetail.message}</f:translate>
-			</li>
-		</f:for>
-	</f:if>
+<f:form.errors>
+<div class="validation">
+	<div class="validation-errors">
+		<div class="validation-header"><f:translate key="tx_fileman_filelist.validation_errors">tx_fileman_filelist.validation_errors</f:translate></div>
+		<ul class="validation-error-messages">
+			<f:for each="{error.errors}" as="err">
+				<f:render partial="FormErrorsDetail" arguments="{entity: for, error: err}" />
+			</f:for>
+		</ul>
+	</div>
+</div>
 </f:form.errors>
-</ul>

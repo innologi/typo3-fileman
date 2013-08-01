@@ -25,46 +25,30 @@
  ***************************************************************/
 
 /**
- *
+ * Lower Case Viewhelper
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Validator_FileUriValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
-	#@TODO delete failed files?
+class Tx_Fileman_ViewHelpers_Format_LowerCaseViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+
 	/**
-	 * @param	string	$elem	Is usually empty, the real value is in FILES
-	 * @return	boolean
+	 * Formats a string to lowercase
+	 *
+	 * @param string $value The value to format
+	 * @return string
 	 */
-	public function isValid($elem = NULL) {
-		//in case of edit action
-		if ($elem !== NULL) {
-			return TRUE;
+	public function render($value = NULL) {
+		if ($value === NULL) {
+			$value = $this->renderChildren();
+		}
+		if (is_string($value)) {
+			$value = strtolower($value);
 		}
 
-		//correct all file upload parameters
-		$e = 'tx_fileman_filelist'; //ext_plugin name
-		$f = 'tmp_name'; //FILES field name
-		$i = 'file'; //instance name
-		$p = 'fileUri'; //property name
-
-		foreach ($_FILES[$e][$f][$i][$p] as $index=>$fileUri) {
-			if (!isset($fileUri[0]) || !file_exists($fileUri)) {
-				unset($_FILES[$e][$f][$i][$p][$index]);
-			}
-		}
-
-		if (!empty($_FILES[$e][$f][$i][$p])) {
-			//a file was in fact successfully uploaded
-			return TRUE;
-		} else {
-			//there was no file uploaded or something went wrong
-			$extName = 'Fileman';
-			$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_file_uri', $extName);
-			$this->addError($errorMessage, time()); #@TODO time()? fix it
-			return FALSE;
-		}
+		return $value;
 	}
+
 }
 ?>

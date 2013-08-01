@@ -1,11 +1,10 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="main">
-<h3><f:translate key="tx_fileman_filelist.new_file_header" /></h3>
+<h3><f:translate key="tx_fileman_filelist.new_file_header" arguments="{s: category.title}" /></h3>
 
 <f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
-
-<f:flashMessages />
 
 <f:render partial="FormErrors" arguments="{for: 'files'}" />
 
@@ -15,7 +14,7 @@
 			<label>
 				<f:translate key="tx_fileman_domain_model_file.file_uri" /> <span class="required"><f:translate key="tx_fileman_filelist.required" /></span>
 				<br />
-				<f:form.upload property="file.file0.fileUri" class="fileupload" />
+				<fi:form.upload property="file.1.fileUri" class="fileupload" />
 			</label>
 			<br />
 			
@@ -38,7 +37,7 @@
 			</div>
 			<br />
 			
-			<f:render partial="File/FormFieldsMulti" arguments="{category:category}" />
+			<f:render partial="File/FormFieldsMulti" />
 		</div>
 			
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" class="submit" />

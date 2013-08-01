@@ -37,6 +37,7 @@ class Tx_Fileman_Domain_Model_FileStorage extends Tx_Extbase_DomainObject_Abstra
 	 * Categories related to this file entity
 	 *
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File>
+	 * @validate Tx_Fileman_Domain_Validator_ObjectStorageValidator
 	 */
 	protected $file;
 

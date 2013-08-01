@@ -1,11 +1,9 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-<h3><f:translate key="tx_fileman_filelist.edit_file_header" /></h3>
+<h3><f:translate key="tx_fileman_filelist.edit_file_header" arguments="{s: category.title}" /></h3>
 
 <f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
-
-<f:flashMessages />
 
 <f:render partial="FormErrors" arguments="{for: 'file'}" />
 
@@ -17,7 +15,7 @@
 		<br />
 		<br />
 		
-		<f:render partial="File/FormFields" arguments="{category:category}" />
+		<f:render partial="File/FormFields" />
 			
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.edit_file_submit')}" class="submit" />
 	</fieldset>

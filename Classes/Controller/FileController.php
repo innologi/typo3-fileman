@@ -184,57 +184,50 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
-		//correct all file upload parameters
-		$e = 'tx_fileman_filelist'; //ext_plugin name
-		$i = 'file'; //instance name
-		$p = 'fileUri'; //property name
-
-		foreach ($_FILES[$e]['tmp_name'][$i][$p] as $index=>$tmpPath) {
-			$fileName = $_FILES[$e]['name'][$i][$p][$index];
+		$fileStorage = $files->getFile();
+		foreach($fileStorage as $file) {
+			$file instanceof Tx_Fileman_Domain_Model_File;
+			$fileName = $file->getFileUri();
+			$tmpFile = $file->getTmpFile();
 
 			if (!$this->isFileTypeAllowed($fileName)) {
 				$this->fileTypeNotAllowedError();
 				//stops
+				#@FIXME finish this
 			}
 
-			#@FIXME finish this
+			$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+			#$absDirPath = PATH_site.$this->settings['uploadDir'];
+			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@SHOULD might as well do it static right now
+			//check/create dirpath
+			if ($this->_check_and_create_dir($absDirPath)) {
+				$finalPath = $fileFunctions->getUniqueName($fileName, $absDirPath);
+				t3lib_div::upload_copy_move($tmpFile, $finalPath);
+				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
+
+				//category
+				if ($category !== NULL) {
+					$category->addFile($file); //this is to make the database field counter update reliably
+					$file->addCategory($category);
+				}
+
+				//feUser
+				$file->setFeUser($this->feUser);
+
+				//finalize creation
+				$this->fileRepository->add($file);
+				$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
+				$this->flashMessageContainer->add($flashMessage);
+			} else {
+				#@TODO throw exception
+				//directory does not exist and could not be created
+			}
 		}
 
-		$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
-		#$absDirPath = PATH_site.$this->settings['uploadDir'];
-		$absDirPath = PATH_site.'uploads/tx_fileman/'; #@SHOULD might as well do it static right now
-		//check/create dirpath
-		if ($this->_check_and_create_dir($absDirPath)) {
-			$finalPath = $fileFunctions->getUniqueName($fileName, $absDirPath);
-			t3lib_div::upload_copy_move($tmpPath, $finalPath);
-			$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
-
-			//category
-			$arguments = NULL;
-			if ($category !== NULL) {
-				$category->addFile($file); //this is to make the database field counter update reliably
-				$this->categoryRepository->update($category); //necessary from 6.1 and upwards
-				$file->addCategory($category);
-				$arguments = array('category'=>$category);
-			}
-
-			//feUser
-			$file->setFeUser($this->feUser);
-
-			//title
-			$title = $file->getAlternateTitle();
-			if (empty($title)) {
-				//note that if the above setFileUri() is changed, setAlternateTitle() should be changed as well
-				$file->setAlternateTitle($file->getFileUri());
-			}
-
-			//finalize creation
-			$this->fileRepository->add($file);
-			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
-			$this->flashMessageContainer->add($flashMessage);
-		} else {
-			#@TODO throw exception
-			//directory does not exist and could not be created
+		$arguments = NULL;
+		if ($category !== NULL) {
+			$this->categoryRepository->update($category); //necessary from 6.1 and upwards
+			$arguments = array('category'=>$category);
 		}
 		$this->redirect('list',NULL,NULL,$arguments);
 	}
