@@ -116,33 +116,27 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		opacity:0.9;
 	}
 	
-	
-	.tx-fileman .rel-switch {
-		margin-left:8px;
-		font-size:0.9em;
-		display:none;
+	.tx-fileman a {
+		color:#66f;
+		text-decoration:none;
+		font-size:1.1em;
 	}
-	.tx-fileman .rel-switch:before {
-		content:"[\25BC]";
-		font-size:0.8em;
-	}
-	
-	.tx-fileman .rel-links {
-		margin-top:10px;
-		font-size:0.9em;
+	.tx-fileman a:hover,
+	.tx-fileman a:focus,
+	.tx-fileman a:active {
+		color:#f22;
 	}
 	
-	.tx-fileman .rel-links ol {
-		margin-top:0;
+	.tx-fileman fieldset {
+		border:0;
 	}
 	
-	.tx-fileman .rel-links a {
-		border-bottom:1px dotted;
-		font-style:italic;
-	}
 	
-	.tx-fileman .button-back {
-		float:left;
+	
+	/* Buttons */
+	
+		.tx-fileman .button-back {
+		display: inline-block;
 		margin-left:10px;
 	}
 	
@@ -166,7 +160,9 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .button-new:before,
 	.tx-fileman .button-edit:before,
 	.tx-fileman .button-delete:before,
-	.tx-fileman .button-back:before {
+	.tx-fileman .button-back:before,
+	.tx-fileman .typo3-message .message-body:before,
+	.tx-fileman .validation-errors .validation-header:before {
 		background-image:url("/typo3conf/ext/fileman/Resources/Public/Icons/t3skin.png");
 		content:"";
 		float:left;
@@ -199,23 +195,6 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .button-back:before {
 		background-position:-18px -36px;
 	}
-	
-	
-	.tx-fileman a {
-		color:#66f;
-		text-decoration:none;
-		font-size:1.1em;
-	}
-	.tx-fileman a:hover,
-	.tx-fileman a:focus,
-	.tx-fileman a:active {
-		color:#f22;
-	}
-	
-	.tx-fileman fieldset {
-		border:0;
-	}
-	
 	
 	
 	/* Messages */
@@ -320,6 +299,34 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		text-align:center;
 		height:10px;
 		margin-top:5px;
+	}
+	
+	
+	
+	/* related link switch */
+	
+	.tx-fileman .rel-switch {
+		margin-left:8px;
+		font-size:0.9em;
+		display:none;
+	}
+	.tx-fileman .rel-switch:before {
+		content:"[\25BC]";
+		font-size:0.8em;
+	}
+	
+	.tx-fileman .rel-links {
+		margin-top:10px;
+		font-size:0.9em;
+	}
+	
+	.tx-fileman .rel-links ol {
+		margin-top:0;
+	}
+	
+	.tx-fileman .rel-links a {
+		border-bottom:1px dotted;
+		font-style:italic;
 	}
 	
 )
