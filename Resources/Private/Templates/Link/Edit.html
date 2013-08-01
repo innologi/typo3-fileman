@@ -11,7 +11,7 @@
 
 <f:form enctype="multipart/form-data" method="post" action="update"  name="link" object="{link}" arguments="{category : category}">
 	<fieldset>
-		<f:render partial="Link/FormFields" arguments="{link:link,category:category}" />
+		<f:render partial="Link/FormFields" arguments="{category:category}" />
 			
 		<f:form.submit class="submit" value="{f:translate(key:'tx_fileman_filelist.edit_link_submit')}" />
 	</fieldset>

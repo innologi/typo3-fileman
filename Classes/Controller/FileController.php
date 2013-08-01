@@ -167,33 +167,37 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * action new
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_File $file
-	 * @dontvalidate $file
+	 * @param Tx_Fileman_Domain_Model_FileStorage $files
+	 * @dontvalidate $files
 	 * @return void
 	 */
-	public function newAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file = NULL) {
+	public function newAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_FileStorage $files = NULL) {
 		$this->view->assign('category', $category);
-		$this->view->assign('file', $file);
+		$this->view->assign('files', $files);
 	}
 
 	/**
 	 * action create
 	 *
-	 * @param $file
-	 * @param $category
+	 * @param Tx_Fileman_Domain_Model_FileStorage $files
+	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @return void
 	 */
-	public function createAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category) {
+	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
 		//correct all file upload parameters
 		$e = 'tx_fileman_filelist'; //ext_plugin name
 		$i = 'file'; //instance name
 		$p = 'fileUri'; //property name
-		$fileName = $_FILES[$e]['name'][$i][$p];
-		$tmpPath = $_FILES[$e]['tmp_name'][$i][$p];
 
-		if (!$this->isFileTypeAllowed($fileName)) {
-			$this->fileTypeNotAllowedError();
-			//stops
+		foreach ($_FILES[$e]['tmp_name'][$i][$p] as $index=>$tmpPath) {
+			$fileName = $_FILES[$e]['name'][$i][$p][$index];
+
+			if (!$this->isFileTypeAllowed($fileName)) {
+				$this->fileTypeNotAllowedError();
+				//stops
+			}
+
+			#@FIXME finish this
 		}
 
 		$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
@@ -291,6 +295,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		if ($category !== NULL) {
 			$arguments = array('category'=>$category);
 		}
+		#@TODO delete file?
 
 		$this->redirect('list',NULL,NULL,$arguments);
 	}

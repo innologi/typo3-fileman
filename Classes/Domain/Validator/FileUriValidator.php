@@ -32,7 +32,7 @@
  *
  */
 class Tx_Fileman_Domain_Validator_FileUriValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
-
+	#@TODO delete failed files?
 	/**
 	 * @param	string	$elem	Is usually empty, the real value is in FILES
 	 * @return	boolean
@@ -49,14 +49,20 @@ class Tx_Fileman_Domain_Validator_FileUriValidator extends Tx_Extbase_Validation
 		$i = 'file'; //instance name
 		$p = 'fileUri'; //property name
 
-		if (isset($_FILES[$e][$f][$i][$p][0]) && file_exists($_FILES[$e][$f][$i][$p])) {
-			//a file was in fact uploaded
+		foreach ($_FILES[$e][$f][$i][$p] as $index=>$fileUri) {
+			if (!isset($fileUri[0]) || !file_exists($fileUri)) {
+				unset($_FILES[$e][$f][$i][$p][$index]);
+			}
+		}
+
+		if (!empty($_FILES[$e][$f][$i][$p])) {
+			//a file was in fact successfully uploaded
 			return TRUE;
 		} else {
 			//there was no file uploaded or something went wrong
 			$extName = 'Fileman';
 			$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_file_uri', $extName);
-			$this->addError($errorMessage, time());
+			$this->addError($errorMessage, time()); #@TODO time()? fix it
 			return FALSE;
 		}
 	}
