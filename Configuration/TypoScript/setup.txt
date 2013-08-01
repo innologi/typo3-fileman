@@ -31,13 +31,6 @@ plugin.tx_fileman {
 		#TYPO3 4.6.0, http://forge.typo3.org/issues/29695 resolved? Clearly not, so for now:
 		jQuery.disableCompression = 1
 		
-		jQueryUI.external = 0
-		jQueryUI = {$plugin.tx_fileman.js.uiLibFile}
-		jQueryUI.disableCompression = 1
-		jQueryUIcss.external = 0
-		jQueryUIcss = {$plugin.tx_fileman.js.uiCssFile}
-		jQueryUIcss.disableCompression = 1
-		
 		inlineJS = FILE
 		inlineJS.file = {$plugin.tx_fileman.js.libFile}
 	}
@@ -57,14 +50,6 @@ page.includeJSFooterlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
 
 [globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJquery}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}] 
 page.includeJSlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
-
-[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJqueryUI}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}] 
-page.includeJSFooterlibs.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUI
-page.includeCSS.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUIcss
-
-[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJqueryUI}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}] 
-page.includeJSlibs.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUI
-page.includeCSS.fileman_jQueryUI < plugin.tx_fileman.jslib.jQueryUIcss
 
 [globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}]
 page.jsFooterInline.198311310 < plugin.tx_fileman.jslib.inlineJS
@@ -97,9 +82,33 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	}
 	
 	
+	
+	/* upload progress bar */
+	
 	.tx-fileman .uploadprogress {
 		display:none;
+		border:1px solid #888;
+		padding:3px;
+		height:30px;
+		width:100%;
+		background-color:#fff;
+		overflow:visible;
+		margin-bottom:15px;
 	}
+	
+	.tx-fileman .uploadprogress .progressbar {
+		width:0;
+		height:100%;
+		background-color:#bbf;
+	}
+	
+	.tx-fileman .uploadprogress .progressvalue {
+		text-align:center;
+		height:10px;
+		margin-top:5px;
+	}
+		
+	
 	
 	
 	.tx-fileman table {

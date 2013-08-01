@@ -44,14 +44,11 @@ jQuery(document).ready(function() {
 		
 		jQuery(form).on('submit', function() {
 			jQuery(this).hide();
-			jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar').progressbar({
-				value: 0
-			});
 			jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
 			
 			updateProgressInt[i] = setInterval(function() {
 				updateProgress(upload_id,i);
-			}, 200);
+			}, 500); //TODO: should be configurable
 			updateProgress(upload_id,i);
 		});
 	});
@@ -61,11 +58,15 @@ jQuery(document).ready(function() {
 		jQuery.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random()}, function(data) {
 			//TODO: catch script errors
 			var uploaded = parseInt(data);
-			jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text(uploaded + '%');
-			jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar').progressbar('option','value',uploaded);
-			
+			jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar').css({
+				'width': uploaded + '%'
+			});
+			//TODO: llang!
 			if (uploaded == 100) {
 				clearInterval(updateProgressInt[i]);
+				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text('Bestand versturen... 99%');
+			} else {
+				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text('Bestand versturen... ' + uploaded + '%');
 			}
 		});
 	};
