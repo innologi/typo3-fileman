@@ -52,6 +52,14 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	protected $tmpFile;
 
 	/**
+	 * Index of uploaded file
+	 *
+	 * @var integer
+	 * @transient
+	 */
+	protected $index;
+
+	/**
 	 * Displayed name of the file.
 	 *
 	 * @var string
@@ -173,6 +181,25 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 */
 	public function setTmpFile($tmpFile) {
 		$this->tmpFile = $tmpFile;
+	}
+
+	/**
+	 * Returns the index
+	 *
+	 * @return string
+	 */
+	public function getIndex() {
+		return $this->index;
+	}
+
+	/**
+	 * Sets the index
+	 *
+	 * @param string $index
+	 * @return void
+	 */
+	public function setIndex($index) {
+		$this->index = $index;
 	}
 
 	/**

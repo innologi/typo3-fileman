@@ -49,8 +49,10 @@ class Tx_Fileman_Domain_Validator_ObjectPropertiesValidator extends Tx_Fileman_V
 			#@TODO error?
 		}
 
-		$validatorResolver = $this->objectManager->get('Tx_Extbase_Validation_ValidatorResolver');
-		$validator = $validatorResolver->getBaseValidatorConjunction(get_class($value));
+		$this->errors = array();
+		$validatorResolver = $this->objectManager->get('Tx_Fileman_Validation_ValidatorResolver');
+		$validatorResolver instanceof Tx_Extbase_Validation_ValidatorResolver;
+		$validator = $validatorResolver->getBaseValidatorConjunction(get_class($value),TRUE);
 		if ($validator->isValid($value)) {
 			return TRUE;
 		}

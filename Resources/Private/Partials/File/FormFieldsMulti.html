@@ -2,7 +2,7 @@
 <label>
 	<f:translate key="tx_fileman_domain_model_file.alternate_title" />
 	<br />
-	<fi:form.textfield property="file.1.alternateTitle" class="textinput" />
+	<fi:form.textfield property="file.i{index}.alternateTitle" class="textinput" value="{file.alternateTitle}" />
 </label>
 <br />
 <br />
@@ -10,15 +10,15 @@
 <label>
 	<f:translate key="tx_fileman_domain_model_file.description" />
 	<br />
-	<fi:form.textarea property="file.1.description" cols="40" rows="15" />
+	<fi:form.textarea property="file.i{index}.description" cols="40" rows="15" value="{file.description}" />
 </label>
 <br />
 <br />
-
+	
 <label>
 	<f:translate key="tx_fileman_domain_model_file.links" />
 	<br />
-	<fi:form.textarea property="file.1.links" cols="40" rows="15" class="textinput" />
+	<fi:form.textarea property="file.i{index}.links" cols="40" rows="15" value="{file.links}" class="small-textarea" />
 </label>
 <br />
 <br />

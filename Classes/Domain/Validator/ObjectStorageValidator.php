@@ -63,7 +63,7 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 						$storageError = new Tx_Fileman_Validation_StorageError($propertyName);
 					}
 
-					$storageError->addErrors(1, $validator->getErrors()); #@FIXME transient id from $obj?
+					$storageError->addErrors($obj->getIndex(), $validator->getErrors());
 				}
 			}
 			$this->errors[] = $storageError;

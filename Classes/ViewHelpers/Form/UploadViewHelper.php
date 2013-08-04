@@ -36,7 +36,6 @@
  */
 class Tx_Fileman_ViewHelpers_Form_UploadViewHelper extends Tx_Fluid_ViewHelpers_Form_UploadViewHelper {
 
-	#@SHOULD make a version that copes well with both normal properties and properties of properties (as well as Select/Textfield)
 	/**
 	 * Get errors for the property and form name of this view helper
 	 *

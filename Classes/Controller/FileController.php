@@ -169,9 +169,36 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
 	 * @dontvalidate $files
+	 * @dontverifyrequesthash
 	 * @return void
 	 */
 	public function newAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_FileStorage $files = NULL) {
+		if ($files !== NULL) {
+			//file upload parameters
+			$e = 'tx_fileman_filelist'; //ext_plugin name
+			$s = 'files'; //storage name
+			$i = 'file'; //instance name
+			$p = 'fileUri'; //property name
+
+			reset($_FILES[$e]['tmp_name'][$s][$i]);
+			reset($_FILES[$e]['name'][$s][$i]);
+			#@FIXME once there is a fileService, we need to have it provide the values here to us, so that we can also differ between failed uploads needing an upload field and succeeded uploads but failed on some other field, thus only needing a text field
+			$fileStorage = $files->getFile();
+			foreach ($fileStorage as $file) {
+				if ($file->getFileUri() === NULL) {
+					$uploadTmpName = each($_FILES[$e]['tmp_name'][$s][$i]);
+					if ($uploadTmpName !== FALSE) {
+						$file->setIndex($uploadTmpName['key']);
+						$uploadTmpName = $uploadTmpName['value'][$p];
+						$uploadName = each($_FILES[$e]['name'][$s][$i]);
+						$uploadName = $uploadName !== FALSE ? $uploadName['value'][$p] : 'unknown';
+						$file->setTmpFile($uploadTmpName); #@FIXME verwerk deze in de template met dezelfde index, en geef in createAction de mogelijkheid dat uit een array te lezen?
+						$file->setFileUri($uploadName);
+					}
+				}
+			}
+		}
+
 		$this->view->assign('category', $category);
 		$this->view->assign('files', $files);
 	}
@@ -181,6 +208,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
 	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @dontverifyrequesthash
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
@@ -201,8 +229,10 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@SHOULD might as well do it static right now
 			//check/create dirpath
 			if ($this->_check_and_create_dir($absDirPath)) {
+				#@TODO Eigenlijk zou dit al ondanks een error in 1 van de bestanden moeten gebeuren bij alles wat goed gegaan was
 				$finalPath = $fileFunctions->getUniqueName($fileName, $absDirPath);
 				t3lib_div::upload_copy_move($tmpFile, $finalPath);
+				//file might be renamed because of duplicate
 				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
 
 				//title
@@ -294,7 +324,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		if ($category !== NULL) {
 			$arguments = array('category'=>$category);
 		}
-		#@TODO delete file?
+		#@FIXME delete file?
 
 		$this->redirect('list',NULL,NULL,$arguments);
 	}

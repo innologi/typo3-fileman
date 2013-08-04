@@ -1,4 +1,3 @@
-{namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="main">
@@ -8,38 +7,18 @@
 
 <f:render partial="FormErrors" arguments="{for: 'files'}" />
 
-<f:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category : category}" class="init-progressbar">
+<f:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category : category}" class="init-progressbar multi-file">
 	<fieldset>
-		<div class="singleFile">
-			<label>
-				<f:translate key="tx_fileman_domain_model_file.file_uri" /> <span class="required"><f:translate key="tx_fileman_filelist.required" /></span>
-				<br />
-				<fi:form.upload property="file.1.fileUri" class="fileupload" />
-			</label>
-			<br />
-			
-			<div class="file-type-info">
-				<f:if condition="{settings.allowFileType}">
-					<f:then>
-						<f:translate key="tx_fileman_filelist.filetype_filter.allow" />: {settings.allowFileType}
-					</f:then>
-					<f:else>
-						<f:if condition="{settings.denyFileType}">
-							<f:then>
-								<f:translate key="tx_fileman_filelist.filetype_filter.deny" />: {settings.denyFileType}
-							</f:then>
-							<f:else>
-								<f:translate key="tx_fileman_filelist.filetype_filter.none" />
-							</f:else>
-						</f:if>
-					</f:else>
-				</f:if>
-			</div>
-			<br />
-			
-			<f:render partial="File/FormFieldsMulti" />
-		</div>
-			
+		<f:if condition="{files.file}">
+			<f:then>
+				<f:for each="{files.file}" as="file" iteration="fileIterator">
+					<f:render partial="File/SingleFile" arguments="{index : fileIterator.cycle, settings : settings, file : file}"/>
+				</f:for>
+			</f:then>
+			<f:else>
+				<f:render partial="File/SingleFile" arguments="{index : 1, settings : settings}"/>
+			</f:else>
+		</f:if>
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" class="submit" />
 	</fieldset>
 </f:form>

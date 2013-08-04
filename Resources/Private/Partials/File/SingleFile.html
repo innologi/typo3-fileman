@@ -1,0 +1,40 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
+<div class="single-file">
+	<label>
+		<f:translate key="tx_fileman_domain_model_file.file_uri" /> <span class="required"><f:translate key="tx_fileman_filelist.required" /></span>
+		<br />
+		
+		<f:if condition="{file.fileUri}">
+			<f:then>
+				<fi:form.textfield property="file.i{index}.fileUri" readonly="readonly" disabled="disabled" class="textinput" value="{file.fileUri}" />
+			</f:then>
+			<f:else>
+				<fi:form.upload property="file.i{index}.fileUri" class="fileupload" />
+			</f:else>
+		</f:if>
+	</label>
+	<br />
+	
+	<div class="file-type-info">
+		<f:if condition="{settings.allowFileType}">
+			<f:then>
+				<f:translate key="tx_fileman_filelist.filetype_filter.allow" />: {settings.allowFileType}
+			</f:then>
+			<f:else>
+				<f:if condition="{settings.denyFileType}">
+					<f:then>
+						<f:translate key="tx_fileman_filelist.filetype_filter.deny" />: {settings.denyFileType}
+					</f:then>
+					<f:else>
+						<f:translate key="tx_fileman_filelist.filetype_filter.none" />
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+	</div>
+	<br />
+	
+	<div class="optional">
+		<f:render partial="File/FormFieldsMulti" arguments="{index : index, file : file}"/>
+	</div>
+</div>

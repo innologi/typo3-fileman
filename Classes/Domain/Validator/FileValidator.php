@@ -33,18 +33,19 @@
  */
 class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 	#@TODO doc
-	#@TODO delete failed files?
+	#@FIXME delete failed files?
 	/**
-	 * @param mixed $file Is usually empty, the real value is in FILES
+	 * @param mixed $file
 	 * @return	boolean
 	 */
 	public function isValid($file) {
 		$valid = FALSE;
 		$extName = 'Fileman';
+		$this->errors = array();
 
 		if ($file instanceof Tx_Fileman_Domain_Model_File) {
 			//in case of edit action
-			if ($file->getFileUri() !== NULL) {
+			if ($file->getFileUri() !== NULL) { //is usually empty, the real value is in FILES
 				$valid = TRUE;
 			} else {
 
@@ -54,10 +55,20 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 				$i = 'file'; //instance name
 				$p = 'fileUri'; //property name
 
-				$uploadTmpName = array_shift($_FILES[$e]['tmp_name'][$s][$i]);
-				$uploadTmpName = $uploadTmpName[$p];
+				#@FIXME move to "file" service
+				$uploadTmpName = each($_FILES[$e]['tmp_name'][$s][$i]);
+				if ($uploadTmpName !== FALSE) {
+					$file->setIndex($uploadTmpName['key']);
+					$uploadTmpName = $uploadTmpName['value'][$p];
+					$uploadName = each($_FILES[$e]['name'][$s][$i]);
+					$uploadName = $uploadName !== FALSE ? $uploadName['value'][$p] : 'unknown';
+					$file->setTmpFile($uploadTmpName);
+					$file->setFileUri($uploadName);
+				}
 
-				if (!isset($uploadTmpName[0]) || !file_exists($uploadTmpName)) {
+				if (isset($uploadTmpName[0]) && file_exists($uploadTmpName)) {
+					$valid = TRUE;
+				} else {
 					//there was no file uploaded or something went wrong
 					$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_file_uri', $extName);
 					$propertyError = new Tx_Extbase_Validation_PropertyError('fileUri');
@@ -65,14 +76,6 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 							new Tx_Extbase_Validation_Error($errorMessage, time())
 					)); #@TODO time()? fix it
 					$this->errors[] = $propertyError;
-				} else {
-					$uploadName = array_shift($_FILES[$e]['name'][$s][$i]);
-					$uploadName = $uploadName[$p];
-
-					$file->setTmpFile($uploadTmpName);
-					$file->setFileUri($uploadName);
-
-					$valid = TRUE;
 				}
 			}
 		} else {

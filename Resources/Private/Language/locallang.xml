@@ -36,6 +36,10 @@
 			<label index="tx_fileman_filelist.filetype_filter.allow">Allowed</label>
 			<label index="tx_fileman_filelist.filetype_filter.deny">Not allowed</label>
 			<label index="tx_fileman_filelist.filetype_filter.none">All filetypes allowed</label>
+			<label index="tx_fileman_filelist.sending_file">Sending file(s)...</label>
+			<label index="tx_fileman_filelist.add_file">Add another file</label>
+			<label index="tx_fileman_filelist.del_file">Add one file less</label>
+			<label index="tx_fileman_filelist.show_optional">Edit details</label>
 			
 			<label index="tx_fileman_validator.error_file_uri">You need to select a file for upload.</label>
 			<label index="tx_fileman_validator.error_link_uri">You need to place a valid link.</label>
@@ -93,6 +97,10 @@
 			<label index="tx_fileman_filelist.filetype_filter.allow">Toegestaan</label>
 			<label index="tx_fileman_filelist.filetype_filter.deny">Niet toegestaan</label>
 			<label index="tx_fileman_filelist.filetype_filter.none">Alle bestandstypen toegestaan</label>
+			<label index="tx_fileman_filelist.sending_file">Bestand(en) versturen...</label>
+			<label index="tx_fileman_filelist.add_file">Meer bestanden</label>
+			<label index="tx_fileman_filelist.del_file">Minder bestanden</label>
+			<label index="tx_fileman_filelist.show_optional">Wijzig details</label>
 			
 			<label index="tx_fileman_validator.error_file_uri">U dient een bestand te selecteren om te plaatsen.</label>
 			<label index="tx_fileman_validator.error_link_uri">U dient een geldig URL in te vullen.</label>
