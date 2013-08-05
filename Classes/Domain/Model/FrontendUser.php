@@ -49,7 +49,7 @@ class Tx_Fileman_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Front
 	 * Sets the usergroups. Keep in mind that the property is called "usergroup"
 	 * although it can hold several usergroups.
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_FrontendUserGroup> $usergroup An object storage containing the usergroups to add
+	 * @param Tx_Extbase_Persistence_ObjectStorage $usergroup An object storage containing the usergroups to add
 	 * @return void
 	 */
 	public function setUsergroup(Tx_Extbase_Persistence_ObjectStorage $usergroup) {
@@ -81,7 +81,7 @@ class Tx_Fileman_Domain_Model_FrontendUser extends Tx_Extbase_Domain_Model_Front
 	 * Returns the usergroups. Keep in mind that the property is called "usergroup"
 	 * although it can hold several usergroups.
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_FrontendUserGroup> An object storage containing the usergroup
+	 * @return Tx_Extbase_Persistence_ObjectStorage An object storage containing the usergroup
 	 */
 	public function getUsergroup() {
 		return $this->usergroup;

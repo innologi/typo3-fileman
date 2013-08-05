@@ -95,6 +95,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action list
 	 *
+	 * Also shows links
+	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category The category to show files of
 	 * @dontvalidate $category
 	 * @return void
@@ -126,7 +128,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param boolean $no_cache
 	 * @return void
 	 */
-	public function downloadAction(Tx_Fileman_Domain_Model_File $file, $no_cache = FALSE) {
+	public function downloadAction(Tx_Fileman_Domain_Model_File $file, $no_cache = FALSE) { #@SHOULD currently unused
 		$fileUri = $file->getFileUri();
 
 		if(is_file($fileUri)) {
@@ -184,6 +186,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action new
 	 *
+	 * Requires @dontverifyrequesthash because of the forward when a validation error occurs @ create action.
+	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
 	 * @dontvalidate $category
@@ -193,10 +197,14 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function newAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_FileStorage $files = NULL) {
 		if ($files !== NULL) {
-			$this->fileService->reset();
+			//when a validation error occurs, $files will contain all file entries, but the attributes given
+			//by fileService during validation, because the forward() tells extbase to re-map the request arguments
+			$this->fileService->reset(); //so start over!
 			$fileStorage = $files->getFile();
 			foreach ($fileStorage as $file) {
 				if ($this->fileService->next() && $this->fileService->hasValidated()) {
+					//each uploaded file that was validated, is associated with the matching $file entry
+					//this would obviously not work if their count and order wasn't identical
 					$this->fileService->setFileProperties($file);
 				}
 			}
@@ -209,6 +217,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action create
 	 *
+	 * Because the new action allows us to alter the form, we have to issue a @dontverifyrequesthash here.
+	 *
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
@@ -220,10 +230,11 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		foreach ($fileStorage as $file) {
 			#$absDirPath = PATH_site.$this->settings['uploadDir'];
 			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@SHOULD might as well do it static right now
+			//moves a file from it's tmp location to it final destination
 			if ($this->fileService->finalizeMove($file,$absDirPath)) {
 				//feUser
 				$file->setFeUser($this->feUser);
-
+				#@TODO do the alternate title stuff here
 				//category
 				if ($category !== NULL) {
 					$category->addFile($file); //this is to make the database field counter update reliably
@@ -233,8 +244,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 				//finalize creation
 				$this->fileRepository->add($file);
 			} else {
-				#@TODO throw exception
+				#@TODO error
 				//move could not take place
+				//unlink?
 			}
 		}
 
@@ -252,6 +264,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action edit
 	 *
+	 * Note the file/files difference with new action
+	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
 	 * @dontvalidate $category
@@ -266,13 +280,15 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action update
 	 *
+	 * Note the file/files difference with create action
+	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
 	 * @dontvalidate $category
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
-		//title
+		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {
 			$file->setAlternateTitle($file->getFileUri());
@@ -293,6 +309,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 
 	/**
 	 * action delete
+	 *
+	 * Also explicitly removes $file from $category, to make sure the counters of this bi-directional relation are in order
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file

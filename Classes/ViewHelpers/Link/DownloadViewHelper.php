@@ -25,7 +25,7 @@
  ***************************************************************/
 
 /**
- *
+ * Download View Helper
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -72,7 +72,6 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 		return $this->tag->render();
 	}
 
-	#@TODO alle comments nalopen en invullen
 	/**
 	 * Returns the documentroot-relative path of the file, if the file lies within.
 	*
@@ -108,7 +107,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 			} else {
 				//could not retrieve document root
 				#@TODO throw exception
-				return false;
+				return FALSE;
 			}
 		}
 
@@ -118,7 +117,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 		}
 
 		//could not resolve sitepath to filepath
-		return false;
+		return FALSE;
 	}
 
 }

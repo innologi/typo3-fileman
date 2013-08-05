@@ -165,7 +165,7 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	
 	.tx-fileman .button-back,
 	.tx-fileman .show-optional,
-	.tx-fileman .del-single-file {
+	.tx-fileman .del-file-entry {
 		margin-left:10px;
 	}
 	
@@ -183,8 +183,8 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .button-edit,
 	.tx-fileman .button-delete,
 	.tx-fileman .button-back,
-	.tx-fileman .add-single-file,
-	.tx-fileman .del-single-file,
+	.tx-fileman .add-file-entry,
+	.tx-fileman .del-file-entry,
 	.tx-fileman .show-optional {
 		display: inline-block;
 	}
@@ -193,8 +193,8 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .button-edit:before,
 	.tx-fileman .button-delete:before,
 	.tx-fileman .button-back:before,
-	.tx-fileman .add-single-file:before,
-	.tx-fileman .del-single-file:before,
+	.tx-fileman .add-file-entry:before,
+	.tx-fileman .del-file-entry:before,
 	.tx-fileman .show-optional:before,
 	.tx-fileman .typo3-message .message-body:before,
 	.tx-fileman .validation-errors .validation-header:before {
@@ -214,8 +214,8 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		height:18px;	
 	}
 	
-	.tx-fileman .add-single-file.disabled,
-	.tx-fileman .del-single-file.disabled {
+	.tx-fileman .add-file-entry.disabled,
+	.tx-fileman .del-file-entry.disabled {
 		opacity:0.2;
 		cursor:default;
 		color:#000;
@@ -233,10 +233,10 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .button-back:before {
 		background-position:-18px -36px;
 	}
-	.tx-fileman .add-single-file:before {
+	.tx-fileman .add-file-entry:before {
 		background-position:-72px -18px;
 	}
-	.tx-fileman .del-single-file:before {
+	.tx-fileman .del-file-entry:before {
 		background-position:0 -234px;
 	}
 	.tx-fileman .show-optional:before {

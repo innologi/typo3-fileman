@@ -25,7 +25,7 @@
  ***************************************************************/
 
 /**
- *
+ * Handles additional domain validations for the File domain.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -41,6 +41,8 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 	protected $settings;
 
 	/**
+	 * Necessary to resolve $settings
+	 *
 	 * @var Tx_Extbase_Configuration_ConfigurationManager
 	 */
 	protected $configurationManager;
@@ -63,7 +65,9 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 	}
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManager
+	 * Injects the Configuration manager and initializes $settings
+	 *
+	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
 	 * @return void
 	 */
 	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
@@ -73,9 +77,10 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 
 
 
-	#@TODO doc
 	#@FIXME delete failed files?
 	/**
+	 * Does some specific file domain validation.
+	 *
 	 * @param mixed $file
 	 * @return	boolean
 	 */
@@ -86,32 +91,34 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 		$errorMessage = '';
 		$errorCode = 0;
 
+		//only proceed if instance matches and an actual file upload took place
 		if ($file instanceof Tx_Fileman_Domain_Model_File && $this->fileService->next()) {
-			$file->setIndex($this->fileService->getIndex()); //we need this regardless, to bind any other error to the right file as well
+			$file->setIndex($this->fileService->getIndex()); //we need this regardless, to bind errors from this and other validators to the right file
 
-			//if not empty, a successful validation had already taken place
 			if ($file->getFileUri() === NULL) {
 				if (!$this->fileService->isAllowed($this->settings['allowFileType'],$this->settings['denyFileType'])) {
+					//the file type is prohibited by configuration
 					$errorMessage = 'MAG WEL: ' . $this->settings['allowFileType'] . '<br />' . 'MAG NIET: ' . $this->settings['denyFileType']; #@TODO llang
 					$errorCode = time(); #@TODO time()? fix it
 				} elseif (!$this->fileService->isValid()) {
 					//there was no file uploaded or something went wrong
-					$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_file_uri', $extName);
+					$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_file_uri', $extName); #@TODO rely on codes instead?
 					$errorCode = time(); #@TODO time()? fix it
 				} else {
-					$valid = TRUE; //if not empty, a successful validation had already taken place
+					$valid = TRUE;
 				}
 			} else {
+				//if not empty, a successful validation had already taken place
 				$valid = TRUE;
 			}
 
 		} else {
-			#@TODO error
+			#@SHOULD error
 		}
 
 
 		if ($valid) {
-			//set remaining properties that are required for success
+			//assign uploadfile attributes to the $file entry
 			$this->fileService->setFileProperties($file);
 			//replace empty title
 			$title = $file->getAlternateTitle();
@@ -119,13 +126,13 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 				$file->setAlternateTitle($file->getFileUri());
 			}
 		} else {
+			//setup error message
 			$propertyError = new Tx_Extbase_Validation_PropertyError('fileUri');
 			$propertyError->addErrors(array(
 					new Tx_Extbase_Validation_Error($errorMessage,$errorCode)
 			));
 			$this->errors[] = $propertyError;
 		}
-
 
 		return $valid;
 	}

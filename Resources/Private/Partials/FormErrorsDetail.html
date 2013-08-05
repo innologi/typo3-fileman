@@ -19,7 +19,7 @@
 						<f:else>
 							<li>
 								<f:if condition="{id}">
-									{id}:
+									{id}: <!-- @FIXME: don't display these, make them functional instead!-->
 								</f:if>
 								<f:alias map="{title: 'tx_fileman_domain_model_{fi:format.lowerCase(value: entity)}.{fi:format.camelCase(type:\'camelCaseToLowerCaseUnderscored\',value: error.propertyName)}'}">
 									<!-- error.{entity}.{error.propertyName}.{errorDetail.code} -->

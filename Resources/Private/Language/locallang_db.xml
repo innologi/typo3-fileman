@@ -12,7 +12,7 @@
 			<label index="tx_fileman_domain_model_file.description">File Description</label>
 			<label index="tx_fileman_domain_model_file.palette.linkcombo">Links</label>
 			<label index="tx_fileman_domain_model_file.links">Related Links</label>
-			<label index="tx_fileman_domain_model_file.link_names">Link Names [UNUSED]</label>
+			<label index="tx_fileman_domain_model_file.link_names">Link Names</label> <!-- @TODO: Currently unused -->
 			<label index="tx_fileman_domain_model_file.category">Category</label>
 			<label index="tx_fileman_domain_model_file.fe_user">User</label>
 
@@ -35,7 +35,7 @@
 			<label index="tx_fileman_domain_model_file.description">Bestandsomschrijving</label>
 			<label index="tx_fileman_domain_model_file.palette.linkcombo">Links</label>
 			<label index="tx_fileman_domain_model_file.links">Gerelateerde Links</label>
-			<label index="tx_fileman_domain_model_file.link_names">Link Names [UNUSED]</label>
+			<label index="tx_fileman_domain_model_file.link_names">Link Names</label> <!-- @TODO: Currently unused -->
 			<label index="tx_fileman_domain_model_file.category">Categorie</label>
 			<label index="tx_fileman_domain_model_file.fe_user">Gebruiker</label>
 

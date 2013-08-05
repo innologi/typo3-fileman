@@ -25,7 +25,7 @@
  ***************************************************************/
 
 /**
- * Basis for all custom validators.
+ * Basis for some custom validators.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later

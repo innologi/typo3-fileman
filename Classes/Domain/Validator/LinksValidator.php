@@ -25,7 +25,11 @@
  ***************************************************************/
 
 /**
+ * Links Validator
  *
+ * Used to check if $file::$link contains 1 valid url per row
+ *
+ * Do not confuse with a validator aimed at the 'Link' domain model
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -34,14 +38,16 @@
 class Tx_Fileman_Domain_Validator_LinksValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 
 	/**
-	 * @param	array	$linkArray	The links to validate
+	 * Validate links, one per row
+	 *
+	 * @param	string	$links	The links to validate
 	 * @return	boolean
 	 */
 	public function isValid($links) { #@TODO don't forget TCA
 		$linkArray = array();
 
 		if (isset($links[0])) {
-			$links = str_replace("\r\n","\n",$links);
+			$links = str_replace("\r\n","\n",$links); #@SHOULD get this from a transient getter, which probably requires us to put this in the File Validator
 			$linkArray = t3lib_div::trimExplode("\n", $links,1);
 		}
 
@@ -51,7 +57,7 @@ class Tx_Fileman_Domain_Validator_LinksValidator extends Tx_Extbase_Validation_V
 				if (!t3lib_div::isValidUrl($link)) {
 					$extName = 'Fileman';
 					$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_links', $extName);
-					$this->addError($errorMessage, time());
+					$this->addError($errorMessage, time()); #@TODO fix time()
 					return FALSE;
 				}
 			}

@@ -26,7 +26,7 @@
 /**
  * Validator Resolver
  *
- * If no storage is set, will not store the conjunction for this specific class.
+ * If noStorage is set, will not store the conjunction for this specific class.
  *
  * In the case of fileman, this is done to ensure an empty $errors property of the conjunction instance,
  * as it would otherwise add up errors from different objects of the same class and show all those

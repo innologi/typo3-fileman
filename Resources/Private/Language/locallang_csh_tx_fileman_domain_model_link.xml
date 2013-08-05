@@ -6,8 +6,7 @@
 		<csh_table>tx_fileman_domain_model_link</csh_table>
 	</meta>
 	<data type="array">
-	<languageKey index="default" type="array">
-	   
+		<languageKey index="default" type="array">
 			<label index="link_uri.description">Link URI</label>
 			<label index="link_name.description">Name of link</label>
 		</languageKey>

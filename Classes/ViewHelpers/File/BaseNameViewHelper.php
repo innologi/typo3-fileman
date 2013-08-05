@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -34,7 +34,7 @@
 class Tx_Fileman_ViewHelpers_File_BaseNameViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
-	 * Formats a string to lowercase
+	 * Gets basename from file URI
 	 *
 	 * @param string $uri The value to format
 	 * @return string

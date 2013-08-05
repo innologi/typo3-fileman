@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -46,13 +46,12 @@ class Tx_Fileman_Domain_Validator_ObjectPropertiesValidator extends Tx_Fileman_V
 	 */
 	public function isValid($value) {
 		if (!is_object($value)) { //also works on objectStorage objects
-			#@TODO error?
+			#@SHOULD error?
 		}
 
-		$this->errors = array();
-		$validatorResolver = $this->objectManager->get('Tx_Fileman_Validation_ValidatorResolver');
-		$validatorResolver instanceof Tx_Extbase_Validation_ValidatorResolver;
-		$validator = $validatorResolver->getBaseValidatorConjunction(get_class($value),TRUE);
+		$this->errors = array(); //the validator will be created only once, which means errors start piling up from different objects if we don't empty the array
+		$validatorResolver = $this->objectManager->get('Tx_Fileman_Validation_ValidatorResolver'); //the original resolver does the same with validatorconjunctions we create as the above issue, so we use our own
+		$validator = $validatorResolver->getBaseValidatorConjunction(get_class($value),TRUE); //TRUE enables the noStorage workaround, that prevents multiple same-class instances to accumulate their siblings errors
 		if ($validator->isValid($value)) {
 			return TRUE;
 		}

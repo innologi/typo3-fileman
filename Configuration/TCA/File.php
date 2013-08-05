@@ -6,16 +6,16 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_fileman_domain_model_file'] = array(
 	'ctrl' => $TCA['tx_fileman_domain_model_file']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, file_uri, alternate_title, description, category, links, fe_user', #@SHOULD link_names,
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, file_uri, alternate_title, description, category, links, fe_user', #@SHOULD currently unused: link_names,
 	),
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, file_uri, alternate_title, description, category,
 			links, fe_user,
-			--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime,endtime'), #@SHOULD --palette--;LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.palette.linkcombo;linkcombo,
+			--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime,endtime'), #@SHOULD currently unused: --palette--;LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.palette.linkcombo;linkcombo,
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
-		/*'linkcombo' => array( #@SHOULD linkcombo
+		/*'linkcombo' => array( #@SHOULD currently unused: linkcombo
 			'showitem' => 'links, link_names',
 			'canNotCollapse' => 1,
 		),*/
@@ -153,7 +153,7 @@ $TCA['tx_fileman_domain_model_file'] = array(
 				'eval' => 'trim'
 			),
 		),
-		/*'link_names' => array( #@SHOULD link_names
+		/*'link_names' => array( #@SHOULD currently unused: link_names
 			'exclude' => 0,
 			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.link_names',
 			'config' => array(

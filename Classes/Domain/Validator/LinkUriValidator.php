@@ -25,7 +25,7 @@
  ***************************************************************/
 
 /**
- *
+ * LinkUri validator
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -34,6 +34,8 @@
 class Tx_Fileman_Domain_Validator_LinkUriValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
 
 	/**
+	 * Checks if $link is a valid URL
+	 *
 	 * @param	string	$link	The link to validate
 	 * @return	boolean
 	 */
@@ -41,7 +43,7 @@ class Tx_Fileman_Domain_Validator_LinkUriValidator extends Tx_Extbase_Validation
 		if (!isset($link[0]) || !is_string($link) || !t3lib_div::isValidUrl($link)) {
 			$extName = 'Fileman';
 			$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_link_uri', $extName);
-			$this->addError($errorMessage, time());
+			$this->addError($errorMessage, time()); #@TODO fix time()
 			return FALSE;
 		}
 

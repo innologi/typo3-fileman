@@ -25,15 +25,14 @@
  ***************************************************************/
 
 /**
- *
+ * File Domain Model
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
 class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
-	#@TODO beveiliging van uploads?
-	#@TODO resterende styling
+	#@TODO beveiliging van upload-bestanden?
 	#@TODO flexform configuratie
 
 	/**
@@ -87,7 +86,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @var string
 	 */
-	protected $linkNames;
+	protected $linkNames; #@SHOULD currently unused
 
 	/**
 	 * Categories related to this file entity
@@ -118,7 +117,6 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	public function __construct() {
-		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
 	}
 
@@ -128,11 +126,6 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		/**
-		 * Do not modify this method!
-		 * It will be rewritten on each save in the extension builder
-		 * You may modify the constructor of this class instead
-		 */
 		$this->category = new Tx_Extbase_Persistence_ObjectStorage();
 	}
 
@@ -141,7 +134,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return string
 	 */
-	public function getFilename() { #@SHOULD isn't being used right now
+	public function getFilename() { #@SHOULD currently unused
 		return basename($this->getFileUri());
 	}
 
@@ -151,7 +144,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return string
 	 */
 	public function getFileUri() {
-		return /*t3lib_div::fixWindowsFilePath(*/$this->fileUri/*)*/; #@TODO sigh
+		return /*t3lib_div::fixWindowsFilePath(*/$this->fileUri/*)*/; #@TODO have to see if we can get around the TCA requirement
 	}
 
 	/**
@@ -218,7 +211,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	public function setAlternateTitle($alternateTitle) {
-		$this->alternateTitle = trim($alternateTitle); #@SHOULD autofill the template field through javascript?
+		$this->alternateTitle = trim($alternateTitle);
 	}
 
 	/**
@@ -254,7 +247,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return array
 	 */
-	public function getLinksFormatted() {
+	public function getLinksFormatted() { #@SHOULD work with a transient
 		if (isset($this->links[0])) {
 			$links = str_replace("\r\n","\n",$this->links);
 			$linkArray = t3lib_div::trimExplode("\n", $links,1);
@@ -278,7 +271,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return string
 	 */
-	public function getLinkNames() { #@SHOULD isn't being used right now
+	public function getLinkNames() { #@SHOULD currently unused
 		return $this->linkNames;
 	}
 
@@ -288,7 +281,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @param string $linkNames
 	 * @return void
 	 */
-	public function setLinkNames($linkNames) { #@SHOULD isn't being used right now
+	public function setLinkNames($linkNames) { #@SHOULD currently unused
 		$this->linkNames = $linkNames;
 	}
 
@@ -315,7 +308,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the category
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @return Tx_Extbase_Persistence_ObjectStorage
 	 */
 	public function getCategory() {
 		return $this->category;
@@ -324,7 +317,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the category
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category> $category
+	 * @param Tx_Extbase_Persistence_ObjectStorage $category
 	 * @return void
 	 */
 	public function setCategory(Tx_Extbase_Persistence_ObjectStorage $category) {

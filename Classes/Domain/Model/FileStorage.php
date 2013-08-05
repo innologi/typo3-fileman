@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -25,16 +25,19 @@
  ***************************************************************/
 
 /**
+ * FileStorage Domain Model
  *
+ * Its only purpose is to make extbase play nice with the objectStorage property, as it HAS to
+ * be contained in a domain model, sadly. This model is not to be persisted.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
 class Tx_Fileman_Domain_Model_FileStorage extends Tx_Extbase_DomainObject_AbstractValueObject {
-	#@TODO doc
+
 	/**
-	 * Categories related to this file entity
+	 * Contains files
 	 *
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File>
 	 * @validate Tx_Fileman_Domain_Validator_ObjectStorageValidator
@@ -47,7 +50,6 @@ class Tx_Fileman_Domain_Model_FileStorage extends Tx_Extbase_DomainObject_Abstra
 	 * @return void
 	 */
 	public function __construct() {
-		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
 	}
 
@@ -57,11 +59,6 @@ class Tx_Fileman_Domain_Model_FileStorage extends Tx_Extbase_DomainObject_Abstra
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		/**
-		 * Do not modify this method!
-		 * It will be rewritten on each save in the extension builder
-		 * You may modify the constructor of this class instead
-		 */
 		$this->file = new Tx_Extbase_Persistence_ObjectStorage();
 	}
 

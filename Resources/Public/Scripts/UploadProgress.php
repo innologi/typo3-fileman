@@ -18,8 +18,9 @@ if(isset($_GET['upload_id']) && is_numeric($_GET['upload_id'])) {
 
 	//APC upload progress
 	if (extension_loaded('apc') && intval(ini_get('apc.rfc1867'))) {
-		//$name = ini_get('apc.rfc1867_name');
 		//for this method to work, a hidden input field as $name will need to exist in form BEFORE file upload field(s?)
+		//$name = ini_get('apc.rfc1867_name');
+
 		$success = FALSE;
 		$fetchKey = ini_get('apc.rfc1867_prefix') . $_GET['upload_id'];
 		$status = apc_fetch($fetchKey,$success);

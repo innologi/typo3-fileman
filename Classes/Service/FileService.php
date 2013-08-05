@@ -24,7 +24,7 @@
  ***************************************************************/
 
 /**
- * Facilitates file-upload interaction.
+ * Facilitates all file-upload interaction.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -38,16 +38,36 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	protected $instance = 'file'; //instance name
 	protected $property = 'fileUri'; //property name
 
+	/**
+	 * Current $_FILES position
+	 *
+	 * @var string
+	 */
 	protected $index = NULL;
+
+	/**
+	 * Contains isValid() results per index-position once performed
+	 *
+	 * @var array
+	 */
 	protected $validated = array();
+
+	/**
+	 * True if subtitutes have been searched, false if it hasn't
+	 *
+	 * @var boolean
+	 */
 	protected $searchedForSubtitutes = FALSE;
 
 	/**
+	 * Performs some basic file functions
+	 *
 	 * @var t3lib_basicFileFunctions
 	 */
 	protected $fileFunctions;
 
 	/**
+	 * Injects basicFileFunctions
 	 *
 	 * @param t3lib_basicFileFunctions $fileFunctions
 	 * @return void
@@ -57,30 +77,53 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	}
 
 
+
+	/**
+	 * Resets array pointers of $_FILES
+	 *
+	 * @return void
+	 */
 	public function reset() {
 		reset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
+		//it's possible tmp_name is set but name isn't, due to the findSubtitutes() mechanism
 		if (isset($_FILES[$this->ext]['name'][$this->storage][$this->instance])) {
 			reset($_FILES[$this->ext]['name'][$this->storage][$this->instance]);
 		}
 		$this->index = NULL;
 	}
 
+	/**
+	 * Searches through $_POST[$this->ext]['tmpFiles'] for previous $index=>tmp_name values.
+	 * Once successful, it places them in $_FILES, so that interaction can occur in multiple stages
+	 * f.e. in a multi-step form.
+	 *
+	 * Note that it relies on finding only FILENAMES of tmp_name, as their directory has been removed for security reasons.
+	 * It sets the directory by itself from the appropriate php.ini entry value.
+	 *
+	 * @return void
+	 */
 	public function findSubstitutes() {
 		if (isset($_POST[$this->ext]['tmpFiles']) && !$this->searchedForSubtitutes) {
 			$tmpNames = $_POST[$this->ext]['tmpFiles'];
+			//files once uploaded, have been moved to said location to prevent them from being deleted after the upload script execution
 			$tmpDir = t3lib_div::fixWindowsFilePath(ini_get('upload_tmp_dir')) . '/' . $this->ext . '/';
 			foreach ($tmpNames as $index=>$tmpName) {
-				if ($this->validateIndex($index) && $this->validateTmpName($tmpName)) {
+				if ($this->validateIndex($index) && $this->validateTmpName($tmpName)) { //validate the index and tmpName values as they come from (hidden) fields in a form
 					$tmpName = $tmpDir . $tmpName;
 					$this->setUploadProperty('tmp_name',$tmpName,$index);
-					$this->validated[$index] = TRUE;
+					$this->validated[$index] = TRUE; //setting this TRUE because it once has been and can no longer be checked through isValid()
 				}
 			}
-			ksort($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
+			ksort($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]); #@SHOULD check if we can do without reset() after a sort
 		}
 		$this->searchedForSubtitutes = TRUE;
 	}
 
+	/**
+	 * Move the index pointer to the next position, or if reset(), the first
+	 *
+	 * @return boolean
+	 */
 	public function next() {
 		$tmpNameContainer = each($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
 		if ($tmpNameContainer !== FALSE) {
@@ -90,15 +133,30 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		return FALSE;
 	}
 
+	/**
+	 * Sets all relevant uploadfile attributes in the $file instance
+	 *
+	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @return void
+	 */
 	public function setFileProperties(Tx_Fileman_Domain_Model_File $file) {
-		if ($file->getFileUri() === NULL) {
+		if ($file->getFileUri() === NULL) { //there are cases where fileUri is not set due to the findSubtitutes() mechanism
 			$file->setFileUri($this->getUploadProperty('name'));
 		}
 		$file->setTmpFile($this->getUploadProperty('tmp_name'));
 		$file->setIndex($this->index);
 	}
 
-	public function isAllowed($allowFileType, $denyFileType) {
+	/**
+	 * Checks whether a file type is allowed, based on file extensions.
+	 *
+	 * Considering that apache serves files based on file extension, this check should suffice.
+	 *
+	 * @param array $allowFileType Allowed filetypes
+	 * @param array $denyFileType Denied filetypes
+	 * @return boolean
+	 */
+	public function isAllowed(array $allowFileType, array $denyFileType) {
 		$fileInfo = explode('.',$this->getUploadProperty('name'));
 		$fileExt = end($fileInfo);
 		$allowed = TRUE;
@@ -114,6 +172,11 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		return $allowed;
 	}
 
+	/**
+	 * Checks (and stores) whether the current uploadfile is valid.
+	 *
+	 * @return boolean
+	 */
 	public function isValid() {
 		if (!isset($this->validated[$this->index])) {
 			$this->validated[$this->index] = $this->isUploadSuccessful();
@@ -121,15 +184,34 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		return $this->validated[$this->index];
 	}
 
-	public function hasValidated() {
+	/**
+	 * Returns whether the current uploadfile has once been validated successfully
+	 *
+	 * @return boolean
+	 */
+	public function hasValidated() { #@SHOULD probably isn't needed as every index gets a value set now, so we could just use isValid()
 		return isset($this->validated[$this->index]) && $this->validated[$this->index];
 	}
 
+	/**
+	 * Returns current index position
+	 *
+	 * @return string
+	 */
 	public function getIndex() {
 		return $this->index;
 	}
 
-	public function finalizeMove($file, $absDirPath) {
+	/**
+	 * Finalize the move of an uploaded file.
+	 *
+	 * We call it finalize, because it assumes it already has been moved around and should now rely on rename()
+	 *
+	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param string $absDirPath
+	 * @return boolean
+	 */
+	public function finalizeMove(Tx_Fileman_Domain_Model_File $file, $absDirPath) {
 		if ($this->checkAndCreateDir($absDirPath)) {
 			$fileName = $file->getFileUri();
 			$tmpFile = $file->getTmpFile();
@@ -141,7 +223,12 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		return FALSE;
 	}
 
-	#@TODO doc
+	/**
+	 * Returns whether the upload was successful, and moves the file to a location where it won't be deleted
+	 * right after the upload script has been executed.
+	 *
+	 * @return boolean
+	 */
 	protected function isUploadSuccessful() {
 		$tmpName = $this->getUploadProperty('tmp_name');
 		if (is_uploaded_file($tmpName)) {
@@ -158,26 +245,50 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		return FALSE;
 	}
 
+	/**
+	 * Retrieves an uploadproperty from the $_FILES array
+	 *
+	 * @param string $uploadProperty e.g. 'tmp_name' or 'name'
+	 */
 	protected function getUploadProperty($uploadProperty) {
 		return $_FILES[$this->ext][$uploadProperty][$this->storage][$this->instance][$this->index][$this->property];
 	}
 
+	/**
+	 * Sets an uploadproperty in the $_FILES array
+	 *
+	 * @param string $uploadProperty e.g. 'tmp_name' or 'name'
+	 * @param string $value
+	 * @param string $index
+	 */
 	protected function setUploadProperty($uploadProperty, $value, $index) {
 		$_FILES[$this->ext][$uploadProperty][$this->storage][$this->instance][$index][$this->property] = $value;
 	}
 
+	/**
+	 * Validates an index
+	 *
+	 * @param string $index
+	 * @return integer Number of matches
+	 */
 	protected function validateIndex($index) {
 		return preg_match('/^[a-z0-9]+$/i',$index);
 	}
 
+	/**
+	 * Validates a basename(tmp_name)
+	 *
+	 * @param string $tmpFileName
+	 * @return integer Number of matches
+	 */
 	protected function validateTmpFileName($tmpFileName) {
 		return preg_match('/^[a-z1-9]+\.tmp$/i',$tmpFileName);
 	}
 
+
 	protected function validateName() {
 		#@TODO make this
 	}
-
 
 	/**
 	 * Checks if a directory exists. If it doesn't, it attempts to create it one directory at a time.

@@ -1,7 +1,5 @@
 <?php
 
-use TYPO3\CMS\Extbase\Property\TypeConverter\IntegerConverter;
-
 /***************************************************************
  *  Copyright notice
  *
@@ -27,7 +25,7 @@ use TYPO3\CMS\Extbase\Property\TypeConverter\IntegerConverter;
  ***************************************************************/
 
 /**
- *
+ * Category Domain Model
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -163,7 +161,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Returns the file
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File> $file
+	 * @return Tx_Extbase_Persistence_ObjectStorage $file
 	 */
 	public function getFile() {
 		return $this->file;
@@ -172,7 +170,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the file
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File> $file
+	 * @param Tx_Extbase_Persistence_ObjectStorage $file
 	 * @return void
 	 */
 	public function setFile(Tx_Extbase_Persistence_ObjectStorage $file) {
@@ -202,7 +200,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Returns the link
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Link> $link
+	 * @return Tx_Extbase_Persistence_ObjectStorage $link
 	 */
 	public function getLink() {
 		return $this->link;
@@ -211,7 +209,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the link
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Link> $link
+	 * @param Tx_Extbase_Persistence_ObjectStorage $link
 	 * @return void
 	 */
 	public function setLink(Tx_Extbase_Persistence_ObjectStorage $link) {

@@ -25,7 +25,7 @@
  ***************************************************************/
 
 /**
- *
+ * Link Domain Model
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
@@ -86,7 +86,6 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	public function __construct() {
-		//Do not remove the next line: It would break the functionality
 		$this->initStorageObjects();
 	}
 
@@ -96,11 +95,6 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		/**
-		 * Do not modify this method!
-		 * It will be rewritten on each save in the extension builder
-		 * You may modify the constructor of this class instead
-		 */
 		$this->category = new Tx_Extbase_Persistence_ObjectStorage();
 	}
 
@@ -203,7 +197,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the category
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category> $category
+	 * @return Tx_Extbase_Persistence_ObjectStorage $category
 	 */
 	public function getCategory() {
 		return $this->category;
@@ -212,7 +206,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the category
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category> $category
+	 * @param Tx_Extbase_Persistence_ObjectStorage $category
 	 * @return void
 	 */
 	public function setCategory(Tx_Extbase_Persistence_ObjectStorage $category) {

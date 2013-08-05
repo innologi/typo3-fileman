@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -70,10 +70,13 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 		if ($value instanceof Tx_Extbase_Persistence_ObjectStorage) {
 			$validator = $this->objectManager->get('Tx_Extbase_Validation_ValidatorResolver')->createValidator('Tx_Fileman_Domain_Validator_ObjectPropertiesValidator',$this->options);
 			$valid = TRUE;
+
+			//if the storage is a File ObjectStorage, we need to initialize some stuff for fileService that need to happen exactly once per storage
 			if ($value->current() instanceof Tx_Fileman_Domain_Model_File) {
 				$this->fileService->findSubstitutes();
 				$this->fileService->reset();
-			}
+			} //we could really only remove this if we create a FileStorage validator from which the objectStorage validation originates, and place it there instead
+
 			foreach ($value as $obj) {
 				if (!$validator->isValid($obj)) {
 					$valid = FALSE;

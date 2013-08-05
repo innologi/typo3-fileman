@@ -45,6 +45,8 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	protected $feUser;
 
 	/**
+	 * User service
+	 *
 	 * @var Tx_Fileman_Service_UserService
 	 */
 	protected $userService;
