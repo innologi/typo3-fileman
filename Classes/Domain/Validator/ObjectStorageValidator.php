@@ -34,6 +34,23 @@
 class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Validation_Validator_PreppedAbstractValidator {
 
 	/**
+	 * File service
+	 *
+	 * @var Tx_Fileman_Service_FileService
+	 */
+	protected $fileService;
+
+	/**
+	 * Injects the File Service
+	 *
+	 * @param Tx_Fileman_Service_FileService $fileService
+	 * @return void
+	 */
+	public function injectFileService(Tx_Fileman_Service_FileService $fileService) {
+		$this->fileService = $fileService;
+	}
+
+	/**
 	 * Checks if an object is a valid objectstorage by passing all its objects
 	 * through the objectsPropertiesValidator. Options are passed to the
 	 * objectsPropertiesValidator.
@@ -53,6 +70,10 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 		if ($value instanceof Tx_Extbase_Persistence_ObjectStorage) {
 			$validator = $this->objectManager->get('Tx_Extbase_Validation_ValidatorResolver')->createValidator('Tx_Fileman_Domain_Validator_ObjectPropertiesValidator',$this->options);
 			$valid = TRUE;
+			if ($value->current() instanceof Tx_Fileman_Domain_Model_File) {
+				$this->fileService->findSubstitutes();
+				$this->fileService->reset();
+			}
 			foreach ($value as $obj) {
 				if (!$validator->isValid($obj)) {
 					$valid = FALSE;

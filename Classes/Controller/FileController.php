@@ -48,6 +48,23 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	protected $linkRepository;
 
 	/**
+	 * File service
+	 *
+	 * @var Tx_Fileman_Service_FileService
+	 */
+	protected $fileService;
+
+	/**
+	 * Injects the File Service
+	 *
+	 * @param Tx_Fileman_Service_FileService $fileService
+	 * @return void
+	 */
+	public function injectFileService(Tx_Fileman_Service_FileService $fileService) {
+		$this->fileService = $fileService;
+	}
+
+	/**
 	 * injectFileRepository
 	 *
 	 * @param Tx_Fileman_Domain_Repository_FileRepository $fileRepository
@@ -79,6 +96,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * action list
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category The category to show files of
+	 * @dontvalidate $category
 	 * @return void
 	 */
 	public function listAction(Tx_Fileman_Domain_Model_Category $category = NULL) {
@@ -168,33 +186,18 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
+	 * @dontvalidate $category
 	 * @dontvalidate $files
 	 * @dontverifyrequesthash
 	 * @return void
 	 */
 	public function newAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_FileStorage $files = NULL) {
 		if ($files !== NULL) {
-			//file upload parameters
-			$e = 'tx_fileman_filelist'; //ext_plugin name
-			$s = 'files'; //storage name
-			$i = 'file'; //instance name
-			$p = 'fileUri'; //property name
-
-			reset($_FILES[$e]['tmp_name'][$s][$i]);
-			reset($_FILES[$e]['name'][$s][$i]);
-			#@FIXME once there is a fileService, we need to have it provide the values here to us, so that we can also differ between failed uploads needing an upload field and succeeded uploads but failed on some other field, thus only needing a text field
+			$this->fileService->reset();
 			$fileStorage = $files->getFile();
 			foreach ($fileStorage as $file) {
-				if ($file->getFileUri() === NULL) {
-					$uploadTmpName = each($_FILES[$e]['tmp_name'][$s][$i]);
-					if ($uploadTmpName !== FALSE) {
-						$file->setIndex($uploadTmpName['key']);
-						$uploadTmpName = $uploadTmpName['value'][$p];
-						$uploadName = each($_FILES[$e]['name'][$s][$i]);
-						$uploadName = $uploadName !== FALSE ? $uploadName['value'][$p] : 'unknown';
-						$file->setTmpFile($uploadTmpName); #@FIXME verwerk deze in de template met dezelfde index, en geef in createAction de mogelijkheid dat uit een array te lezen?
-						$file->setFileUri($uploadName);
-					}
+				if ($this->fileService->next() && $this->fileService->hasValidated()) {
+					$this->fileService->setFileProperties($file);
 				}
 			}
 		}
@@ -208,38 +211,18 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
 	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @dontvalidate $category
 	 * @dontverifyrequesthash
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
 		$fileStorage = $files->getFile();
-		foreach($fileStorage as $file) {
-			$file instanceof Tx_Fileman_Domain_Model_File;
-			$fileName = $file->getFileUri();
-			$tmpFile = $file->getTmpFile();
-
-			if (!$this->isFileTypeAllowed($fileName)) {
-				$this->fileTypeNotAllowedError();
-				//stops
-				#@FIXME finish this, put it in validation? What if multiple files and only one fails?
-			}
-
-			$fileFunctions = t3lib_div::makeInstance('t3lib_basicFileFunctions');
+		foreach ($fileStorage as $file) {
 			#$absDirPath = PATH_site.$this->settings['uploadDir'];
 			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@SHOULD might as well do it static right now
-			//check/create dirpath
-			if ($this->_check_and_create_dir($absDirPath)) {
-				#@TODO Eigenlijk zou dit al ondanks een error in 1 van de bestanden moeten gebeuren bij alles wat goed gegaan was
-				$finalPath = $fileFunctions->getUniqueName($fileName, $absDirPath);
-				t3lib_div::upload_copy_move($tmpFile, $finalPath);
-				//file might be renamed because of duplicate
-				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
-
-				//title
-				$title = $file->getAlternateTitle();
-				if (empty($title)) {
-					$file->setAlternateTitle($file->getFileUri()); //should be changed if above setter is changed
-				}
+			if ($this->fileService->finalizeMove($file,$absDirPath)) {
+				//feUser
+				$file->setFeUser($this->feUser);
 
 				//category
 				if ($category !== NULL) {
@@ -247,18 +230,16 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 					$file->addCategory($category);
 				}
 
-				//feUser
-				$file->setFeUser($this->feUser);
-
 				//finalize creation
 				$this->fileRepository->add($file);
-				$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
-				$this->flashMessageContainer->add($flashMessage);
 			} else {
 				#@TODO throw exception
-				//directory does not exist and could not be created
+				//move could not take place
 			}
 		}
+
+		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
+		$this->flashMessageContainer->add($flashMessage);
 
 		$arguments = NULL;
 		if ($category !== NULL) {
@@ -273,6 +254,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @dontvalidate $category
+	 * @dontvalidate $file
 	 * @return void
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
@@ -285,6 +268,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @dontvalidate $category
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
@@ -312,6 +296,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @dontvalidate $category
+	 * @dontvalidate $file
 	 * @return void
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
@@ -322,6 +308,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		//category
 		$arguments = NULL;
 		if ($category !== NULL) {
+			$category->removeFile($file);
 			$arguments = array('category'=>$category);
 		}
 		#@FIXME delete file?
@@ -329,52 +316,6 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->redirect('list',NULL,NULL,$arguments);
 	}
 
-
-	#@TODO doc
-	protected function isFileTypeAllowed($fileName) {
-		$fileInfo = explode('.',$fileName);
-		$fileExt = end($fileInfo);
-		$allowed = TRUE;
-
-		if (isset($this->settings['allowFileType'][0])) {
-			$fileTypes = explode(',',$this->settings['allowFileType']);
-			$allowed = in_array($fileExt,$fileTypes);
-		} elseif (isset($this->settings['denyFileType'][0])) {
-			$fileTypes = explode(',',$this->settings['denyFileType']);
-			$allowed = !in_array($fileExt,$fileTypes);
-		}
-
-		return $allowed;
-	}
-
-	#@TODO doc
-	/**
-	 * Fails validation manually based on time-related fields.
-	 * It then forwards to requested $action.
-	 *
-	 * @param string $action The action to forward to
-	 * @param integer $errorCode The errorcode
-	 * @param array $timeFields Contains formfield uids of time-related formfields
-	 * @return void
-	 */
-	protected function fileTypeNotAllowedError($action = 'new', $errorCode = 407501337) {
-		$errors = array();
-		$errorMsg = 'File type not allowed.'; #@TODO llang
-
-
-		$propertyError = new Tx_Extbase_Validation_PropertyError('fileUri');
-		$propertyError->addErrors(array(
-				new Tx_Extbase_Validation_Error($errorMsg,$errorCode)
-		));
-
-		//this adds the validation errors to the appointment argument, which identifies with a form's objectName
-		$argumentError = new Tx_Extbase_MVC_Controller_ArgumentError('file');
-		$argumentError->addErrors(array($propertyError));
-
-		//set the errors within the request, which survives the forward()
-		$this->request->setErrors(array($argumentError));
-		$this->forward($action);
-	}
 
 
 	/**
@@ -400,25 +341,6 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			flush();
 		}
 		return fclose($fp);
-	}
-
-	/**
-	 * Checks if a directory exists. If it doesn't, it attempts to create it one directory at a time.
-	 *
-	 * @param	string		$dirpath	The path to the directory
-	 * @return	boolean		True on success, false on failure
-	 */
-	private function _check_and_create_dir($dirpath) {
-		//split the dirpath for use by mkdir_deep
-		$matches = array();
-		$pattern = '=^(([a-z]:)?/)(.*)$=i'; //.. thus windows-paths are assumed to have been corrected!
-		preg_match($pattern,$dirpath,$matches);
-		//if dir doesn't exist, mkdir_deep creates every nonexisting directory from its second argument..
-		if (!is_dir($dirpath) && !is_null(t3lib_div::mkdir_deep($matches[1],$matches[3]))) {
-			//mkdir_deep only returns something on errors
-			return false;
-		}
-		return true;
 	}
 
 }

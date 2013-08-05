@@ -32,6 +32,47 @@
  *
  */
 class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+
+	/**
+	 * TypoScript settings
+	 *
+	 * @var array
+	 */
+	protected $settings;
+
+	/**
+	 * @var Tx_Extbase_Configuration_ConfigurationManager
+	 */
+	protected $configurationManager;
+
+	/**
+	 * File service
+	 *
+	 * @var Tx_Fileman_Service_FileService
+	 */
+	protected $fileService;
+
+	/**
+	 * Injects the File Service
+	 *
+	 * @param Tx_Fileman_Service_FileService $fileService
+	 * @return void
+	 */
+	public function injectFileService(Tx_Fileman_Service_FileService $fileService) {
+		$this->fileService = $fileService;
+	}
+
+	/**
+	 * @param Tx_Extbase_Configuration_ConfigurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
+		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManager::CONFIGURATION_TYPE_SETTINGS);
+	}
+
+
+
 	#@TODO doc
 	#@FIXME delete failed files?
 	/**
@@ -42,47 +83,52 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 		$valid = FALSE;
 		$extName = 'Fileman';
 		$this->errors = array();
+		$errorMessage = '';
+		$errorCode = 0;
 
-		if ($file instanceof Tx_Fileman_Domain_Model_File) {
-			//in case of edit action
-			if ($file->getFileUri() !== NULL) { //is usually empty, the real value is in FILES
-				$valid = TRUE;
-			} else {
+		if ($file instanceof Tx_Fileman_Domain_Model_File && $this->fileService->next()) {
+			$file->setIndex($this->fileService->getIndex()); //we need this regardless, to bind any other error to the right file as well
 
-				//file upload parameters
-				$e = 'tx_fileman_filelist'; //ext_plugin name
-				$s = 'files'; //storage name
-				$i = 'file'; //instance name
-				$p = 'fileUri'; //property name
-
-				#@FIXME move to "file" service
-				$uploadTmpName = each($_FILES[$e]['tmp_name'][$s][$i]);
-				if ($uploadTmpName !== FALSE) {
-					$file->setIndex($uploadTmpName['key']);
-					$uploadTmpName = $uploadTmpName['value'][$p];
-					$uploadName = each($_FILES[$e]['name'][$s][$i]);
-					$uploadName = $uploadName !== FALSE ? $uploadName['value'][$p] : 'unknown';
-					$file->setTmpFile($uploadTmpName);
-					$file->setFileUri($uploadName);
-				}
-
-				if (isset($uploadTmpName[0]) && file_exists($uploadTmpName)) {
-					$valid = TRUE;
-				} else {
+			//if not empty, a successful validation had already taken place
+			if ($file->getFileUri() === NULL) {
+				if (!$this->fileService->isAllowed($this->settings['allowFileType'],$this->settings['denyFileType'])) {
+					$errorMessage = 'MAG WEL: ' . $this->settings['allowFileType'] . '<br />' . 'MAG NIET: ' . $this->settings['denyFileType']; #@TODO llang
+					$errorCode = time(); #@TODO time()? fix it
+				} elseif (!$this->fileService->isValid()) {
 					//there was no file uploaded or something went wrong
 					$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_file_uri', $extName);
-					$propertyError = new Tx_Extbase_Validation_PropertyError('fileUri');
-					$propertyError->addErrors(array(
-							new Tx_Extbase_Validation_Error($errorMessage, time())
-					)); #@TODO time()? fix it
-					$this->errors[] = $propertyError;
+					$errorCode = time(); #@TODO time()? fix it
+				} else {
+					$valid = TRUE; //if not empty, a successful validation had already taken place
 				}
+			} else {
+				$valid = TRUE;
 			}
+
 		} else {
 			#@TODO error
 		}
 
+
+		if ($valid) {
+			//set remaining properties that are required for success
+			$this->fileService->setFileProperties($file);
+			//replace empty title
+			$title = $file->getAlternateTitle();
+			if (empty($title)) {
+				$file->setAlternateTitle($file->getFileUri());
+			}
+		} else {
+			$propertyError = new Tx_Extbase_Validation_PropertyError('fileUri');
+			$propertyError->addErrors(array(
+					new Tx_Extbase_Validation_Error($errorMessage,$errorCode)
+			));
+			$this->errors[] = $propertyError;
+		}
+
+
 		return $valid;
 	}
+
 }
 ?>
