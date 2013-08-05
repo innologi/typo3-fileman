@@ -152,11 +152,11 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 *
 	 * Considering that apache serves files based on file extension, this check should suffice.
 	 *
-	 * @param array $allowFileType Allowed filetypes
-	 * @param array $denyFileType Denied filetypes
+	 * @param string $allowFileType Allowed filetypes, comma seperated
+	 * @param string $denyFileType Denied filetypes, comma seperated
 	 * @return boolean
 	 */
-	public function isAllowed(array $allowFileType, array $denyFileType) {
+	public function isAllowed($allowFileType, $denyFileType) {
 		$fileInfo = explode('.',$this->getUploadProperty('name'));
 		$fileExt = end($fileInfo);
 		$allowed = TRUE;
