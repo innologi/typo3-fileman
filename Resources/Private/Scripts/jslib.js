@@ -48,7 +48,7 @@ jQuery(document).ready(function() {
 		
 		jQuery(form).on('submit', function() {
 			//only show the progressbar if fileupload is not empty
-			var fileuploadValue = jQuery(this).find('.fileupload').val(); //FIXME: input[type=file]
+			var fileuploadValue = jQuery(this).find('input[type=file].fileupload').val();
 			if (fileuploadValue != '') {
 				jQuery(this).hide();
 				jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
