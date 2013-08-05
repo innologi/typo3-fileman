@@ -112,7 +112,7 @@ jQuery(document).ready(function() {
 				if (fileCount < fileCountMax && !jQuery(this).hasClass('disabled')) {
 					if (fileCount == 1) delFileLink.removeClass('disabled');
 					
-					var singleFile = jQuery(this).prevAll('.single-file:last');
+					var singleFile = jQuery(this).prevAll('.single-file:first');
 					var clone = singleFile.clone();
 					var findName = '[file][i' + fileCount + ']';
 					var replaceName = '[file][i' + (++fileCount) + ']';
@@ -136,7 +136,7 @@ jQuery(document).ready(function() {
 				if (fileCount > 1  && !jQuery(this).hasClass('disabled')) {
 					if (fileCount == fileCountMax) addFileLink.removeClass('disabled');
 					
-					jQuery(this).prevAll('.single-file:last').remove();
+					jQuery(this).prevAll('.single-file:first').remove();
 					fileCount--;
 					
 					if (fileCount == 1) delFileLink.addClass('disabled');
