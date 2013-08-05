@@ -13,7 +13,7 @@ $pluginSignature = str_replace('_','',$_EXTKEY) . '_filelist';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_filelist.xml');
 
-#@TODO clean up constants
+#@FIXME clean up constants
 #@TODO documenteer pageTS TCEMAIN.clearCacheCmd = pid
 #@TODO test in >= 6.0
 #@TODO namespaces?

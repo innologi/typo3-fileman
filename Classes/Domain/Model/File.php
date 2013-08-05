@@ -41,7 +41,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @var string
 	 */
-	protected $fileUri; #@FIXME field is empty on validation error
+	protected $fileUri;
 
 	/**
 	 * Temporary upload file path
