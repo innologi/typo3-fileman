@@ -37,6 +37,16 @@
 class Tx_Fileman_ViewHelpers_Form_UploadViewHelper extends Tx_Fluid_ViewHelpers_Form_UploadViewHelper {
 
 	/**
+	 * Initialize the arguments.
+	 *
+	 * @return void
+	 */
+	public function initializeArguments() {
+		parent::initializeArguments();
+		$this->registerTagAttribute('required', 'string', 'Specifies that the input element is required.');
+	}
+
+	/**
 	 * Get errors for the property and form name of this view helper
 	 *
 	 * CHANGES to the original function are marked.
