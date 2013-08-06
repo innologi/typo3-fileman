@@ -218,7 +218,8 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 			$finalPath = $this->fileFunctions->getUniqueName($fileName, $absDirPath);
 			//file might have been renamed because of duplicate
 			$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
-			return rename($tmpFile,$finalPath);
+			$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
+			return $success;
 		}
 		return FALSE;
 	}
