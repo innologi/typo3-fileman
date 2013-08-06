@@ -130,7 +130,7 @@ jQuery(document).ready(function() {
 			var formVar = { //can be passed as reference to functions
 					fileCount: fileEntries.size(), //there could be more files initially already, due to validation errors
 					lastIndex: getLastIndex(form)
-			}
+			};
 			
 			//create buttons
 			jQuery(form).find('.submit').before('<a href="#" class="add-file-entry" title="'+addFileText+'">'+addFileText+'</a><a href="#" class="del-file-entry" title="'+delFileText+'">'+delFileText+'</a>');
@@ -141,6 +141,7 @@ jQuery(document).ready(function() {
 			//set initial state to disabled where it applies
 			if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //no adds possible if @ max
 			if (formVar.fileCount == 1) delFileLink.addClass('disabled'); //no dels possible if @ min
+			if (!jQuery(form).hasClass('multi-file-add')) addFileLink.hide(); //HIDE button if form doesn't meet requirement
 			
 			//for each initial file-entry, do the following
 			fileEntries.each(function(i,entry) {
@@ -169,45 +170,48 @@ jQuery(document).ready(function() {
 			});
 			
 			
-			//when an add link is clicked:
-			jQuery(form).find('a.add-file-entry').click(function() {
-				if (formVar.fileCount < fileCountMax && !jQuery(this).hasClass('disabled')) { //only works if not disabled
-					if (formVar.fileCount == 1) jQuery(form).find('a.del-file-entry').removeClass('disabled'); //if we were @ min, we can enable the del link again
-					formVar.fileCount++;
-					//clone the last file-entry
-					var fileEntry = jQuery(this).prevAll('.file-entry:first'); 
-					var clone = fileEntry.clone(); //FIXME: if fileupload is type=text, this causes problems!
-					//replace its index in the clone
-					var findName = '[file][i' + formVar.lastIndex + ']';
-					var replaceName = '[file][i' + (++formVar.lastIndex) + ']';
-					//empty field values!
-					jQuery(clone).find('input[type=file],input[type=text],textarea').each(function(i, elem) {
-						jQuery(elem).attr('name', jQuery(elem).attr('name').replace(findName,replaceName));
-						jQuery(elem).val(null); //input values are copied with the clone..
-						//FIXME: attr value!
-					});
-					
-					//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign certain events explicitly
-						//--> show optional
-					jQuery(clone).find('.show-optional').click(function() {
-						toggleOptional(jQuery(clone).find('.optional'), this);
-						return false;
-					});
-						//--> auto fill title
-					initAutoFill(clone);
-						//--> del file link
-					jQuery(clone).find('a.del-file-entry').click(function() {
-						deleteFileEntry(formVar,addFileLink,this,form);
-						return false;
-					});
-					
-					//place it before the button
-					jQuery(this).before(clone);
-					
-					if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
-				}
-				return false;
-			});
+			//only add this event if form meets requirements
+			if (jQuery(form).hasClass('multi-file-add')) {
+				//when an add link is clicked:
+				jQuery(form).find('a.add-file-entry').click(function() {
+					if (formVar.fileCount < fileCountMax && !jQuery(this).hasClass('disabled')) { //only works if not disabled and form allows adds
+						if (formVar.fileCount == 1) jQuery(form).find('a.del-file-entry').removeClass('disabled'); //if we were @ min, we can enable the del link again
+						formVar.fileCount++;
+						//clone the last file-entry
+						var fileEntry = jQuery(this).prevAll('.file-entry:first'); 
+						var clone = fileEntry.clone();
+						//replace its index in the clone
+						var findName = '[file][i' + formVar.lastIndex + ']';
+						var replaceName = '[file][i' + (++formVar.lastIndex) + ']';
+						//empty field values!
+						jQuery(clone).find('input[type=file],input[type=text],textarea').each(function(i, elem) {
+							jQuery(elem).attr('name', jQuery(elem).attr('name').replace(findName,replaceName));
+							//jQuery(elem).attr('value',''); //if input is type=text..
+							jQuery(elem).val(null); //input values are copied with the clone..
+						});
+						
+						//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign certain events explicitly
+							//--> show optional
+						jQuery(clone).find('.show-optional').click(function() {
+							toggleOptional(jQuery(clone).find('.optional'), this);
+							return false;
+						});
+							//--> auto fill title
+						initAutoFill(clone);
+							//--> del file link
+						jQuery(clone).find('a.del-file-entry').click(function() {
+							deleteFileEntry(formVar,addFileLink,this,form);
+							return false;
+						});
+						
+						//place it before the button
+						jQuery(this).before(clone);
+						
+						if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
+					}
+					return false;
+				});
+			}
 		
 		});
 	}

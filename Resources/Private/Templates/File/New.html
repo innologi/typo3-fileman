@@ -7,7 +7,9 @@
 
 <f:render partial="FormErrors" arguments="{for: 'files'}" />
 
-<f:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category : category}" class="init-progressbar multi-file">
+<f:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category : category}"
+	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add')}"
+>
 	<fieldset>
 		<f:if condition="{files.file}">
 			<f:then>
