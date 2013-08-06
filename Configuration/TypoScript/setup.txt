@@ -164,9 +164,12 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	/* Buttons */
 	
 	.tx-fileman .button-back,
-	.tx-fileman .show-optional,
-	.tx-fileman .del-file-entry {
+	.tx-fileman .show-optional {
 		margin-left:10px;
+	}
+	
+	.tx-fileman .del-file-entry {
+		margin-left:50px;
 	}
 	
 	.tx-fileman .button-new {
@@ -206,12 +209,14 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		margin:2px 8px 0 0;
 	}
 	
+	.tx-fileman .del-file-entry:before,
 	.tx-fileman .show-optional:before {
 		margin-top:3px;
 	}
 	
 	.tx-fileman .button-edit,
 	.tx-fileman .button-delete,
+	.tx-fileman .del-file-entry,
 	.tx-fileman .show-optional {
 		overflow:hidden;
 		width:16px;
@@ -223,6 +228,10 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		opacity:0.2;
 		cursor:default;
 		color:#000;
+	}
+	
+	.tx-fileman .del-file-entry.disabled {
+		display:none;
 	}
 	
 	.tx-fileman .button-new:before {

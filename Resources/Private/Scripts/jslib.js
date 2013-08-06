@@ -29,8 +29,8 @@ jQuery(document).ready(function() {
 	//*****************
 	// Auto fill title
 	//*****************
-	
-	jQuery('.tx-fileman .file-entry').each(function(i, entry) {
+	//TODO: doc
+	jQuery('.tx-fileman .file-entry').each(function(i, entry) { 
 		jQuery(entry).data('titleUnchanged',true);
 		var title = jQuery(entry).find('.optional .textinput:first');
 		
@@ -40,7 +40,7 @@ jQuery(document).ready(function() {
 		
 		jQuery(entry).find('.fileupload').change(function() {
 			if (jQuery(entry).data('titleUnchanged')) {
-				title.val(jQuery(this).val());
+				title.val(jQuery(this).val()); //FIXME: remove "C:\Fakepath\" (IE)
 			}
 		});
 	});
@@ -68,7 +68,7 @@ jQuery(document).ready(function() {
 		jQuery(form).on('submit', function() {
 			//only show the progressbar if fileupload is not empty
 			var fileuploadValue = jQuery(this).find('input[type=file].fileupload').val();
-			if (fileuploadValue != '') {
+			if (fileuploadValue != undefined && fileuploadValue != '') {
 				jQuery(this).hide();
 				jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
 				
@@ -108,58 +108,77 @@ jQuery(document).ready(function() {
 	
 	var fileCountMax = "###MAX_FILE_UPLOADS###";
 	var addFileText = "###ADD_FILE###";
-	var delFileText = "###DEL_FILE###"; //TODO: can't we make a delete button for every file entry?
+	var delFileText = "###DEL_FILE###";
 	var showOptionalText = "###SHOW_OPTIONAL###";
 	
 	//don't enable it unless there are more files allowed than 1
 	if (fileCountMax > 1) {
 		jQuery('.tx-fileman .multi-file').each(function(i, form) {
-			var fileCount = jQuery(form).find('.file-entry').size(); //there could be more files initially already, due to validation errors
-			//add buttons
+			var fileEntries = jQuery(form).find('.file-entry');
+			var formVar = { //can be passed as reference to functions
+					fileCount: fileEntries.size(), //there could be more files initially already, due to validation errors
+					lastIndex: getLastIndex(form)
+			}
+			
+			//create buttons
 			jQuery(form).find('.submit').before('<a href="#" class="add-file-entry" title="'+addFileText+'">'+addFileText+'</a><a href="#" class="del-file-entry" title="'+delFileText+'">'+delFileText+'</a>');
-			var addFileLink = jQuery(form).find('.add-file-entry');
-			var delFileLink = addFileLink.next('.del-file-entry');
+			var addFileLink = jQuery(form).find('a.add-file-entry');
+			var delFileLink = addFileLink.next('a.del-file-entry');
+			delFileLink.remove(); //remove it here, clone it later
 			
 			//set initial state to disabled where it applies
-			if (fileCount == fileCountMax) addFileLink.addClass('disabled'); //no adds possible if @ max
-			if (fileCount == 1) delFileLink.addClass('disabled'); //no dels possible if @ min
+			if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //no adds possible if @ max
+			if (formVar.fileCount == 1) delFileLink.addClass('disabled'); //no dels possible if @ min
 			
-			//the multi-file UI can get crowded, so we hide the optional fields under a button
-			jQuery(form).find('.optional').addClass('indent'); //indent gives some special styling that should only be visible if multi-file UI is in effect
-			//each, because there could already be multiple file-uploads
-			jQuery(form).find('.optional').each(function(i, optional) {
-				var fileEntry = jQuery(optional).parent('.file-entry');
-				//add show-optional button
-				fileEntry.find('.fileupload').after('<a href="#" class="show-optional" title="'+showOptionalText+'">'+showOptionalText+'</a>');
-				fileEntry.find('.show-optional').click(function() {
-					jQuery(optional).slideToggle();
-					jQuery(this).toggleClass('expanded'); //this class helps to style any indication of an expanded view on the button
+			//for each initial file-entry, do the following
+			fileEntries.each(function(i,entry) {
+				var fileUpload = jQuery(entry).find('.fileupload');
+				
+				//place delFileLink clone
+				var clone = delFileLink.clone();
+				jQuery(clone).insertAfter(fileUpload);
+				
+				//when a delete link is clicked:
+				jQuery(clone).click(function() { //TODO: undo button?
+					deleteFileEntry(formVar,addFileLink,this,form);
 					return false;
 				});
-				jQuery(optional).hide();
+				
+				//the multi-file UI can get crowded, so we hide the optional fields under a button
+				var optional = jQuery(entry).find('.optional');
+				optional.hide();
+				optional.addClass('indent'); //indent gives some special styling that should only be visible if multi-file UI is in effect
+					//create button
+				fileUpload.after('<a href="#" class="show-optional" title="'+showOptionalText+'">'+showOptionalText+'</a>');
+				jQuery(entry).find('.show-optional').click(function() {
+					toggleOptional(optional,this);
+					return false;
+				});
 			});
+			
 			
 			//when an add link is clicked:
 			jQuery(form).find('a.add-file-entry').click(function() {
-				if (fileCount < fileCountMax && !jQuery(this).hasClass('disabled')) { //only works if not disabled
-					if (fileCount == 1) delFileLink.removeClass('disabled'); //if we were @ min, we can enable the del link again
+				if (formVar.fileCount < fileCountMax && !jQuery(this).hasClass('disabled')) { //only works if not disabled
+					if (formVar.fileCount == 1) jQuery(form).find('a.del-file-entry').removeClass('disabled'); //if we were @ min, we can enable the del link again
+					formVar.fileCount++;
 					//clone the last file-entry
 					var fileEntry = jQuery(this).prevAll('.file-entry:first'); 
-					var clone = fileEntry.clone();
+					var clone = fileEntry.clone(); //FIXME: if fileupload is type=text, this causes problems!
 					//replace its index in the clone
-					var findName = '[file][i' + fileCount + ']';
-					var replaceName = '[file][i' + (++fileCount) + ']';
+					var findName = '[file][i' + formVar.lastIndex + ']';
+					var replaceName = '[file][i' + (++formVar.lastIndex) + ']';
 					//empty field values!
 					jQuery(clone).find('input[type=file],input[type=text],textarea').each(function(i, elem) {
 						jQuery(elem).attr('name', jQuery(elem).attr('name').replace(findName,replaceName));
 						jQuery(elem).val(null); //input values are copied with the clone..
+						//FIXME: attr value!
 					});
 					
 					//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign certain events explicitly
 						//--> show optional
 					jQuery(clone).find('.show-optional').click(function() {
-						jQuery(clone).find('.optional').slideToggle();
-						jQuery(this).toggleClass('expanded');
+						toggelOptional(jQuery(clone).find('.optional'), this);
 						return false;
 					});
 						//--> auto fill title
@@ -173,29 +192,46 @@ jQuery(document).ready(function() {
 							title.val(jQuery(this).val());
 						}
 					});
+						//--> del file link
+					jQuery(clone).find('a.del-file-entry').click(function() {
+						deleteFileEntry(formVar,addFileLink,this,form);
+						return false;
+					});
 					
 					//place it before the button
 					jQuery(this).before(clone);
 					
-					if (fileCount == fileCountMax) addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
-				}
-				return false;
-			});
-			
-			//when a delete link is clicked:
-			jQuery(form).find('a.del-file-entry').click(function() {
-				if (fileCount > 1  && !jQuery(this).hasClass('disabled')) { //only works if not disabled
-					if (fileCount == fileCountMax) addFileLink.removeClass('disabled'); //if we were @ max, we can enable add link again
-					
-					jQuery(this).prevAll('.file-entry:first').remove(); //remove the last file-entry
-					fileCount--;
-					
-					if (fileCount == 1) delFileLink.addClass('disabled'); //if we are @ min now, we need to disable del link
+					if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
 				}
 				return false;
 			});
 		
 		});
+	}
+	
+	//deletes a file entry
+	function deleteFileEntry(countVars, addButton, deleteButton, form) {
+		if (countVars.fileCount > 1  && !jQuery(deleteButton).hasClass('disabled')) { //only works if not disabled
+			if (countVars.fileCount == fileCountMax) addButton.removeClass('disabled'); //if we were @ max, we can enable add link again
+			countVars.fileCount--;
+			
+			jQuery(deleteButton).parents('.file-entry').remove(); //remove the file-entry the button belongs to
+			countVars.lastIndex = getLastIndex(form);
+			
+			if (countVars.fileCount == 1) jQuery(form).find('a.del-file-entry').addClass('disabled'); //if we are @ min now, we need to disable ALL del links	
+		}
+	}
+	
+	//retrieves the last index from the form
+	function getLastIndex(form) {
+		//we want 999 from: <input class="fileupload" name="*[file][i999][fileUri]" />
+		return jQuery(form).find('.fileupload:last').attr('name').match(/\[file\]\[i([0-9]+)\]\[fileUri\]/i)[1];
+	}
+	
+	//toggle optional fields
+	function toggleOptional(optional, button) {
+		jQuery(optional).slideToggle();
+		jQuery(button).toggleClass('expanded'); //this class helps for indicating an expanded view through styles on the button
 	}
 	
 });

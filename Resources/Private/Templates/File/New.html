@@ -11,12 +11,12 @@
 	<fieldset>
 		<f:if condition="{files.file}">
 			<f:then>
-				<f:for each="{files.file}" as="file" iteration="fileIterator">
-					<f:render partial="File/FileEntry" arguments="{index : fileIterator.cycle, settings : settings, file : file}"/>
+				<f:for each="{files.file}" as="file">
+					<f:render partial="File/FileEntry" arguments="{index : file.index, settings : settings, file : file}"/>
 				</f:for>
 			</f:then>
 			<f:else>
-				<f:render partial="File/FileEntry" arguments="{index : 1, settings : settings}"/>
+				<f:render partial="File/FileEntry" arguments="{index : 'i1', settings : settings}"/>
 			</f:else>
 		</f:if>
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" class="submit" />
