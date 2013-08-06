@@ -209,11 +209,6 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		margin:2px 8px 0 0;
 	}
 	
-	.tx-fileman .del-file-entry:before,
-	.tx-fileman .show-optional:before {
-		margin-top:3px;
-	}
-	
 	.tx-fileman .button-edit,
 	.tx-fileman .button-delete,
 	.tx-fileman .del-file-entry,
