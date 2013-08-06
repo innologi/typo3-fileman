@@ -108,7 +108,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 			//files once uploaded, have been moved to said location to prevent them from being deleted after the upload script execution
 			$tmpDir = t3lib_div::fixWindowsFilePath(ini_get('upload_tmp_dir')) . '/' . $this->ext . '/';
 			foreach ($tmpNames as $index=>$tmpName) {
-				if ($this->validateIndex($index) && $this->validateTmpName($tmpName)) { //validate the index and tmpName values as they come from (hidden) fields in a form
+				if ($this->validateIndex($index) && $this->validateTmpFileName($tmpName)) { //validate the index and tmpName values as they come from (hidden) fields in a form
 					$tmpName = $tmpDir . $tmpName;
 					$this->setUploadProperty('tmp_name',$tmpName,$index);
 					$this->validated[$index] = TRUE; //setting this TRUE because it once has been and can no longer be checked through isValid()
