@@ -232,7 +232,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	protected function isUploadSuccessful() {
 		$tmpName = $this->getUploadProperty('tmp_name');
 		if (is_uploaded_file($tmpName)) {
-			$newTmpName = t3lib_div::fixWindowsFilePath(dirname($tmpName)) . $this->ext . '/';
+			$newTmpName = t3lib_div::fixWindowsFilePath(dirname($tmpName)) . '/' . $this->ext . '/';
 			if ($this->checkAndCreateDir($newTmpName)) {
 				$newTmpName .= basename($tmpName);
 				if (move_uploaded_file($tmpName,$newTmpName)) {
@@ -303,6 +303,8 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		preg_match($pattern,$dirpath,$matches);
 		//if dir doesn't exist, mkdir_deep creates every nonexisting directory from its second argument..
 		if (!is_dir($dirpath) && !is_null(t3lib_div::mkdir_deep($matches[1],$matches[3]))) {
+			$temp = t3lib_div::mkdir_deep($matches[1],$matches[3]);
+			var_dump($temp);die();
 			//mkdir_deep only returns something on errors
 			return FALSE;
 		}
