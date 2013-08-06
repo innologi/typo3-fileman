@@ -29,22 +29,34 @@ jQuery(document).ready(function() {
 	//*****************
 	// Auto fill title
 	//*****************
-	//TODO: doc
-	jQuery('.tx-fileman .file-entry').each(function(i, entry) { 
-		jQuery(entry).data('titleUnchanged',true);
+
+	jQuery('.tx-fileman .file-entry').each(function(i, entry) {
+		initAutoFill(entry);
+	});
+	
+	//a PHP basename() equivalent
+	function basename(string) {
+		string = string.replace(/\\/g,'/'); //note the regex global option in order to replace more than once
+		return string.substring(string.lastIndexOf('/')+1);
+	}
+
+	//will auto-fill title only if title wasn't fiddled with manually
+	function initAutoFill(entry) {
 		var title = jQuery(entry).find('.optional .textinput:first');
-		
+		//setting the var as data, so we can change it when cloned later on
+		jQuery(entry).data('titleUnchanged',true);
+		//if anything was put in title manually, change the boolean
 		title.keyup(function() {
 			jQuery(entry).data('titleUnchanged',false);
 		});
-		
+		//copy the fileupload val to title IF title remains untouched
 		jQuery(entry).find('.fileupload').change(function() {
 			if (jQuery(entry).data('titleUnchanged')) {
-				title.val(jQuery(this).val()); //FIXME: remove "C:\Fakepath\" (IE)
+				//depending on the browser, you might get more than the filename, so we do basename()
+				title.val(basename(jQuery(this).val()));
 			}
 		});
-	});
-	
+	}
 	
 	
 	//*********************
@@ -182,16 +194,7 @@ jQuery(document).ready(function() {
 						return false;
 					});
 						//--> auto fill title
-					jQuery(clone).data('titleUnchanged',true);
-					var title = jQuery(clone).find('.optional .textinput:first');
-					title.keyup(function() {
-						jQuery(clone).data('titleUnchanged',false);
-					});
-					jQuery(clone).find('.fileupload').change(function() {
-						if (jQuery(clone).data('titleUnchanged')) {
-							title.val(jQuery(this).val());
-						}
-					});
+					initAutoFill(clone);
 						//--> del file link
 					jQuery(clone).find('a.del-file-entry').click(function() {
 						deleteFileEntry(formVar,addFileLink,this,form);
