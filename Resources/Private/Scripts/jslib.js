@@ -10,8 +10,6 @@
 
 jQuery(document).ready(function() {
 	
-	//TODO: autofill the template title field through javascript?
-	
 	//***********************
 	// Hidden Field Switcher
 	//***********************
@@ -24,7 +22,28 @@ jQuery(document).ready(function() {
 	
 	//by default all is unhidden (in case of no js-support), force once to set initial state hidden
 	jQuery('.tx-fileman .rel-switch').show();
-	jQuery('.tx-fileman .rel-links').hide();	
+	jQuery('.tx-fileman .rel-links').hide();
+	
+	
+	
+	//*****************
+	// Auto fill title
+	//*****************
+	
+	jQuery('.tx-fileman .file-entry').each(function(i, entry) {
+		jQuery(entry).data('titleUnchanged',true);
+		var title = jQuery(entry).find('.optional .textinput:first');
+		
+		title.keyup(function() {
+			jQuery(entry).data('titleUnchanged',false);
+		});
+		
+		jQuery(entry).find('.fileupload').change(function() {
+			if (jQuery(entry).data('titleUnchanged')) {
+				title.val(jQuery(this).val());
+			}
+		});
+	});
 	
 	
 	
@@ -135,13 +154,28 @@ jQuery(document).ready(function() {
 						jQuery(elem).attr('name', jQuery(elem).attr('name').replace(findName,replaceName));
 						jQuery(elem).val(null); //input values are copied with the clone..
 					});
-					//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign functionality to certain buttons explicitly
+					
+					//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign certain events explicitly
+						//--> show optional
 					jQuery(clone).find('.show-optional').click(function() {
 						jQuery(clone).find('.optional').slideToggle();
 						jQuery(this).toggleClass('expanded');
 						return false;
 					});
-					jQuery(this).before(clone); //place it before the button
+						//--> auto fill title
+					jQuery(clone).data('titleUnchanged',true);
+					var title = jQuery(clone).find('.optional .textinput:first');
+					title.keyup(function() {
+						jQuery(clone).data('titleUnchanged',false);
+					});
+					jQuery(clone).find('.fileupload').change(function() {
+						if (jQuery(clone).data('titleUnchanged')) {
+							title.val(jQuery(this).val());
+						}
+					});
+					
+					//place it before the button
+					jQuery(this).before(clone);
 					
 					if (fileCount == fileCountMax) addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
 				}
