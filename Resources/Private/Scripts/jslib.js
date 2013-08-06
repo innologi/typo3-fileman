@@ -190,7 +190,7 @@ jQuery(document).ready(function() {
 					//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign certain events explicitly
 						//--> show optional
 					jQuery(clone).find('.show-optional').click(function() {
-						toggelOptional(jQuery(clone).find('.optional'), this);
+						toggleOptional(jQuery(clone).find('.optional'), this);
 						return false;
 					});
 						//--> auto fill title
