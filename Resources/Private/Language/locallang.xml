@@ -38,7 +38,7 @@
 			<label index="tx_fileman_filelist.filetype_filter.none">All filetypes allowed</label>
 			<label index="tx_fileman_filelist.sending_file">Sending file(s)...</label>
 			<label index="tx_fileman_filelist.add_file">Add another file</label>
-			<label index="tx_fileman_filelist.del_file">Remove</label>
+			<label index="tx_fileman_filelist.del_file">Remove upload-field</label>
 			<label index="tx_fileman_filelist.show_optional">Edit details</label>
 			
 			<label index="tx_fileman_validator.error_file_uri">You need to select a file for upload.</label>
@@ -99,7 +99,7 @@
 			<label index="tx_fileman_filelist.filetype_filter.none">Alle bestandstypen toegestaan</label>
 			<label index="tx_fileman_filelist.sending_file">Bestand(en) versturen...</label>
 			<label index="tx_fileman_filelist.add_file">Voeg meer bestanden toe</label>
-			<label index="tx_fileman_filelist.del_file">Verwijder</label>
+			<label index="tx_fileman_filelist.del_file">Verwijder upload-veld</label>
 			<label index="tx_fileman_filelist.show_optional">Wijzig details</label>
 			
 			<label index="tx_fileman_validator.error_file_uri">U dient een bestand te selecteren om te plaatsen.</label>
