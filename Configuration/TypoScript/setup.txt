@@ -40,6 +40,10 @@ plugin.tx_fileman {
 			APC_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getApcFieldName
 			MAX_FILE_UPLOADS = USER
 			MAX_FILE_UPLOADS.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
+			DEBUG = TEXT
+			DEBUG.value = {$plugin.tx_fileman.js.debug}
+			UPLOADPROGRESS = TEXT
+			UPLOADPROGRESS.value = {$plugin.tx_fileman.js.uploadProgress}
 			SENDING_FILE = TEXT
 			SENDING_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.sending_file
 			ADD_FILE = TEXT

@@ -71,43 +71,58 @@ jQuery(document).ready(function() {
 	var updateProgressInt = {};
 	var apcFieldName = "###APC_FIELD_NAME###";
 	var sendingFileText = "###SENDING_FILE###";
+	var debug = "###DEBUG###";
+	var progressType = "###UPLOADPROGRESS###";
 	
-	jQuery('.tx-fileman .init-progressbar').each(function(i, form) {
-		var upload_id = i + upload_id_gen;
-		jQuery(form).prepend('<input type="hidden" name="'+apcFieldName+'" value="' + upload_id + '" />');
-		jQuery(form).after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
+	if (progressType != 'none') {
 		
-		jQuery(form).on('submit', function() {
-			//only show the progressbar if fileupload is not empty
-			var fileuploadValue = jQuery(this).find('input[type=file].fileupload').val();
-			if (fileuploadValue != undefined && fileuploadValue != '') {
-				jQuery(this).hide();
-				jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
-				
-				updateProgressInt[i] = setInterval(function() {
-					updateProgress(upload_id,i);
-				}, 500); //TODO: should be configurable
-				updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here 
+		jQuery('.tx-fileman .init-progressbar').each(function(i, form) {
+			var upload_id = i + upload_id_gen;
+			jQuery(form).after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
+			
+			if (progressType == 'apc') {
+				jQuery(form).prepend('<input type="hidden" name="'+apcFieldName+'" value="' + upload_id + '" />');
+			} else if (progressType == 'uploadprogress') {
+				jQuery(form).prepend('<input type="hidden" name="UPLOAD_IDENTIFIER" value="' + upload_id + '" />');
 			}
+			
+			jQuery(form).on('submit', function() {
+				//only show the progressbar if fileupload is not empty
+				var fileuploadValue = jQuery(this).find('input[type=file].fileupload').val();
+				if (fileuploadValue != undefined && fileuploadValue != '') {
+					jQuery(this).hide();
+					jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
+					
+					updateProgressInt[i] = setInterval(function() {
+						updateProgress(upload_id,i);
+					}, 100); //TODO: should be configurable
+					updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here 
+				}
+			});
 		});
-	});
+		
+	}
 	
 	//TODO: url should be set from TS, no cache should not be necessary once headers in script are set
 	//updates progress in progress bar
 	function updateProgress(id,i) {
-		jQuery.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random()}, function(data) {
+		jQuery.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random(), type: progressType}, function(data) {
 			//TODO: catch script errors
 			var uploaded = parseInt(data);
-			jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar').css({
-				'width': uploaded + '%'
-			});
-			if (uploaded == 100) {
-				clearInterval(updateProgressInt[i]);
-				//because the request won't be really "done" at the same time the file is received, we display 99% to indicate a still unfinished state
-				//this way, the user never sees 100% and is (hopefully) not tempted to do something that breaks the process too early
-				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text(sendingFileText+' 99%');
+			if (debug == '1' && isNaN(uploaded)) {
+				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').html('Not receiving upload-progress status: '+data);
 			} else {
-				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text(sendingFileText+' '+uploaded+'%');
+				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar').css({
+					'width': uploaded + '%'
+				});
+				if (uploaded == 100) {
+					clearInterval(updateProgressInt[i]);
+					//because the request won't be really "done" at the same time the file is received, we display 99% to indicate a still unfinished state
+					//this way, the user never sees 100% and is (hopefully) not tempted to do something that breaks the process too early
+					jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text(sendingFileText+' 99%');
+				} else {
+					jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text(sendingFileText+' '+uploaded+'%');
+				}
 			}
 		});
 	};

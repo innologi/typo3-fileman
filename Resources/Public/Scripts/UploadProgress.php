@@ -12,37 +12,66 @@ foreach($headers as $header => $data) {
 	header($headerString);
 }
 
-/* @TODO Test non APC implementation (so.. 5.4?)
+/* @TODO Test 5.4
 http://php.net/manual/en/session.upload-progress.php
 
 session_start();
-//error_reporting(0);
 
 $progress_key = ini_get("session.upload_progress.prefix") . $_POST[ini_get("session.upload_progress.name")]
-$current = $_SESSION[$progress_key]["bytes_processed"];
-$total = $_SESSION[$progress_key]["content_length"];
-echo $current < $total ? ceil($current / $total * 100) : 100;
+echo ($_SESSION[$progress_key]["bytes_processed"] / $_SESSION[$progress_key]["content_length"]) * 100;
+
+
+@TODO HTML5
+<progress> and XMLHttpRequest Level 2 specs
+
+@TODO file size check
+HTML5: http://stackoverflow.com/questions/4112575/client-checking-file-size-using-html5
 */
 
-if(isset($_GET['upload_id']) && is_numeric($_GET['upload_id'])) {
 
-	//APC upload progress
-	if (extension_loaded('apc') && intval(ini_get('apc.rfc1867'))) {
-		//for this method to work, a hidden input field as $name will need to exist in form BEFORE file upload field(s?)
-		//$name = ini_get('apc.rfc1867_name');
 
-		$success = FALSE;
-		$fetchKey = ini_get('apc.rfc1867_prefix') . $_GET['upload_id'];
-		$status = apc_fetch($fetchKey,$success);
-		if ($success) {
-			echo ($status['current'] / $status['total']) * 100;
-		} else {
-			echo 'apc_failed';
-		}
-		exit;
+if(isset($_GET['type']) && isset($_GET['upload_id']) && is_numeric($_GET['upload_id'])) {
+
+	switch ($_GET['type']) {
+		case 'apc':
+			//APC upload progress
+			if (extension_loaded('apc') && intval(ini_get('apc.rfc1867'))) {
+				//for this method to work, a hidden input field as $name will need to exist in form BEFORE file upload field(s?)
+				//$name = ini_get('apc.rfc1867_name');
+
+				$success = FALSE;
+				$fetchKey = ini_get('apc.rfc1867_prefix') . $_GET['upload_id'];
+				$status = apc_fetch($fetchKey,$success);
+				if ($success) {
+					echo ($status['current'] / $status['total']) * 100;
+				} else {
+					echo 'ERROR: apc_fail: pid = ' . getmypid() . ', id = ' . $fetchKey . ', result = ';
+					var_dump($status);
+				}
+				exit;
+			}
+			break;
+		case 'uploadprogress':
+			//PECL uploadprogress package
+			if (extension_loaded('uploadprogress')) {
+				//for this method to work, a hidden input field as UPLOAD_IDENTIFIER will need to exist in form BEFORE file upload field(s?)
+
+				$status = uploadprogress_get_info($_GET['upload_id']);
+				if ($status !== NULL) {
+					if (isset($status['bytes_total'])) {
+						echo ($status['bytes_uploaded'] / $status['bytes_total']) * 100;
+					}
+					#@SHOULD or else.. ?
+				} else {
+					echo 'ERROR: uploadprogress_fail: pid = ' . getmypid() . ', id = ' . $_GET['upload_id'] . ', result = ';
+					var_dump($status);
+				}
+				exit;
+			}
+			break;
 	}
 
-	echo 'none_supported';
+	echo 'ERROR: Your chosen upload-progress type is not supported.';
 	exit;
 }
 
