@@ -6,7 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
-			<label index="tx_fileman_filelist.required">(required)</label>
+			<label index="tx_fileman_filelist.required">required fields</label>
 			<label index="tx_fileman_filelist.go_back">Go back</label>
 			<label index="tx_fileman_filelist.new_category">New category</label>
 			<label index="tx_fileman_filelist.new_category_header">New category</label>
@@ -40,11 +40,15 @@
 			<label index="tx_fileman_filelist.add_file">Add another file</label>
 			<label index="tx_fileman_filelist.del_file">Remove upload-field</label>
 			<label index="tx_fileman_filelist.show_optional">Edit details</label>
+			<label index="tx_fileman_filelist.prepped_file">This file was received well and waits at the site-servers until you complete the process successfully.</label>
 			
-			<label index="tx_fileman_validator.error_file_uri">You need to select a file for upload.</label>
-			<label index="tx_fileman_validator.error_link_uri">You need to place a valid link.</label>
-			<label index="tx_fileman_validator.error_links">One valid URL per row, or leave the field empty.</label>
+			<label index="tx_fileman_filelist.error_message">One or more form-fields need to be corrected before the process can complete. Please take note of the hints below. When you've corrected the issues, resend the form.</label>
+			<label index="tx_fileman_filelist.validation_errors">Fields requiring correction:</label>
 			<label index="error.category.title.1221560718">Can not be empty.</label>
+			<label index="error.file.fileUri.40750133701">The file is not allowed due to its filetype. Please refer to the info at the field to determine which filetypes are or aren't allowed.</label>
+			<label index="error.file.fileUri.40750133702">You need to select a file for upload.</label>
+			<label index="error.file.links.40750133703">One valid URL per row, or leave the field empty.</label>
+			<label index="error.link.linkUri.40750133704">You need to place a valid link.</label>
 		
 			<label index="tx_fileman_domain_model_file">Files</label>
 			<label index="tx_fileman_domain_model_file.file_uri">File</label>
@@ -67,7 +71,7 @@
 			<label index="tx_fileman_domain_model_link.tstamp">Placed on</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
-			<label index="tx_fileman_filelist.required">(vereist)</label>
+			<label index="tx_fileman_filelist.required">vereiste velden</label>
 			<label index="tx_fileman_filelist.go_back">Ga terug</label>
 			<label index="tx_fileman_filelist.new_category">Nieuwe categorie</label>
 			<label index="tx_fileman_filelist.new_category_header">Nieuwe categorie</label>
@@ -101,11 +105,16 @@
 			<label index="tx_fileman_filelist.add_file">Voeg meer bestanden toe</label>
 			<label index="tx_fileman_filelist.del_file">Verwijder upload-veld</label>
 			<label index="tx_fileman_filelist.show_optional">Wijzig details</label>
+			<label index="tx_fileman_filelist.prepped_file">Dit bestand was goed ontvangen en wacht op de site-servers tot u het proces succesvol heeft afgerond.</label>
 			
-			<label index="tx_fileman_validator.error_file_uri">U dient een bestand te selecteren om te plaatsen.</label>
-			<label index="tx_fileman_validator.error_link_uri">U dient een geldig URL in te vullen.</label>
-			<label index="tx_fileman_validator.error_links">U mag één geldig URL per rij invullen, of het veld leeglaten.</label>
+			
+			<label index="tx_fileman_filelist.error_message">Er zijn problemen met de invulling van één of meerdere formulier-velden, welke hieronder staan vermeld met hints om ze te corrigeren. U dient deze te corrigeren en vervolgens het formulier weer te verzenden, voordat het proces voltooid kan worden.</label>
+			<label index="tx_fileman_filelist.validation_errors">De volgende velden vereisen correctie:</label>
 			<label index="error.category.title.1221560718">Mag niet leeg zijn.</label>
+			<label index="error.file.fileUri.40750133701">Het bestand is niet toegestaan door zijn bestandstype. Bekijk de info bij het upload-veld voor welke bestandstypen wel of niet zijn toegestaan.</label>
+			<label index="error.file.fileUri.40750133702">U dient een bestand te selecteren om te plaatsen.</label>
+			<label index="error.file.links.40750133703">U mag één geldig URL per rij invullen, of het veld leeglaten.</label>
+			<label index="error.link.linkUri.40750133704">U dient een geldig URL in te vullen.</label>
 		
 			<label index="tx_fileman_domain_model_file">Bestanden</label>
 			<label index="tx_fileman_domain_model_file.file_uri">Bestand</label>

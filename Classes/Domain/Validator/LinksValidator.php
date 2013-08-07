@@ -55,9 +55,7 @@ class Tx_Fileman_Domain_Validator_LinksValidator extends Tx_Extbase_Validation_V
 			foreach ($linkArray as $link) {
 				//each link needs to be a valid URL or errors ensue
 				if (!t3lib_div::isValidUrl($link)) {
-					$extName = 'Fileman';
-					$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_links', $extName);
-					$this->addError($errorMessage, time()); #@TODO fix time()
+					$this->addError('There was a problem with links', 40750133703);
 					return FALSE;
 				}
 			}

@@ -1,0 +1,13 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
+<fi:form.errors for="{for}">
+<div class="validation">
+	<div class="validation-errors">
+		<div class="validation-header"><f:translate key="tx_fileman_filelist.validation_errors">tx_fileman_filelist.validation_errors</f:translate></div>
+		<ul class="validation-error-messages">
+			<f:for each="{error}" as="err">
+				<f:render partial="FormErrorsDetail" arguments="{entity: entity, error: err}" />
+			</f:for>
+		</ul>
+	</div>
+</div>
+</fi:form.errors>

@@ -5,6 +5,8 @@
 
 <f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 
+<div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
+
 <f:render partial="FormErrors" arguments="{for: 'link'}" />
 
 <f:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}">

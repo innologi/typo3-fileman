@@ -125,10 +125,12 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return boolean
 	 */
 	public function next() {
-		$tmpNameContainer = each($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
-		if ($tmpNameContainer !== FALSE) {
-			$this->index = $tmpNameContainer['key'];
-			return TRUE;
+		if (isset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance])) {
+			$tmpNameContainer = each($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
+			if ($tmpNameContainer !== FALSE) {
+				$this->index = $tmpNameContainer['key'];
+				return TRUE;
+			}
 		}
 		return FALSE;
 	}
@@ -182,15 +184,6 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 			$this->validated[$this->index] = $this->isUploadSuccessful();
 		}
 		return $this->validated[$this->index];
-	}
-
-	/**
-	 * Returns whether the current uploadfile has once been validated successfully
-	 *
-	 * @return boolean
-	 */
-	public function hasValidated() { #@SHOULD probably isn't needed as every index gets a value set now, so we could just use isValid()
-		return isset($this->validated[$this->index]) && $this->validated[$this->index];
 	}
 
 	/**

@@ -41,9 +41,7 @@ class Tx_Fileman_Domain_Validator_LinkUriValidator extends Tx_Extbase_Validation
 	 */
 	public function isValid($link) {
 		if (!isset($link[0]) || !is_string($link) || !t3lib_div::isValidUrl($link)) {
-			$extName = 'Fileman';
-			$errorMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_validator.error_link_uri', $extName);
-			$this->addError($errorMessage, time()); #@TODO fix time()
+			$this->addError('There was a problem with linkUri', 40750133704);
 			return FALSE;
 		}
 

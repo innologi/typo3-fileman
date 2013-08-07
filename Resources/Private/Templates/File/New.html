@@ -5,7 +5,7 @@
 
 <f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 
-<f:render partial="FormErrors" arguments="{for: 'files'}" />
+<div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 
 <f:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category : category}"
 	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add')}"

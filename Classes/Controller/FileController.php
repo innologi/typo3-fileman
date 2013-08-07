@@ -201,11 +201,14 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			//by fileService during validation, because the forward() tells extbase to re-map the request arguments
 			$this->fileService->reset(); //so start over!
 			$fileStorage = $files->getFile();
-			foreach ($fileStorage as $file) {
-				if ($this->fileService->next() && $this->fileService->hasValidated()) {
+			foreach ($fileStorage as $hash=>$file) {
+				if ($this->fileService->next()) {
 					//each uploaded file that was validated, is associated with the matching $file entry
 					//this would obviously not work if their count and order wasn't identical
 					$this->fileService->setFileProperties($file);
+				} else {
+					#@TODO error
+					unset($fileStorage[$hash]);
 				}
 			}
 		}
@@ -334,6 +337,18 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->redirect('list',NULL,NULL,$arguments);
 	}
 
+
+	/**
+	 * A template method for displaying custom error flash messages, or to
+	 * display no flash message at all on errors. Override this to customize
+	 * the flash message in your action controller.
+	 *
+	 * @return string The flash message or FALSE if no flash message should be set
+	 * @api
+	 */
+	protected function getErrorFlashMessage() {
+		return Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.error_message', $this->extensionName);
+	}
 
 
 	/**

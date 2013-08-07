@@ -80,6 +80,18 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		border:1px #ff0000 solid !important;
 	}
 	
+	.tx-fileman .legenda {
+		margin:15px;
+	}
+	.tx-fileman .required {
+		color:#f00;
+	}
+	
+	.tx-fileman .fileupload.prepped {
+		background-color: #E4FFCF;
+		border: 1px solid #668822;
+	}
+	
 	.tx-fileman .submit {
 		border:1px solid #999;
 		background-color:#ccc;
@@ -206,8 +218,24 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		float:left;
 		height:16px;
 		width:16px;
+	}
+	
+	.tx-fileman .button-new:before,
+	.tx-fileman .button-edit:before,
+	.tx-fileman .button-delete:before,
+	.tx-fileman .button-back:before,
+	.tx-fileman .add-file-entry:before,
+	.tx-fileman .del-file-entry:before,
+	.tx-fileman .show-optional:before {
 		margin:2px 8px 0 0;
 	}
+	
+	.tx-fileman .typo3-message .message-body:before,
+	.tx-fileman .validation-errors .validation-header:before {
+		margin:0 8px 0 0;
+	}
+	
+	
 	
 	.tx-fileman .button-edit,
 	.tx-fileman .button-delete,

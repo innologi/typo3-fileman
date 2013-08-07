@@ -39,7 +39,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @var string
 	 * @validate Tx_Fileman_Domain_Validator_LinkUriValidator
 	 */
-	protected $linkUri; #@TODO wat gebeurt er bij validation error?
+	protected $linkUri;
 
 	/**
 	 * Name of link
