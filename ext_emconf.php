@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'File Manager',
-	'description' => 'File manager for uploading, viewing and managing files on frontend. Includes complete management in backend.',
+	'description' => 'File manager for category-based uploading, viewing and managing files on frontend. Includes complete management in backend.',
 	'category' => 'plugin',
 	'author' => 'Frenck Lutke',
 	'author_email' => 'frenck@innologi.nl',
@@ -20,7 +20,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'shy' => '',
 	'priority' => '',
 	'module' => '',
-	'state' => 'alpha',
+	'state' => 'beta',
 	'internal' => '',
 	'uploadfolder' => 1,
 	'createDirs' => '',
@@ -30,6 +30,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '0.0.1',
 	'constraints' => array(
 		'depends' => array(
+			'php' => '5.3.0-5.3.99',
+			'typo3' => '4.5.0-4.7.99',
 			'extbase' => '1.3.0',
 			'fluid' => '1.3.0',
 		),
