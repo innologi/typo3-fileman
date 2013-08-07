@@ -1,5 +1,16 @@
 <?php
-#@TODO test hardcoded means to no-caching.. see decospublisher download headers, I think I have documented much of my research there
+$headers = array(
+	'Expires' => 'Thu, 01 Jan 1970 00:00:00 GMT', //'Expires: 0' does NOT always produce expected results
+	'Cache-Control' => 'no-cache, must-revalidate',
+	//losing these enforces use of Expires by user-agents that prefer these or don't play nice with cache-control (e.g. HTTP/1.0)
+	'Last-Modified' => NULL,
+	'ETag' => NULL
+);
+
+foreach($headers as $header => $data) {
+	$headerString = $header . ': ' . $data;
+	header($headerString);
+}
 
 /* @TODO Test non APC implementation (so.. 5.4?)
 http://php.net/manual/en/session.upload-progress.php
@@ -11,7 +22,6 @@ $progress_key = ini_get("session.upload_progress.prefix") . $_POST[ini_get("sess
 $current = $_SESSION[$progress_key]["bytes_processed"];
 $total = $_SESSION[$progress_key]["content_length"];
 echo $current < $total ? ceil($current / $total * 100) : 100;
-
 */
 
 if(isset($_GET['upload_id']) && is_numeric($_GET['upload_id'])) {
