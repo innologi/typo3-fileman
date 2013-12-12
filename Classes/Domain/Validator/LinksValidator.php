@@ -47,7 +47,7 @@ class Tx_Fileman_Domain_Validator_LinksValidator extends Tx_Extbase_Validation_V
 		$linkArray = array();
 
 		if (isset($links[0])) {
-			$links = str_replace("\r\n","\n",$links); #@SHOULD get this from a transient getter, which probably requires us to put this in the File Validator
+			$links = str_replace("\r\n","\n",$links); #@LOW get this from a transient getter, which probably requires us to put this in the File Validator
 			$linkArray = t3lib_div::trimExplode("\n", $links,1);
 		}
 

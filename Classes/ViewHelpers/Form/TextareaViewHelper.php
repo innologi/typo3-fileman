@@ -36,7 +36,7 @@
  */
 class Tx_Fileman_ViewHelpers_Form_TextareaViewHelper extends Tx_Fluid_ViewHelpers_Form_TextareaViewHelper {
 
-	#@SHOULD make a version that copes well with both normal properties and properties of properties (as well as Upload/Textfield)
+	#@LOW make a version that copes well with both normal properties and properties of properties (as well as Upload/Textfield)
 	/**
 	 * Get errors for the property and form name of this view helper
 	 *

@@ -63,7 +63,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @var string
 	 */
-	protected $alternateTitle; #@SHOULD be renamed
+	protected $alternateTitle; #@LOW be renamed
 
 	/**
 	 * File description
@@ -86,7 +86,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @var string
 	 */
-	protected $linkNames; #@SHOULD currently unused
+	protected $linkNames; #@LOW currently unused
 
 	/**
 	 * Categories related to this file entity
@@ -134,7 +134,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return string
 	 */
-	public function getFilename() { #@SHOULD currently unused
+	public function getFilename() { #@LOW currently unused
 		return basename($this->getFileUri());
 	}
 
@@ -247,7 +247,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return array
 	 */
-	public function getLinksFormatted() { #@SHOULD work with a transient
+	public function getLinksFormatted() { #@LOW work with a transient
 		if (isset($this->links[0])) {
 			$links = str_replace("\r\n","\n",$this->links);
 			$linkArray = t3lib_div::trimExplode("\n", $links,1);
@@ -271,7 +271,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return string
 	 */
-	public function getLinkNames() { #@SHOULD currently unused
+	public function getLinkNames() { #@LOW currently unused
 		return $this->linkNames;
 	}
 
@@ -281,7 +281,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @param string $linkNames
 	 * @return void
 	 */
-	public function setLinkNames($linkNames) { #@SHOULD currently unused
+	public function setLinkNames($linkNames) { #@LOW currently unused
 		$this->linkNames = $linkNames;
 	}
 

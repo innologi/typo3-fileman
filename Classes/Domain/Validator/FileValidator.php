@@ -77,7 +77,7 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 
 
 
-	#@FIXME delete failed files?
+	#@FIX delete failed files?
 	/**
 	 * Does some specific file domain validation.
 	 *
@@ -114,11 +114,11 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 				//edit action
 				$valid = TRUE;
 			} else {
-				#@SHOULD error
+				#@LOW error
 				//no FILES and no fileUri, something is fucked
 			}
 		} else {
-			#@SHOULD error
+			#@LOW error
 			//not a FILE
 		}
 

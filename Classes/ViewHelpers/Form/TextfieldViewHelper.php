@@ -73,7 +73,7 @@ class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends Tx_Fluid_ViewHelpe
 	 * @see Tx_Fluid_ViewHelpers_Form_AbstractFormViewHelper::getValue()
 	 */
 	protected function getValue($convertObjects = TRUE) {
-		if ($this->arguments instanceof Tx_Fluid_Core_ViewHelper_Arguments) { //TYPO3 4.5 compatibility #@SHOULD remove once dependency is raised
+		if ($this->arguments instanceof Tx_Fluid_Core_ViewHelper_Arguments) { //TYPO3 4.5 compatibility #@LOW remove once dependency is raised
 			$value = $this->getOrChangeValue($convertObjects);
 			if ($value !== NULL && empty($value)) { //4.5 still checks !empty($value) instead of !== NULL in parent::render()
 				$this->tag->addAttribute('value', $value); //.. so we'll add it ourselves in that specific case

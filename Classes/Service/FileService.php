@@ -114,7 +114,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 					$this->validated[$index] = TRUE; //setting this TRUE because it once has been and can no longer be checked through isValid()
 				}
 			}
-			ksort($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]); #@SHOULD check if we can do without reset() after a sort
+			ksort($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]); #@LOW check if we can do without reset() after a sort
 		}
 		$this->searchedForSubtitutes = TRUE;
 	}

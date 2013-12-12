@@ -61,7 +61,7 @@ if(isset($_GET['type']) && isset($_GET['upload_id']) && is_numeric($_GET['upload
 					if (isset($status['bytes_total'])) {
 						echo ($status['bytes_uploaded'] / $status['bytes_total']) * 100;
 					}
-					#@SHOULD or else.. ?
+					#@LOW or else.. ?
 				} else {
 					echo 'ERROR: uploadprogress_fail: pid = ' . getmypid() . ', id = ' . $_GET['upload_id'] . ', result = ';
 					var_dump($status);
@@ -75,6 +75,6 @@ if(isset($_GET['type']) && isset($_GET['upload_id']) && is_numeric($_GET['upload
 	exit;
 }
 
-#@SHOULD be a more thorough check, like a referrer that was explicitly set by jslib's ajax call
+#@LOW be a more thorough check, like a referrer that was explicitly set by jslib's ajax call
 die('ERROR: This script is not supposed to be called manually.');
 ?>

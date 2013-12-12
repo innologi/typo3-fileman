@@ -128,7 +128,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param boolean $no_cache
 	 * @return void
 	 */
-	public function downloadAction(Tx_Fileman_Domain_Model_File $file, $no_cache = FALSE) { #@SHOULD currently unused
+	public function downloadAction(Tx_Fileman_Domain_Model_File $file, $no_cache = FALSE) { #@LOW currently unused
 		$fileUri = $file->getFileUri();
 
 		if(is_file($fileUri)) {
@@ -232,7 +232,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$fileStorage = $files->getFile();
 		foreach ($fileStorage as $file) {
 			#$absDirPath = PATH_site.$this->settings['uploadDir'];
-			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@SHOULD might as well do it static right now
+			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@LOW might as well do it static right now
 			//moves a file from it's tmp location to it final destination
 			if ($this->fileService->finalizeMove($file,$absDirPath)) {
 				//feUser
@@ -332,7 +332,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			$category->removeFile($file);
 			$arguments = array('category'=>$category);
 		}
-		#@FIXME delete file?
+		#@FIX delete file?
 
 		$this->redirect('list',NULL,NULL,$arguments);
 	}

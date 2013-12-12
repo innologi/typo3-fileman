@@ -70,7 +70,7 @@ class Tx_Fileman_ViewHelpers_Form_ErrorsViewHelper extends Tx_Fluid_ViewHelpers_
 				if ($error->getPropertyName() === $propertyName) {
 					return $error->getErrors();
 				}
-			} elseif ($error instanceof Tx_Fileman_Validation_StorageError) { #@SHOULD see if we can get storageError to extend propertyerror, and take debugging from there
+			} elseif ($error instanceof Tx_Fileman_Validation_StorageError) { #@LOW see if we can get storageError to extend propertyerror, and take debugging from there
 				$errorArray = $error->getErrors();
 				if (isset($errorArray[$propertyName])) {
 					return $errorArray[$propertyName];

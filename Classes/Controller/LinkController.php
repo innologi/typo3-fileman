@@ -32,7 +32,7 @@
  *
  */
 class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_ActionController {
-	#@SHOULD display the links (and files) more nicely, like with file sizes, file icons, external domain mentioned, etc. This would also make it possible to eventually merge the lists
+	#@LOW display the links (and files) more nicely, like with file sizes, file icons, external domain mentioned, etc. This would also make it possible to eventually merge the lists
 
 	/**
 	 * linkRepository

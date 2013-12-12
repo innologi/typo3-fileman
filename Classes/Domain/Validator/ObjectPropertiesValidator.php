@@ -46,7 +46,7 @@ class Tx_Fileman_Domain_Validator_ObjectPropertiesValidator extends Tx_Fileman_V
 	 */
 	public function isValid($value) {
 		if (!is_object($value)) { //also works on objectStorage objects
-			#@SHOULD error?
+			#@LOW error?
 		}
 
 		$this->errors = array(); //the validator will be created only once, which means errors start piling up from different objects if we don't empty the array

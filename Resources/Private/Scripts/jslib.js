@@ -63,7 +63,7 @@ jQuery(document).ready(function() {
 	// Upload progress bar 
 	//*********************
 
-	//TODO: SHOULD BE ABLE TO SET THE UPLOAD PROGRESS BAR TYPE FROM TS
+	//@TODO: SHOULD BE ABLE TO SET THE UPLOAD PROGRESS BAR TYPE FROM TS
 	//note that it is a string, so that the numbers get concatenated
 	var upload_id_gen = '' + new Date().getTime() + Math.random();
 	upload_id_gen = upload_id_gen.replace('.','');
@@ -95,7 +95,7 @@ jQuery(document).ready(function() {
 					
 					updateProgressInt[i] = setInterval(function() {
 						updateProgress(upload_id,i);
-					}, 100); //TODO: should be configurable
+					}, 100); //@TODO: should be configurable
 					updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here 
 				}
 			});
@@ -103,11 +103,11 @@ jQuery(document).ready(function() {
 		
 	}
 	
-	//TODO: url should be set from TS, no cache should not be necessary once headers in script are set
+	//@TODO: url should be set from TS, no cache should not be necessary once headers in script are set
 	//updates progress in progress bar
 	function updateProgress(id,i) {
 		jQuery.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random(), type: progressType}, function(data) {
-			//TODO: catch script errors
+			//@TODO: catch script errors
 			var uploaded = parseInt(data);
 			if (debug == '1' && isNaN(uploaded)) {
 				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').html('Not receiving upload-progress status: '+data);
@@ -167,7 +167,7 @@ jQuery(document).ready(function() {
 				jQuery(clone).insertAfter(fileUpload);
 				
 				//when a delete link is clicked:
-				jQuery(clone).click(function() { //TODO: undo button?
+				jQuery(clone).click(function() { //@TODO: undo button?
 					deleteFileEntry(formVar,addFileLink,this,form);
 					return false;
 				});
