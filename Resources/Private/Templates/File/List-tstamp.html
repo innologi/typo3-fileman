@@ -16,6 +16,7 @@
 		<tr>
 			<th><f:translate key="tx_fileman_domain_model_file.file_uri" /></th>
 			<th><f:translate key="tx_fileman_domain_model_file.description" /></th>
+			<th><f:translate key="tx_fileman_domain_model_file.tstamp" /></th>
 		</tr>
 	
 		<f:for each="{files}" as="file">
@@ -45,6 +46,7 @@
 		 			</f:if>
 	 			</td>
 				<td>{file.description}</td>
+				<td><f:format.date format="d/m/Y - H:i">@{file.tstamp}</f:format.date></td>
 			</tr>
 		 	
 		</f:for>
@@ -54,6 +56,7 @@
 		<tr>
 			<th><f:translate key="tx_fileman_domain_model_link.link_uri" /></th>
 			<th><f:translate key="tx_fileman_domain_model_link.description" /></th>
+			<th><f:translate key="tx_fileman_domain_model_link.tstamp" /></th>
 		</tr>
 	
 		<f:for each="{links}" as="link">
@@ -69,6 +72,7 @@
 					</f:if>
 	 			</td>
 	 			<td>{link.description}</td>
+				<td><f:format.date format="d/m/Y - H:i">@{link.tstamp}</f:format.date></td>
 			</tr>
 		 	
 		</f:for>
