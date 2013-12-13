@@ -1,4 +1,5 @@
 <?php
+session_start();
 $headers = array(
 	'Expires' => 'Thu, 01 Jan 1970 00:00:00 GMT', //'Expires: 0' does NOT always produce expected results
 	'Cache-Control' => 'no-cache, must-revalidate',
@@ -12,15 +13,7 @@ foreach($headers as $header => $data) {
 	header($headerString);
 }
 
-/* @TODO Test 5.4
-http://php.net/manual/en/session.upload-progress.php
-
-session_start();
-
-$progress_key = ini_get("session.upload_progress.prefix") . $_POST[ini_get("session.upload_progress.name")]
-echo ($_SESSION[$progress_key]["bytes_processed"] / $_SESSION[$progress_key]["content_length"]) * 100;
-
-
+/*
 @TODO HTML5
 <progress> and XMLHttpRequest Level 2 specs
 
@@ -29,10 +22,34 @@ HTML5: http://stackoverflow.com/questions/4112575/client-checking-file-size-usin
 */
 
 
-
 if(isset($_GET['type']) && isset($_GET['upload_id']) && is_numeric($_GET['upload_id'])) {
 
 	switch ($_GET['type']) {
+		case 'session':
+			//PHP 5.4+ Session upload progress
+			if (version_compare(phpversion(), '5.4', '>=') && (bool) ini_get('session.upload_progress.enabled')) {
+				// http://php.net/manual/en/session.upload-progress.php
+				// for this method to work, a hidden input field as $name will need to exist in form BEFORE file upload field(s?)
+				// $name = ini_get('session.upload_progress.name');
+
+				$key = ini_get('session.upload_progress.prefix') . $_GET['upload_id'];
+				$status = isset($_SESSION[$key]) ? $_SESSION[$key] : NULL;
+				if ($status !== NULL && count($status['files']) > 0) {
+					echo ($status['bytes_processed'] / $status['content_length']) * 100;
+				} else {
+					echo 'ERROR: session_fail: pid = ' . getmypid() . ', id = ' . $key . ', result = ';
+					var_dump($status);
+					if ($status === NULL) {
+						/*
+						 * disabling session.upload_progress.cleanup seems to help in TYPO3 context,
+						 * meaning TYPO3 reads it before this script gets to
+						 */
+						echo "\n", 'Try disabling session.upload_progress.cleanup to see if that helps.';
+					}
+				}
+				exit;
+			}
+			break;
 		case 'apc':
 			//APC upload progress
 			if (extension_loaded('apc') && intval(ini_get('apc.rfc1867'))) {
@@ -68,7 +85,6 @@ if(isset($_GET['type']) && isset($_GET['upload_id']) && is_numeric($_GET['upload
 				}
 				exit;
 			}
-			break;
 	}
 
 	echo 'ERROR: Your chosen upload-progress type is not supported.';

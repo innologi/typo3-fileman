@@ -38,6 +38,8 @@ plugin.tx_fileman {
 		inlineJS.marks {
 			APC_FIELD_NAME = USER
 			APC_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getApcFieldName
+			SES_FIELD_NAME = USER
+			SES_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getSesFieldName
 			MAX_FILE_UPLOADS = USER
 			MAX_FILE_UPLOADS.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
 			DEBUG = TEXT

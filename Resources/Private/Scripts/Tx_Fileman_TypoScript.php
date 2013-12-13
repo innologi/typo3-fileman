@@ -58,5 +58,18 @@ class Tx_Fileman_TypoScript {
 	public function getApcFieldName($content, $conf) {
 		return ini_get('apc.rfc1867_name');
 	}
+
+	/**
+	 * Retrieves 'session.upload_progress.name' from php.ini
+	 *
+	 * Used to set the field name in the jslib.
+	 *
+	 * @param string $content
+	 * @param array $conf
+	 * @return string
+	 */
+	public function getSesFieldName($content, $conf) {
+		return ini_get('session.upload_progress.name');
+	}
 }
 ?>

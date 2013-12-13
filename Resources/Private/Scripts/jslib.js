@@ -70,6 +70,7 @@ jQuery(document).ready(function() {
 	//contains interval return values for use by clearInterval
 	var updateProgressInt = {};
 	var apcFieldName = "###APC_FIELD_NAME###";
+	var sesFieldName = "###SES_FIELD_NAME###";
 	var sendingFileText = "###SENDING_FILE###";
 	var debug = "###DEBUG###";
 	var progressType = "###UPLOADPROGRESS###";
@@ -80,7 +81,9 @@ jQuery(document).ready(function() {
 			var upload_id = i + upload_id_gen;
 			jQuery(form).after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
 			
-			if (progressType == 'apc') {
+			if (progressType == 'session') {
+				jQuery(form).prepend('<input type="hidden" name="'+sesFieldName+'" value="' + upload_id + '" />');
+			} else if (progressType == 'apc') {
 				jQuery(form).prepend('<input type="hidden" name="'+apcFieldName+'" value="' + upload_id + '" />');
 			} else if (progressType == 'uploadprogress') {
 				jQuery(form).prepend('<input type="hidden" name="UPLOAD_IDENTIFIER" value="' + upload_id + '" />');
