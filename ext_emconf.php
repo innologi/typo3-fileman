@@ -30,6 +30,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'version' => '0.0.1',
 	'constraints' => array(
 		'depends' => array(
+			// @FIX PHP requirement is too low
 			'php' => '5.3.0',
 			'typo3' => '4.5.0-4.7.99',
 			'extbase' => '1.3.0',
