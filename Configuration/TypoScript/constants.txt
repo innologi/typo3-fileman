@@ -21,9 +21,9 @@ plugin.tx_fileman {
 		# cat=plugin.tx_fileman/javascript; type=text; label= jQuery CDN url: The url from which jQuery is included. Configurable to easily allow jQuery version changes.
 		jQueryCDN = http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 		
-		uploadProgress = session
+		uploadProgress = none
 		
-		debug = 1
+		debug = 0
 		
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.js
 	}
