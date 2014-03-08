@@ -45,13 +45,13 @@
 			<label index="tx_fileman_filelist.error_message">One or more form-fields need to be corrected before the process can complete. Please take note of the hints below. When you've corrected the issues, resend the form.</label>
 			<label index="tx_fileman_filelist.validation_errors">Fields requiring correction:</label>
 			<label index="error.category.title.1221560718">Can not be empty.</label>
-			<label index="error.file.fileUri.40750133701">The file is not allowed due to its filetype. Please refer to the info at the field to determine which filetypes are or aren't allowed.</label>
-			<label index="error.file.fileUri.40750133702">You need to select a file for upload.</label>
+			<label index="error.file.uploadData.40750133701">The file is not allowed due to its filetype. Please refer to the info at the field to determine which filetypes are or aren't allowed.</label>
+			<label index="error.file.uploadData.40750133702">You need to select a file for upload.</label>
 			<label index="error.file.links.40750133703">One valid URL per row, or leave the field empty.</label>
 			<label index="error.link.linkUri.40750133704">You need to place a valid link.</label>
 		
 			<label index="tx_fileman_domain_model_file">Files</label>
-			<label index="tx_fileman_domain_model_file.file_uri">File</label>
+			<label index="tx_fileman_domain_model_file.upload_data">File</label>
 			<label index="tx_fileman_domain_model_file.alternate_title">Displayed title</label>
 			<label index="tx_fileman_domain_model_file.description">Description</label>
 			<label index="tx_fileman_domain_model_file.links">Related links</label>
@@ -111,13 +111,13 @@
 			<label index="tx_fileman_filelist.error_message">Er zijn problemen met de invulling van één of meerdere formulier-velden, welke hieronder staan vermeld met hints om ze te corrigeren. U dient deze te corrigeren en vervolgens het formulier weer te verzenden, voordat het proces voltooid kan worden.</label>
 			<label index="tx_fileman_filelist.validation_errors">De volgende velden vereisen correctie:</label>
 			<label index="error.category.title.1221560718">Mag niet leeg zijn.</label>
-			<label index="error.file.fileUri.40750133701">Het bestand is niet toegestaan door zijn bestandstype. Bekijk de info bij het upload-veld voor welke bestandstypen wel of niet zijn toegestaan.</label>
-			<label index="error.file.fileUri.40750133702">U dient een bestand te selecteren om te plaatsen.</label>
+			<label index="error.file.uploadData.40750133701">Het bestand is niet toegestaan door zijn bestandstype. Bekijk de info bij het upload-veld voor welke bestandstypen wel of niet zijn toegestaan.</label>
+			<label index="error.file.uploadData.40750133702">U dient een bestand te selecteren om te plaatsen.</label>
 			<label index="error.file.links.40750133703">U mag één geldig URL per rij invullen, of het veld leeglaten.</label>
 			<label index="error.link.linkUri.40750133704">U dient een geldig URL in te vullen.</label>
 		
 			<label index="tx_fileman_domain_model_file">Bestanden</label>
-			<label index="tx_fileman_domain_model_file.file_uri">Bestand</label>
+			<label index="tx_fileman_domain_model_file.upload_data">Bestand</label>
 			<label index="tx_fileman_domain_model_file.alternate_title">Bestandstitel</label>
 			<label index="tx_fileman_domain_model_file.description">Omschrijving</label>
 			<label index="tx_fileman_domain_model_file.links">Gerelateerde links</label>

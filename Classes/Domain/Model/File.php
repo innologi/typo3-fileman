@@ -82,6 +82,14 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	protected $links;
 
 	/**
+	 * Array with upload data from the $_FILES array, filled by either rewrittenPropertyManager or fileService
+	 *
+	 * @var array
+	 * @transient
+	 */
+	protected $uploadData = array();
+
+	/**
 	 * Alternative name per link (one per row)
 	 *
 	 * @var string
@@ -341,6 +349,25 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 */
 	public function setFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
 		$this->feUser = $feUser;
+	}
+
+	/**
+	 * Returns uploadData
+	 *
+	 * @return array
+	 */
+	public function getUploadData() {
+		return $this->uploadData;
+	}
+
+	/**
+	 * Set uploadData, should correspond to properties from $_FILES
+	 *
+	 * @param array $uploadData
+	 * @return void
+	 */
+	public function setUploadData(array $uploadData) {
+		$this->uploadData = $uploadData;
 	}
 
 	/**

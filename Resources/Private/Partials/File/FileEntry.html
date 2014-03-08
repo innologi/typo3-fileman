@@ -2,7 +2,7 @@
 <f:render partial="FormErrorsMulti" arguments="{for: 'files.file.{index}', entity: 'file'}" />
 <div class="file-entry">
 	<label>
-		<f:translate key="tx_fileman_domain_model_file.file_uri" /> <span class="required">*</span>
+		<f:translate key="tx_fileman_domain_model_file.upload_data" /> <span class="required">*</span>
 		<br />
 		
 		<f:if condition="{file.fileUri}">
@@ -11,7 +11,7 @@
 				<f:form.hidden name="tmpFiles[{index}]" value="{fi:file.basename(uri:file.tmpFile)}" />
 			</f:then>
 			<f:else>
-				<fi:form.upload property="file.{index}.fileUri" class="fileupload" /> <!-- required="required" -->
+				<fi:form.upload property="file.{index}.uploadData" class="fileupload" /> <!-- required="required" -->
 			</f:else>
 		</f:if>
 	</label>

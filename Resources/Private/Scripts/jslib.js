@@ -140,7 +140,7 @@ jQuery(document).ready(function() {
 	var addFileText = "###ADD_FILE###";
 	var delFileText = "###DEL_FILE###";
 	var showOptionalText = "###SHOW_OPTIONAL###";
-	
+	// @FIX it's not cast to an integer?
 	//don't enable it unless there are more files allowed than 1
 	if (fileCountMax > 1) {
 		jQuery('.tx-fileman .multi-file').each(function(i, form) {
@@ -250,7 +250,7 @@ jQuery(document).ready(function() {
 	//retrieves the last index from the form
 	function getLastIndex(form) {
 		//we want 999 from: <input class="fileupload" name="*[file][i999][fileUri]" />
-		return jQuery(form).find('.fileupload:last').attr('name').match(/\[file\]\[i([0-9]+)\]\[fileUri\]/i)[1];
+		return jQuery(form).find('.fileupload:last').attr('name').match(/\[file\]\[i([0-9]+)\]/i)[1];
 	}
 	
 	//toggle optional fields

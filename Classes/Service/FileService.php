@@ -36,7 +36,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	protected $ext = 'tx_fileman_filelist'; //ext_plugin name
 	protected $storage = 'files'; //storage name
 	protected $instance = 'file'; //instance name
-	protected $property = 'fileUri'; //property name
+	protected $property = 'uploadData'; //property name
 
 	/**
 	 * Current $_FILES position
@@ -103,6 +103,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return void
 	 */
 	public function findSubstitutes() {
+		#@FIX we shouldn't use $_POST..
 		if (isset($_POST[$this->ext]['tmpFiles']) && !$this->searchedForSubtitutes) {
 			$tmpNames = $_POST[$this->ext]['tmpFiles'];
 			//files once uploaded, have been moved to said location to prevent them from being deleted after the upload script execution
@@ -266,7 +267,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return integer Number of matches
 	 */
 	protected function validateIndex($index) {
-		return preg_match('/^[a-z0-9]+$/i',$index);
+		return preg_match('/^i[0-9]+$/i',$index);
 	}
 
 	/**

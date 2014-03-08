@@ -95,7 +95,7 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 		if ($file instanceof Tx_Fileman_Domain_Model_File) {
 			if ($this->fileService->next()) {
 				$file->setIndex($this->fileService->getIndex()); //we need this regardless, to bind errors from this and other validators to the right file
-
+				// NULL @ first-time create, NOT NULL after validation error
 				if ($file->getFileUri() === NULL) {
 					if (!$this->fileService->isAllowed($this->settings['allowFileType'],$this->settings['denyFileType'])) {
 						//the file type is prohibited by configuration
@@ -133,9 +133,9 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 			}
 		} else {
 			//setup error message
-			$propertyError = new Tx_Extbase_Validation_PropertyError('fileUri');
+			$propertyError = new Tx_Extbase_Validation_PropertyError('uploadData');
 			$propertyError->addErrors(array(
-					new Tx_Extbase_Validation_Error('There was a problem with fileUri',$errorCode)
+					new Tx_Extbase_Validation_Error('There was a problem with uploadData',$errorCode)
 			));
 			$this->errors[] = $propertyError;
 		}
