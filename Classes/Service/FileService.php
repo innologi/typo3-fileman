@@ -288,7 +288,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return integer Number of matches
 	 */
 	protected function validateTmpFileName($tmpFileName) {
-		return preg_match('/^[a-z1-9]+\.tmp$/i',$tmpFileName);
+		return preg_match('/^[a-z1-9]+(\.tmp)?$/i',$tmpFileName);
 	}
 
 
