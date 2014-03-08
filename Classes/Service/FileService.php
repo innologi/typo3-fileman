@@ -188,6 +188,17 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	}
 
 	/**
+	 * Clears file name in upload data.
+	 *
+	 * Necessary on e.g. upload-failure when the upload itself was successful, e.g. due to file-type-restrictions.
+	 *
+	 * @return void
+	 */
+	public function clearFileName() {
+		$this->setUploadProperty('name', '', $this->index);
+	}
+
+	/**
 	 * Returns current index position
 	 *
 	 * @return string

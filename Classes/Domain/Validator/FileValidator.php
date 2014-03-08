@@ -132,6 +132,8 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 				$file->setAlternateTitle($file->getFileUri());
 			}
 		} else {
+			// uploadData errors might ensue after a successful upload, so clear the file name so we don't lose the upload-field
+			$this->fileService->clearFileName();
 			//setup error message
 			$propertyError = new Tx_Extbase_Validation_PropertyError('uploadData');
 			$propertyError->addErrors(array(
