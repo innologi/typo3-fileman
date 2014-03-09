@@ -62,8 +62,8 @@ plugin.tx_fileman {
 		denyFileType = {$plugin.tx_fileman.settings.denyFileType}
 	}
 	features {
-		# uncomment the following line to enable the new Property Mapper.
-		# rewrittenPropertyMapper = 1
+		# @TODO finish adjustments before TYPO3 6.3 releases
+		rewrittenPropertyMapper = 0
 	}
 }
 
