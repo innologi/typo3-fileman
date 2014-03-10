@@ -42,7 +42,7 @@ plugin.tx_fileman {
 			SES_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getSesFieldName
 			MAX_FILE_UPLOADS = USER
 			MAX_FILE_UPLOADS.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
-			DEBUG = TEXT
+			DEBUG = TEXTor 
 			DEBUG.value = {$plugin.tx_fileman.js.debug}
 			UPLOADPROGRESS = TEXT
 			UPLOADPROGRESS.value = {$plugin.tx_fileman.js.uploadProgress}
@@ -62,8 +62,17 @@ plugin.tx_fileman {
 		denyFileType = {$plugin.tx_fileman.settings.denyFileType}
 	}
 	features {
-		# @TODO finish adjustments before TYPO3 6.3 releases
+		# @TODO support before TYPO3 6.3 release
 		rewrittenPropertyMapper = 0
+	}
+	objects {
+		# extbase 6.1+ bugfix for rewrittenPropertyMapper=0
+		TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager {
+			className = Innologi\Fileman\Persistence\PersistenceManager
+		}
+		TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface {
+			className = Innologi\Fileman\Persistence\PersistenceManagerInterface
+		}
 	}
 }
 
