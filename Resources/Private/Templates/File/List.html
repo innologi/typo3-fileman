@@ -10,12 +10,13 @@
 	<f:link.action action="new" controller="Link" arguments="{category : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link" /></f:link.action>
 </f:if>
 
-<table class="tx_fileman" >
+<table class="tx_fileman" summary="{f:translate(key:'tx_fileman_filelist.file_summary')}">
+	<caption><f:translate key="tx_fileman_filelist.file_caption" /></caption>
 
 	<f:if condition="{files}">
 		<tr>
-			<th><f:translate key="tx_fileman_domain_model_file.file_uri" /></th>
-			<th><f:translate key="tx_fileman_domain_model_file.description" /></th>
+			<th scope="col"><f:translate key="tx_fileman_domain_model_file.file_uri" /></th>
+			<th scope="col"><f:translate key="tx_fileman_domain_model_file.description" /></th>
 		</tr>
 	
 		<f:for each="{files}" as="file">
@@ -52,8 +53,8 @@
 	
 	<f:if condition="{links}">
 		<tr>
-			<th><f:translate key="tx_fileman_domain_model_link.link_uri" /></th>
-			<th><f:translate key="tx_fileman_domain_model_link.description" /></th>
+			<th scope="col"><f:translate key="tx_fileman_domain_model_link.link_uri" /></th>
+			<th scope="col"><f:translate key="tx_fileman_domain_model_link.description" /></th>
 		</tr>
 	
 		<f:for each="{links}" as="link">

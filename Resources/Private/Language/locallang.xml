@@ -49,7 +49,12 @@
 			<label index="error.file.uploadData.40750133702">You need to select a file for upload.</label>
 			<label index="error.file.links.40750133703">One valid URL per row, or leave the field empty.</label>
 			<label index="error.link.linkUri.40750133704">You need to place a valid link.</label>
-		
+			
+			<label index="tx_fileman_filelist.category_caption">File categories</label>
+			<label index="tx_fileman_filelist.category_summary">This is a list of file-categories.</label>
+			<label index="tx_fileman_filelist.file_caption">Files and links</label>
+			<label index="tx_fileman_filelist.file_summary">This is a list of files and links.</label>
+			
 			<label index="tx_fileman_domain_model_file">Files</label>
 			<label index="tx_fileman_domain_model_file.upload_data">File</label>
 			<label index="tx_fileman_domain_model_file.alternate_title">Displayed title</label>
@@ -115,6 +120,11 @@
 			<label index="error.file.uploadData.40750133702">U dient een bestand te selecteren om te plaatsen.</label>
 			<label index="error.file.links.40750133703">U mag één geldig URL per rij invullen, of het veld leeglaten.</label>
 			<label index="error.link.linkUri.40750133704">U dient een geldig URL in te vullen.</label>
+			
+			<label index="tx_fileman_filelist.category_caption">Bestandscategorieën</label>
+			<label index="tx_fileman_filelist.category_summary">Dit is een lijst van bestandscategorieën.</label>
+			<label index="tx_fileman_filelist.file_caption">Bestanden en links</label>
+			<label index="tx_fileman_filelist.file_summary">Dit is een lijst van bestanden en links.</label>
 		
 			<label index="tx_fileman_domain_model_file">Bestanden</label>
 			<label index="tx_fileman_domain_model_file.upload_data">Bestand</label>

@@ -6,10 +6,11 @@
 	<f:link.action action="new" controller="Category" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
 </f:if>
 
-<table>
+<table summary="{f:translate(key:'tx_fileman_filelist.category_summary')}">
+	<caption><f:translate key="tx_fileman_filelist.category_caption" /></caption>
 	<tr>
-		<th><f:translate key="tx_fileman_domain_model_category.title" /></th>
-		<th><f:translate key="tx_fileman_domain_model_category.description" /></th>
+		<th scope="col"><f:translate key="tx_fileman_domain_model_category.title" /></th>
+		<th scope="col"><f:translate key="tx_fileman_domain_model_category.description" /></th>
 	</tr>
 
 	<f:for each="{categories}" as="category">

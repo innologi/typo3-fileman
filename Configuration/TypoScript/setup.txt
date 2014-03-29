@@ -133,8 +133,12 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		border-collapse: separate;
 		border-radius: 25px;
 		border-spacing: 0 4px;
-	    padding: 5px 15px 13px;
+		padding: 5px 15px 13px;
 		width: 100%;
+	}
+	
+	.tx-fileman table caption {
+		display:none;
 	}
 	
 	.tx-fileman table,
