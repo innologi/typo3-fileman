@@ -64,35 +64,40 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 	 * @return boolean TRUE if the value is valid, FALSE if an error occured
 	 */
 	public function isValid($value) {
-		$valid = FALSE;
-		$storageError = NULL;
+		#if ($this->configurationManager->isFeatureEnabled('rewrittenPropertyMapper')) {
+			#@TODO finish this for TYPO3 6.3+, as well as in other validators and VHs
+		#	$this->result->merge($validator->validate());
+		#} else {
+			$valid = FALSE;
+			$storageError = NULL;
 
-		if ($value instanceof Tx_Extbase_Persistence_ObjectStorage) {
-			$validator = $this->objectManager->get('Tx_Extbase_Validation_ValidatorResolver')->createValidator('Tx_Fileman_Domain_Validator_ObjectPropertiesValidator',$this->options);
-			$valid = TRUE;
+			if ($value instanceof Tx_Extbase_Persistence_ObjectStorage) {
+				$validator = $this->objectManager->get('Tx_Extbase_Validation_ValidatorResolver')->createValidator('Tx_Fileman_Domain_Validator_ObjectPropertiesValidator',$this->options);
+				$valid = TRUE;
 
-			//if the storage is a File ObjectStorage, we need to initialize some stuff for fileService that need to happen exactly once per storage
-			if ($value->current() instanceof Tx_Fileman_Domain_Model_File) {
-				$this->fileService->findSubstitutes();
-				$this->fileService->reset();
-			} //we could really only remove this if we create a FileStorage validator from which the objectStorage validation originates, and place it there instead
+				//if the storage is a File ObjectStorage, we need to initialize some stuff for fileService that need to happen exactly once per storage
+				if ($value->current() instanceof Tx_Fileman_Domain_Model_File) {
+					$this->fileService->findSubstitutes();
+					$this->fileService->reset();
+				} //we could really only remove this if we create a FileStorage validator from which the objectStorage validation originates, and place it there instead
 
-			foreach ($value as $obj) {
-				if (!$validator->isValid($obj)) {
-					$valid = FALSE;
+				foreach ($value as $obj) {
+					if (!$validator->isValid($obj)) {
+						$valid = FALSE;
 
-					if (!isset($storageError)) {
-						$propertyName = str_replace('Tx_Fileman_Domain_Model_','',get_class($obj));
-						$propertyName[0] = strtolower($propertyName[0]);
-						$storageError = new Tx_Fileman_Validation_StorageError($propertyName);
+						if (!isset($storageError)) {
+							$propertyName = str_replace('Tx_Fileman_Domain_Model_','',get_class($obj));
+							$propertyName[0] = strtolower($propertyName[0]);
+							$storageError = new Tx_Fileman_Validation_StorageError($propertyName);
+						}
+
+						$storageError->addErrors($obj->getIndex(), $validator->getErrors());
 					}
-
-					$storageError->addErrors($obj->getIndex(), $validator->getErrors());
 				}
+				$this->errors[] = $storageError;
 			}
-			$this->errors[] = $storageError;
-		}
-		return $valid;
+			return $valid;
+		#}
 	}
 
 }

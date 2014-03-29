@@ -91,6 +91,33 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	}
 
 
+	// @TODO doc
+	public function initializeCreateAction() {
+		if ($this->configurationManager->isFeatureEnabled('rewrittenPropertyMapper')) {
+			if ($this->request->hasArgument('files')) {
+				$value = $this->request->getArgument('files');
+				// i2 - iN
+				$indexArray = preg_grep('/^i([2-9]|([1-9][0-9]*))$/', array_keys($value['file']));
+				$propertyMapConfig = $this->arguments->getArgument('files')->getPropertyMappingConfiguration();
+				if (empty($indexArray)) {
+					$propertyMapConfig->setTargetTypeForSubProperty('file.i1.uploadData', 'array');
+				} else {
+					$subPropertyMapConfig = $propertyMapConfig->getConfigurationFor('file');
+					foreach ($indexArray as $index) {
+						// $propertyMapConfig->allowAllProperties();
+						$propertyMapConfig->allowCreationForSubProperty('file.' . $index);
+						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.uploadData', 'array');
+						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.fileUri', 'string');
+						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.alternateTitle', 'string');
+						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.description', 'string');
+						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.links', 'string');
+						$subPropertyMapConfig->allowProperties($index);
+						$subPropertyMapConfig->forProperty($index)->allowProperties('uploadData', 'alternateTitle', 'description', 'links');
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * action list
@@ -197,8 +224,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function newAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_FileStorage $files = NULL) {
 		if ($files !== NULL) {
-			//when a validation error occurs, $files will contain all file entries, but the attributes given
-			//by fileService during validation, because the forward() tells extbase to re-map the request arguments
+			//when a validation error occurs, $files will contain all file entries, but not the attributes given
+			//by fileService during validation, because forward() tells extbase to re-map the request arguments
 			$this->fileService->reset(); //so start over!
 			$fileStorage = $files->getFile();
 			foreach ($fileStorage as $hash=>$file) {
