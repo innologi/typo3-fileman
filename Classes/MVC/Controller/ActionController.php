@@ -96,5 +96,47 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 		$this->feUser = $this->userService->getCurrentUser();
 	}
 
+	/**
+	 * Adds the needed validators to the Arguments:
+	 *
+	 * - Validators checking the data type from the @param annotation
+	 * - Custom validators specified with validate annotations.
+	 * - Model-based validators (validate annotations in the model)
+	 * - Custom model validator classes
+	 *
+	 * This override works around the 6.2-bug where it no longer supports
+	 * dontvalidate for the deprecatedPropertyMapper when a matching
+	 * Domain Model validator is present.
+	 *
+	 * @return void
+	 */
+	protected function initializeActionMethodValidators() {
+		if (version_compare(TYPO3_branch, '6.2', '<')) {
+			parent::initializeActionMethodValidators();
+		} else {
+			// @deprecated since Extbase 1.4.0, will be removed two versions after Extbase 6.1
+
+			$parameterValidators = $this->validatorResolver->buildMethodArgumentsValidatorConjunctions(get_class($this), $this->actionMethodName);
+			$dontValidateAnnotations = array();
+
+			$methodTagsValues = $this->reflectionService->getMethodTagsValues(get_class($this), $this->actionMethodName);
+			if (isset($methodTagsValues['dontvalidate'])) {
+				$dontValidateAnnotations = $methodTagsValues['dontvalidate'];
+			}
+
+			foreach ($this->arguments as $argument) {
+				$validator = $parameterValidators[$argument->getName()];
+				if (array_search('$' . $argument->getName(), $dontValidateAnnotations) === FALSE) {
+					$baseValidatorConjunction = $this->validatorResolver->getBaseValidatorConjunction($argument->getDataType());
+					if ($baseValidatorConjunction !== NULL) {
+						$validator->addValidator($baseValidatorConjunction);
+					}
+					// CHANGE: moved this INSIDE the if, instead of outside
+					$argument->setValidator($validator);
+				}
+			}
+		}
+	}
+
 }
 ?>
