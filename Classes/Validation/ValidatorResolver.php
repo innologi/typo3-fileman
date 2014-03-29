@@ -162,6 +162,7 @@ class Tx_Fileman_Validation_ValidatorResolver extends Tx_Extbase_Validation_Vali
 		}
 
 		$this->addCustomValidators($targetClassName, $conjunctionValidator);
+	}
 
 }
 ?>
