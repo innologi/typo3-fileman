@@ -59,7 +59,9 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_Link $link
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @dontvalidate $link
+	 * @ignorevalidation $link
 	 * @return void
 	 */
 	public function newAction( Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link = NULL) {
@@ -73,6 +75,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_Link $link
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
@@ -105,7 +108,9 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_Link $link
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @dontvalidate $link
+	 * @ignorevalidation $link
 	 * @return void
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
@@ -119,6 +124,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_Link $link
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
@@ -149,7 +155,9 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_Link $link
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @dontvalidate $link
+	 * @ignorevalidation $link
 	 * @return void
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {

@@ -126,6 +126,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category The category to show files of
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @return void
 	 */
 	public function listAction(Tx_Fileman_Domain_Model_Category $category = NULL) {
@@ -218,7 +219,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @dontvalidate $files
+	 * @ignorevalidation $files
 	 * @dontverifyrequesthash
 	 * @return void
 	 */
@@ -252,6 +255,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_FileStorage $files
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @dontverifyrequesthash
 	 * @return void
 	 */
@@ -299,7 +303,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @dontvalidate $file
+	 * @ignorevalidation $file
 	 * @return void
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
@@ -315,6 +321,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
@@ -345,7 +352,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
 	 * @dontvalidate $category
+	 * @ignorevalidation $category
 	 * @dontvalidate $file
+	 * @ignorevalidation $file
 	 * @return void
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
