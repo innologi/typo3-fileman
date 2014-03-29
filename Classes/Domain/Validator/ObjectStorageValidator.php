@@ -94,7 +94,9 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 						$storageError->addErrors($obj->getIndex(), $validator->getErrors());
 					}
 				}
-				$this->errors[] = $storageError;
+				if (!$valid) {
+					$this->errors[] = $storageError;
+				}
 			}
 			return $valid;
 		#}
