@@ -49,14 +49,14 @@ class Tx_Fileman_Domain_Validator_ObjectPropertiesValidator extends Tx_Fileman_V
 			#@LOW error?
 		}
 
-		$this->errors = array(); //the validator will be created only once, which means errors start piling up from different objects if we don't empty the array
-		$validatorResolver = $this->objectManager->get('Tx_Fileman_Validation_ValidatorResolver'); //the original resolver does the same with validatorconjunctions we create as the above issue, so we use our own
+		$validatorResolver = $this->objectManager->get('Tx_Fileman_Validation_ValidatorResolver'); //the original resolver creates a single conjunction instance which accumulates errors, so we use our own
 		$validator = $validatorResolver->getBaseValidatorConjunction(get_class($value),TRUE); //TRUE enables the noStorage workaround, that prevents multiple same-class instances to accumulate their siblings errors
 		if ($validator->isValid($value)) {
 			return TRUE;
 		}
 
-		$this->errors = array_merge($this->errors,$validator->getErrors());
+		//the validator will be created only once, which means errors start piling up from different objects if we don't empty the array
+		$this->errors = $validator->getErrors();
 		return FALSE;
 	}
 
