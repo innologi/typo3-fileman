@@ -82,7 +82,12 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 		$this->categoryRepository->add($category);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
-		$this->redirect('list');
+
+		if ($parentCategory === NULL) {
+			$this->redirect('list');
+		} else {
+			$this->redirect('list', 'File', NULL, array('category' => $parentCategory));
+		}
 	}
 
 	/**
