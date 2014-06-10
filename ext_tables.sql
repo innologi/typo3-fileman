@@ -7,12 +7,12 @@ CREATE TABLE tx_fileman_domain_model_file (
 	pid int(11) DEFAULT '0' NOT NULL,
 
 	file_uri varchar(255) DEFAULT '' NOT NULL,
-    alternate_title varchar(255) DEFAULT '' NOT NULL,
-    description text NOT NULL,
-    links text NOT NULL,
-    link_names text NOT NULL,
-    category int(11) unsigned DEFAULT '0' NOT NULL,
-    fe_user int(11) unsigned DEFAULT '0' NOT NULL,
+	alternate_title varchar(255) DEFAULT '' NOT NULL,
+	description text NOT NULL,
+	links text NOT NULL,
+	link_names text NOT NULL,
+	category int(11) unsigned DEFAULT '0' NOT NULL,
+	fe_user int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -57,6 +57,8 @@ CREATE TABLE tx_fileman_domain_model_category (
 	description text NOT NULL,
 	file int(11) unsigned DEFAULT '0' NOT NULL,
 	link int(11) unsigned DEFAULT '0' NOT NULL,
+	sub_category int(11) unsigned DEFAULT '0' NOT NULL,
+	parent_category int(11) unsigned DEFAULT '0' NOT NULL,
 	fe_user int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
@@ -102,7 +104,7 @@ CREATE TABLE tx_fileman_domain_model_link (
 	link_name varchar(255) DEFAULT '' NOT NULL,
 	description text NOT NULL,
 	category int(11) unsigned DEFAULT '0' NOT NULL,
-    fe_user int(11) unsigned DEFAULT '0' NOT NULL,
+	fe_user int(11) unsigned DEFAULT '0' NOT NULL,
 
 	tstamp int(11) unsigned DEFAULT '0' NOT NULL,
 	crdate int(11) unsigned DEFAULT '0' NOT NULL,
@@ -133,6 +135,19 @@ CREATE TABLE tx_fileman_domain_model_link (
 	KEY t3ver_oid (t3ver_oid,t3ver_wsid),
 	KEY language (l10n_parent,sys_language_uid)
 
+);
+
+#
+# Table structure for table 'tx_fileman_category_mm'
+#
+CREATE TABLE tx_fileman_category_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
 );
 
 #

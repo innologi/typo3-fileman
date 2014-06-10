@@ -4,14 +4,29 @@
 <f:section name="main">
 <h3>{category.title}</h3>
 
-<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+<f:if condition="{category.parentCategory}">
+<f:then>
+	<f:for each="{category.parentCategory}" as="parent">
+		<f:link.action class="button-back" action="list" controller="File" arguments="{category : parent}"><f:translate key="tx_fileman_filelist.go_back_to" arguments="{0: parent.title}" /></f:link.action>
+	</f:for>
+</f:then>
+<f:else>
+	<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+</f:else>
+</f:if>
+
 <f:if condition="{isLoggedIn}">
+	<f:link.action action="new" controller="Category" arguments="{parentCategory : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
 	<f:link.action action="new" controller="File" arguments="{category : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_file" /></f:link.action>
 	<f:link.action action="new" controller="Link" arguments="{category : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link" /></f:link.action>
 </f:if>
 
 <table class="tx_fileman" summary="{f:translate(key:'tx_fileman_filelist.file_summary')}">
 	<caption><f:translate key="tx_fileman_filelist.file_caption" /></caption>
+	
+	<f:if condition="{category.subCategory}">
+		<f:render partial="Category/List" arguments="{categories : category.subCategory}" />
+	</f:if>
 
 	<f:if condition="{files}">
 		<tr>

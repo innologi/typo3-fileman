@@ -39,7 +39,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * @return void
 	 */
 	public function listAction() {
-		$categories = $this->categoryRepository->findAll();
+		$categories = $this->categoryRepository->findInRoot();
 		$this->view->assign('categories', $categories);
 
 		if ($this->feUser) {
@@ -53,22 +53,32 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * action new
 	 *
 	 * @param $category
+	 * @param $parentCategory
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
+	 * @dontvalidate $parentCategory
+	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
-	public function newAction(Tx_Fileman_Domain_Model_Category $category = NULL) {
+	public function newAction(Tx_Fileman_Domain_Model_Category $category = NULL, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
+		$this->view->assign('parentCategory', $parentCategory);
 	}
 
 	/**
 	 * action create
 	 *
-	 * @param $category
+	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
+	 * @dontvalidate $parentCategory
+	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
-	public function createAction(Tx_Fileman_Domain_Model_Category $category) {
+	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$category->setFeUser($this->feUser);
+		if ($parentCategory !== NULL) {
+			$category->addParentCategory($parentCategory);
+		}
 		$this->categoryRepository->add($category);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);

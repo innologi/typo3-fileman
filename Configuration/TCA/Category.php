@@ -6,10 +6,10 @@ if (!defined ('TYPO3_MODE')) {
 $TCA['tx_fileman_domain_model_category'] = array(
 	'ctrl' => $TCA['tx_fileman_domain_model_category']['ctrl'],
 	'interface' => array(
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, file, link, fe_user',
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, sub_category, file, link, parent_category, fe_user',
 	),
 	'types' => array( #@TODO add div for content (file, link)
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,file,link,fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,sub_category,file,link,parent_category,fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -123,6 +123,43 @@ $TCA['tx_fileman_domain_model_category'] = array(
 			),
 			'defaultExtras' => 'richtext[]',
 		),
+		'sub_category' => array(
+			'exclude' => 0,
+			'label' => 'Subcategories', #@TODO llang
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_fileman_domain_model_category',
+				'MM' => 'tx_fileman_category_mm',
+				'MM_opposite_field' => 'parent_category', //this needs to be set on only ONE side, with bidirectional!
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'maxitems' => 999,
+				'multiple' => 0,
+				'wizards' => array(
+					'_PADDING' => 1,
+					'_VERTICAL' => 1,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'icon' => 'edit2.gif',
+						'popup_onlyOpenIfSelected' => 1,
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+					),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new',
+						'icon' => 'add.gif',
+						'params' => array(
+							'table' => 'tx_fileman_domain_model_category',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+						),
+						'script' => 'wizard_add.php',
+					),
+				),
+			),
+		),
 		'file' => array(
 			'exclude' => 0,
 			'label' => 'Files', #@TODO llang
@@ -192,6 +229,42 @@ $TCA['tx_fileman_domain_model_category'] = array(
 							'pid' => '###CURRENT_PID###',
 							'setValue' => 'prepend'
 							),
+						'script' => 'wizard_add.php',
+					),
+				),
+			),
+		),
+		'parent_category' => array(
+			'exclude' => 0,
+			'label' => 'Parent categories',
+			'config' => array(
+				'type' => 'select',
+				'foreign_table' => 'tx_fileman_domain_model_category',
+				'MM' => 'tx_fileman_category_mm',
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'maxitems' => 999,
+				'multiple' => 0,
+				'wizards' => array(
+					'_PADDING' => 1,
+					'_VERTICAL' => 1,
+					'edit' => array(
+						'type' => 'popup',
+						'title' => 'Edit',
+						'script' => 'wizard_edit.php',
+						'icon' => 'edit2.gif',
+						'popup_onlyOpenIfSelected' => 1,
+						'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
+					),
+					'add' => Array(
+						'type' => 'script',
+						'title' => 'Create new',
+						'icon' => 'add.gif',
+						'params' => array(
+							'table' => 'tx_fileman_domain_model_category',
+							'pid' => '###CURRENT_PID###',
+							'setValue' => 'prepend'
+						),
 						'script' => 'wizard_add.php',
 					),
 				),

@@ -50,6 +50,14 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	protected $description;
 
 	/**
+	 * Subcategories
+	 *
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @lazy
+	 */
+	protected $subCategory;
+
+	/**
 	 * Files within this category
 	 *
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File>
@@ -64,6 +72,14 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @lazy
 	 */
 	protected $link;
+
+	/**
+	 * Parent-categories
+	 *
+	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @lazy
+	 */
+	protected $parentCategory;
 
 	/**
 	 * Sum of $link and $file counts
@@ -98,6 +114,8 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	protected function initStorageObjects() {
 		$this->file = new Tx_Extbase_Persistence_ObjectStorage();
 		$this->link = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->subCategory = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->parentCategory = new Tx_Extbase_Persistence_ObjectStorage();
 	}
 
 	/**
@@ -136,6 +154,45 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 */
 	public function setDescription($description) {
 		$this->description = trim($description);
+	}
+
+	/**
+	 * Adds a SubCategory
+	 *
+	 * @param Tx_Fileman_Domain_Model_Category $subCategory
+	 * @return void
+	 */
+	public function addSubCategory(Tx_Fileman_Domain_Model_Category $subCategory) {
+		$this->subCategory->attach($subCategory);
+	}
+
+	/**
+	 * Removes a SubCategory
+	 *
+	 * @param Tx_Fileman_Domain_Model_Category $subCategoryToRemove The SubCategory to be removed
+	 * @return void
+	 */
+	public function removeSubCategory(Tx_Fileman_Domain_Model_Category $subCategoryToRemove) {
+		$this->subCategory->detach($subCategoryToRemove);
+	}
+
+	/**
+	 * Returns the subCategory
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage $subCategory
+	 */
+	public function getSubCategory() {
+		return $this->subCategory;
+	}
+
+	/**
+	 * Sets the subCategory
+	 *
+	 * @param Tx_Extbase_Persistence_ObjectStorage $subCategory
+	 * @return void
+	 */
+	public function setSubCategory(Tx_Extbase_Persistence_ObjectStorage $subCategory) {
+		$this->subCategory = $subCategory;
 	}
 
 	/**
@@ -217,6 +274,45 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	}
 
 	/**
+	 * Adds a ParentCategory
+	 *
+	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
+	 * @return void
+	 */
+	public function addParentCategory(Tx_Fileman_Domain_Model_Category $parentCategory) {
+		$this->parentCategory->attach($parentCategory);
+	}
+
+	/**
+	 * Removes a ParentCategory
+	 *
+	 * @param Tx_Fileman_Domain_Model_Category $parentCategoryToRemove The ParentCategory to be removed
+	 * @return void
+	 */
+	public function removeParentCategory(Tx_Fileman_Domain_Model_Category $parentCategoryToRemove) {
+		$this->parentCategory->detach($parentCategoryToRemove);
+	}
+
+	/**
+	 * Returns the parentCategory
+	 *
+	 * @return Tx_Extbase_Persistence_ObjectStorage $parentCategory
+	 */
+	public function getParentCategory() {
+		return $this->parentCategory;
+	}
+
+	/**
+	 * Sets the parentCategory
+	 *
+	 * @param Tx_Extbase_Persistence_ObjectStorage $parentCategory
+	 * @return void
+	 */
+	public function setParentCategory(Tx_Extbase_Persistence_ObjectStorage $parentCategory) {
+		$this->parentCategory = $parentCategory;
+	}
+
+	/**
 	 * Returns the feUser
 	 *
 	 * @return Tx_Fileman_Domain_Model_FrontendUser feUser
@@ -241,7 +337,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @return integer
 	 */
 	public function getCount() {
-		$this->count = $this->file->count() + $this->link->count();
+		$this->count = $this->file->count() + $this->link->count() + $this->subCategory->count();
 		return $this->count;
 	}
 

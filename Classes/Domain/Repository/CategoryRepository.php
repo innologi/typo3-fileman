@@ -33,5 +33,18 @@
  */
 class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persistence_Repository {
 
+	/**
+	 * Returns all objects of this repository that are in the root (no parents)
+	 *
+	 * @return array An array of objects, empty if no objects found
+	 */
+	public function findInRoot() {
+		$query = $this->createQuery();
+		$result = $query->matching(
+			$query->equals('parentCategory', 0)
+		)->execute();
+		return $result;
+	}
+
 }
 ?>
