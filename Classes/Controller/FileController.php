@@ -327,7 +327,6 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
-		#@FIX there should be validation stopping an empty file.category field
 		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {
