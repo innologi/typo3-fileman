@@ -31,6 +31,7 @@
 			<label index="tx_fileman_filelist.edit_link_success">Link updated</label>
 			<label index="tx_fileman_filelist.delete_category_success">Category deleted</label>
 			<label index="tx_fileman_filelist.delete_file_success">File deleted</label>
+			<label index="tx_fileman_filelist.remove_file_success">File removed from category</label>
 			<label index="tx_fileman_filelist.delete_link_success">Link deleted</label>
 			<label index="tx_fileman_filelist.button_edit">Edit</label>
 			<label index="tx_fileman_filelist.button_delete">Delete</label>
@@ -102,6 +103,7 @@
 			<label index="tx_fileman_filelist.edit_link_success">Link gewijzigd</label>
 			<label index="tx_fileman_filelist.delete_category_success">Categorie verwijderd</label>
 			<label index="tx_fileman_filelist.delete_file_success">Bestand verwijderd</label>
+			<label index="tx_fileman_filelist.remove_file_success">Bestand uit categorie gehaald</label>
 			<label index="tx_fileman_filelist.delete_link_success">Link verwijderd</label>
 			<label index="tx_fileman_filelist.button_edit">Wijzigen</label>
 			<label index="tx_fileman_filelist.button_delete">Verwijderen</label>

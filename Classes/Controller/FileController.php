@@ -327,6 +327,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+		#@FIX there should be validation stopping an empty file.category field
 		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {
@@ -369,17 +370,22 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			$arguments = array('category'=>$category);
 		}
 
-		// removed from all cats? fully remove it
+		// whats next depends on whether it has any remaining category
 		if ($file->getCategory()->count() === 0) {
 			$this->fileRepository->remove($file);
-			#@FIX delete file?
+
+			#@LOW change this as soon as its no longer static / using FAL
+			// $uri = PATH_site . 'uploads/tx_fileman/' . $file->getFileUri();
+			#@TODO try/catch?
+			// unlink($uri);
+
+			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
 		} else {
 			$this->fileRepository->update($file);
+			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.remove_file_success', $this->extensionName);
 		}
 
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
-
 		$this->redirect('list',NULL,NULL,$arguments);
 	}
 
