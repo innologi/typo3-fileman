@@ -310,6 +310,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
 		$this->view->assign('category', $category); //category is given for URL-consistency and redirecting afterwards
+		#@LOW can we make the structure more clear in the selection?
+		$this->view->assign('categories', $this->categoryRepository->findAll());
 		$this->view->assign('file', $file);
 	}
 
@@ -358,17 +360,25 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
-		$this->fileRepository->remove($file);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$arguments = NULL;
 
 		//category
-		$arguments = NULL;
 		if ($category !== NULL) {
-			$category->removeFile($file);
+			$file->removeCategory($category);
+			//$category->removeFile($file);
 			$arguments = array('category'=>$category);
 		}
-		#@FIX delete file?
+
+		// removed from all cats? fully remove it
+		if ($file->getCategory()->count() === 0) {
+			$this->fileRepository->remove($file);
+			#@FIX delete file?
+		} else {
+			$this->fileRepository->update($file);
+		}
+
+		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
+		$this->flashMessageContainer->add($flashMessage);
 
 		$this->redirect('list',NULL,NULL,$arguments);
 	}

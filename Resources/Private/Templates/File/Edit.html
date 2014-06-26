@@ -16,6 +16,14 @@
 		<br />
 		
 		<f:render partial="File/FormFields" />
+		
+		<f:translate key="tx_fileman_domain_model_file.category" />
+		<br />
+		<f:form.select
+			property="category" options="{categories}"
+			optionValueField="uid" optionLabelField="title"
+			multiple="multiple" size="20"
+		/>
 			
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.edit_file_submit')}" class="submit" />
 	</fieldset>
