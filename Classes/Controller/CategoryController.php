@@ -94,40 +94,58 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * action edit
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
 	 * @dontvalidate $category
+	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $category
+	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
-	public function editAction(Tx_Fileman_Domain_Model_Category $category) {
+	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
+		$this->view->assign('parentCategory', $parentCategory);
 	}
 
 	/**
 	 * action update
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
+	 * @dontvalidate $parentCategory
+	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
-	public function updateAction(Tx_Fileman_Domain_Model_Category $category) {
+	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->categoryRepository->update($category);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
-		$this->redirect('list');
+		if ($parentCategory === NULL) {
+			$this->redirect('list');
+		} else {
+			$this->redirect('list', 'File', NULL, array('category' => $parentCategory));
+		}
 	}
 
 	/**
 	 * action delete
 	 *
 	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
+	 * @dontvalidate $parentCategory
+	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
-	public function deleteAction(Tx_Fileman_Domain_Model_Category $category) {
+	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->categoryRepository->remove($category);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
-		$this->redirect('list');
+		if ($parentCategory === NULL) {
+			$this->redirect('list');
+		} else {
+			$this->redirect('list', 'File', NULL, array('category' => $parentCategory));
+		}
 	}
 
 }

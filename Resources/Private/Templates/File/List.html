@@ -25,7 +25,7 @@
 	<caption><f:translate key="tx_fileman_filelist.file_caption" /></caption>
 	
 	<f:if condition="{category.subCategory}">
-		<f:render partial="Category/List" arguments="{categories : category.subCategory, isSuperUser : isSuperUser}" />
+		<f:render partial="Category/List" arguments="{categories : category.subCategory, parentCategory : category, isSuperUser : isSuperUser}" />
 	</f:if>
 
 	<f:if condition="{files}">
