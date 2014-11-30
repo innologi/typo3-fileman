@@ -35,7 +35,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controller_ErrorOnDebugController {
+class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controller_CsrfProtectController {
 
 	/**
 	 * Logged in frontend user
@@ -92,6 +92,7 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	 * @return void
 	 */
 	protected function initializeAction() {
+		parent::initializeAction();
 		//get currently logged in user
 		$this->feUser = $this->userService->getCurrentUser();
 	}

@@ -1,3 +1,4 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="main">
@@ -9,7 +10,7 @@
 
 <f:render partial="FormErrors" arguments="{for: 'category'}" />
 
-<f:form enctype="multipart/form-data" method="post" action="create" name="category" object="{category}" arguments="{parentCategory : parentCategory}">
+<fi:form enctype="multipart/form-data" method="post" action="create" name="category" object="{category}" arguments="{parentCategory : parentCategory}" syncToken="TRUE" absolute="TRUE">
 	<f:render partial="Category/FormFields" arguments="{category:category}" />
-</f:form>
+</fi:form>
 </f:section>

@@ -9,23 +9,23 @@
  */
 
 jQuery(document).ready(function() {
-	
+
 	//***********************
 	// Hidden Field Switcher
 	//***********************
-	
+
 	//click function toggles unhide class on all relevant elements
 	jQuery('.tx-fileman .rel-switch').click(function() {
 		jQuery(this).next('.tx-fileman .rel-links').slideToggle();
 		return false;
 	});
-	
+
 	//by default all is unhidden (in case of no js-support), force once to set initial state hidden
 	jQuery('.tx-fileman .rel-switch').show();
 	jQuery('.tx-fileman .rel-links').hide();
-	
-	
-	
+
+
+
 	//*****************
 	// Auto fill title
 	//*****************
@@ -33,7 +33,7 @@ jQuery(document).ready(function() {
 	jQuery('.tx-fileman .file-entry').each(function(i, entry) {
 		initAutoFill(entry);
 	});
-	
+
 	//a PHP basename() equivalent
 	function basename(string) {
 		string = string.replace(/\\/g,'/'); //note the regex global option in order to replace more than once
@@ -57,10 +57,10 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
-	
-	
+
+
 	//*********************
-	// Upload progress bar 
+	// Upload progress bar
 	//*********************
 
 	//@TODO: SHOULD BE ABLE TO SET THE UPLOAD PROGRESS BAR TYPE FROM TS
@@ -74,13 +74,13 @@ jQuery(document).ready(function() {
 	var sendingFileText = "###SENDING_FILE###";
 	var debug = "###DEBUG###";
 	var progressType = "###UPLOADPROGRESS###";
-	
+
 	if (progressType != 'none') {
-		
+
 		jQuery('.tx-fileman .init-progressbar').each(function(i, form) {
 			var upload_id = i + upload_id_gen;
 			jQuery(form).after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
-			
+
 			if (progressType == 'session') {
 				jQuery(form).prepend('<input type="hidden" name="'+sesFieldName+'" value="' + upload_id + '" />');
 			} else if (progressType == 'apc') {
@@ -88,24 +88,24 @@ jQuery(document).ready(function() {
 			} else if (progressType == 'uploadprogress') {
 				jQuery(form).prepend('<input type="hidden" name="UPLOAD_IDENTIFIER" value="' + upload_id + '" />');
 			}
-			
+
 			jQuery(form).on('submit', function() {
 				//only show the progressbar if fileupload is not empty
 				var fileuploadValue = jQuery(this).find('input[type=file].fileupload').val();
 				if (fileuploadValue != undefined && fileuploadValue != '') {
 					jQuery(this).hide();
 					jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
-					
+
 					updateProgressInt[i] = setInterval(function() {
 						updateProgress(upload_id,i);
 					}, 100); //@TODO: should be configurable
-					updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here 
+					updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here
 				}
 			});
 		});
-		
+
 	}
-	
+
 	//@TODO: url should be set from TS, no cache should not be necessary once headers in script are set
 	//updates progress in progress bar
 	function updateProgress(id,i) {
@@ -129,13 +129,13 @@ jQuery(document).ready(function() {
 			}
 		});
 	};
-	
-	
-	
+
+
+
 	//**********************
 	// Multi-file Upload UI
 	//**********************
-	
+
 	var fileCountMax = "###MAX_FILE_UPLOADS###";
 	var addFileText = "###ADD_FILE###";
 	var delFileText = "###DEL_FILE###";
@@ -149,32 +149,32 @@ jQuery(document).ready(function() {
 					fileCount: fileEntries.size(), //there could be more files initially already, due to validation errors
 					lastIndex: getLastIndex(form)
 			};
-			
+
 			//create buttons
 			jQuery(form).find('.submit').before('<a href="#" class="add-file-entry" title="'+addFileText+'">'+addFileText+'</a><a href="#" class="del-file-entry" title="'+delFileText+'">'+delFileText+'</a>');
 			var addFileLink = jQuery(form).find('a.add-file-entry');
 			var delFileLink = addFileLink.next('a.del-file-entry');
 			delFileLink.remove(); //remove it here, clone it later
-			
+
 			//set initial state to disabled where it applies
 			if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //no adds possible if @ max
 			if (formVar.fileCount == 1) delFileLink.addClass('disabled'); //no dels possible if @ min
 			if (!jQuery(form).hasClass('multi-file-add')) addFileLink.hide(); //HIDE button if form doesn't meet requirement
-			
+
 			//for each initial file-entry, do the following
 			fileEntries.each(function(i,entry) {
 				var fileUpload = jQuery(entry).find('.fileupload');
-				
+
 				//place delFileLink clone
 				var clone = delFileLink.clone();
 				jQuery(clone).insertAfter(fileUpload);
-				
+
 				//when a delete link is clicked:
 				jQuery(clone).click(function() { //@TODO: undo button?
 					deleteFileEntry(formVar,addFileLink,this,form);
 					return false;
 				});
-				
+
 				//the multi-file UI can get crowded, so we hide the optional fields under a button
 				var optional = jQuery(entry).find('.optional');
 				optional.hide();
@@ -186,8 +186,8 @@ jQuery(document).ready(function() {
 					return false;
 				});
 			});
-			
-			
+
+
 			//only add this event if form meets requirements
 			if (jQuery(form).hasClass('multi-file-add')) {
 				//when an add link is clicked:
@@ -196,7 +196,7 @@ jQuery(document).ready(function() {
 						if (formVar.fileCount == 1) jQuery(form).find('a.del-file-entry').removeClass('disabled'); //if we were @ min, we can enable the del link again
 						formVar.fileCount++;
 						//clone the last file-entry
-						var fileEntry = jQuery(this).prevAll('.file-entry:first'); 
+						var fileEntry = jQuery(this).prevAll('.file-entry:first');
 						var clone = fileEntry.clone();
 						//replace its index in the clone
 						var findName = '[file][i' + formVar.lastIndex + ']';
@@ -207,7 +207,7 @@ jQuery(document).ready(function() {
 							//jQuery(elem).attr('value',''); //if input is type=text..
 							jQuery(elem).val(null); //input values are copied with the clone..
 						});
-						
+
 						//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign certain events explicitly
 							//--> show optional
 						jQuery(clone).find('.show-optional').click(function() {
@@ -221,42 +221,106 @@ jQuery(document).ready(function() {
 							deleteFileEntry(formVar,addFileLink,this,form);
 							return false;
 						});
-						
+
 						//place it before the button
 						jQuery(this).before(clone);
-						
+
 						if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
 					}
 					return false;
 				});
 			}
-		
+
 		});
 	}
-	
+
 	//deletes a file entry
 	function deleteFileEntry(countVars, addButton, deleteButton, form) {
 		if (countVars.fileCount > 1  && !jQuery(deleteButton).hasClass('disabled')) { //only works if not disabled
 			if (countVars.fileCount == fileCountMax) addButton.removeClass('disabled'); //if we were @ max, we can enable add link again
 			countVars.fileCount--;
-			
+
 			jQuery(deleteButton).parents('.file-entry').remove(); //remove the file-entry the button belongs to
 			countVars.lastIndex = getLastIndex(form);
-			
-			if (countVars.fileCount == 1) jQuery(form).find('a.del-file-entry').addClass('disabled'); //if we are @ min now, we need to disable ALL del links	
+
+			if (countVars.fileCount == 1) jQuery(form).find('a.del-file-entry').addClass('disabled'); //if we are @ min now, we need to disable ALL del links
 		}
 	}
-	
+
 	//retrieves the last index from the form
 	function getLastIndex(form) {
 		//we want 999 from: <input class="fileupload" name="*[file][i999][fileUri]" />
 		return jQuery(form).find('.fileupload:last').attr('name').match(/\[file\]\[i([0-9]+)\]/i)[1];
 	}
-	
+
 	//toggle optional fields
 	function toggleOptional(optional, button) {
 		jQuery(optional).slideToggle();
 		jQuery(button).toggleClass('expanded'); //this class helps for indicating an expanded view through styles on the button
 	}
-	
+
+
+
+	//**********************************************
+	// XHR CSRF-protection
+	//**********************************************
+
+	// @TODO read class through TS?
+	var $csrfProtectA = jQuery('.tx-fileman a.csrf-protect'),
+		$csrfProtectForm = jQuery('.tx-fileman form.csrf-protect'),
+		xhrPageType = '###XHR_PAGETYPE###',
+		xhrPageId = '###XHR_PAGEID###';
+	if ($csrfProtectA[0] || $csrfProtectForm[0]) {
+		var $submitButtons = jQuery(':submit', $csrfProtectForm),
+			encodedUrls = [];
+		$submitButtons.hide();
+		$csrfProtectA.hide();
+		$csrfProtectA.each(function (i, a) {
+			encodedUrls.push(jQuery(a).attr('data-utoken'));
+		});
+		$csrfProtectForm.each(function (i, form) {
+			encodedUrls.push(jQuery(form).attr('data-utoken'));
+		});
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('HEAD', 'index.php?id=' + xhrPageId + '&type=' + xhrPageType + '&tx_fileman_filelist[controller]=Category&tx_fileman_filelist[action]=ajaxGenerateTokens', true);
+		// @TODO what if the header is too large? (e.g. default apache is 8kb)
+		xhr.setRequestHeader('innologi--utoken', encodedUrls);
+		xhr.onload = function(e) {
+			if (this.status == 200) {
+				var tokens = this.getResponseHeader('innologi__stoken'),
+					tokenCounter = 0;
+				if (tokens !== null) {
+					tokens = tokens.split(',');
+					$csrfProtectA.each(function (i, a) {
+						jQuery(a).attr('data-stoken', tokens[tokenCounter++]);
+						jQuery(a).click(function () {
+							verifyToken(
+								jQuery(this).attr('data-stoken'), jQuery(this).attr('data-utoken')
+							);
+						});
+					});
+					$csrfProtectForm.each(function (i, form) {
+						jQuery(form).attr('data-stoken', tokens[tokenCounter++]);
+						jQuery(form).submit(function () {
+							verifyToken(
+								jQuery(this).attr('data-stoken'), jQuery(this).attr('data-utoken')
+							);
+						});
+					});
+				}
+			}
+			$submitButtons.show();
+			$csrfProtectA.show();
+		};
+		xhr.send();
+	}
+
+	function verifyToken(token, tokenUri) {
+		var xhr = new XMLHttpRequest();
+		xhr.open('HEAD', 'index.php?id=' + xhrPageId + '&type=' + xhrPageType + '&tx_fileman_filelist[controller]=Category&tx_fileman_filelist[action]=ajaxVerifyToken&tx_fileman_filelist[encodedUrl]=' + tokenUri, false);
+		xhr.setRequestHeader('innologi--stoken', token);
+		xhr.send();
+	}
+
 });

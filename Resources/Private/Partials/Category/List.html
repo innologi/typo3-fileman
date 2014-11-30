@@ -1,3 +1,4 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
 <tr>
 	<th scope="col"><f:translate key="tx_fileman_domain_model_category.title" /></th>
 	<th scope="col"><f:translate key="tx_fileman_domain_model_category.description" /></th>
@@ -11,7 +12,9 @@
 			<f:if condition="{isSuperUser}" >
 				<f:link.action action="edit" controller="Category" arguments="{category : category, parentCategory : parentCategory}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 				<f:if condition="{category.count} == 0">
-					<f:link.action action="delete" controller="Category" arguments="{category : category, parentCategory : parentCategory}" class="button-delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+					<fi:form enctype="multipart/form-data" method="post" controller="Category" action="delete" object="{category}" objectName="category" class="delete-form one-button-form" arguments="{parentCategory : parentCategory}" syncToken="TRUE" absolute="TRUE">
+						<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key : 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
+					</fi:form>
 				</f:if>
 			</f:if>
 		</td>

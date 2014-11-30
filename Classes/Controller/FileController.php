@@ -257,6 +257,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontverifyrequesthash
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
@@ -324,6 +325,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_File $file
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
@@ -357,6 +359,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @ignorevalidation $category
 	 * @dontvalidate $file
 	 * @ignorevalidation $file
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {

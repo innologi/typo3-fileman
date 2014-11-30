@@ -43,7 +43,9 @@
 	 				</fi:link.download>
 	 				<f:if condition="{isSuperUser}">
 						<f:link.action action="edit" arguments="{file : file, category : category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-						<f:link.action action="delete" arguments="{file : file, category : category}" class="button-delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+						<fi:form enctype="multipart/form-data" method="post" action="delete" object="{file}" objectName="file" class="delete-form one-button-form" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
+							<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key : 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
+						</fi:form>
 					</f:if>
 	 				
 	 				<f:if condition="{file.links}">
@@ -81,7 +83,9 @@
 	 				</f:link.external>
 	 				<f:if condition="{isSuperUser}">
 						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-						<f:link.action action="delete" controller="Link" arguments="{link : link, category : category}" class="button-delete"><f:translate key="tx_fileman_filelist.button_delete" /></f:link.action>
+						<fi:form enctype="multipart/form-data" method="post" controller="Link" action="delete" object="{link}" objectName="link" class="delete-form one-button-form" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
+							<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key : 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
+						</fi:form>
 					</f:if>
 	 			</td>
 	 			<td>{link.description}</td>

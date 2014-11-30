@@ -1,3 +1,4 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="main">
@@ -9,11 +10,11 @@
 
 <f:render partial="FormErrors" arguments="{for: 'link'}" />
 
-<f:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}">
+<fi:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
 	<fieldset>
 		<f:render partial="Link/FormFields" />
 			
 		<f:form.submit class="submit" value="{f:translate(key:'tx_fileman_filelist.new_link_submit')}" />
 	</fieldset>
-</f:form>
+</fi:form>
 </f:section>

@@ -1,3 +1,4 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="main">
@@ -7,7 +8,7 @@
 
 <f:render partial="FormErrors" arguments="{for: 'file'}" />
 
-<f:form enctype="multipart/form-data" method="post" action="update"  name="file" object="{file}" arguments="{category : category}">
+<fi:form enctype="multipart/form-data" method="post" action="update"  name="file" object="{file}" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
 	<fieldset>
 		<f:translate key="tx_fileman_domain_model_file.file_uri" />
 		<br />
@@ -27,5 +28,5 @@
 			
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.edit_file_submit')}" class="submit" />
 	</fieldset>
-</f:form>
+</fi:form>
 </f:section>

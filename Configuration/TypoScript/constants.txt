@@ -28,6 +28,14 @@ plugin.tx_fileman {
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.js
 	}
 	settings {
+		# @TODO llang
+		
+		# cat=plugin.tx_appointments/a_extconf/045; type=int+; label=XHR page type
+		type.xhr = 201412011983
+		
+		# @TODO remove this when eid is utilized, do so before TER release!
+		pages.xhr = 2123
+	
 		# cat=plugin.tx_fileman/file; type=string; label=Upload dir (FE)
 		uploadDir = uploads/tx_fileman/
 		

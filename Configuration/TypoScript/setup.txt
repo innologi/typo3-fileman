@@ -1,3 +1,9 @@
+config.tx_extbase.objects {
+	Tx_Fileman_Service_CsrfProtectServiceInterface {
+		className = Tx_Fileman_Service_Typo3CsrfProtectService
+	}
+}
+
 includeLibs.Tx_Fileman_TypoScript = EXT:fileman/Resources/Private/Scripts/Tx_Fileman_Typoscript.php
 plugin.tx_fileman {
 	view {
@@ -36,6 +42,10 @@ plugin.tx_fileman {
 		inlineJS.template = FILE
 		inlineJS.template.file = {$plugin.tx_fileman.js.libFile}
 		inlineJS.marks {
+			XHR_PAGETYPE = TEXT
+			XHR_PAGETYPE.value = {$plugin.tx_fileman.settings.type.xhr}
+			XHR_PAGEID = TEXT
+			XHR_PAGEID.value = {$plugin.tx_fileman.settings.pages.xhr}
 			APC_FIELD_NAME = USER
 			APC_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getApcFieldName
 			SES_FIELD_NAME = USER
@@ -57,6 +67,9 @@ plugin.tx_fileman {
 		}
 	}
 	settings {
+		type {
+			xhr = {$plugin.tx_fileman.settings.type.xhr}
+		}
 		uploadDir = {$plugin.tx_fileman.settings.uploadDir}
 		allowFileType = {$plugin.tx_fileman.settings.allowFileType}
 		denyFileType = {$plugin.tx_fileman.settings.denyFileType}
@@ -92,6 +105,26 @@ page.jsFooterInline.198311310 < plugin.tx_fileman.jslib.inlineJS
 [globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}]
 page.jsInline.198311310 < plugin.tx_fileman.jslib.inlineJS
 [global]
+
+# XHR pagetype, not using eid because of required extbase controller context
+# @TODO should probably consider eid though, not having to deal with pid bullshit etc.
+fileman_xhr = PAGE
+fileman_xhr {
+	typeNum = {$plugin.tx_fileman.settings.type.xhr}
+	config {
+		disableAllHeaderCode = 1
+		disablePrefixComment = 1
+		xhtml_cleaning = 0
+		admPanel = 0
+		debug = 0
+		no_cache = 1
+		metaCharset = utf-8
+	}
+	10 = COA_INT
+	10 < styles.content.get
+	// exclusively take list content, regardless of colPos
+	10.select.where = list_type = 'fileman_filelist'
+}
 
 plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .f3-form-error {
@@ -169,14 +202,18 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		opacity:0.9;
 	}
 	
-	.tx-fileman a {
+	.tx-fileman a,
+	.tx-fileman .one-button-form button {
 		color:#66f;
 		text-decoration:none;
 		font-size:1.1em;
 	}
 	.tx-fileman a:hover,
 	.tx-fileman a:focus,
-	.tx-fileman a:active {
+	.tx-fileman a:active,
+	.tx-fileman .one-button-form button:hover,
+	.tx-fileman .one-button-form button:focus,
+	.tx-fileman .one-button-form button:active {
 		color:#f22;
 	}
 	
@@ -265,7 +302,7 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .del-file-entry,
 	.tx-fileman .show-optional {
 		overflow:hidden;
-		width:16px;
+		width:18px;
 		height:18px;	
 	}
 	
@@ -303,6 +340,17 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	}
 	.tx-fileman .show-optional.expanded:before {
 		background-position:-216px 0;
+	}
+	
+	.tx-fileman .one-button-form button {
+		border:0;
+		padding:0;
+		background-color:transparent;
+		cursor:pointer;
+	}
+	.tx-fileman .one-button-form,
+	.tx-fileman .one-button-form fieldset {
+		display:inline-block;
 	}
 	
 	

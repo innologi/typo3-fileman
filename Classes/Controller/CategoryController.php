@@ -72,6 +72,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
 	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
@@ -113,6 +114,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
 	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
@@ -135,6 +137,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * @ignorevalidation $category
 	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {

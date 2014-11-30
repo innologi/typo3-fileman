@@ -76,6 +76,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Link $link
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
@@ -125,6 +126,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @param Tx_Fileman_Domain_Model_Link $link
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
@@ -158,6 +160,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @ignorevalidation $category
 	 * @dontvalidate $link
 	 * @ignorevalidation $link
+	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {

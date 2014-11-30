@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_fileman.csrf_invalid_request">The form or link has expired. Please try again.</label>
 			<label index="tx_fileman_filelist.required">required fields</label>
 			<label index="tx_fileman_filelist.go_back">Go back</label>
 			<label index="tx_fileman_filelist.go_back_to">Go back to %s</label>
@@ -78,6 +79,7 @@
 			<label index="tx_fileman_domain_model_link.tstamp">Placed on</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
+			<label index="tx_fileman.csrf_invalid_request">De geldigheid van het formulier of link is verlopen. Probeer het opnieuw s.v.p.</label>
 			<label index="tx_fileman_filelist.required">vereiste velden</label>
 			<label index="tx_fileman_filelist.go_back">Ga terug</label>
 			<label index="tx_fileman_filelist.go_back_to">Ga terug naar %s</label>
