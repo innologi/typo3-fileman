@@ -84,10 +84,12 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return void
 	 */
 	public function reset() {
-		reset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
-		//it's possible tmp_name is set but name isn't, due to the findSubtitutes() mechanism
-		if (isset($_FILES[$this->ext]['name'][$this->storage][$this->instance])) {
-			reset($_FILES[$this->ext]['name'][$this->storage][$this->instance]);
+		if (isset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance])) {
+			reset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
+			//it's possible tmp_name is set but name isn't, due to the findSubtitutes() mechanism
+			if (isset($_FILES[$this->ext]['name'][$this->storage][$this->instance])) {
+				reset($_FILES[$this->ext]['name'][$this->storage][$this->instance]);
+			}
 		}
 		$this->index = NULL;
 	}
@@ -115,7 +117,11 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 					$this->validated[$index] = TRUE; //setting this TRUE because it once has been and can no longer be checked through isValid()
 				}
 			}
-			ksort($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]); #@LOW check if we can do without reset() after a sort
+			if (isset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance])) {
+				ksort($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]); #@LOW check if we can do without reset() after a sort
+			} else {
+				// @TODO throw exception?
+			}
 		}
 		$this->searchedForSubtitutes = TRUE;
 	}
