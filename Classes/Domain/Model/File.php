@@ -100,7 +100,6 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * Categories related to this file entity
 	 *
 	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
-	 * @validate NotEmpty
 	 * @lazy
 	 */
 	protected $category;
