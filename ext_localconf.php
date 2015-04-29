@@ -11,8 +11,10 @@ if (isset($TYPO3_CONF_VARS['EXT']['extConf'][$_EXTKEY])) {
 		$noCache = in_array(
 			(int)$extConf['csrf_protection_level'],
 			array(
-				Tx_Fileman_Service_CsrfProtectServiceInterface::STRONG,
-				Tx_Fileman_Service_CsrfProtectServiceInterface::STRONG_PLUS
+				// using ext-constants in this file produces problems when the extension
+				// is uninstalled but the cache isn't cleared yet
+				3, //Tx_Fileman_Service_CsrfProtectServiceInterface::STRONG,
+				4, //Tx_Fileman_Service_CsrfProtectServiceInterface::STRONG_PLUS
 			)
 		) ? ', list' : '';
 	}
