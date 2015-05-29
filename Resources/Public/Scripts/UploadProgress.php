@@ -13,15 +13,6 @@ foreach($headers as $header => $data) {
 	header($headerString);
 }
 
-/*
-@TODO HTML5
-<progress> and XMLHttpRequest Level 2 specs
-
-@TODO file size check
-HTML5: http://stackoverflow.com/questions/4112575/client-checking-file-size-using-html5
-*/
-
-
 if(isset($_GET['type']) && isset($_GET['upload_id']) && is_numeric($_GET['upload_id'])) {
 
 	switch ($_GET['type']) {

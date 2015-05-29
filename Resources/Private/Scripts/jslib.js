@@ -232,6 +232,13 @@ jQuery(document).ready(function() {
 
 	}
 
+	/**
+	 * Trims the chosen char from beginning and end of string
+	 *
+	 * @param string
+	 * @param charToRemove
+	 * @return string
+	 */
 	function trimChar(string, charToRemove) {
 		while(string.charAt(0) === charToRemove) {
 			string = string.substring(1);
@@ -242,6 +249,13 @@ jQuery(document).ready(function() {
 		return string;
 	}
 
+	/**
+	 * Convert bytes to human readable size,
+	 * e.g. KB, MB, GB, TB
+	 *
+	 * @param bytes
+	 * @return string
+	 */
 	function bytesToSize(bytes) {
 		var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
 		if (bytes == 0) return 'n/a';
@@ -274,8 +288,11 @@ jQuery(document).ready(function() {
 		});
 	};
 
-	// @FIX test this in combination with different CSRF levels
-	// @TODO doc
+	/**
+	 * Initializes XHR Upload mechanism, if enabled
+	 *
+	 * @return void
+	 */
 	function initXhrUpload() {
 		if (uploadType === 'js') {
 			jQuery('.tx-fileman .init-progressbar').each(function(i, form) {
@@ -292,6 +309,13 @@ jQuery(document).ready(function() {
 		}
 	}
 
+	/**
+	 * Upload every upload-file within the form
+	 *
+	 * @param form
+	 * @param index
+	 * @return void
+	 */
 	function xhrUploadFiles(form, index) {
 		var previouslyUploaded = 0;
 		jQuery('.fileupload', form).each(function(i, upload) {
@@ -341,6 +365,15 @@ jQuery(document).ready(function() {
 		}
 	}
 
+	/**
+	 * Upload a file in chunks via XHR mechanism
+	 *
+	 * @param file
+	 * @param i Form index
+	 * @param j Uploadfield index
+	 * @param form
+	 * @return void
+	 */
 	function xhrUploadFileInChunks(file, i, j, form) {
 		var reader = new FileReader(),
 			xhr = new XMLHttpRequest(),

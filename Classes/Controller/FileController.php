@@ -91,7 +91,15 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	}
 
 
-	// @TODO doc
+	/**
+	 * Initializes create action
+	 *
+	 * Mainly propertymapping configuration for rewritten property mapper.
+	 * This is preliminary, the rewrittenPropertyMapper is explicitly disabled
+	 * in this extension for now.
+	 *
+	 * @return void
+	 */
 	public function initializeCreateAction() {
 		if ($this->configurationManager->isFeatureEnabled('rewrittenPropertyMapper')) {
 			if ($this->request->hasArgument('files')) {

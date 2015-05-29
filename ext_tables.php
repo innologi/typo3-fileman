@@ -16,7 +16,6 @@ t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Co
 #@FIX it seems files don't get consistent chmod permissions, e.g. mp3 got 644, but gz got 600. Can we listen to TYPO3Conf for this?
 #@FIX clean up constants
 #@TODO documenteer pageTS TCEMAIN.clearCacheCmd = pid
-#@TODO test in >= 6.0
 #@TODO namespaces?
 #@TODO what about FAL?
 #@TODO what about system categories instead? is that an option?
