@@ -52,8 +52,7 @@ plugin.tx_fileman {
 			SES_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getSesFieldName
 			MAX_FILE_UPLOADS = USER
 			MAX_FILE_UPLOADS.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
-			# @FIX bugfix!
-			DEBUG = TEXTor 
+			DEBUG = TEXT
 			DEBUG.value = {$plugin.tx_fileman.js.debug}
 			UPLOADPROGRESS = TEXT
 			UPLOADPROGRESS.value = {$plugin.tx_fileman.js.uploadProgress}
