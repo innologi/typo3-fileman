@@ -86,7 +86,6 @@ jQuery(document).ready(function() {
 		chunkSize = 1024 * 1024;
 
 
-
 	if (window.File) {
 
 		jQuery('.tx-fileman form').on('change', 'input[type=file].fileupload', function(e) {
@@ -94,59 +93,34 @@ jQuery(document).ready(function() {
 				name = $upload.attr('name');
 			if (this.files[0]) {
 				var file = this.files[0];
-				// @TODO test what happens if I upload a zip file with this disabled
+
 				// filter on mime types
 				if (allowMimeType.length > 0) {
 					// sometimes, a MIME type is enclosed with double quotes
 					var testFileType = trimChar(file.type, '"'),
 						filter = new RegExp('^(' + allowMimeType + ')', 'i');
 
-					if (!filter.test(testFileType)) {
-						console.log('File type denied: ' + file.type);
-						$upload.val(null);
-						$upload.addClass('f3-form-error file-checker-error');
+					if (!validateField(
+						$upload,
+						!filter.test(testFileType),
+						'File type denied: ' + file.type,
 						// @TODO llang
-						var errorMsg = 'Bestandstype niet toegestaan.',
-							$label = $upload.parent('label'),
-							$errorMsg = $label.prev('.typo3-messages').find('.typo3-message');
-						if ($errorMsg[0]) {
-							$errorMsg.text(errorMsg);
-						} else {
-							$label.before('<div class="typo3-messages"><div class="typo3-message message-error">' + errorMsg + '</div></div>');
-						}
+						'Bestandstype niet toegestaan.'
+					)) {
 						return;
-					} else {
-						if ($upload.hasClass('file-checker-error')) {
-							$upload.removeClass('f3-form-error file-checker-error');
-							$upload.parent('label').prev('.typo3-messages').remove();
-						}
 					}
 				}
 
 				// file size limit per file
 				if (maxFileSize > 0) {
-					if (file.size > maxFileSize) {
-						console.log('File size ' + file.size + ' exceeds set limit: ' + maxFileSize);
-						$upload.val(null);
-						$upload.addClass('f3-form-error file-checker-error');
+					if (!validateField(
+						$upload,
+						file.size > maxFileSize,
+						'File size ' + file.size + ' exceeds set limit: ' + maxFileSize,
 						// @TODO llang
-						var errorMsg = 'Bestand is groter dan het toegestane limiet van {maxFileSize}.'.replace(
-								'{maxFileSize}',
-								bytesToSize(maxFileSize)
-							),
-							$label = $upload.parent('label'),
-							$errorMsg = $label.prev('.typo3-messages').find('.typo3-message');
-						if ($errorMsg[0]) {
-							$errorMsg.text(errorMsg);
-						} else {
-							$label.before('<div class="typo3-messages"><div class="typo3-message message-error">' + errorMsg + '</div></div>');
-						}
+						'Bestand is groter dan het toegestane limiet van {maxFileSize}.'.replace('{maxFileSize}', bytesToSize(maxFileSize))
+					)) {
 						return;
-					} else {
-						if ($upload.hasClass('file-checker-error')) {
-							$upload.removeClass('f3-form-error file-checker-error');
-							$upload.parent('label').prev('.typo3-messages').remove();
-						}
 					}
 				}
 
@@ -164,28 +138,14 @@ jQuery(document).ready(function() {
 
 			// total file size limit
 			if (maxTotalFileSize > 0) {
-				if (totalSize > maxTotalFileSize) {
-					console.log('Total file size ' + totalSize + ' exceeds set limit: ' + maxTotalFileSize);
-					$upload.val(null);
-					$upload.addClass('f3-form-error file-checker-error');
+				if (!validateField(
+					$upload,
+					totalSize > maxTotalFileSize,
+					'Total file size ' + totalSize + ' exceeds set limit: ' + maxTotalFileSize,
 					// @TODO llang
-					var errorMsg = 'Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.'.replace(
-							'{maxTotalFileSize}',
-							bytesToSize(maxTotalFileSize)
-						),
-						$label = $upload.parent('label'),
-						$errorMsg = $label.prev('.typo3-messages').find('.typo3-message');
-					if ($errorMsg[0]) {
-						$errorMsg.text(errorMsg);
-					} else {
-						$label.before('<div class="typo3-messages"><div class="typo3-message message-error">' + errorMsg + '</div></div>');
-					}
+					'Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.'.replace('{maxTotalFileSize}', bytesToSize(maxTotalFileSize))
+				)) {
 					return;
-				} else {
-					if ($upload.hasClass('file-checker-error')) {
-						$upload.removeClass('f3-form-error file-checker-error');
-						$upload.parent('label').prev('.typo3-messages').remove();
-					}
 				}
 			}
 
@@ -212,12 +172,11 @@ jQuery(document).ready(function() {
 					jQuery(form).prepend('<input type="hidden" name="UPLOAD_IDENTIFIER" value="' + upload_id + '" />');
 				}
 
-				jQuery(form).on('submit', function() {
-					//only show the progressbar if fileupload is not empty
+				jQuery(form).on('submit', function(e) {
+					// fileuploadValue will only be empty if none of the fileupload fields have a value
 					var fileuploadValue = jQuery(this).find('input[type=file].fileupload').val();
-					// @TODO test this with multiple files
-					console.log(fileuploadValue);
-					if (fileuploadValue != undefined && fileuploadValue !== '') {
+					// only show the progressbar if fileupload is not empty
+					if (fileuploadValue !== undefined && fileuploadValue !== '') {
 						jQuery(this).hide();
 						jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
 
@@ -229,7 +188,38 @@ jQuery(document).ready(function() {
 				});
 			}
 		});
+	}
 
+	/**
+	 * Validates an upload field with a reversed assertion.
+	 *
+	 * @param $upload jQuery object of upload field
+	 * @param assertion If this assertion is true, then the field won't validate
+	 * @param consoleMsg
+	 * @param errorMsg
+	 * @return boolean
+	 */
+	function validateField($upload, assertion, consoleMsg, errorMsg) {
+		if (assertion) {
+			console.log(consoleMsg);
+			$upload.val(null);
+			$upload.addClass('f3-form-error file-checker-error');
+
+			var $label = $upload.parent('label'),
+				$errorMsg = $label.prev('.typo3-messages').find('.typo3-message');
+			if ($errorMsg[0]) {
+				$errorMsg.text(errorMsg);
+			} else {
+				$label.before('<div class="typo3-messages"><div class="typo3-message message-error">' + errorMsg + '</div></div>');
+			}
+			return false;
+		} else {
+			if ($upload.hasClass('file-checker-error')) {
+				$upload.removeClass('f3-form-error file-checker-error');
+				$upload.parent('label').prev('.typo3-messages').remove();
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -320,7 +310,6 @@ jQuery(document).ready(function() {
 		var previouslyUploaded = 0;
 		jQuery('.fileupload', form).each(function(i, upload) {
 			var $upload = jQuery(upload);
-			console.log(upload);
 			i++;
 			if (
 				// these are needed to cover every circumstance for every single browser (read: IE)
