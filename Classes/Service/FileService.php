@@ -109,7 +109,8 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		if (isset($_POST[$this->ext]['tmpFiles']) && !$this->searchedForSubtitutes) {
 			$tmpNames = $_POST[$this->ext]['tmpFiles'];
 			//files once uploaded, have been moved to said location to prevent them from being deleted after the upload script execution
-			$tmpDir = t3lib_div::fixWindowsFilePath(ini_get('upload_tmp_dir')) . '/' . $this->ext . '/';
+			$tmpDir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
+			$tmpDir = rtrim(t3lib_div::fixWindowsFilePath($tmpDir), '/') . '/' . $this->ext . '/';
 			foreach ($tmpNames as $index=>$tmpName) {
 				if ($this->validateIndex($index) && $this->validateTmpFileName($tmpName)) { //validate the index and tmpName values as they come from (hidden) fields in a form
 					$tmpName = $tmpDir . $tmpName;
@@ -149,9 +150,15 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return void
 	 */
 	public function setFileProperties(Tx_Fileman_Domain_Model_File $file) {
-		if ($file->getFileUri() === NULL) { //there are cases where fileUri is not set due to the findSubtitutes() mechanism
-			$file->setFileUri($this->getUploadProperty('name'));
+		if ($this->getUploadProperty('clear')) {
+			// necessary for js uploads, which will maintain their fileUri by themselves
+			$file->setFileUri(NULL);
+		} else {
+			if ($file->getFileUri() === NULL) { //there are cases where fileUri is not set due to the findSubtitutes() mechanism
+				$file->setFileUri($this->getUploadProperty('name'));
+			}
 		}
+		// @LOW can these go into the if valid scope?
 		$file->setTmpFile($this->getUploadProperty('tmp_name'));
 		$file->setIndex($this->index);
 	}
@@ -163,10 +170,13 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 *
 	 * @param string $allowFileType Allowed filetypes, comma seperated
 	 * @param string $denyFileType Denied filetypes, comma seperated
+	 * @param string $filename
 	 * @return boolean
 	 */
-	public function isAllowed($allowFileType, $denyFileType) {
-		$fileInfo = explode('.',$this->getUploadProperty('name'));
+	public function isAllowed($allowFileType, $denyFileType, $filename = NULL) {
+		$fileInfo = explode('.', (
+			$filename !== NULL ? $filename : $this->getUploadProperty('name')
+		));
 		$fileExt = end($fileInfo);
 		$allowed = TRUE;
 
@@ -202,6 +212,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 */
 	public function clearFileName() {
 		$this->setUploadProperty('name', '', $this->index);
+		$this->setUploadProperty('clear', TRUE, $this->index);
 	}
 
 	/**
@@ -225,12 +236,15 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	public function finalizeMove(Tx_Fileman_Domain_Model_File $file, $absDirPath) {
 		if ($this->checkAndCreateDir($absDirPath)) {
 			$fileName = $file->getFileUri();
-			$tmpFile = $file->getTmpFile();
-			$finalPath = $this->fileFunctions->getUniqueName($fileName, $absDirPath);
-			//file might have been renamed because of duplicate
-			$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
-			$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
-			return $success;
+			// if something goes wrong somewhere and we get an empty file name, we'll get exceptions here, so don't even try
+			if (isset($fileName[0])) {
+				$tmpFile = $file->getTmpFile();
+				$finalPath = $this->fileFunctions->getUniqueName($fileName, $absDirPath);
+				//file might have been renamed because of duplicate
+				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
+				$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
+				return $success;
+			}
 		}
 		return FALSE;
 	}
@@ -263,7 +277,9 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @param string $uploadProperty e.g. 'tmp_name' or 'name'
 	 */
 	protected function getUploadProperty($uploadProperty) {
-		return $_FILES[$this->ext][$uploadProperty][$this->storage][$this->instance][$this->index][$this->property];
+		return isset($_FILES[$this->ext][$uploadProperty])
+			? $_FILES[$this->ext][$uploadProperty][$this->storage][$this->instance][$this->index][$this->property]
+			: FALSE;
 	}
 
 	/**
@@ -315,8 +331,8 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		preg_match($pattern,$dirpath,$matches);
 		//if dir doesn't exist, mkdir_deep creates every nonexisting directory from its second argument..
 		if (!is_dir($dirpath) && !is_null(t3lib_div::mkdir_deep($matches[1],$matches[3]))) {
-			$temp = t3lib_div::mkdir_deep($matches[1],$matches[3]);
-			var_dump($temp);die();
+			#$temp = t3lib_div::mkdir_deep($matches[1],$matches[3]);
+			#var_dump($temp);die();
 			//mkdir_deep only returns something on errors
 			return FALSE;
 		}

@@ -21,9 +21,13 @@ plugin.tx_fileman {
 		# cat=plugin.tx_fileman/javascript; type=text; label= jQuery CDN url: The url from which jQuery is included. Configurable to easily allow jQuery version changes.
 		jQueryCDN = http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
 		
+		uploadType = js
 		uploadProgress = none
-		
 		debug = 0
+		# text/plain|application/msword|application/vnd.openxmlformats|application/rtf|application/vnd.ms-excel|application/vnd.oasis.opendocument|application/pdf|image/jpeg|image/gif|image/png|video/mp4|video/x-flv|video/x-msvideo|audio/mpeg
+		allowMimeType =
+		maxFileSize =
+		maxTotalFileSize =
 		
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.js
 	}

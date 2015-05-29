@@ -52,10 +52,19 @@ plugin.tx_fileman {
 			SES_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getSesFieldName
 			MAX_FILE_UPLOADS = USER
 			MAX_FILE_UPLOADS.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
+			# @FIX bugfix!
 			DEBUG = TEXTor 
 			DEBUG.value = {$plugin.tx_fileman.js.debug}
 			UPLOADPROGRESS = TEXT
 			UPLOADPROGRESS.value = {$plugin.tx_fileman.js.uploadProgress}
+			UPLOADTYPE = TEXT
+			UPLOADTYPE.value = {$plugin.tx_fileman.js.uploadType}
+			ALLOW_MIMETYPE = TEXT
+			ALLOW_MIMETYPE.value = {$plugin.tx_fileman.js.allowMimeType}
+			MAX_FILESIZE = TEXT
+			MAX_FILESIZE.value = {$plugin.tx_fileman.js.maxFileSize}
+			MAX_TOTAL_FILESIZE = TEXT
+			MAX_TOTAL_FILESIZE.value = {$plugin.tx_fileman.js.maxTotalFileSize}
 			SENDING_FILE = TEXT
 			SENDING_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.sending_file
 			ADD_FILE = TEXT

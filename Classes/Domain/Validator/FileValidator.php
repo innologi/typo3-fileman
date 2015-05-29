@@ -95,19 +95,19 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 		if ($file instanceof Tx_Fileman_Domain_Model_File) {
 			if ($this->fileService->next()) {
 				$file->setIndex($this->fileService->getIndex()); //we need this regardless, to bind errors from this and other validators to the right file
-				// NULL @ first-time create, NOT NULL after validation error
-				if ($file->getFileUri() === NULL) {
-					if (!$this->fileService->isAllowed($this->settings['allowFileType'],$this->settings['denyFileType'])) {
-						//the file type is prohibited by configuration
-						$errorCode = 40750133701;
-					} elseif (!$this->fileService->isValid()) {
-						//there was no file uploaded or something went wrong
-						$errorCode = 40750133702;
-					} else {
-						$valid = TRUE;
-					}
+				// note @ fileUri: NULL @ first-time create, NOT NULL after validation error / js upload
+				if (!$this->fileService->isAllowed(
+					$this->settings['allowFileType'],
+					$this->settings['denyFileType'],
+					$file->getFileUri()
+				)) {
+					//the file type is prohibited by configuration
+					$errorCode = 40750133701;
+					//if fileUri is not NULL, fileService->isValid() will fail because the file isn't uploaded "again"
+				} elseif ($file->getFileUri() === NULL && !$this->fileService->isValid()) {
+					//there was no file uploaded or something went wrong
+					$errorCode = 40750133702;
 				} else {
-					//if not empty, a successful validation had already taken place
 					$valid = TRUE;
 				}
 			} elseif ($file->getFileUri() !== NULL) {
@@ -134,6 +134,7 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 		} else {
 			// uploadData errors might ensue after a successful upload, so clear the file name so we don't lose the upload-field
 			$this->fileService->clearFileName();
+			$file->setFileUri(NULL);
 			//setup error message
 			$propertyError = new Tx_Extbase_Validation_PropertyError('uploadData');
 			$propertyError->addErrors(array(
