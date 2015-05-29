@@ -238,7 +238,11 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 					$this->fileService->setFileProperties($file);
 				} else {
 					#@TODO error
-					unset($fileStorage[$hash]);
+					if (version_compare(TYPO3_branch, '6.2', '<')) {
+						unset($fileStorage[$hash]);
+					} else {
+						unset($fileStorage[$file]);
+					}
 				}
 			}
 		}
