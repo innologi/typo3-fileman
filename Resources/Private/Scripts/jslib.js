@@ -453,11 +453,10 @@ jQuery(document).ready(function() {
 	// Multi-file Upload UI
 	//**********************
 
-	var fileCountMax = "###MAX_FILE_UPLOADS###";
+	var fileCountMax = parseInt("###MAX_FILE_UPLOADS###");
 	var addFileText = "###ADD_FILE###";
 	var delFileText = "###DEL_FILE###";
 	var showOptionalText = "###SHOW_OPTIONAL###";
-	// @FIX it's not cast to an integer?
 	//don't enable it unless there are more files allowed than 1
 	if (fileCountMax > 1) {
 		jQuery('.tx-fileman .multi-file').each(function(i, form) {
