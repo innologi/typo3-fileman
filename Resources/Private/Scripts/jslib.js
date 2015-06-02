@@ -432,8 +432,11 @@ jQuery(document).ready(function() {
 					}
 					return;
 				}
+			} else {
+				// @TODO what if an error occurred, something visual?
+				console.log('ERROR: No valid XHR response');
+				console.log(e);
 			}
-			// @TODO what if an error occurred?
 		}, false);
 		xhr.addEventListener('error', function(e) {
 			console.log('ERROR: Could not send file');
