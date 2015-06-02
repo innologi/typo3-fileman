@@ -451,7 +451,9 @@ jQuery(document).ready(function() {
 					if (uploaded > 100) {
 						uploaded = 100;
 					}
-					//console.log(uploaded);
+					if (debug == '1') {
+						console.log(uploaded);
+					}
 					$progressBar.css({
 						'width': uploaded + '%'
 					});
