@@ -64,6 +64,8 @@ plugin.tx_fileman {
 			MAX_FILESIZE.value = {$plugin.tx_fileman.js.maxFileSize}
 			MAX_TOTAL_FILESIZE = TEXT
 			MAX_TOTAL_FILESIZE.value = {$plugin.tx_fileman.js.maxTotalFileSize}
+			CHUNKSIZE = TEXT
+			CHUNKSIZE.value = {$plugin.tx_fileman.js.chunkSize}
 			SENDING_FILE = TEXT
 			SENDING_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.sending_file
 			ADD_FILE = TEXT

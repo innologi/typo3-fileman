@@ -28,6 +28,8 @@ plugin.tx_fileman {
 		allowMimeType =
 		maxFileSize =
 		maxTotalFileSize =
+		# default chunksize of 1MB
+		chunkSize = 1048576
 		
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.js
 	}

@@ -83,7 +83,12 @@ jQuery(document).ready(function() {
 		fileSizes = {},
 		totalSize = 0,
 		uploadedSize = 0,
+		chunkSize = parseInt('###CHUNKSIZE###');
+
+	if (chunkSize < 1) {
+		// 1 MB default
 		chunkSize = 1024 * 1024;
+	}
 
 
 	if (window.File) {
