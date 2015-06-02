@@ -82,6 +82,7 @@ jQuery(document).ready(function() {
 		maxTotalFileSize = parseInt('###MAX_TOTAL_FILESIZE###'),
 		fileSizes = {},
 		totalSize = 0,
+		totalSizeHR = '',
 		uploadedSize = 0,
 		chunkSize = parseInt('###CHUNKSIZE###');
 
@@ -140,6 +141,7 @@ jQuery(document).ready(function() {
 					totalSize += fileSizes[i];
 				}
 			}
+			totalSizeHR = bytesToSize(totalSize);
 
 			// total file size limit
 			if (maxTotalFileSize > 0) {
@@ -441,7 +443,8 @@ jQuery(document).ready(function() {
 			$progressBar = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar');
 			if ($progressVal[0] && $progressBar[0]) {
 				if (e.lengthComputable) {
-					var uploaded = ((uploadedSize + e.loaded) / totalSizeExp) * 100;
+					var uploadedBytes = uploadedSize + e.loaded,
+						uploaded = (uploadedBytes / totalSizeExp) * 100;
 					if (uploaded > 100) {
 						uploaded = 100;
 					}
@@ -455,7 +458,7 @@ jQuery(document).ready(function() {
 						//this way, the user never sees 100% and is (hopefully) not tempted to do something that breaks the process too early
 						$progressVal.text(sendingFileText+' 99%');
 					} else {
-						$progressVal.text(sendingFileText+' '+uploaded+'%');
+						$progressVal.text(sendingFileText+' '+uploaded+'% ('+ bytesToSize(uploadedBytes/1.33) +' / '+ totalSizeHR +')');
 					}
 					if (e.loaded === e.total) {
 						uploadedSize += e.total;
