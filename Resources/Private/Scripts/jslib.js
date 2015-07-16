@@ -439,11 +439,16 @@ jQuery(document).ready(function() {
 			}
 		}, false);
 		xhr.addEventListener('error', function(e) {
-			console.log('ERROR: Could not send file');
+			console.log('ERROR: No connection, retrying in 30 seconds');
+			var $progressVal = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue');
+			$progressVal.text('Geen verbinding. Poging om te hervatten: elke 30 seconden.');
+			setTimeout(function() {
+				xhrUploadFileInChunks(file, i, j, form);
+			}, 30000);
 		}, false);
 		xhr.upload.addEventListener('progress', function(e) {
-			$progressVal = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue');
-			$progressBar = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar');
+			var $progressVal = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue'),
+				$progressBar = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar');
 			if ($progressVal[0] && $progressBar[0]) {
 				if (e.lengthComputable) {
 					var uploadedBytes = uploadedSize + e.loaded,
