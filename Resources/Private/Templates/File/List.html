@@ -24,8 +24,8 @@
 <table class="tx_fileman" summary="{f:translate(key:'tx_fileman_filelist.file_summary')}">
 	<caption><f:translate key="tx_fileman_filelist.file_caption" /></caption>
 	
-	<f:if condition="{category.subCategory}">
-		<f:render partial="Category/List" arguments="{categories : category.subCategory, parentCategory : category, isSuperUser : isSuperUser}" />
+	<f:if condition="{subCategories}">
+		<f:render partial="Category/List" arguments="{categories : subCategories, parentCategory : category, isSuperUser : isSuperUser}" />
 	</f:if>
 
 	<f:if condition="{files}">

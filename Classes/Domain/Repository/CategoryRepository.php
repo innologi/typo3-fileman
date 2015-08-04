@@ -46,5 +46,19 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persist
 		return $result;
 	}
 
+	/**
+	 * Returns all objects of this repository belonging to the provided category
+	 *
+	 * @param Tx_Fileman_Domain_Model_Category $category The category to show subcategories of
+	 * @return array An array of objects, empty if no objects found
+	 */
+	public function findAllByParentCategory(Tx_Fileman_Domain_Model_Category $category) {
+		$query = $this->createQuery();
+		$result = $query->matching(
+			$query->contains('parentCategory', $category)
+		)->execute();
+		return $result;
+	}
+
 }
 ?>

@@ -139,14 +139,19 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function listAction(Tx_Fileman_Domain_Model_Category $category = NULL) {
 		if ($category === NULL) {
+			$subCategories = $this->categoryRepository->findAll();
 			$files = $this->fileRepository->findAll();
 			$links = $this->linkRepository->findAll();
 		} else {
+			$subCategories = $this->categoryRepository->findAllByParentCategory($category);
 			$files = $this->fileRepository->findAllByCategory($category);
 			$links = $this->linkRepository->findAllByCategory($category);
 			$this->view->assign('category', $category);
 		}
 
+		// normally I would use category.subCategory, but I can't seem to sort it automatically
+		// on title due to its MM table sorting, so I'm using the cleanest code I can think of
+		$this->view->assign('subCategories', $subCategories);
 		$this->view->assign('files', $files);
 		$this->view->assign('links', $links);
 
