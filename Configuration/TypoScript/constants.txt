@@ -24,7 +24,7 @@ plugin.tx_fileman {
 		uploadType = js
 		uploadProgress = none
 		debug = 0
-		# text/plain|application/msword|application/vnd.openxmlformats|application/rtf|application/vnd.ms-excel|application/vnd.oasis.opendocument|application/pdf|image/jpeg|image/gif|image/png|video/mp4|video/x-flv|video/x-msvideo|audio/mpeg
+		# text/plain|application/msword|application/vnd.openxmlformats|application/rtf|application/vnd.ms-excel|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument|application/pdf|image/jpeg|image/gif|image/png|video/mp4|video/x-flv|video/x-msvideo|audio/mpeg
 		allowMimeType =
 		maxFileSize =
 		maxTotalFileSize =
@@ -45,7 +45,7 @@ plugin.tx_fileman {
 		# cat=plugin.tx_fileman/file; type=string; label=Upload dir (FE)
 		uploadDir = uploads/tx_fileman/
 		
-		# txt,doc,docx,rtf,odf,xls,xlsx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
+		# txt,doc,docx,rtf,odf,xls,xlsx,ppt,pptx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
 		allowFileType = 
 		denyFileType = php,phps,php3,php4,php5,js,html,htm,css,htaccess
 	}
