@@ -37,7 +37,7 @@
 		<f:for each="{files}" as="file">
 			
 			<tr>
-				<td>
+				<td class="file">
 					<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file : file}">
 						{file.alternateTitle}
 	 				</fi:link.download>
@@ -62,7 +62,7 @@
 						</f:then>
 		 			</f:if>
 	 			</td>
-				<td>{file.description}</td>
+				<td class="description">{file.description}</td>
 			</tr>
 		 	
 		</f:for>
@@ -77,7 +77,7 @@
 		<f:for each="{links}" as="link">
 			
 			<tr>
-				<td>
+				<td class="link">
 					<f:link.external uri="{link.linkUri}" >
 						{link.linkName}
 	 				</f:link.external>
@@ -88,7 +88,7 @@
 						</fi:form>
 					</f:if>
 	 			</td>
-	 			<td>{link.description}</td>
+	 			<td class="description">{link.description}</td>
 			</tr>
 		 	
 		</f:for>

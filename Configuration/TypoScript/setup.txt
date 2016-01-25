@@ -206,6 +206,10 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		padding:8px 15px;
 	}
 	
+	.tx-fileman table .description {
+		white-space: pre-wrap;
+	}
+	
 	
 	.tx-fileman .file-type-info {
 		font-size:0.8em;

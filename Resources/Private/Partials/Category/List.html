@@ -7,7 +7,7 @@
 <f:for each="{categories}" as="category">
 	
 	<tr>
-		<td>
+		<td class="category">
 			<f:link.action action="list" controller="File" arguments="{category : category}">{category.title} ({category.count})</f:link.action>
 			<f:if condition="{isSuperUser}" >
 				<f:link.action action="edit" controller="Category" arguments="{category : category, parentCategory : parentCategory}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
@@ -18,7 +18,7 @@
 				</f:if>
 			</f:if>
 		</td>
-		<td>{category.description}</td>
+		<td class="description">{category.description}</td>
 	</tr>
 	
 </f:for>
