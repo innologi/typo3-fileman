@@ -93,7 +93,6 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * Owner of category
 	 *
 	 * @var Tx_Fileman_Domain_Model_FrontendUser
-	 * @lazy
 	 */
 	protected $feUser;
 
