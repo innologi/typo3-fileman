@@ -16,10 +16,9 @@
 	
 	<f:translate key="tx_fileman_domain_model_category.fe_user" />
 	<br />
-	<!-- @TODO optionLabelField configurable? -->
 	<f:form.select
 		property="feUser" options="{users}"
-		optionValueField="uid" optionLabelField="name"
+		optionValueField="uid" optionLabelField="{settings.userLabelField}"
 		size="1" value="{feUser}"
 	/>
 	<br />
