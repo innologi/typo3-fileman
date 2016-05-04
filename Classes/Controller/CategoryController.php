@@ -104,6 +104,8 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
+		#@LOW can we make the structure more clear in the selection?
+		$this->view->assign('categories', $this->categoryRepository->findAll());
 		$this->view->assign('parentCategory', $parentCategory);
 	}
 

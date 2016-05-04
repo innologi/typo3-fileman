@@ -12,5 +12,15 @@
 
 <fi:form enctype="multipart/form-data" method="post" action="update" name="category" object="{category}" arguments="{parentCategory : parentCategory}" syncToken="TRUE" absolute="TRUE">
 	<f:render partial="Category/FormFields" arguments="{category:category}" />
+	
+	<f:translate key="tx_fileman_domain_model_category.parent_category" />
+	<br />
+	<f:form.select
+		property="parentCategory" options="{categories}"
+		optionValueField="uid" optionLabelField="title"
+		multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
+	/>
+	
+	<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
 </fi:form>
 </f:section>

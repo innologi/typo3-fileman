@@ -44,6 +44,7 @@
 			<label index="tx_fileman_filelist.del_file">Remove upload-field</label>
 			<label index="tx_fileman_filelist.show_optional">Edit details</label>
 			<label index="tx_fileman_filelist.prepped_file">This file was received well and waits at the site-servers until you complete the process successfully.</label>
+			<label index="tx_fileman_filelist.multi_select_title">By holding down CTRL or CMD button, you can select multiple or deselect categories.</label>
 			
 			<label index="tx_fileman_filelist.error_message">One or more form-fields need to be corrected before the process can complete. Please take note of the hints below. When you've corrected the issues, resend the form.</label>
 			<label index="tx_fileman_filelist.validation_errors">Fields requiring correction:</label>
@@ -70,6 +71,7 @@
 			<label index="tx_fileman_domain_model_category">Categories</label>
 			<label index="tx_fileman_domain_model_category.title">Category</label>
 			<label index="tx_fileman_domain_model_category.description">Description</label>
+			<label index="tx_fileman_domain_model_category.parent_category">Place in category</label>
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
@@ -117,6 +119,7 @@
 			<label index="tx_fileman_filelist.del_file">Verwijder upload-veld</label>
 			<label index="tx_fileman_filelist.show_optional">Wijzig details</label>
 			<label index="tx_fileman_filelist.prepped_file">Dit bestand was goed ontvangen en wacht op de site-servers tot u het proces succesvol heeft afgerond.</label>
+			<label index="tx_fileman_filelist.multi_select_title">Door CTRL of CMD ingedrukt te houden, kunt u meerdere categoriën selecteren of deselecteren.</label>
 			
 			
 			<label index="tx_fileman_filelist.error_message">Er zijn problemen met de invulling van één of meerdere formulier-velden, welke hieronder staan vermeld met hints om ze te corrigeren. U dient deze te corrigeren en vervolgens het formulier weer te verzenden, voordat het proces voltooid kan worden.</label>
@@ -144,6 +147,7 @@
 			<label index="tx_fileman_domain_model_category">Categorieën</label>
 			<label index="tx_fileman_domain_model_category.title">Categorie</label>
 			<label index="tx_fileman_domain_model_category.description">Omschrijving</label>
+			<label index="tx_fileman_domain_model_category.parent_category">Plaats in categorie:</label>
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
