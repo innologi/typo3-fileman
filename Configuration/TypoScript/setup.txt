@@ -80,6 +80,8 @@ plugin.tx_fileman {
 		type {
 			xhr = {$plugin.tx_fileman.settings.type.xhr}
 		}
+		possibleOwnerGroup = {$plugin.tx_fileman.settings.possibleOwnerGroup}
+		userLabelField = {$plugin.tx_fileman.settings.userLabelField}
 		uploadDir = {$plugin.tx_fileman.settings.uploadDir}
 		allowFileType = {$plugin.tx_fileman.settings.allowFileType}
 		denyFileType = {$plugin.tx_fileman.settings.denyFileType}

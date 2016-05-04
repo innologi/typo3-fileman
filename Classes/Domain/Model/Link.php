@@ -58,7 +58,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	protected $description;
 
 	/**
-	 * User who created this appointment
+	 * User who created this file
 	 *
 	 * @var Tx_Fileman_Domain_Model_FrontendUser
 	 * @lazy

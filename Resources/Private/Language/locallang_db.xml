@@ -14,19 +14,19 @@
 			<label index="tx_fileman_domain_model_file.links">Related Links</label>
 			<label index="tx_fileman_domain_model_file.link_names">Link Names</label> <!-- @TODO: Currently unused -->
 			<label index="tx_fileman_domain_model_file.category">Category</label>
-			<label index="tx_fileman_domain_model_file.fe_user">User</label>
+			<label index="tx_fileman_domain_model_file.fe_user">Creator</label>
 
 			<label index="tx_fileman_domain_model_category">Category</label>
 			<label index="tx_fileman_domain_model_category.title">Title</label>
 			<label index="tx_fileman_domain_model_category.description">Description</label>
-			<label index="tx_fileman_domain_model_category.fe_user">User</label>
+			<label index="tx_fileman_domain_model_category.fe_user">Category Admin</label>
 			
 			<label index="tx_fileman_domain_model_link">Link</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link Uri</label>
 			<label index="tx_fileman_domain_model_link.link_name">Title</label>
 			<label index="tx_fileman_domain_model_link.description">Description</label>
 			<label index="tx_fileman_domain_model_link.category">Category</label>
-			<label index="tx_fileman_domain_model_link.fe_user">User</label>
+			<label index="tx_fileman_domain_model_link.fe_user">Creator</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
 			<label index="tx_fileman_domain_model_file">Bestand</label>
@@ -37,19 +37,19 @@
 			<label index="tx_fileman_domain_model_file.links">Gerelateerde Links</label>
 			<label index="tx_fileman_domain_model_file.link_names">Link Names</label> <!-- @TODO: Currently unused -->
 			<label index="tx_fileman_domain_model_file.category">Categorie</label>
-			<label index="tx_fileman_domain_model_file.fe_user">Gebruiker</label>
+			<label index="tx_fileman_domain_model_file.fe_user">Plaatser</label>
 
 			<label index="tx_fileman_domain_model_category">Categorie</label>
 			<label index="tx_fileman_domain_model_category.title">Titel</label>
 			<label index="tx_fileman_domain_model_category.description">Omschrijving</label>
-			<label index="tx_fileman_domain_model_category.fe_user">Gebruiker</label>
+			<label index="tx_fileman_domain_model_category.fe_user">Categorie Beheerder</label>
 			
 			<label index="tx_fileman_domain_model_link">Link</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link Uri</label>
 			<label index="tx_fileman_domain_model_link.link_name">Titel</label>
 			<label index="tx_fileman_domain_model_link.description">Omschrijving</label>
 			<label index="tx_fileman_domain_model_link.category">Categorie</label>
-			<label index="tx_fileman_domain_model_link.fe_user">Gebruiker</label>
+			<label index="tx_fileman_domain_model_link.fe_user">Plaatser</label>
 		</languageKey>
 	</data>
 </T3locallang>

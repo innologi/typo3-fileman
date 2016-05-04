@@ -156,7 +156,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->view->assign('links', $links);
 
 		if ($this->feUser) {
-			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup'])) || $this->userService->isCategoryAdmin($category);
 			$this->view->assign('isSuperUser', $isSuperUser);
 			$this->view->assign('isLoggedIn', TRUE);
 		}
@@ -328,8 +328,15 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
 		$this->view->assign('category', $category); //category is given for URL-consistency and redirecting afterwards
+
+		// if the user isn't a superUser, categories should be limited to those he owns
+		$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
 		#@LOW can we make the structure more clear in the selection?
-		$this->view->assign('categories', $this->categoryRepository->findAll());
+		$categories = $isSuperUser
+			? $this->categoryRepository->findAll()
+			: $this->categoryRepository->findByFeUser($this->feUser);
+
+		$this->view->assign('categories', $categories);
 		$this->view->assign('file', $file);
 	}
 

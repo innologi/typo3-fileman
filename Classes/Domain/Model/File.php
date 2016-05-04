@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2016 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -105,7 +105,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	protected $category;
 
 	/**
-	 * User who created this appointment
+	 * User who created this file
 	 *
 	 * @var Tx_Fileman_Domain_Model_FrontendUser
 	 * @lazy
