@@ -73,7 +73,11 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 		$this->view->assign('parentCategory', $parentCategory);
 		$this->view->assign('feUser', $this->feUser);
 		$this->view->assign('users',
-			$this->frontendUserRepository->findPossibleOwners((int) $this->settings['possibleOwnerGroup'])
+			$this->frontendUserRepository->findPossibleOwners(
+				(int) $this->settings['possibleOwnerGroup'],
+				$this->feUser,
+				($category !== NULL ? $category->getFeUser() : NULL)
+			)
 		);
 	}
 
@@ -129,7 +133,11 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 		$this->view->assign('categories', $categories);
 		$this->view->assign('parentCategory', $parentCategory);
 		$this->view->assign('users',
-			$this->frontendUserRepository->findPossibleOwners((int) $this->settings['possibleOwnerGroup'])
+			$this->frontendUserRepository->findPossibleOwners(
+				(int) $this->settings['possibleOwnerGroup'],
+				$this->feUser,
+				$category->getFeUser()
+			)
 		);
 	}
 
