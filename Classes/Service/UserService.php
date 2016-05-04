@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2016 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -123,5 +123,19 @@ class Tx_Fileman_Service_UserService implements t3lib_Singleton {
 		return $this->inGroup[$groupId];
 	}
 
+	/**
+	 * Returns whether the user is the category admin
+	 *
+	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @return boolean
+	 */
+	public function isCategoryAdmin(Tx_Fileman_Domain_Model_Category $category = NULL) {
+		$isAdmin = FALSE;
+		if ($category !== NULL) {
+			$owner = $category->getFeUser();
+			$isAdmin = $owner !== NULL && $this->feUser !== NULL && $owner->getUid() === $this->feUser->getUid();
+		}
+		return $isAdmin;
+	}
+
 }
-?>

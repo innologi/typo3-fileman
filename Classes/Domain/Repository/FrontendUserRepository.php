@@ -1,9 +1,8 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2016 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -33,5 +32,23 @@
  */
 class Tx_Fileman_Domain_Repository_FrontendUserRepository extends Tx_Fileman_Persistence_NoPersistRepository {
 
+	/**
+	 * Finds possible owners of categories
+	 *
+	 * @param integer $userGroup
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findPossibleOwners($userGroup = 0) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+
+		if ($userGroup > 0) {
+			$query->matching(
+				$query->contains('usergroup', $userGroup)
+			);
+		}
+
+		return $query->execute();
+	}
+
 }
-?>

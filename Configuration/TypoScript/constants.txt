@@ -36,7 +36,7 @@ plugin.tx_fileman {
 	settings {
 		# @TODO llang
 		
-		# cat=plugin.tx_appointments/a_extconf/045; type=int+; label=XHR page type
+		# cat=plugin.tx_fileman/a_extconf/045; type=int+; label=XHR page type
 		type.xhr = 201412011983
 		
 		# @TODO remove this when eid is utilized, do so before TER release!
@@ -45,8 +45,12 @@ plugin.tx_fileman {
 		# cat=plugin.tx_fileman/file; type=string; label=Upload dir (FE)
 		uploadDir = uploads/tx_fileman/
 		
+		# cat=plugin.tx_fileman//a; type=int; label=Possible Owner Group
+		possibleOwnerGroup = 0
+		
 		# txt,doc,docx,rtf,odf,xls,xlsx,ppt,pptx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
 		allowFileType = 
 		denyFileType = php,phps,php3,php4,php5,js,html,htm,css,htaccess
+		
 	}
 }

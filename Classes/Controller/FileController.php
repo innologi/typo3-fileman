@@ -156,7 +156,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->view->assign('links', $links);
 
 		if ($this->feUser) {
-			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup'])) || $this->userService->isCategoryAdmin($category);
 			$this->view->assign('isSuperUser', $isSuperUser);
 			$this->view->assign('isLoggedIn', TRUE);
 		}
