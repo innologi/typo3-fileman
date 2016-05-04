@@ -118,8 +118,15 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
+
+		// if the user isn't a superUser, categories should be limited to those he owns
+		$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
 		#@LOW can we make the structure more clear in the selection?
-		$this->view->assign('categories', $this->categoryRepository->findAll());
+		$categories = $isSuperUser
+			? $this->categoryRepository->findAll()
+			: $this->categoryRepository->findByFeUser($this->feUser);
+
+		$this->view->assign('categories', $categories);
 		$this->view->assign('parentCategory', $parentCategory);
 		$this->view->assign('users',
 			$this->frontendUserRepository->findPossibleOwners((int) $this->settings['possibleOwnerGroup'])

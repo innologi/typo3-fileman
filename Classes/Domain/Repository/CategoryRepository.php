@@ -1,9 +1,8 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2016 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -60,5 +59,17 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persist
 		return $result;
 	}
 
+	/**
+	 * Returns all objects with feUser set
+	 *
+	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
+		$query = $this->createQuery();
+		return $query->matching(
+			$query->equals('feUser', $feUser)
+		)->execute();
+	}
+
 }
-?>
