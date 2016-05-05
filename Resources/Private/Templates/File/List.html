@@ -7,7 +7,7 @@
 <f:if condition="{category.parentCategory}">
 <f:then>
 	<f:for each="{category.parentCategory}" as="parent">
-		<f:link.action class="button-back" action="list" controller="File" arguments="{category : parent}"><f:translate key="tx_fileman_filelist.go_back_to" arguments="{0: parent.title}" /></f:link.action>
+		<f:link.action class="button-back" action="list" controller="File" arguments="{category: parent}"><f:translate key="tx_fileman_filelist.go_back_to" arguments="{0: parent.title}" /></f:link.action>
 	</f:for>
 </f:then>
 <f:else>
@@ -16,82 +16,24 @@
 </f:if>
 
 <f:if condition="{isLoggedIn}">
-	<f:link.action action="new" controller="Category" arguments="{parentCategory : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
-	<f:link.action action="new" controller="File" arguments="{category : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_file" /></f:link.action>
-	<f:link.action action="new" controller="Link" arguments="{category : category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link" /></f:link.action>
+	<f:link.action action="new" controller="Category" arguments="{parentCategory: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
+	<f:link.action action="new" controller="File" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_file" /></f:link.action>
+	<f:link.action action="new" controller="Link" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link" /></f:link.action>
 </f:if>
 
 <table class="tx_fileman" summary="{f:translate(key:'tx_fileman_filelist.file_summary')}">
 	<caption><f:translate key="tx_fileman_filelist.file_caption" /></caption>
 	
 	<f:if condition="{subCategories}">
-		<f:render partial="Category/List" arguments="{categories : subCategories, parentCategory : category, isSuperUser : isSuperUser}" />
+		<f:render partial="Category/List" arguments="{categories: subCategories, parentCategory: category, isSuperUser: isSuperUser}" />
 	</f:if>
 
 	<f:if condition="{files}">
-		<tr>
-			<th scope="col"><f:translate key="tx_fileman_domain_model_file.upload_data" /></th>
-			<th scope="col"><f:translate key="tx_fileman_domain_model_file.description" /></th>
-		</tr>
-	
-		<f:for each="{files}" as="file">
-			
-			<tr>
-				<td class="file">
-					<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file : file}">
-						{file.alternateTitle}
-	 				</fi:link.download>
-	 				<f:if condition="{isSuperUser}">
-						<f:link.action action="edit" arguments="{file : file, category : category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-						<fi:form enctype="multipart/form-data" method="post" action="delete" object="{file}" objectName="file" class="delete-form one-button-form" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
-							<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key : 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
-						</fi:form>
-					</f:if>
-	 				
-	 				<f:if condition="{file.links}">
-						<f:then>
-							<a href="#" class="rel-switch">&nbsp;</a>
-							<div class="rel-links">
-								<span class="rel-links-header"><f:translate key="tx_fileman_domain_model_file.links" /></span>
-								<ol>
-									<f:for each="{file.linksFormatted}" as="link">
-										<li><f:link.external uri="{link}">{link}</f:link.external></li>
-									</f:for>
-								</ol>
-							</div>
-						</f:then>
-		 			</f:if>
-	 			</td>
-				<td class="description">{file.description}</td>
-			</tr>
-		 	
-		</f:for>
+		<f:render partial="File/List" arguments="{files: files, category: category, isSuperUser: isSuperUser}" />
 	</f:if>
 	
 	<f:if condition="{links}">
-		<tr>
-			<th scope="col"><f:translate key="tx_fileman_domain_model_link.link_uri" /></th>
-			<th scope="col"><f:translate key="tx_fileman_domain_model_link.description" /></th>
-		</tr>
-	
-		<f:for each="{links}" as="link">
-			
-			<tr>
-				<td class="link">
-					<f:link.external uri="{link.linkUri}" >
-						{link.linkName}
-	 				</f:link.external>
-	 				<f:if condition="{isSuperUser}">
-						<f:link.action action="edit" controller="Link" arguments="{link : link, category : category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-						<fi:form enctype="multipart/form-data" method="post" controller="Link" action="delete" object="{link}" objectName="link" class="delete-form one-button-form" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
-							<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key : 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
-						</fi:form>
-					</f:if>
-	 			</td>
-	 			<td class="description">{link.description}</td>
-			</tr>
-		 	
-		</f:for>
+		<f:render partial="Link/List" arguments="{links: links, category: category, isSuperUser: isSuperUser}" />
 	</f:if>
 </table>
 

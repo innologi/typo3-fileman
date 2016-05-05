@@ -1,0 +1,24 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
+<tr>
+	<th scope="col"><f:translate key="tx_fileman_domain_model_link.link_uri" /></th>
+	<th scope="col"><f:translate key="tx_fileman_domain_model_link.description" /></th>
+</tr>
+
+<f:for each="{links}" as="link">
+	
+	<tr>
+		<td class="link">
+			<f:link.external uri="{link.linkUri}" >
+				{link.linkName}
+			</f:link.external>
+			<f:if condition="{isSuperUser}">
+				<f:link.action action="edit" controller="Link" arguments="{link: link, category: category}" class="button-edit" pageUid="{pageUid}"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+				<fi:form enctype="multipart/form-data" method="post" controller="Link" action="delete" object="{link}" objectName="link" class="delete-form one-button-form" arguments="{category: category}" syncToken="TRUE" absolute="TRUE" pageUid="{pageUid}">
+					<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
+				</fi:form>
+			</f:if>
+		</td>
+		<td class="description">{link.description}</td>
+	</tr>
+ 	
+</f:for>

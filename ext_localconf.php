@@ -27,15 +27,23 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 		'Category' => 'list, new, create, edit, update, delete, ajaxVerifyToken, ajaxGenerateTokens',
 		'File' => 'list, download, new, create, edit, update, delete',
 		'Link' => 'new, create, edit, update, delete',
-
 	),
 	// non-cacheable actions
 	array(
 		'Category' => 'create, update, delete, ajaxVerifyToken, ajaxGenerateTokens' . $noCache,
 		'File' => 'download, create, update, delete' . $noCache,
 		'Link' => 'create, update, delete',
-
 	)
 );
 
-?>
+Tx_Extbase_Utility_Extension::configurePlugin(
+	$_EXTKEY,
+	'Search',
+	array(
+		'File' => 'search, searchResult',
+	),
+	// non-cacheable actions
+	array(
+		'File' => 'searchResult',
+	)
+);

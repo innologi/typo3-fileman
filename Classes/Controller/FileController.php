@@ -1,5 +1,4 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * File controller
  *
@@ -32,6 +31,11 @@
  *
  */
 class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_ActionController {
+
+	// search constants
+	const SEARCH_CATEGORIES = 0;
+	const SEARCH_FILES = 1;
+	const SEARCH_LINKS = 2;
 
 	/**
 	 * fileRepository
@@ -413,6 +417,50 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 
 		$this->flashMessageContainer->add($flashMessage);
 		$this->redirect('list',NULL,NULL,$arguments);
+	}
+
+	/**
+	 * action search
+	 *
+	 * Produces a search template
+	 *
+	 * @return void
+	 */
+	public function searchAction() {
+		if (!isset($this->settings['searchResultPid'][0])) {
+			$this->settings['searchResultPid'] = $GLOBALS['TSFE']->id;
+			$this->view->assign('settings', $this->settings);
+		}
+	}
+
+	/**
+	 * action search result
+	 *
+	 * @param string $search
+	 * @return void
+	 */
+	public function searchResultAction($search = NULL) {
+		// @TODO if search === NULL?
+		$searchTypes = GeneralUtility::intExplode(',', $this->settings['searchTypes']);
+		if (in_array(self::SEARCH_CATEGORIES, $searchTypes)) {
+			$categories = $this->categoryRepository->search($search);
+			$this->view->assign('categories', $categories);
+		}
+		if (in_array(self::SEARCH_FILES, $searchTypes)) {
+			$files = $this->fileRepository->search($search);
+			$this->view->assign('files', $files);
+		}
+		if (in_array(self::SEARCH_LINKS, $searchTypes)) {
+			$links = $this->linkRepository->search($search);
+			$this->view->assign('links', $links);
+		}
+
+		if ($this->feUser) {
+			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+			$this->view->assign('isSuperUser', $isSuperUser);
+			$this->view->assign('isLoggedIn', TRUE);
+		}
+
 	}
 
 
