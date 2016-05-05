@@ -8,12 +8,12 @@
 	
 	<tr>
 		<td class="file">
-			<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file: file}" pageUid="{pageUid}">
+			<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file: file}">
 				{file.alternateTitle}
 			</fi:link.download>
 			<f:if condition="{isSuperUser}">
-				<f:link.action action="edit" arguments="{file: file, category: category}" class="button-edit" pageUid="{pageUid}"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-				<fi:form enctype="multipart/form-data" method="post" action="delete" object="{file}" objectName="file" class="delete-form one-button-form" arguments="{category: category}" syncToken="TRUE" absolute="TRUE" pageUid="{pageUid}">
+				<f:link.action action="edit" arguments="{file: file, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+				<fi:form enctype="multipart/form-data" method="post" action="delete" object="{file}" objectName="file" class="delete-form one-button-form" arguments="{category: category}" syncToken="TRUE" absolute="TRUE">
 					<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
 				</fi:form>
 			</f:if>

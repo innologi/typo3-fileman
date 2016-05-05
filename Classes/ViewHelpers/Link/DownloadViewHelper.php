@@ -48,7 +48,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 	 * @param integer $pageUid Target page
 	 * @return string
 	 */
-	public function render($fileUri, $title = NULL, $noDocrootAction = NULL, array $noDocrootArguments = NULL, $noDocrootController = NULL, $pageUid = NULL) {
+	public function render($fileUri, $title = NULL, $noDocrootAction = NULL, array $noDocrootArguments = NULL, $noDocrootController = NULL) {
 		//if the fileUri lies within docroot, this will resolve the valid sitepath to file, otherwise: boolean false
 		$validSitepath = $this->_resolveSitepath($fileUri);
 
@@ -60,7 +60,6 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 			$uriBuilder = $this->controllerContext->getUriBuilder();
 			//after a quick look @ Tx_Fluid_ViewHelpers_Link_ActionViewHelper..
 			$uri = $uriBuilder->reset()
-				->setTargetPageUid($pageUid)
 				->setUseCacheHash(FALSE)
 				->setCreateAbsoluteUri(TRUE)
 				->uriFor($noDocrootAction, $noDocrootArguments, $noDocrootController);

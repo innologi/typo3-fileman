@@ -422,24 +422,10 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action search
 	 *
-	 * Produces a search template
-	 *
-	 * @return void
-	 */
-	public function searchAction() {
-		if (!isset($this->settings['searchResultPid'][0])) {
-			$this->settings['searchResultPid'] = $GLOBALS['TSFE']->id;
-			$this->view->assign('settings', $this->settings);
-		}
-	}
-
-	/**
-	 * action search result
-	 *
 	 * @param string $search
 	 * @return void
 	 */
-	public function searchResultAction($search = NULL) {
+	public function searchAction($search = NULL) {
 		// @TODO if search === NULL?
 		$searchTypes = GeneralUtility::intExplode(',', $this->settings['searchTypes']);
 		if (in_array(self::SEARCH_CATEGORIES, $searchTypes)) {

@@ -8,11 +8,11 @@
 	
 	<tr>
 		<td class="category">
-			<f:link.action action="list" controller="File" arguments="{category: category}" pageUid="{pageUid}">{category.title} ({category.count})</f:link.action>
+			<f:link.action action="list" controller="File" arguments="{category: category}">{category.title} ({category.count})</f:link.action>
 			<f:if condition="{isSuperUser}" >
-				<f:link.action action="edit" controller="Category" arguments="{category: category, parentCategory: parentCategory}" class="button-edit" pageUid="{pageUid}"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+				<f:link.action action="edit" controller="Category" arguments="{category: category, parentCategory: parentCategory}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 				<f:if condition="{category.count} == 0">
-					<fi:form enctype="multipart/form-data" method="post" controller="Category" action="delete" object="{category}" objectName="category" class="delete-form one-button-form" arguments="{parentCategory: parentCategory}" syncToken="TRUE" absolute="TRUE" pageUid="{pageUid}">
+					<fi:form enctype="multipart/form-data" method="post" controller="Category" action="delete" object="{category}" objectName="category" class="delete-form one-button-form" arguments="{parentCategory: parentCategory}" syncToken="TRUE" absolute="TRUE">
 						<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
 					</fi:form>
 				</f:if>
