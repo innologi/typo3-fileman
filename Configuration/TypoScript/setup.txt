@@ -192,7 +192,8 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	
 	.tx-fileman table,
 	.tx-fileman form,
-	.tx-fileman .error {
+	.tx-fileman .error,
+	.tx-fileman .buttons {
 		clear:both;
 	}
 
@@ -249,7 +250,25 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	
 	
 	
+	.tx-fileman .search-form {
+		margin:5px 0;
+		text-align:right;
+		width:100%;
+	}
+	.tx-fileman .search-form .searchbox {
+		width:130px;
+	}
+	.tx-fileman .search-form .searchsubmit {
+		padding:0;
+	}
+	
+	
+	
 	/* Buttons */
+	
+	.tx-fileman .buttons {
+		margin:5px 0;
+	}
 	
 	.tx-fileman .button-back,
 	.tx-fileman .show-optional {

@@ -3,8 +3,9 @@
 
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.edit_link_header" arguments="{s: category.title}" /></h3>
-
-<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+<div class="buttons">
+	<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+</div>
 
 <div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 

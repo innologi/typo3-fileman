@@ -3,8 +3,10 @@
 <f:section name="main">
 <!-- @TODO lang -->
 <h3>Zoekresultaten</h3>
-	
-<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+<f:render partial="Search" arguments="{settings: settings, search: search}" />
+<div class="buttons">
+	<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+</div>
 
 <f:if condition="{noResults}">
 <f:then>

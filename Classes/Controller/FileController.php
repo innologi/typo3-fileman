@@ -426,7 +426,6 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function searchAction($search = NULL) {
-		// @TODO prettify / position the search field
 		$resultCount = 0;
 		$search = $search === NULL ? '' : trim($search);
 

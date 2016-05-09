@@ -3,7 +3,8 @@
 
 <f:section name="main">
 <h3>{category.title}</h3>
-
+<f:render partial="Search" arguments="{settings: settings}" />
+<div class="buttons">
 <f:if condition="{category.parentCategory}">
 <f:then>
 	<f:for each="{category.parentCategory}" as="parent">
@@ -20,6 +21,8 @@
 	<f:link.action action="new" controller="File" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_file" /></f:link.action>
 	<f:link.action action="new" controller="Link" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link" /></f:link.action>
 </f:if>
+
+</div>
 
 <table class="tx_fileman" summary="{f:translate(key:'tx_fileman_filelist.file_summary')}">
 	<caption><f:translate key="tx_fileman_filelist.file_caption" /></caption>
