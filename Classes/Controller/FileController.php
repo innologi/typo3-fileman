@@ -426,7 +426,6 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @return void
 	 */
 	public function searchAction($search = NULL) {
-		// @TODO show searchterms on page!
 		// @TODO prettify / position the search field
 		$resultCount = 0;
 		$search = $search === NULL ? '' : trim($search);
@@ -461,6 +460,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 
 		// if there are no results (or valid searchterm) ..
 		$this->view->assign('noResults', $resultCount < 1);
+		$this->view->assign('search', $search);
 	}
 
 
