@@ -431,18 +431,27 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		// @TODO prettify / position the search field
 		$searchTypes = GeneralUtility::intExplode(',', $this->settings['searchTypes']);
 		$searchTerms = GeneralUtility::trimExplode(' ', $search, 1);
+		$resultCount = 0;
 
 		if (in_array(self::SEARCH_CATEGORIES, $searchTypes)) {
 			$categories = $this->categoryRepository->search($searchTerms);
+			$resultCount += $categories->count();
 			$this->view->assign('categories', $categories);
 		}
 		if (in_array(self::SEARCH_FILES, $searchTypes)) {
 			$files = $this->fileRepository->search($searchTerms);
+			$resultCount += $files->count();
 			$this->view->assign('files', $files);
 		}
 		if (in_array(self::SEARCH_LINKS, $searchTypes)) {
 			$links = $this->linkRepository->search($searchTerms);
+			$resultCount += $links->count();
 			$this->view->assign('links', $links);
+		}
+
+		// if there are no results
+		if ($resultCount < 1) {
+			$this->view->assign('noResults', TRUE);
 		}
 
 		if ($this->feUser) {

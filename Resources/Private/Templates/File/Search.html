@@ -6,13 +6,18 @@
 	
 <f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
 
+<f:if condition="{noResults}">
+<f:then>
+	<p><f:translate key="tx_fileman_filelist.no_search_results" /></p>
+</f:then>
+<f:else>
+
 <table class="tx_fileman" summary="{f:translate(key:'tx_fileman_filelist.file_summary')}">
 	<caption><f:translate key="tx_fileman_filelist.file_caption" /></caption>
-	
 	<f:if condition="{categories}">
 		<f:render partial="Category/List" arguments="{categories: categories, isSuperUser: isSuperUser}" />
 	</f:if>
-
+	
 	<f:if condition="{files}">
 		<f:render partial="File/List" arguments="{files: files, isSuperUser: isSuperUser}" />
 	</f:if>
@@ -22,5 +27,7 @@
 	</f:if>
 </table>
 
+</f:else>
+</f:if>
 
 </f:section>
