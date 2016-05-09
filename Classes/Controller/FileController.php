@@ -427,17 +427,21 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function searchAction($search = NULL) {
 		// @TODO if search === NULL?
+		// @TODO show searchterms on page!
+		// @TODO prettify / position the search field
 		$searchTypes = GeneralUtility::intExplode(',', $this->settings['searchTypes']);
+		$searchTerms = GeneralUtility::trimExplode(' ', $search, 1);
+
 		if (in_array(self::SEARCH_CATEGORIES, $searchTypes)) {
-			$categories = $this->categoryRepository->search($search);
+			$categories = $this->categoryRepository->search($searchTerms);
 			$this->view->assign('categories', $categories);
 		}
 		if (in_array(self::SEARCH_FILES, $searchTypes)) {
-			$files = $this->fileRepository->search($search);
+			$files = $this->fileRepository->search($searchTerms);
 			$this->view->assign('files', $files);
 		}
 		if (in_array(self::SEARCH_LINKS, $searchTypes)) {
-			$links = $this->linkRepository->search($search);
+			$links = $this->linkRepository->search($searchTerms);
 			$this->view->assign('links', $links);
 		}
 

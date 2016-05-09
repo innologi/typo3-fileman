@@ -48,22 +48,28 @@ class Tx_Fileman_Domain_Repository_FileRepository extends Tx_Extbase_Persistence
 	}
 
 	/**
-	 * Returns all objects that match $search
+	 * Returns all objects that match all search terms
 	 *
-	 * @param string $search
+	 * @param array $searchTerms
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function search($search) {
-		$search = '%' . $search . '%';
+	public function search(array $searchTerms) {
 		$query = $this->createQuery();
+
+		$conditions = array();
+		foreach ($searchTerms as $searchTerm) {
+			$searchTerm = '%' . $searchTerm . '%';
+			$conditions[] = $query->logicalOr(array(
+				$query->like('file_uri', $searchTerm, FALSE),
+				$query->like('alternate_title', $searchTerm, FALSE),
+				$query->like('description', $searchTerm, FALSE),
+				$query->like('links', $searchTerm, FALSE),
+				$query->like('link_names', $searchTerm, FALSE),
+			));
+		}
+
 		return $query->matching(
-			$query->logicalOr(array(
-				$query->like('file_uri', $search, FALSE),
-				$query->like('alternate_title', $search, FALSE),
-				$query->like('description', $search, FALSE),
-				$query->like('links', $search, FALSE),
-				$query->like('link_names', $search, FALSE),
-			))
+			$query->logicalAnd($conditions)
 		)->execute();
 	}
 }
