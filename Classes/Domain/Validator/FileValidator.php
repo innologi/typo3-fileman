@@ -32,7 +32,7 @@
  *
  */
 class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
-
+	// @TODO this file is a travesty, please please PLEASE refactor.
 	/**
 	 * TypoScript settings
 	 *
@@ -75,8 +75,6 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManager::CONFIGURATION_TYPE_SETTINGS);
 	}
 
-
-
 	#@FIX delete failed files?
 	/**
 	 * Does some specific file domain validation.
@@ -111,8 +109,18 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 					$valid = TRUE;
 				}
 			} elseif ($file->getFileUri() !== NULL) {
-				//edit action
-				$valid = TRUE;
+				if ($file->getCategory()->count() > 0) {
+					//edit action
+					$valid = TRUE;
+				} else {
+					// @TODO llang
+					$propertyError = new Tx_Extbase_Validation_PropertyError('category');
+					$propertyError->addErrors(array(
+						new Tx_Extbase_Validation_Error('Het bestand dient in minstens één categorie geplaatst te zijn.', 0)
+					));
+					$this->errors[] = $propertyError;
+					return FALSE;
+				}
 			} else {
 				#@LOW error
 				//no FILES and no fileUri, something is fucked
