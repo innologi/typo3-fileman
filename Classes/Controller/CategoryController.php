@@ -125,13 +125,13 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 
 		// if the user isn't a superUser, categories should be limited to those he owns
 		$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
-		#@LOW can we make the structure more clear in the selection?
 		$categories = $isSuperUser
-			? $this->categoryRepository->findAll()
+			? $this->categoryRepository->findInRoot()
 			: $this->categoryRepository->findByFeUser($this->feUser);
 
-		$this->view->assign('categories', $categories);
+		$this->view->assign('categories', $categories->toArray());
 		$this->view->assign('parentCategory', $parentCategory);
+		$this->view->assign('isSuperUser', $isSuperUser);
 		$this->view->assign('users',
 			$this->frontendUserRepository->findPossibleOwners(
 				(int) $this->settings['possibleOwnerGroup'],
