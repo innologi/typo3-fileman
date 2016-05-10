@@ -2,9 +2,12 @@
 
 <f:section name="main">
 
+<f:render partial="Search" arguments="{settings: settings}" />
+<div class="buttons">
 <f:if condition="{isLoggedIn}">
 	<f:link.action action="new" controller="Category" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
 </f:if>
+</div>
 
 <table summary="{f:translate(key:'tx_fileman_filelist.category_summary')}">
 	<caption><f:translate key="tx_fileman_filelist.category_caption" /></caption>

@@ -45,6 +45,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
  	 * @param string $noDocrootAction Target action in case filepath lies outside docroot
 	 * @param array $noDocrootArguments Arguments in case filepath lies outside docroot
 	 * @param string $noDocrootController Target controller in case filepath lies outside docroot. If NULL current controllerName is used
+	 * @param integer $pageUid Target page
 	 * @return string
 	 */
 	public function render($fileUri, $title = NULL, $noDocrootAction = NULL, array $noDocrootArguments = NULL, $noDocrootController = NULL) {
@@ -58,8 +59,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 			//since the file isn't accessible from docroot, we need to feed the file through a specialized download action
 			$uriBuilder = $this->controllerContext->getUriBuilder();
 			//after a quick look @ Tx_Fluid_ViewHelpers_Link_ActionViewHelper..
-			$uri = $uriBuilder
-				->reset()
+			$uri = $uriBuilder->reset()
 				->setUseCacheHash(FALSE)
 				->setCreateAbsoluteUri(TRUE)
 				->uriFor($noDocrootAction, $noDocrootArguments, $noDocrootController);

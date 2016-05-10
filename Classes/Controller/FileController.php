@@ -1,5 +1,4 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * File controller
  *
@@ -32,6 +31,11 @@
  *
  */
 class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_ActionController {
+
+	// search constants
+	const SEARCH_CATEGORIES = 0;
+	const SEARCH_FILES = 1;
+	const SEARCH_LINKS = 2;
 
 	/**
 	 * fileRepository
@@ -413,6 +417,49 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 
 		$this->flashMessageContainer->add($flashMessage);
 		$this->redirect('list',NULL,NULL,$arguments);
+	}
+
+	/**
+	 * action search
+	 *
+	 * @param string $search
+	 * @return void
+	 */
+	public function searchAction($search = NULL) {
+		$resultCount = 0;
+		$search = $search === NULL ? '' : trim($search);
+
+		if (isset($search[0])) {
+			$searchTypes = GeneralUtility::intExplode(',', $this->settings['searchTypes']);
+			$searchTerms = GeneralUtility::trimExplode(' ', $search, 1);
+
+			if (in_array(self::SEARCH_CATEGORIES, $searchTypes)) {
+				$categories = $this->categoryRepository->search($searchTerms);
+				$resultCount += $categories->count();
+				$this->view->assign('categories', $categories);
+			}
+			if (in_array(self::SEARCH_FILES, $searchTypes)) {
+				$files = $this->fileRepository->search($searchTerms);
+				$resultCount += $files->count();
+				$this->view->assign('files', $files);
+			}
+			if (in_array(self::SEARCH_LINKS, $searchTypes)) {
+				$links = $this->linkRepository->search($searchTerms);
+				$resultCount += $links->count();
+				$this->view->assign('links', $links);
+			}
+
+			// for now, it suffices to base superuser rights only on the su-group
+			if ($this->feUser) {
+				$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+				$this->view->assign('isSuperUser', $isSuperUser);
+				$this->view->assign('isLoggedIn', TRUE);
+			}
+		}
+
+		// if there are no results (or valid searchterm) ..
+		$this->view->assign('noResults', $resultCount < 1);
+		$this->view->assign('search', $search);
 	}
 
 

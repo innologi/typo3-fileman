@@ -72,4 +72,27 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persist
 		)->execute();
 	}
 
+	/**
+	 * Returns all objects that match all search terms
+	 *
+	 * @param array $searchTerms
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function search(array $searchTerms) {
+		$query = $this->createQuery();
+
+		$conditions = array();
+		foreach ($searchTerms as $searchTerm) {
+			$searchTerm = '%' . $searchTerm . '%';
+			$conditions[] = $query->logicalOr(array(
+				$query->like('title', $searchTerm, FALSE),
+				$query->like('description', $searchTerm, FALSE),
+			));
+		}
+
+		return $query->matching(
+			$query->logicalAnd($conditions)
+		)->execute();
+	}
+
 }

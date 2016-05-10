@@ -25,17 +25,13 @@ Tx_Extbase_Utility_Extension::configurePlugin(
 	'Filelist',
 	array(
 		'Category' => 'list, new, create, edit, update, delete, ajaxVerifyToken, ajaxGenerateTokens',
-		'File' => 'list, download, new, create, edit, update, delete',
+		'File' => 'list, download, new, create, edit, update, delete, search',
 		'Link' => 'new, create, edit, update, delete',
-
 	),
 	// non-cacheable actions
 	array(
 		'Category' => 'create, update, delete, ajaxVerifyToken, ajaxGenerateTokens' . $noCache,
-		'File' => 'download, create, update, delete' . $noCache,
+		'File' => 'download, create, update, delete, search' . $noCache,
 		'Link' => 'create, update, delete',
-
 	)
 );
-
-?>
