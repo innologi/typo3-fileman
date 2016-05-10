@@ -11,6 +11,61 @@
 
 jQuery(document).ready(function() {
 
+	//*****************
+	// Search features
+	//*****************
+
+	var $searchBox = jQuery('.tx-fileman .search-form .searchbox'),
+		searchWidth = $searchBox.width(),
+		searchTerms = $searchBox[0].value.trim();
+
+	if ($searchBox.val().length > 0) {
+		$searchBox.css({
+			width: '85%'
+		});
+	}
+	$searchBox.on('focus', function() {
+		if (this.value.length < 1) {
+			jQuery(this).animate({
+				width: '85%'
+			});
+		}
+	});
+	$searchBox.on('blur', function() {
+		if (this.value.length < 1) {
+			jQuery(this).animate({
+				width: searchWidth
+			});
+		}
+	});
+
+	if (searchTerms.length > 0) {
+		// split search terms
+		searchTerms = searchTerms.split(' ');
+
+		// remove empty elements (i.e. due to double spaces)
+		for (var i in searchTerms) {
+			if (searchTerms.hasOwnProperty(i)) {
+				if (searchTerms[i].length < 1) {
+					searchTerms.splice(i, 1);
+				}
+			}
+		}
+
+		// create Regexp pattern from searchterms, incl. negative lookbehind to NOT match anything part of an HTML tag
+		var pattern = new RegExp('(' + searchTerms.join('|') + ')(?![^<]*>|[^<>]<\/)', 'ig');
+
+		// replace each match with itself wrapped in a span for styling
+		jQuery('.tx-fileman table.tx_fileman').each(function(i, table) {
+			var $obj = jQuery(table),
+				replacement = '<span class="search-match">$1</span>';
+			// note that this replacement would destroy event handlers, hence this feature must be applied before all others
+			$obj.html($obj.html().replace(pattern, replacement));
+		});
+	}
+
+
+
 	//***********************
 	// Hidden Field Switcher
 	//***********************
@@ -58,6 +113,7 @@ jQuery(document).ready(function() {
 			}
 		});
 	}
+
 
 
 	//*********************
