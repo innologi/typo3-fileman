@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2016 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -22,7 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Facilitates all file-upload interaction.
  *
@@ -254,6 +254,8 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 				//file might have been renamed because of duplicate
 				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
 				$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
+				// otherwise, permissions might end up non-consistent
+				GeneralUtility::fixPermissions($finalPath);
 				return $success;
 			}
 		}
