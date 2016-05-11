@@ -34,6 +34,11 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
 class Tx_Fileman_ViewHelpers_Order_HierarchyViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	/**
+	 * @var array
+	 */
+	protected $processed = array();
+	// @TODO descriptions
+	/**
 	 * Class constructor
 	 *
 	 * @return void
@@ -41,6 +46,7 @@ class Tx_Fileman_ViewHelpers_Order_HierarchyViewHelper extends Tx_Fluid_Core_Vie
 	public function __construct() {
 		$this->registerArgument('recursionProperty', 'string', '', TRUE);
 		$this->registerArgument('labelProperty', 'string', '', TRUE);
+		$this->registerArgument('noDuplicates', 'boolean', '', FALSE, FALSE);
 	}
 
 	/**
@@ -69,15 +75,30 @@ class Tx_Fileman_ViewHelpers_Order_HierarchyViewHelper extends Tx_Fluid_Core_Vie
 	 */
 	protected function recursion(array &$collection, AbstractDomainObject $item, $index, $preLabel = '| ') {
 		$collection[$index] = $item;
+		/** @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage $subItems */
 		$subItems = $item->_getProperty($this->arguments['recursionProperty']);
 
-		if (!empty($subItems)) {
+		if ($subItems->valid()) {
 			$preSort = array();
-			foreach ($subItems as $subItem) {
+			foreach ($subItems as $key => $subItem) {
+				$label = NULL;
+				if (isset($this->processed[$key])) {
+					if ($this->arguments['noDuplicates']) {
+						// Preventing a previously processed subitem (e.g. because he's subitem of multiple items)
+						// helps prevent give them erroneous labels. Consider that the resulting collection offered
+						// to e.g. a select element will eliminate any double values anyway.
+						continue;
+					}
+					// original label
+					$label = $this->processed[$key];
+				}
 				/** @var \TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject $subItem */
-				$label = $subItem->_getProperty($this->arguments['labelProperty']);
+				if ($label === NULL) {
+					$label = $subItem->_getProperty($this->arguments['labelProperty']);
+				}
 				$preSort[$label] = $subItem;
 				$subItem->_setProperty($this->arguments['labelProperty'], $preLabel . $label);
+				$this->processed[$key] = $label;
 			}
 			ksort($preSort);
 

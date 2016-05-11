@@ -22,7 +22,7 @@
 		<f:translate key="tx_fileman_domain_model_file.category" />
 		<br />
 		<f:form.select
-			options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\')}', else: categories)}"
+			options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
 			optionValueField="uid" optionLabelField="title" property="category" 
 			multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
 		/>
