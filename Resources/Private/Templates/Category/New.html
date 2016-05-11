@@ -4,8 +4,14 @@
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.new_category_header" /></h3>
 <div class="buttons">
-	<!-- @TODO back to parent cat from here? -->
-	<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+	<f:if condition="{parentCategory}">
+	<f:then>
+		<f:link.action action="list" controller="File" arguments="{category: parentCategory}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+	</f:then>
+	<f:else>
+		<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+	</f:else>
+	</f:if>
 </div>
 
 <div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
