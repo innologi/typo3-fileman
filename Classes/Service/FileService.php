@@ -105,9 +105,9 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return void
 	 */
 	public function findSubstitutes() {
-		#@FIX we shouldn't use $_POST..
-		if (isset($_POST[$this->ext]['tmpFiles']) && !$this->searchedForSubtitutes) {
-			$tmpNames = $_POST[$this->ext]['tmpFiles'];
+		$postData = GeneralUtility::_POST($this->ext);
+		if (isset($postData['tmpFiles']) && !$this->searchedForSubtitutes) {
+			$tmpNames = $postData['tmpFiles'];
 			//files once uploaded, have been moved to said location to prevent them from being deleted after the upload script execution
 			$tmpDir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
 			$tmpDir = rtrim(t3lib_div::fixWindowsFilePath($tmpDir), '/') . '/' . $this->ext . '/';
