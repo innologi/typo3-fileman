@@ -9,6 +9,8 @@
 			<label index="tx_fileman_flexform_suGroup">Superuser group</label>
 			<label index="tx_fileman_flexform_searchTypes">Searchable record types</label>
 			
+			<label index="tca_tab_content">Category Content</label>
+			
 			<label index="ts_category_upload">Upload Settings</label>
 			<label index="ts_category_uploadadv">Advanced HTML5 Upload Settings</label>
 			<label index="ts_category_general">General Settings</label>

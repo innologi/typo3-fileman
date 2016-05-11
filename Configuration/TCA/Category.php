@@ -8,8 +8,11 @@ $TCA['tx_fileman_domain_model_category'] = array(
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, sub_category, file, link, parent_category, fe_user',
 	),
-	'types' => array( #@TODO add div for content (file, link)
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,sub_category,file,link,parent_category,fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+	'types' => array(
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,parent_category,fe_user,
+			--div--;LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tca_tab_content,sub_category,file,link,
+			--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'
+		),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
