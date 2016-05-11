@@ -144,6 +144,17 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	}
 
 	/**
+	 * Delete the file at the current index
+	 *
+	 * @return boolean
+	 */
+	public function removeFile() {
+		return isset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance][$this->index][$this->property][0])
+			&& is_file($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance][$this->index][$this->property])
+			&& unlink($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance][$this->index][$this->property]);
+	}
+
+	/**
 	 * Sets all relevant uploadfile attributes in the $file instance
 	 *
 	 * @param Tx_Fileman_Domain_Model_File $file

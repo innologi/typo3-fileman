@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2016 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -75,7 +75,6 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManager::CONFIGURATION_TYPE_SETTINGS);
 	}
 
-	#@FIX delete failed files?
 	/**
 	 * Does some specific file domain validation.
 	 *
@@ -101,6 +100,8 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 				)) {
 					//the file type is prohibited by configuration
 					$errorCode = 40750133701;
+					// delete denied file
+					$this->fileService->removeFile();
 					//if fileUri is not NULL, fileService->isValid() will fail because the file isn't uploaded "again"
 				} elseif ($file->getFileUri() === NULL && !$this->fileService->isValid()) {
 					//there was no file uploaded or something went wrong
