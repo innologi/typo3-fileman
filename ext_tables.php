@@ -14,7 +14,6 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_
 t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_filelist.xml');
 
 #@FIX it seems files don't get consistent chmod permissions, e.g. mp3 got 644, but gz got 600. Can we listen to TYPO3Conf for this?
-#@FIX clean up constants
 #@TODO documenteer pageTS TCEMAIN.clearCacheCmd = pid
 #@TODO namespaces?
 #@TODO what about FAL?

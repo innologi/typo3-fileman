@@ -1,59 +1,68 @@
+## custom subcategories
+# customsubcategory=a_upload=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_category_upload
+# customsubcategory=b_upload_adv=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_category_uploadadv
+# customsubcategory=0_general=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_category_general
+
 plugin.tx_fileman {
 	view {
-		# cat=plugin.tx_fileman/file; type=string; label=Path to template root (FE)
+		# cat=plugin.tx_fileman/file/10; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_templateRootPath
 		templateRootPath = EXT:fileman/Resources/Private/Templates/
-		# cat=plugin.tx_fileman/file; type=string; label=Path to template partials (FE)
+		# cat=plugin.tx_fileman/file/20; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_partialRootPath
 		partialRootPath = EXT:fileman/Resources/Private/Partials/
-		# cat=plugin.tx_fileman/file; type=string; label=Path to template layouts (FE)
+		# cat=plugin.tx_fileman/file/30; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_layoutRootPath
 		layoutRootPath = EXT:fileman/Resources/Private/Layouts/
 	}
 	persistence {
-		# cat=plugin.tx_fileman//a; type=string; label=Default storage PID
+		# cat=plugin.tx_fileman/0_general/010; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_storagePid
 		storagePid = 
 	}
 	js {
-		# cat=plugin.tx_fileman/javascript; type=boolean; label= Enable jQuery inclusion: Will include the jQuery library through the configured CDN. If for some reason there already is a jQuery library present, you can disable fileman's here to prevent conflicts.
+		# cat=plugin.tx_fileman/file/40; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_includeJquery
 		includeJquery = 1
-		# cat=plugin.tx_fileman/javascript; type=boolean; label= Enable Javascript inclusion: Will include fileman Javascript. It's all jQuery dependent, so make sure to have jQuery enabled through this or another extension.
+		# cat=plugin.tx_fileman/file/50; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_includeJS
 		includeJS = 1
-		# cat=plugin.tx_fileman/javascript; type=boolean; label= Place Javascript in page footer: If enabled, will move the fileman Javascript out of the header and into the footer.
+		# cat=plugin.tx_fileman/file/60; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_toFooter
 		toFooter = 1
-		# cat=plugin.tx_fileman/javascript; type=text; label= jQuery CDN url: The url from which jQuery is included. Configurable to easily allow jQuery version changes.
-		jQueryCDN = http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js
-		
-		uploadType = js
-		uploadProgress = none
-		debug = 0
-		# text/plain|application/msword|application/vnd.openxmlformats|application/rtf|application/vnd.ms-excel|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument|application/pdf|image/jpeg|image/gif|image/png|video/mp4|video/x-flv|video/x-msvideo|audio/mpeg
-		allowMimeType =
-		maxFileSize =
-		maxTotalFileSize =
-		# default chunksize of 1MB
-		chunkSize = 1048576
+		# cat=plugin.tx_fileman/file/70; type=text; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_jQueryCDN
+		jQueryCDN = https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js
 		
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.js
+		
+		# cat=plugin.tx_fileman/a_upload/040; type=options[HTML5=js, PHP=php]; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadType
+		uploadType = js
+		# cat=plugin.tx_fileman/a_upload/050; type=options[PHP-Session=session, PHP-APC=apc, PHP-UploadProgress=uploadprogress, None=none]; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadProgress
+		uploadProgress = session
+		
+		# e.g. text/plain|application/msword|application/vnd.openxmlformats|application/rtf|application/vnd.ms-excel|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument|application/pdf|image/jpeg|image/gif|image/png|video/mp4|video/x-flv|video/x-msvideo|audio/mpeg
+		# cat=plugin.tx_fileman/b_upload_adv/020; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_allowMimeType
+		allowMimeType =
+		# cat=plugin.tx_fileman/b_upload_adv/030; type=int; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_maxFileSize
+		maxFileSize =
+		# cat=plugin.tx_fileman/b_upload_adv/040; type=int; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_maxTotalFileSize
+		maxTotalFileSize =
+		# cat=plugin.tx_fileman/b_upload_adv/050; type=int; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_chunkSize
+		chunkSize = 1048576
+		
+		debug = 0
 	}
 	settings {
-		# @TODO llang
-		
-		# cat=plugin.tx_fileman/a_extconf/045; type=int+; label=XHR page type
-		type.xhr = 201412011983
-		
 		# @TODO remove this when eid is utilized, do so before TER release!
+		type.xhr = 201412011983
 		pages.xhr = 2123
 	
-		# cat=plugin.tx_fileman/file; type=string; label=Upload dir (FE)
+		# cat=plugin.tx_fileman/a_upload/10; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadDir
 		uploadDir = uploads/tx_fileman/
 		
-		# cat=plugin.tx_fileman//a; type=int; label=Possible Owner Group
-		possibleOwnerGroup = 0
-		
-		# cat=plugin.tx_fileman//a; type=string; label=User Label Field
-		userLabelField = name
-		
-		# txt,doc,docx,rtf,odf,xls,xlsx,ppt,pptx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
-		allowFileType = 
+		# e.g. txt,doc,docx,rtf,odf,xls,xlsx,ppt,pptx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
+		# cat=plugin.tx_fileman/a_upload/20; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_allowFileType
+		allowFileType =
+		# cat=plugin.tx_fileman/a_upload/30; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_denyFileType
 		denyFileType = php,phps,php3,php4,php5,js,html,htm,css,htaccess
 		
+		# cat=plugin.tx_fileman/0_general/020; type=int; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_possibleOwnerGroup
+		possibleOwnerGroup = 0
+		
+		# cat=plugin.tx_fileman/0_general/030; type=options[Full name=name, First name=firstname, Last name=lastname, Username=username]; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_userLabelField
+		userLabelField = name
 	}
 }
