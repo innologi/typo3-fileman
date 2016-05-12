@@ -23,6 +23,8 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * File controller
  *
@@ -248,18 +250,23 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			//by fileService during validation, because forward() tells extbase to re-map the request arguments
 			$this->fileService->reset(); //so start over!
 			$fileStorage = $files->getFile();
+			/** @var Tx_Fileman_Domain_Model_File $file */
 			foreach ($fileStorage as $hash=>$file) {
 				if ($this->fileService->next()) {
 					//each uploaded file that was validated, is associated with the matching $file entry
 					//this would obviously not work if their count and order wasn't identical
 					$this->fileService->setFileProperties($file);
 				} else {
-					#@TODO error
 					if (version_compare(TYPO3_branch, '6.2', '<')) {
 						unset($fileStorage[$hash]);
 					} else {
 						unset($fileStorage[$file]);
 					}
+					$this->addFlashMessage(
+						LocalizationUtility::translate('tx_fileman_filelist.new_file_failed_reconstitute', $this->extensionName, array($file->getFileUri())),
+						'',
+						FlashMessage::WARNING
+					);
 				}
 			}
 		}
@@ -283,6 +290,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
 		$fileStorage = $files->getFile();
+		$failedFiles = array();
+		/** @var Tx_Fileman_Domain_Model_File $file */
 		foreach ($fileStorage as $file) {
 			#$absDirPath = PATH_site.$this->settings['uploadDir'];
 			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@LOW might as well do it static right now
@@ -300,14 +309,18 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 				//finalize creation
 				$this->fileRepository->add($file);
 			} else {
-				#@TODO error
-				//move could not take place
-				//unlink?
+				$failedFiles[] = $file;
 			}
 		}
 
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		if (empty($failedFiles)) {
+			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
+			$severity = FlashMessage::OK;
+		} else {
+			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_error', $this->extensionName, array(count($failedFiles)));
+			$severity = FlashMessage::ERROR;
+		}
+		$this->addFlashMessage($flashMessage, '', $severity);
 
 		$arguments = NULL;
 		if ($category !== NULL) {

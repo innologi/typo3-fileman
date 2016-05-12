@@ -31,12 +31,34 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  */
 class Tx_Fileman_Service_FileService implements t3lib_Singleton {
-	#@TODO doc
-	//$_FILES property names
-	protected $ext = 'tx_fileman_filelist'; //ext_plugin name
-	protected $storage = 'files'; //storage name
-	protected $instance = 'file'; //instance name
-	protected $property = 'uploadData'; //property name
+
+	/**
+	 * $_FILES ext_plugin name
+	 *
+	 * @var string
+	 */
+	protected $ext = 'tx_fileman_filelist';
+
+	/**
+	 * $_FILES storage name
+	 *
+	 * @var string
+	 */
+	protected $storage = 'files';
+
+	/**
+	 * $_FILES instance name
+	 *
+	 * @var string
+	 */
+	protected $instance = 'file';
+
+	/**
+	 * $_FILES property name
+	 *
+	 * @var string
+	 */
+	protected $property = 'uploadData';
 
 	/**
 	 * Current $_FILES position
@@ -63,19 +85,9 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * Performs some basic file functions
 	 *
 	 * @var t3lib_basicFileFunctions
+	 * @inject
 	 */
 	protected $fileFunctions;
-
-	/**
-	 * Injects basicFileFunctions
-	 *
-	 * @param t3lib_basicFileFunctions $fileFunctions
-	 * @return void
-	 */
-	public function injectFileFunctions(t3lib_basicFileFunctions $fileFunctions) {
-		$this->fileFunctions = $fileFunctions;
-	}
-
 
 
 	/**
@@ -254,6 +266,10 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 				//file might have been renamed because of duplicate
 				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
 				$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
+				if (!success) {
+					$success = copy($tmpFile, $finalPath);
+					unlink($tmpFile);
+				}
 				// otherwise, permissions might end up non-consistent
 				GeneralUtility::fixPermissions($finalPath);
 				return $success;
