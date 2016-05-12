@@ -128,7 +128,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'sub_category' => array(
 			'exclude' => 0,
-			'label' => 'Subcategories', #@TODO llang
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.sub_category',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_category',
@@ -165,7 +165,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'file' => array(
 			'exclude' => 0,
-			'label' => 'Files', #@TODO llang
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.file',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_file',
@@ -202,7 +202,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'link' => array(
 			'exclude' => 0,
-			'label' => 'Links', #@TODO llang
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.link',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_link',
@@ -239,7 +239,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'parent_category' => array(
 			'exclude' => 0,
-			'label' => 'Parent categories',
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.parent_category',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_category',

@@ -74,6 +74,16 @@ plugin.tx_fileman {
 			DEL_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.del_file
 			SHOW_OPTIONAL = TEXT
 			SHOW_OPTIONAL.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.show_optional
+			VALID_FAIL_MIMETYPE = TEXT
+			VALID_FAIL_MIMETYPE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_mimetype
+			VALID_FAIL_MAXFILESIZE = TEXT
+			VALID_FAIL_MAXFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilesize
+			VALID_FAIL_TOTFILESIZE = TEXT
+			VALID_FAIL_TOTFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_totalfilesize
+			XHR_RETRY = TEXT
+			XHR_RETRY.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_retry
+			XHR_NO_PROGRESS = TEXT
+			XHR_NO_PROGRESS.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_no_progress
 		}
 	}
 	settings {

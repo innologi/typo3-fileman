@@ -168,8 +168,7 @@ jQuery(document).ready(function() {
 						$upload,
 						!filter.test(testFileType),
 						'File type denied: ' + file.type,
-						// @TODO llang
-						'Bestandstype niet toegestaan.'
+						'###VALID_FAIL_MIMETYPE###'
 					)) {
 						return;
 					}
@@ -181,8 +180,7 @@ jQuery(document).ready(function() {
 						$upload,
 						file.size > maxFileSize,
 						'File size ' + file.size + ' exceeds set limit: ' + maxFileSize,
-						// @TODO llang
-						'Bestand is groter dan het toegestane limiet van {maxFileSize}.'.replace('{maxFileSize}', bytesToSize(maxFileSize))
+						'###VALID_FAIL_MAXFILESIZE###'.replace('{maxFileSize}', bytesToSize(maxFileSize))
 					)) {
 						return;
 					}
@@ -207,8 +205,7 @@ jQuery(document).ready(function() {
 					$upload,
 					totalSize > maxTotalFileSize,
 					'Total file size ' + totalSize + ' exceeds set limit: ' + maxTotalFileSize,
-					// @TODO llang
-					'Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.'.replace('{maxTotalFileSize}', bytesToSize(maxTotalFileSize))
+					'###VALID_FAIL_TOTFILESIZE###'.replace('{maxTotalFileSize}', bytesToSize(maxTotalFileSize))
 				)) {
 					return;
 				}
@@ -247,7 +244,7 @@ jQuery(document).ready(function() {
 
 						updateProgressInt[i] = setInterval(function() {
 							updateProgress(upload_id,i);
-						}, 100); //@TODO: should be configurable
+						}, 100);
 						updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here
 					}
 				});
@@ -319,7 +316,7 @@ jQuery(document).ready(function() {
 	}
 
 
-	//@TODO: url should be set from TS, no cache should not be necessary once headers in script are set
+	//@TODO url should be set from TS, no cache should not be necessary once headers in script are set
 	//updates progress in progress bar
 	function updateProgress(id,i) {
 		jQuery.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random(), type: progressType}, function(data) {
@@ -499,7 +496,7 @@ jQuery(document).ready(function() {
 		xhr.addEventListener('error', function(e) {
 			console.log('ERROR: No connection, retrying in 30 seconds');
 			var $progressVal = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue');
-			$progressVal.text('Geen verbinding. Poging om te hervatten: elke 30 seconden.');
+			$progressVal.text('###XHR_RETRY###');
 			setTimeout(function() {
 				xhrUploadFileInChunks(file, i, j, form);
 			}, 30000);
@@ -532,7 +529,7 @@ jQuery(document).ready(function() {
 						uploadedSize += e.total;
 					}
 				} else if (debug == '1') {
-					$progressVal.html('Not receiving upload-progress status.');
+					$progressVal.html('###XHR_NO_PROGRESS###');
 				}
 			}
 		}, false);

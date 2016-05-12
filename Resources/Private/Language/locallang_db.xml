@@ -19,6 +19,10 @@
 			<label index="tx_fileman_domain_model_category">Category</label>
 			<label index="tx_fileman_domain_model_category.title">Title</label>
 			<label index="tx_fileman_domain_model_category.description">Description</label>
+			<label index="tx_fileman_domain_model_category.sub_category">Subcategories</label>
+			<label index="tx_fileman_domain_model_category.file">Files</label>
+			<label index="tx_fileman_domain_model_category.link">Links</label>
+			<label index="tx_fileman_domain_model_category.parent_category">Parent categories</label>
 			<label index="tx_fileman_domain_model_category.fe_user">Category Admin</label>
 			
 			<label index="tx_fileman_domain_model_link">Link</label>
@@ -42,6 +46,10 @@
 			<label index="tx_fileman_domain_model_category">Categorie</label>
 			<label index="tx_fileman_domain_model_category.title">Titel</label>
 			<label index="tx_fileman_domain_model_category.description">Omschrijving</label>
+			<label index="tx_fileman_domain_model_category.sub_category">Sub categorieën</label>
+			<label index="tx_fileman_domain_model_category.file">Bestanden</label>
+			<label index="tx_fileman_domain_model_category.link">Links</label>
+			<label index="tx_fileman_domain_model_category.parent_category">Ouder categorieën</label>
 			<label index="tx_fileman_domain_model_category.fe_user">Categorie Beheerder</label>
 			
 			<label index="tx_fileman_domain_model_link">Link</label>

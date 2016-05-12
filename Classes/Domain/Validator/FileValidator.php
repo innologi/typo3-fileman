@@ -114,10 +114,9 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 					//edit action
 					$valid = TRUE;
 				} else {
-					// @TODO llang
 					$propertyError = new Tx_Extbase_Validation_PropertyError('category');
 					$propertyError->addErrors(array(
-						new Tx_Extbase_Validation_Error('Het bestand dient in minstens één categorie geplaatst te zijn.', 0)
+						new Tx_Extbase_Validation_Error('There was a problem with category', 40750133705)
 					));
 					$this->errors[] = $propertyError;
 					return FALSE;
