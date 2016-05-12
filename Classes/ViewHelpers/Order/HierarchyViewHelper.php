@@ -44,9 +44,9 @@ class Tx_Fileman_ViewHelpers_Order_HierarchyViewHelper extends Tx_Fluid_Core_Vie
 	 * @return void
 	 */
 	public function __construct() {
-		$this->registerArgument('recursionProperty', 'string', '', TRUE);
-		$this->registerArgument('labelProperty', 'string', '', TRUE);
-		$this->registerArgument('noDuplicates', 'boolean', '', FALSE, FALSE);
+		$this->registerArgument('recursionProperty', 'string', 'Property to base recursion of ordering on. Usually refers to an ObjectStorage.', TRUE);
+		$this->registerArgument('labelProperty', 'string', 'Label property that is to be adjusted to display an item\'s hierarchical position.', TRUE);
+		$this->registerArgument('noDuplicates', 'boolean', 'If TRUE, prevents the processing of duplicate items (e.g. a subitem to multiple items).', FALSE, FALSE);
 	}
 
 	/**
