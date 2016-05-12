@@ -35,14 +35,24 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persist
 	/**
 	 * Returns all objects of this repository that are in the root (no parents)
 	 *
+	 * @param Tx_Fileman_Domain_Model_Category $excludeCategory
 	 * @return array An array of objects, empty if no objects found
 	 */
-	public function findInRoot() {
+	public function findInRoot(Tx_Fileman_Domain_Model_Category $excludeCategory = NULL) {
 		$query = $this->createQuery();
-		$result = $query->matching(
+
+		$conditions = array(
 			$query->equals('parentCategory', 0)
+		);
+		if ($excludeCategory !== NULL) {
+			$conditions[] = $query->logicalNot(
+				$query->equals('uid', $excludeCategory->getUid())
+			);
+		}
+
+		return $query->matching(
+			$query->logicalAnd($conditions)
 		)->execute();
-		return $result;
 	}
 
 	/**
@@ -63,12 +73,23 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persist
 	 * Returns all objects with feUser set
 	 *
 	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @param Tx_Fileman_Domain_Model_Category $excludeCategory
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findByFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
+	public function findByFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser, Tx_Fileman_Domain_Model_Category $excludeCategory = NULL) {
 		$query = $this->createQuery();
-		return $query->matching(
+
+		$conditions = array(
 			$query->equals('feUser', $feUser)
+		);
+		if ($excludeCategory !== NULL) {
+			$conditions[] = $query->logicalNot(
+				$query->equals('uid', $excludeCategory->getUid())
+			);
+		}
+
+		return $query->matching(
+			$query->logicalAnd($conditions)
 		)->execute();
 	}
 
