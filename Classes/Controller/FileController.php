@@ -335,15 +335,15 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Note the file/files difference with new action
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $file
 	 * @ignorevalidation $file
 	 * @return void
 	 */
-	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+	public function editAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
 		$this->view->assign('category', $category); //category is given for URL-consistency and redirecting afterwards
 
 		// if the user isn't a superUser, categories should be limited to those he owns
@@ -362,14 +362,14 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Note the file/files difference with create action
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+	public function updateAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
 		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {
@@ -394,8 +394,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Also explicitly removes $file from $category, to make sure the counters of this bi-directional relation are in order
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $file
@@ -403,8 +403,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+	public function deleteAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
 		$arguments = NULL;
+		$fileCategories = $file->getCategory();
 
 		//category
 		if ($category !== NULL) {
@@ -414,13 +415,17 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		// whats next depends on whether it has any remaining category
-		if ($file->getCategory()->count() === 0) {
+		if ($fileCategories->count() === 0) {
 			$this->fileRepository->remove($file);
 
 			#@LOW change this as soon as its no longer static / using FAL
 			$uri = PATH_site . 'uploads/tx_fileman/' . $file->getFileUri();
 			#@TODO try/catch?
-			unlink($uri);
+			#try {
+				unlink($uri);
+			#} catch (\Exception $e) {
+			#	$e->getMessage();
+			#}
 
 			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
 		} else {
