@@ -412,6 +412,13 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			$file->removeCategory($category);
 			//$category->removeFile($file);
 			$arguments = array('category'=>$category);
+		} elseif ($fileCategories->count() > 0) {
+			// If we get here, it means file was attempted to be removed outside of its category, e.g. via search.
+			// This action suggests the file needs to be removed ENTIRELY, regardless. So first remove it from any
+			// category.
+			foreach ($fileCategories as $fC) {
+				$file->removeCategory($fC);
+			}
 		}
 
 		// whats next depends on whether it has any remaining category
