@@ -405,6 +405,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
 		$arguments = NULL;
+		$controller = 'Category';
 		$fileCategories = $file->getCategory();
 
 		//category
@@ -412,6 +413,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			$file->removeCategory($category);
 			//$category->removeFile($file);
 			$arguments = array('category'=>$category);
+			$controller = NULL;
 		} elseif ($fileCategories->count() > 0) {
 			// If we get here, it means file was attempted to be removed outside of its category, e.g. via search.
 			// This action suggests the file needs to be removed ENTIRELY, regardless. So first remove it from any
@@ -440,7 +442,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		$this->flashMessageContainer->add($flashMessage);
-		$this->redirect('list',NULL,NULL,$arguments);
+		$this->redirect('list',$controller,NULL,$arguments);
 	}
 
 	/**
