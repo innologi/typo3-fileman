@@ -264,11 +264,15 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 				$tmpFile = $file->getTmpFile();
 				$finalPath = $this->fileFunctions->getUniqueName($fileName, $absDirPath);
 				//file might have been renamed because of duplicate
-				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
+				$file->setFileUri(basename($finalPath));
 				$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
 				if (!success) {
 					$success = copy($tmpFile, $finalPath);
-					unlink($tmpFile);
+					try {
+						unlink($tmpFile);
+					} catch (\Exception $e) {
+						// @LOW log?
+					}
 				}
 				// otherwise, permissions might end up non-consistent
 				GeneralUtility::fixPermissions($finalPath);

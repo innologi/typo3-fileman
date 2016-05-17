@@ -427,12 +427,11 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 
 			#@LOW change this as soon as its no longer static / using FAL
 			$uri = PATH_site . 'uploads/tx_fileman/' . $file->getFileUri();
-			#@TODO try/catch?
-			#try {
+			try {
 				unlink($uri);
-			#} catch (\Exception $e) {
-			#	$e->getMessage();
-			#}
+			} catch (\Exception $e) {
+				// @LOW log?
+			}
 
 			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
 		} else {
