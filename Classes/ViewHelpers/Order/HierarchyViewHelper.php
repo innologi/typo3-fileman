@@ -37,7 +37,7 @@ class Tx_Fileman_ViewHelpers_Order_HierarchyViewHelper extends Tx_Fluid_Core_Vie
 	 * @var array
 	 */
 	protected $processed = array();
-	// @TODO descriptions
+
 	/**
 	 * Class constructor
 	 *

@@ -16,7 +16,6 @@ t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Co
 #@TODO documenteer pageTS TCEMAIN.clearCacheCmd = pid
 #@TODO namespaces?
 #@TODO what about FAL?
-#@TODO what about system categories instead? is that an option?
 #@TODO locallang_csh_tx_fileman_domain_model_link.xml
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'File Manager');

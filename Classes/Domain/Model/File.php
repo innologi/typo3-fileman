@@ -152,7 +152,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return string
 	 */
 	public function getFileUri() {
-		return /*t3lib_div::fixWindowsFilePath(*/$this->fileUri/*)*/; #@TODO have to see if we can get around the TCA requirement
+		return /*t3lib_div::fixWindowsFilePath(*/$this->fileUri/*)*/; # @TODO replace with FAL?
 	}
 
 	/**

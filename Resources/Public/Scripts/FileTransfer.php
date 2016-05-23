@@ -23,8 +23,8 @@ $return = array(
 
 if(isset($_GET['filename']) && isset($_GET['state'])) {
 
-	// @FIX fixWindowsPaths, see other "upload_tmp_dir"
 	$dir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
+	# @TODO once it is eid: $dir = rtrim(t3lib_div::fixWindowsFilePath($dir), '/') . '/tx_fileman_filelist/';
 	$dir = rtrim($dir, '/') . '/tx_fileman_filelist/';
 	$filename = $_GET['filename'];
 	if($_GET['state'] === '0') {

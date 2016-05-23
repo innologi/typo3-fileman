@@ -2,7 +2,7 @@
 if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
-#@FIX hidden categories kunnen nog steeds gekozen worden..
+
 $TCA['tx_fileman_domain_model_file'] = array(
 	'ctrl' => $TCA['tx_fileman_domain_model_file']['ctrl'],
 	'interface' => array(

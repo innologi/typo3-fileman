@@ -43,7 +43,7 @@ class Tx_Fileman_Domain_Validator_LinksValidator extends Tx_Extbase_Validation_V
 	 * @param	string	$links	The links to validate
 	 * @return	boolean
 	 */
-	public function isValid($links) { #@TODO don't forget TCA
+	public function isValid($links) { #@LOW don't forget TCA
 		$linkArray = array();
 
 		if (isset($links[0])) {
