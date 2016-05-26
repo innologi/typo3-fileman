@@ -134,6 +134,7 @@ jQuery(document).ready(function() {
 	var progressType = "###UPLOADPROGRESS###",
 		uploadType = '###UPLOADTYPE###',
 		uploadQueue = [],
+		xhrUploadEnabled = false,
 		xhrUploadDone = false,
 		allowMimeType = '###ALLOW_MIMETYPE###',
 		maxFileSize = parseInt('###MAX_FILESIZE###'),
@@ -381,6 +382,7 @@ jQuery(document).ready(function() {
 					}
 				});
 			});
+			xhrUploadEnabled = true;
 		}
 	}
 
@@ -664,6 +666,9 @@ jQuery(document).ready(function() {
 					}
 					return false;
 				});
+			} else {
+				// makes other JS funcs not look for add-file-entry button, since multi-file handling is currently depending on it
+				fileCountMax = 1;
 			}
 
 		});
@@ -707,19 +712,22 @@ jQuery(document).ready(function() {
 	// Drag 'n Drop Support
 	//**********************
 
-	$dropzones = jQuery('.tx-fileman .drop-zone');
-	$dropzones.on('drop', function(event) {
-		drop_handler(event.originalEvent, this);
-	});
-	$dropzones.on('dragover', function(event) {
-		dragover_handler(event.originalEvent);
-	});
-	// aka dragEnd
-	$dropzones.each(function(i, dropzone) {
-		dropzone.addEventListener('dragend', function(event) {
-			dragend_handler(event);
-		}, false);
-	});
+	// relies on xhr uploading
+	if (xhrUploadEnabled) {
+		$dropzones = jQuery('.tx-fileman .drop-zone');
+		$dropzones.on('drop', function(event) {
+			drop_handler(event.originalEvent, this);
+		});
+		$dropzones.on('dragover', function(event) {
+			dragover_handler(event.originalEvent);
+		});
+		// aka dragEnd
+		$dropzones.each(function(i, dropzone) {
+			dropzone.addEventListener('dragend', function(event) {
+				dragend_handler(event);
+			}, false);
+		});
+	}
 
 	//$dropzones.on('dragstop', function(event) {
 	//	dragend_handler(event);
@@ -766,6 +774,7 @@ jQuery(document).ready(function() {
 			)) {
 				return false;
 			}
+
 			// for dragNdrop, clear the filesizes object to ensure proper validation
 			fileSizes = {};
 			if (!validateFiles(files, $upload, 'dragNdrop')) {
@@ -773,6 +782,7 @@ jQuery(document).ready(function() {
 				return false;
 			}
 
+			// adjust the number of file-entries in the form, to match expectancy of PHP processing
 			if (files.length !== $entries.length) {
 				if (files.length > $entries.length) {
 					var addCount = files.length - $entries.length,
@@ -789,6 +799,7 @@ jQuery(document).ready(function() {
 				$obj[0].files = [ files[i] ];
 				jQuery('.fileupload', entry).replaceWith($obj);
 			});
+
 
 			jQuery(form).submit();
 		}
