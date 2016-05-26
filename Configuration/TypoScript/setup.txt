@@ -82,6 +82,10 @@ plugin.tx_fileman {
 			VALID_FAIL_TOTFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_totalfilesize
 			VALID_FAIL_FILECOUNT = TEXT
 			VALID_FAIL_FILECOUNT.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilecount
+			DROP_ZONE = TEXT
+			DROP_ZONE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_text
+			DROP_ZONE_TOOLTIP = TEXT
+			DROP_ZONE_TOOLTIP.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_tooltip
 			XHR_RETRY = TEXT
 			XHR_RETRY.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_retry
 			XHR_NO_PROGRESS = TEXT
@@ -537,4 +541,35 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		font-style:italic;
 	}
 	
+	
+	.tx-fileman .drop-zone {
+		position:relative;
+	}
+	.tx-fileman .drop-zone .drop-overlay {
+		position:absolute;
+		background-image:url("/typo3conf/ext/fileman/Resources/Public/Images/arrowdown.png");
+		background-repeat: no-repeat;
+		background-position:50% 50%;
+		height:100%;
+		width:100%;
+		display:none;
+		z-index:100;
+	}
+	.tx-fileman .drop-zone .drop-overlay.loading {
+		background-image:url("/typo3conf/ext/fileman/Resources/Public/Images/loading.gif");
+	}
+	.tx-fileman .drop-zone .drop-here {
+		height:65px;
+		width:150px;
+		float:right;
+		text-align:center;
+		font-size:1.5em;
+		padding-top:12px;
+		color:#99d
+	}
+	.tx-fileman .drop-zone .drop-overlay,
+	.tx-fileman .drop-zone .drop-here {
+		border:5px dashed #aaf;
+		background-color:#eef;
+	}
 )

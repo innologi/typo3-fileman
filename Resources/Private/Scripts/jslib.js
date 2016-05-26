@@ -395,9 +395,7 @@ jQuery(document).ready(function() {
 	 */
 	function xhrUploadFiles(form, index) {
 		var previouslyUploaded = 0;
-		console.log('submit?');
 		jQuery('.fileupload', form).each(function(i, upload) {
-			console.log('submit!');
 			var $upload = jQuery(upload);
 			i++;
 			if (
@@ -712,30 +710,52 @@ jQuery(document).ready(function() {
 	// Drag 'n Drop Support
 	//**********************
 
+	var dropzoneActive = false;
+
 	// relies on xhr uploading
 	if (xhrUploadEnabled) {
 		$dropzones = jQuery('.tx-fileman .drop-zone');
-		$dropzones.on('drop', function(event) {
-			drop_handler(event.originalEvent, this);
-		});
-		$dropzones.on('dragover', function(event) {
-			dragover_handler(event.originalEvent);
-		});
-		// aka dragEnd
-		$dropzones.each(function(i, dropzone) {
-			dropzone.addEventListener('dragend', function(event) {
-				dragend_handler(event);
-			}, false);
-		});
+
+		if ($dropzones.length > 0) {
+			$dropzones.prepend('<div class="drop-overlay"></div>');
+			$dropzones.find('.submit').before('<div class="drop-here" title="###DROP_ZONE_TOOLTIP###">###DROP_ZONE###</div>');
+			$dropzones.on('drop', function(event) {
+				event.originalEvent.preventDefault();
+				var $overlay = jQuery('.drop-overlay', this);
+				$overlay.toggleClass('loading');
+				if (!drop_handler(event.originalEvent, this)) {
+					drop_exit(this);
+					$overlay.toggleClass('loading');
+				}
+			});
+			$dropzones.on('dragover', function(event) {
+				event.originalEvent.preventDefault();
+			});
+			$dropzones.on('dragenter', function(event) {
+				event.originalEvent.preventDefault();
+				event.originalEvent.stopPropagation();
+				if (!dropzoneActive) {
+					jQuery('.drop-overlay', this).show();
+					dropzoneActive = true;
+				}
+			});
+			$dropzones.on('dragexit', function(event) {
+				event.originalEvent.preventDefault();
+				event.originalEvent.stopPropagation();
+				drop_exit(this);
+			});
+		}
 	}
 
-	//$dropzones.on('dragstop', function(event) {
-	//	dragend_handler(event);
-	//});
+	function drop_exit(form) {
+		if (dropzoneActive) {
+			jQuery('.drop-overlay', form).hide();
+			dropzoneActive = false;
+		}
+	}
 
 	function drop_handler(ev, form) {
 		// @TODO visual confirmation, in case it takes long!
-		ev.preventDefault();
 		// If dropped items aren't files, reject them
 		var dt = ev.dataTransfer;
 		var files = [];
@@ -749,10 +769,6 @@ jQuery(document).ready(function() {
 		} else {
 			files = dt.files;
 		}
-
-		// @FIX test in chrome
-		// @FIX test om IE11
-		// @FIX test in EDGE
 
 		if (files.length > 0) {
 			var $entries = jQuery('.file-entry', form),
@@ -800,30 +816,7 @@ jQuery(document).ready(function() {
 				jQuery('.fileupload', entry).replaceWith($obj);
 			});
 
-
 			jQuery(form).submit();
-		}
-	}
-
-	function dragover_handler(ev) {
-		// @TODO visual confirmation?
-		// Prevent default select and drag behavior
-		ev.preventDefault();
-	}
-
-	function dragend_handler(ev) {
-		console.log("dragEnd");
-		console.log(ev);
-		// Remove all of the drag data
-		var dt = ev.dataTransfer;
-		if (dt.items) {
-			// Use DataTransferItemList interface to remove the drag data
-			for (var i = 0; i < dt.items.length; i++) {
-				dt.items.remove(i);
-			}
-		} else {
-			// Use DataTransfer interface to remove the drag data
-			ev.dataTransfer.clearData();
 		}
 	}
 
