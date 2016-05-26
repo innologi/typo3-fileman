@@ -60,9 +60,10 @@
 			<label index="error.link.linkUri.40750133704">You need to place a valid link.</label>
 			<label index="error.file.category.40750133705">The file needs to be placed in at least 1 category.</label>
 			
-			<label index="tx_fileman_filelist.validate_failed_mimetype">Filetype not allowed.</label>
-			<label index="tx_fileman_filelist.validate_failed_maxfilesize">File is too large. The maximum allowed file size is {maxFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_mimetype">Filetype of "{fileName}" not allowed.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilesize">File "{fileName}" is too large. The maximum allowed file size is {maxFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_totalfilesize">The total size of all files is too large. The maximum total file size is {maxTotalFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilecount">You can only upload {maxFileCount} files at a time.</label>
 			<label index="tx_fileman_filelist.xhr_retry">No connection, retrying in 30 seconds.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Not receiving upload-progress status.</label>
 			
@@ -148,9 +149,10 @@
 			<label index="error.link.linkUri.40750133704">U dient een geldig URL in te vullen.</label>
 			<label index="error.file.category.40750133705">Het bestand dient in minstens 1 categorie plaats te nemen.</label>
 			
-			<label index="tx_fileman_filelist.validate_failed_mimetype">Bestandstype niet toegestaan.</label>
-			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand is groter dan het toegestane limiet van {maxFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_mimetype">Bestandstype van "{fileName}" niet toegestaan.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand "{fileName}" is groter dan het toegestane limiet van {maxFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_totalfilesize">Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilecount">Probeer niet meer dan {maxFileCount} bestanden tegelijk te plaatsen.</label>
 			<label index="tx_fileman_filelist.xhr_retry">Geen verbinding. Poging om te hervatten: elke 30 seconden.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Geen upload-voortgang data ontvangen.</label>
 			

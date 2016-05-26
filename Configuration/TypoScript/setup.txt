@@ -80,6 +80,8 @@ plugin.tx_fileman {
 			VALID_FAIL_MAXFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilesize
 			VALID_FAIL_TOTFILESIZE = TEXT
 			VALID_FAIL_TOTFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_totalfilesize
+			VALID_FAIL_FILECOUNT = TEXT
+			VALID_FAIL_FILECOUNT.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilecount
 			XHR_RETRY = TEXT
 			XHR_RETRY.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_retry
 			XHR_NO_PROGRESS = TEXT

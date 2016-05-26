@@ -153,64 +153,10 @@ jQuery(document).ready(function() {
 	if (window.File) {
 
 		jQuery('.tx-fileman form').on('change', 'input[type=file].fileupload', function(e) {
-			var $upload = jQuery(this),
-				name = $upload.attr('name');
-			if (this.files[0]) {
-				var file = this.files[0];
-
-				// filter on mime types
-				if (allowMimeType.length > 0) {
-					// sometimes, a MIME type is enclosed with double quotes
-					var testFileType = trimChar(file.type, '"'),
-						filter = new RegExp('^(' + allowMimeType + ')', 'i');
-
-					if (!validateField(
-						$upload,
-						!filter.test(testFileType),
-						'File type denied: ' + file.type,
-						'###VALID_FAIL_MIMETYPE###'
-					)) {
-						return;
-					}
-				}
-
-				// file size limit per file
-				if (maxFileSize > 0) {
-					if (!validateField(
-						$upload,
-						file.size > maxFileSize,
-						'File size ' + file.size + ' exceeds set limit: ' + maxFileSize,
-						'###VALID_FAIL_MAXFILESIZE###'.replace('{maxFileSize}', bytesToSize(maxFileSize))
-					)) {
-						return;
-					}
-				}
-
-				fileSizes[name] = file.size;
-			} else if (fileSizes.hasOwnProperty(name)) {
-				delete fileSizes[name];
+			var $upload = jQuery(this);
+			if (!validateFiles(this.files, $upload, $upload.attr('name'))) {
+				return false;
 			}
-
-			totalSize = 0;
-			for (var i in fileSizes) {
-				if (fileSizes.hasOwnProperty(i)) {
-					totalSize += fileSizes[i];
-				}
-			}
-			totalSizeHR = bytesToSize(totalSize);
-
-			// total file size limit
-			if (maxTotalFileSize > 0) {
-				if (!validateField(
-					$upload,
-					totalSize > maxTotalFileSize,
-					'Total file size ' + totalSize + ' exceeds set limit: ' + maxTotalFileSize,
-					'###VALID_FAIL_TOTFILESIZE###'.replace('{maxTotalFileSize}', bytesToSize(maxTotalFileSize))
-				)) {
-					return;
-				}
-			}
-
 		});
 
 		if (window.FileReader) {
@@ -253,6 +199,87 @@ jQuery(document).ready(function() {
 	}
 
 	/**
+	 * Validates a number of upload files
+	 *
+	 * @param files FileList or array containing files
+	 * @param $upload jQuery object of upload field
+	 * @param basename Base of field name
+	 * @return boolean
+	 */
+	function validateFiles(files, $upload, basename) {
+		// start with no errors
+		if ($upload.hasClass('file-checker-error')) {
+			$upload.removeClass('f3-form-error file-checker-error');
+			$upload.parent('label').prev('.typo3-messages').remove();
+		}
+
+		// by default, this method is only called with 1 file, so set a default name based on that
+		var name = basename + 0,
+			error = false;
+		if (files.length > 0) {
+			for (var i=0; i < files.length; i++) {
+				var file = files[i];
+				name = basename + i;
+
+				// filter on mime types
+				if (allowMimeType.length > 0) {
+					// sometimes, a MIME type is enclosed with double quotes
+					var testFileType = trimChar(file.type, '"'),
+						filter = new RegExp('^(' + allowMimeType + ')', 'i');
+
+					if (!validateField(
+						$upload,
+						!filter.test(testFileType),
+						'File type denied for \'' + file.name + '\': ' + file.type,
+						'###VALID_FAIL_MIMETYPE###'.replace('{fileName}', file.name)
+					)) {
+						error = true;
+					}
+				}
+
+				// file size limit per file
+				if (maxFileSize > 0) {
+					if (!validateField(
+						$upload,
+						file.size > maxFileSize,
+						'File size ' + file.size + ' of \'' + file.name + '\' exceeds set limit: ' + maxFileSize,
+						'###VALID_FAIL_MAXFILESIZE###'.replace('{maxFileSize}', bytesToSize(maxFileSize)).replace('{fileName}', file.name)
+					)) {
+						error = true;
+					}
+				}
+
+				fileSizes[name] = file.size;
+			}
+		} else if (fileSizes.hasOwnProperty(name)) {
+			delete fileSizes[name];
+		}
+
+		// recalculate total size on any fileupload change
+		totalSize = 0;
+		for (var i in fileSizes) {
+			if (fileSizes.hasOwnProperty(i)) {
+				totalSize += fileSizes[i];
+			}
+		}
+		totalSizeHR = bytesToSize(totalSize);
+
+		// total file size limit
+		if (maxTotalFileSize > 0) {
+			if (!validateField(
+				$upload,
+				totalSize > maxTotalFileSize,
+				'Total file size ' + totalSize + ' exceeds set limit: ' + maxTotalFileSize,
+				'###VALID_FAIL_TOTFILESIZE###'.replace('{maxTotalFileSize}', bytesToSize(maxTotalFileSize))
+			)) {
+				error = true;
+			}
+		}
+
+		return !error;
+	}
+
+	/**
 	 * Validates an upload field with a reversed assertion.
 	 *
 	 * @param $upload jQuery object of upload field
@@ -266,20 +293,16 @@ jQuery(document).ready(function() {
 			console.log(consoleMsg);
 			$upload.val(null);
 			$upload.addClass('f3-form-error file-checker-error');
+			errorMsg = '<div class="typo3-message message-error">' + errorMsg + '</div>';
 
 			var $label = $upload.parent('label'),
-				$errorMsg = $label.prev('.typo3-messages').find('.typo3-message');
-			if ($errorMsg[0]) {
-				$errorMsg.text(errorMsg);
+				$errors = $label.prev('.typo3-messages');
+			if ($errors[0]) {
+				$errors.append(errorMsg);
 			} else {
-				$label.before('<div class="typo3-messages"><div class="typo3-message message-error">' + errorMsg + '</div></div>');
+				$label.before('<div class="typo3-messages">' + errorMsg + '</div>');
 			}
 			return false;
-		} else {
-			if ($upload.hasClass('file-checker-error')) {
-				$upload.removeClass('f3-form-error file-checker-error');
-				$upload.parent('label').prev('.typo3-messages').remove();
-			}
 		}
 		return true;
 	}
@@ -370,7 +393,9 @@ jQuery(document).ready(function() {
 	 */
 	function xhrUploadFiles(form, index) {
 		var previouslyUploaded = 0;
+		console.log('submit?');
 		jQuery('.fileupload', form).each(function(i, upload) {
+			console.log('submit!');
 			var $upload = jQuery(upload);
 			i++;
 			if (
@@ -543,7 +568,6 @@ jQuery(document).ready(function() {
 	}
 
 
-
 	//**********************
 	// Multi-file Upload UI
 	//**********************
@@ -675,6 +699,121 @@ jQuery(document).ready(function() {
 	function toggleOptional(optional, button) {
 		jQuery(optional).slideToggle();
 		jQuery(button).toggleClass('expanded'); //this class helps for indicating an expanded view through styles on the button
+	}
+
+
+
+	//**********************
+	// Drag 'n Drop Support
+	//**********************
+
+	$dropzones = jQuery('.tx-fileman .drop-zone');
+	$dropzones.on('drop', function(event) {
+		drop_handler(event.originalEvent, this);
+	});
+	$dropzones.on('dragover', function(event) {
+		dragover_handler(event.originalEvent);
+	});
+	// aka dragEnd
+	$dropzones.each(function(i, dropzone) {
+		dropzone.addEventListener('dragend', function(event) {
+			dragend_handler(event);
+		}, false);
+	});
+
+	//$dropzones.on('dragstop', function(event) {
+	//	dragend_handler(event);
+	//});
+
+	function drop_handler(ev, form) {
+		// @TODO visual confirmation, in case it takes long!
+		ev.preventDefault();
+		// If dropped items aren't files, reject them
+		var dt = ev.dataTransfer;
+		var files = [];
+		if (dt.items) {
+			// Use DataTransferItemList interface to access the file(s)
+			for (var i=0; i < dt.items.length; i++) {
+				if (dt.items[i].kind == "file") {
+					files.push(dt.items[i].getAsFile());
+				}
+			}
+		} else {
+			files = dt.files;
+		}
+
+		// @FIX test in chrome
+		// @FIX test om IE11
+		// @FIX test in EDGE
+
+		if (files.length > 0) {
+			var $entries = jQuery('.file-entry', form),
+				$upload = $entries.first().find('.fileupload'),
+				$obj = null;
+
+			// clean up any previous errors
+			if ($upload.hasClass('file-checker-error')) {
+				$upload.removeClass('f3-form-error file-checker-error');
+				$upload.parent('label').prev('.typo3-messages').remove();
+			}
+
+			// check fileCountMax
+			if (!validateField(
+				$upload,
+				files.length > fileCountMax,
+				'Max file count is ' + fileCountMax + ', tried uploading ' + files.length,
+				'###VALID_FAIL_FILECOUNT###'.replace('{maxFileCount}', fileCountMax)
+			)) {
+				return false;
+			}
+			// for dragNdrop, clear the filesizes object to ensure proper validation
+			fileSizes = {};
+			if (!validateFiles(files, $upload, 'dragNdrop')) {
+				fileSizes = {};
+				return false;
+			}
+
+			if (files.length !== $entries.length) {
+				if (files.length > $entries.length) {
+					var addCount = files.length - $entries.length,
+						$button = jQuery('a.add-file-entry', form);
+					for (var i=0; i < addCount; i++) $button.click();
+				} else {
+					var remCount = ($entries.length - files.length) * -1;
+					$entries.slice(remCount).remove();
+				}
+			}
+
+			jQuery('.file-entry', form).each(function(i, entry) {
+				$obj = jQuery('<span class="fileupload">' + files[i].name + '</span>');
+				$obj[0].files = [ files[i] ];
+				jQuery('.fileupload', entry).replaceWith($obj);
+			});
+
+			jQuery(form).submit();
+		}
+	}
+
+	function dragover_handler(ev) {
+		// @TODO visual confirmation?
+		// Prevent default select and drag behavior
+		ev.preventDefault();
+	}
+
+	function dragend_handler(ev) {
+		console.log("dragEnd");
+		console.log(ev);
+		// Remove all of the drag data
+		var dt = ev.dataTransfer;
+		if (dt.items) {
+			// Use DataTransferItemList interface to remove the drag data
+			for (var i = 0; i < dt.items.length; i++) {
+				dt.items.remove(i);
+			}
+		} else {
+			// Use DataTransfer interface to remove the drag data
+			ev.dataTransfer.clearData();
+		}
 	}
 
 
