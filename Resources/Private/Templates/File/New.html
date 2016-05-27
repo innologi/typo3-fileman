@@ -4,14 +4,20 @@
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.new_file_header" arguments="{s: category.title}" /></h3>
 <div class="buttons">
-	<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+	<f:link.action action="list" controller="File" arguments="{category: category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 </div>
 
-<div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
+<p class="explanation">
+	<f:translate
+		key="tx_fileman_filelist.new_file_explanation"
+		arguments="{0: '{f:cObject(typoscriptObjectPath:\'lib.tx_fileman.maxFileUploads\')}', 1: '{settings.maxFileSize -> fi:format.bytesToSize()}', 2: '{settings.maxTotalFileSize -> fi:format.bytesToSize()}'}"
+	/>
+</p>
 
-<fi:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category : category}"
-	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add')}" syncToken="TRUE" absolute="TRUE"
+<fi:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category: category}"
+	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add drop-zone')}" syncToken="TRUE" absolute="TRUE"
 >
+	<div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 	<fieldset>
 		<f:if condition="{files.file}">
 			<f:then>

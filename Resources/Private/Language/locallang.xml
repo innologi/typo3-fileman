@@ -18,7 +18,8 @@
 			<label index="tx_fileman_filelist.new_file">Upload new file</label>
 			<label index="tx_fileman_filelist.new_file_header">Upload new file in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Upload</label>
-			<label index="tx_fileman_filelist.new_file_success">File uploaded</label>
+			<label index="tx_fileman_filelist.new_file_explanation">You can upload multiple files from your PC by dragging them to the 'Drag &amp; Drop' window below, or a single file per upload field below that. Each upload may consist of a maximum of %1$d files. The size of each file can be no larger than %2$s. The total size of all files of a single upload, can be no larger than %3$s combined.</label>
+			<label index="tx_fileman_filelist.new_file_success">File(s) uploaded</label>
 			<label index="tx_fileman_filelist.new_file_error">Failed uploading %d file(s)</label>
 			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Failed to reconstitute the file '%s', please try again.</label>
 			<label index="tx_fileman_filelist.new_link">Place new link</label>
@@ -60,11 +61,16 @@
 			<label index="error.link.linkUri.40750133704">You need to place a valid link.</label>
 			<label index="error.file.category.40750133705">The file needs to be placed in at least 1 category.</label>
 			
-			<label index="tx_fileman_filelist.validate_failed_mimetype">Filetype not allowed.</label>
-			<label index="tx_fileman_filelist.validate_failed_maxfilesize">File is too large. The maximum allowed file size is {maxFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_mimetype">Filetype of '{fileName}' not allowed.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilesize">File '{fileName}' is too large. The maximum allowed file size is {maxFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_totalfilesize">The total size of all files is too large. The maximum total file size is {maxTotalFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilecount">You can only upload {maxFileCount} files at a time.</label>
+			<label index="tx_fileman_filelist.drop_zone_text">Drop files here</label>
+			<label index="tx_fileman_filelist.drop_zone_tooltip">By dropping files here, they will be uploaded immediately. This is a much easier alternative to using the standard form.</label>
 			<label index="tx_fileman_filelist.xhr_retry">No connection, retrying in 30 seconds.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Not receiving upload-progress status.</label>
+			<label index="tx_fileman_filelist.error_file_transfer">File transfer halted due to unknown error. Reload the page to retry. If this issue persists, please contact the webmaster.</label>
+			<label index="tx_fileman_filelist.error_xhr_response">File transfer erroneously configured. Please contact the webmaster.</label>
 			
 			<label index="tx_fileman_filelist.category_caption">File categories</label>
 			<label index="tx_fileman_filelist.category_summary">This is a list of file-categories.</label>
@@ -106,7 +112,8 @@
 			<label index="tx_fileman_filelist.new_file">Plaats nieuw bestand</label>
 			<label index="tx_fileman_filelist.new_file_header">Plaats nieuw bestand in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Plaats</label>
-			<label index="tx_fileman_filelist.new_file_success">Bestand geplaatst</label>
+			<label index="tx_fileman_filelist.new_file_explanation">U kunt meerdere bestanden vanaf uw PC tegelijk toevoegen via het 'Drag &amp; Drop' venster hieronder, of een enkel bestand per upload-veld daaronder. Per keer kunnen maximaal %1$d bestanden tegelijk toegevoegd worden. De grootte van elk bestand mag maximaal %2$s zijn. De totaalgrootte bij meerdere bestanden tegelijk plaatsen mag maximaal %3$s zijn.</label>
+			<label index="tx_fileman_filelist.new_file_success">Bestand(en) geplaatst</label>
 			<label index="tx_fileman_filelist.new_file_error">Plaatsen van %d bestand(en) mislukt</label>
 			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Kon bestand '%s' niet terugvinden, probeer het nog eens.</label>
 			<label index="tx_fileman_filelist.new_link">Plaats nieuwe link</label>
@@ -148,11 +155,16 @@
 			<label index="error.link.linkUri.40750133704">U dient een geldig URL in te vullen.</label>
 			<label index="error.file.category.40750133705">Het bestand dient in minstens 1 categorie plaats te nemen.</label>
 			
-			<label index="tx_fileman_filelist.validate_failed_mimetype">Bestandstype niet toegestaan.</label>
-			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand is groter dan het toegestane limiet van {maxFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_mimetype">Bestandstype van '{fileName}' niet toegestaan.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand '{fileName}' is groter dan het toegestane limiet van {maxFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_totalfilesize">Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilecount">Probeer niet meer dan {maxFileCount} bestanden tegelijk te plaatsen.</label>
+			<label index="tx_fileman_filelist.drop_zone_text">Versleep bestanden hier naartoe</label>
+			<label index="tx_fileman_filelist.drop_zone_tooltip">Door bestanden hier naartoe te verslepen, worden zij direct geupload. Dit is een eenvoudiger alternatief op het standaard formulier.</label>
 			<label index="tx_fileman_filelist.xhr_retry">Geen verbinding. Poging om te hervatten: elke 30 seconden.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Geen upload-voortgang data ontvangen.</label>
+			<label index="tx_fileman_filelist.error_file_transfer">Upload proces gestopt door onbekende fout. Ververs de pagina om het opnieuw te proberen. Als het probleem aanhoudt, neem dan contact op met de webmaster.</label>
+			<label index="tx_fileman_filelist.error_xhr_response">Upload proces verkeerd geconfigureerd. Neem contact op met de webmaster.</label>
 			
 			<label index="tx_fileman_filelist.category_caption">Bestandscategorieën</label>
 			<label index="tx_fileman_filelist.category_summary">Dit is een lijst van bestandscategorieën.</label>
