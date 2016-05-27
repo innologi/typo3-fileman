@@ -26,14 +26,14 @@ plugin.tx_fileman {
 		# cat=plugin.tx_fileman/file/70; type=text; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_jQueryCDN
 		jQueryCDN = https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js
 		
-		libFile = EXT:fileman/Resources/Private/Scripts/jslib.js
+		libFile = EXT:fileman/Resources/Private/Scripts/jslib.closure.js
 		
 		# cat=plugin.tx_fileman/a_upload/040; type=options[HTML5=js, PHP=php]; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadType
 		uploadType = js
 		# cat=plugin.tx_fileman/a_upload/050; type=options[PHP-Session=session, PHP-APC=apc, PHP-UploadProgress=uploadprogress, None=none]; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadProgress
 		uploadProgress = session
 		
-		# e.g. text/plain|application/msword|application/vnd.openxmlformats|application/rtf|application/vnd.ms-excel|application/vnd.ms-powerpoint|application/vnd.oasis.opendocument|application/pdf|text/pdf|image/jpeg|image/gif|image/png|video/mp4|video/x-flv|video/x-msvideo|audio/mpeg
+		# e.g. text/plain|application/msword|application/vnd.openxmlformats|application/rtf|application/vnd.ms-excel|application/vnd.oasis.opendocument|application/pdf|text/pdf|image/jpeg|image/gif|image/png|video/mp4|video/x-flv|video/x-msvideo|audio/mpeg|audio/mp3
 		# cat=plugin.tx_fileman/b_upload_adv/020; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_allowMimeType
 		allowMimeType =
 		# cat=plugin.tx_fileman/b_upload_adv/030; type=int; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_maxFileSize
