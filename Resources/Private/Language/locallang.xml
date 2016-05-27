@@ -18,6 +18,7 @@
 			<label index="tx_fileman_filelist.new_file">Upload new file</label>
 			<label index="tx_fileman_filelist.new_file_header">Upload new file in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Upload</label>
+			<label index="tx_fileman_filelist.new_file_explanation">U kunt meerdere bestanden vanaf uw PC tegelijk toevoegen via het 'Drag &amp; Drop' venster hieronder, of een enkel bestand per upload-veld daaronder. Per keer kunnen maximaal %1$d bestanden tegelijk toegevoegd worden. De grootte van elk bestand mag maximaal %2$s zijn. De totaalgrootte bij meerdere bestanden tegelijk plaatsen mag maximaal %3$s zijn.</label>
 			<label index="tx_fileman_filelist.new_file_success">File(s) uploaded</label>
 			<label index="tx_fileman_filelist.new_file_error">Failed uploading %d file(s)</label>
 			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Failed to reconstitute the file '%s', please try again.</label>

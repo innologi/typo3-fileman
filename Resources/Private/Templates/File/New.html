@@ -7,6 +7,13 @@
 	<f:link.action action="list" controller="File" arguments="{category: category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 </div>
 
+<p class="explanation">
+	<f:translate
+		key="tx_fileman_filelist.new_file_explanation"
+		arguments="{0: '{f:cObject(typoscriptObjectPath:\'lib.tx_fileman.maxFileUploads\')}', 1: '{settings.maxFileSize -> fi:format.bytesToSize()}', 2: '{settings.maxTotalFileSize -> fi:format.bytesToSize()}'}"
+	/>
+</p>
+
 <fi:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category: category}"
 	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add drop-zone')}" syncToken="TRUE" absolute="TRUE"
 >
