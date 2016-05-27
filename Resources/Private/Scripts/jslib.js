@@ -411,8 +411,10 @@ jQuery(document).ready(function() {
 			$form = jQuery(form);
 
 		$form.find('.fileupload').each(function(i, upload) {
-			var $upload = jQuery(upload);
-			i++;
+			var $upload = jQuery(upload),
+				// the reason we can't just use i+1, is because of the delFileEntry button capable of
+					// producing a non-succeeding index count
+				uIndex = getIndex($upload);
 			if (
 				// these are needed to cover every circumstance for every single browser (read: IE)
 				upload.files !== undefined && upload.files !== null && upload.files.length > 0
@@ -421,7 +423,7 @@ jQuery(document).ready(function() {
 			) {
 				uploadQueue.push({
 					file: upload.files[0],
-					uploadIndex: i,
+					uploadIndex: uIndex,
 					form: form
 				});
 			} else {
@@ -434,8 +436,8 @@ jQuery(document).ready(function() {
 
 			if (uploadQueue.length > 0) {
 				$upload.after(
-					'<input type="text" name="tx_fileman_filelist[files][file][i' + i + '][fileUri]" readonly="readonly" class="fileupload fill-' + i + '" value="" />' +
-					'<input type="hidden" name="tx_fileman_filelist[tmpFiles][i' + i + ']" class="tmpfile fill-' + i + '" value="" />'
+					'<input type="text" name="tx_fileman_filelist[files][file][i' + uIndex + '][fileUri]" readonly="readonly" class="fileupload fill-' + uIndex + '" value="" />' +
+					'<input type="hidden" name="tx_fileman_filelist[tmpFiles][i' + uIndex + ']" class="tmpfile fill-' + uIndex + '" value="" />'
 				);
 				// disable the original file upload
 				$upload.remove();
@@ -722,8 +724,11 @@ jQuery(document).ready(function() {
 
 	//retrieves the last index from the form
 	function getLastIndex(form) {
+		return getIndex(jQuery(form).find('.fileupload:last'));
+	}
+	function getIndex($fileupload) {
 		//we want 999 from: <input class="fileupload" name="*[file][i999][fileUri]" />
-		return jQuery(form).find('.fileupload:last').attr('name').match(/\[file\]\[i([0-9]+)\]/i)[1];
+		return $fileupload.attr('name').match(/\[file\]\[i([0-9]+)\]/i)[1];
 	}
 
 	//toggle optional fields
