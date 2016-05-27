@@ -84,6 +84,10 @@ plugin.tx_fileman {
 			VALID_FAIL_TOTFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_totalfilesize
 			VALID_FAIL_FILECOUNT = TEXT
 			VALID_FAIL_FILECOUNT.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilecount
+			ERROR_FILE_TRANSFER = TEXT
+			ERROR_FILE_TRANSFER.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_file_transfer
+			ERROR_XHR_RESPONSE = TEXT
+			ERROR_XHR_RESPONSE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_xhr_response
 			DROP_ZONE = TEXT
 			DROP_ZONE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_text
 			DROP_ZONE_TOOLTIP = TEXT

@@ -143,7 +143,8 @@ jQuery(document).ready(function() {
 		totalSize = 0,
 		totalSizeHR = '',
 		uploadedSize = 0,
-		chunkSize = parseInt('###CHUNKSIZE###');
+		chunkSize = parseInt('###CHUNKSIZE###'),
+		$progressBar = null;
 
 	if (chunkSize < 1) {
 		// 1 MB default
@@ -294,18 +295,22 @@ jQuery(document).ready(function() {
 			console.log(consoleMsg);
 			$upload.val(null);
 			$upload.addClass('f3-form-error file-checker-error');
-			errorMsg = '<div class="typo3-message message-error">' + errorMsg + '</div>';
-
-			var $label = $upload.parent('label'),
-				$errors = $label.prev('.typo3-messages');
-			if ($errors[0]) {
-				$errors.append(errorMsg);
-			} else {
-				$label.before('<div class="typo3-messages">' + errorMsg + '</div>');
-			}
+			errorMessage(errorMsg, $upload.parent('label'));
 			return false;
 		}
 		return true;
+	}
+
+	// produce visual TYPO3-like errormessage
+	function errorMessage(errorMsg, $elemAfter) {
+		errorMsg = '<div class="typo3-message message-error">' + errorMsg + '</div>';
+
+		var $errors = $elemAfter.prev('.typo3-messages');
+		if ($errors[0]) {
+			$errors.append(errorMsg);
+		} else {
+			$elemAfter.before('<div class="typo3-messages">' + errorMsg + '</div>');
+		}
 	}
 
 	/**
@@ -430,7 +435,8 @@ jQuery(document).ready(function() {
 
 		if (uploadQueue.length > 0) {
 			jQuery(form).hide();
-			jQuery('.tx-fileman #fileman-uploadProgress'+index).show();
+			$progressBar = jQuery('.tx-fileman #fileman-uploadProgress'+index);
+			$progressBar.show();
 
 			var first = uploadQueue.shift();
 			xhrUploadFileInChunks(first.file, first.formIndex, first.uploadIndex, first.form);
@@ -485,6 +491,7 @@ jQuery(document).ready(function() {
 					console.log(response);
 				}
 
+				// @TODO log succesful / failed transfers?
 				if (response.success && response.success === 1) {
 					if (response.tmp_name) {
 						filename = response.tmp_name;
@@ -499,7 +506,6 @@ jQuery(document).ready(function() {
 							file.slice(startByte, endByte)
 						);
 					} else {
-						// @TODO log succesful transfer?
 						jQuery('.tmpfile.fill-' + j, form).val(filename);
 						jQuery('.fileupload.fill-' + j, form).val(file.name);
 						var next = uploadQueue.shift();
@@ -511,11 +517,18 @@ jQuery(document).ready(function() {
 						}
 					}
 					return;
+				} else {
+					console.log('ERROR: File transfer failure');
+					errorMessage('###ERROR_FILE_TRANSFER###', $progressBar);
+					return;
 				}
 			} else {
-				// @TODO what if an error occurred, something visual?
 				console.log('ERROR: No valid XHR response');
-				console.log(e);
+				errorMessage('###ERROR_XHR_RESPONSE###', $progressBar);
+				if (debug == '1') {
+					console.log(e);
+				}
+				return;
 			}
 		}, false);
 		xhr.addEventListener('error', function(e) {

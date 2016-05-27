@@ -69,6 +69,8 @@
 			<label index="tx_fileman_filelist.drop_zone_tooltip">By dropping files here, they will be uploaded immediately. This is a much easier alternative to using the standard form.</label>
 			<label index="tx_fileman_filelist.xhr_retry">No connection, retrying in 30 seconds.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Not receiving upload-progress status.</label>
+			<label index="tx_fileman_filelist.error_file_transfer">File transfer halted due to unknown error. Reload the page to retry. If this issue persists, please contact the webmaster.</label>
+			<label index="tx_fileman_filelist.error_xhr_response">File transfer erroneously configured. Please contact the webmaster.</label>
 			
 			<label index="tx_fileman_filelist.category_caption">File categories</label>
 			<label index="tx_fileman_filelist.category_summary">This is a list of file-categories.</label>
@@ -160,6 +162,8 @@
 			<label index="tx_fileman_filelist.drop_zone_tooltip">Door bestanden hier naartoe te verslepen, worden zij direct geupload. Dit is een eenvoudiger alternatief op het standaard formulier.</label>
 			<label index="tx_fileman_filelist.xhr_retry">Geen verbinding. Poging om te hervatten: elke 30 seconden.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Geen upload-voortgang data ontvangen.</label>
+			<label index="tx_fileman_filelist.error_file_transfer">Upload proces gestopt door onbekende fout. Ververs de pagina om het opnieuw te proberen. Als het probleem aanhoudt, neem dan contact op met de webmaster.</label>
+			<label index="tx_fileman_filelist.error_xhr_response">Upload proces verkeerd geconfigureerd. Neem contact op met de webmaster.</label>
 			
 			<label index="tx_fileman_filelist.category_caption">Bestandscategorieën</label>
 			<label index="tx_fileman_filelist.category_summary">Dit is een lijst van bestandscategorieën.</label>

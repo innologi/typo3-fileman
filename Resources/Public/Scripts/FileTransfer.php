@@ -20,7 +20,6 @@ $return = array(
 );
 
 // @TODO make this an eid script
-
 if(isset($_GET['filename']) && isset($_GET['state'])) {
 
 	$dir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
@@ -38,7 +37,6 @@ if(isset($_GET['filename']) && isset($_GET['state'])) {
 		}
 		$return['output_path'] = $path = $dir . $filename;
 
-
 		$data = file_get_contents('php://input');
 		$dataExp = explode(',', $data);
 		if (isset($dataExp[1])) {
@@ -48,7 +46,6 @@ if(isset($_GET['filename']) && isset($_GET['state'])) {
 					$return['success'] = 1;
 					$return['message'] = 'Successful transfer.';
 				} else {
-					// @FIX if it fails, it could hang. How do we properly disengage the upload process then?
 					$return['message'] = 'Transfer failed.';
 				}
 			} else {
