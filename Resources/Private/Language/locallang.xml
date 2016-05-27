@@ -18,7 +18,7 @@
 			<label index="tx_fileman_filelist.new_file">Upload new file</label>
 			<label index="tx_fileman_filelist.new_file_header">Upload new file in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Upload</label>
-			<label index="tx_fileman_filelist.new_file_success">File uploaded</label>
+			<label index="tx_fileman_filelist.new_file_success">File(s) uploaded</label>
 			<label index="tx_fileman_filelist.new_file_error">Failed uploading %d file(s)</label>
 			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Failed to reconstitute the file '%s', please try again.</label>
 			<label index="tx_fileman_filelist.new_link">Place new link</label>
@@ -109,7 +109,7 @@
 			<label index="tx_fileman_filelist.new_file">Plaats nieuw bestand</label>
 			<label index="tx_fileman_filelist.new_file_header">Plaats nieuw bestand in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Plaats</label>
-			<label index="tx_fileman_filelist.new_file_success">Bestand geplaatst</label>
+			<label index="tx_fileman_filelist.new_file_success">Bestand(en) geplaatst</label>
 			<label index="tx_fileman_filelist.new_file_error">Plaatsen van %d bestand(en) mislukt</label>
 			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Kon bestand '%s' niet terugvinden, probeer het nog eens.</label>
 			<label index="tx_fileman_filelist.new_link">Plaats nieuwe link</label>
