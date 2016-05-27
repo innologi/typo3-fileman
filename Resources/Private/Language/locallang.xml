@@ -18,7 +18,7 @@
 			<label index="tx_fileman_filelist.new_file">Upload new file</label>
 			<label index="tx_fileman_filelist.new_file_header">Upload new file in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Upload</label>
-			<label index="tx_fileman_filelist.new_file_explanation">U kunt meerdere bestanden vanaf uw PC tegelijk toevoegen via het 'Drag &amp; Drop' venster hieronder, of een enkel bestand per upload-veld daaronder. Per keer kunnen maximaal %1$d bestanden tegelijk toegevoegd worden. De grootte van elk bestand mag maximaal %2$s zijn. De totaalgrootte bij meerdere bestanden tegelijk plaatsen mag maximaal %3$s zijn.</label>
+			<label index="tx_fileman_filelist.new_file_explanation">You can upload multiple files from your PC by dragging them to the 'Drag &amp; Drop' window below, or a single file per upload field below that. Each upload may consist of a maximum of %1$d files. The size of each file can be no larger than %2$s. The total size of all files of a single upload, can be no larger than %3$s combined.</label>
 			<label index="tx_fileman_filelist.new_file_success">File(s) uploaded</label>
 			<label index="tx_fileman_filelist.new_file_error">Failed uploading %d file(s)</label>
 			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Failed to reconstitute the file '%s', please try again.</label>
@@ -112,6 +112,7 @@
 			<label index="tx_fileman_filelist.new_file">Plaats nieuw bestand</label>
 			<label index="tx_fileman_filelist.new_file_header">Plaats nieuw bestand in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Plaats</label>
+			<label index="tx_fileman_filelist.new_file_explanation">U kunt meerdere bestanden vanaf uw PC tegelijk toevoegen via het 'Drag &amp; Drop' venster hieronder, of een enkel bestand per upload-veld daaronder. Per keer kunnen maximaal %1$d bestanden tegelijk toegevoegd worden. De grootte van elk bestand mag maximaal %2$s zijn. De totaalgrootte bij meerdere bestanden tegelijk plaatsen mag maximaal %3$s zijn.</label>
 			<label index="tx_fileman_filelist.new_file_success">Bestand(en) geplaatst</label>
 			<label index="tx_fileman_filelist.new_file_error">Plaatsen van %d bestand(en) mislukt</label>
 			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Kon bestand '%s' niet terugvinden, probeer het nog eens.</label>
