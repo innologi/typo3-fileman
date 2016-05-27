@@ -711,9 +711,8 @@ jQuery(document).ready(function() {
 	//**********************
 
 	var dropzoneActive = false;
-
-	// relies on xhr uploading
-	if (xhrUploadEnabled) {
+	// relies on xhr uploading & draggable feature-support
+	if (xhrUploadEnabled && 'draggable' in document.createElement('span')) {
 		$dropzones = jQuery('.tx-fileman .drop-zone');
 
 		if ($dropzones.length > 0) {
@@ -739,6 +738,7 @@ jQuery(document).ready(function() {
 					dropzoneActive = true;
 				}
 			});
+			// @FIX not compatible with IE11?
 			$dropzones.on('dragexit', function(event) {
 				event.originalEvent.preventDefault();
 				event.originalEvent.stopPropagation();
