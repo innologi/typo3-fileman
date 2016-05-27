@@ -64,7 +64,7 @@
 			<label index="tx_fileman_filelist.validate_failed_maxfilesize">File "{fileName}" is too large. The maximum allowed file size is {maxFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_totalfilesize">The total size of all files is too large. The maximum total file size is {maxTotalFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_maxfilecount">You can only upload {maxFileCount} files at a time.</label>
-			<label index="tx_fileman_filelist.drop_zone_text">.. or drop files here!</label>
+			<label index="tx_fileman_filelist.drop_zone_text">Drop files here</label>
 			<label index="tx_fileman_filelist.drop_zone_tooltip">By dropping files here, they will be uploaded immediately. This is a much easier alternative to using the standard form.</label>
 			<label index="tx_fileman_filelist.xhr_retry">No connection, retrying in 30 seconds.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Not receiving upload-progress status.</label>
@@ -155,7 +155,7 @@
 			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand "{fileName}" is groter dan het toegestane limiet van {maxFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_totalfilesize">Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_maxfilecount">Probeer niet meer dan {maxFileCount} bestanden tegelijk te plaatsen.</label>
-			<label index="tx_fileman_filelist.drop_zone_text">.. of versleep bestanden hier naartoe!</label>
+			<label index="tx_fileman_filelist.drop_zone_text">Versleep bestanden hier naartoe</label>
 			<label index="tx_fileman_filelist.drop_zone_tooltip">Door bestanden hier naartoe te verslepen, worden zij direct geupload. Dit is een eenvoudiger alternatief op het standaard formulier.</label>
 			<label index="tx_fileman_filelist.xhr_retry">Geen verbinding. Poging om te hervatten: elke 30 seconden.</label>
 			<label index="tx_fileman_filelist.xhr_no_progress">Geen upload-voortgang data ontvangen.</label>

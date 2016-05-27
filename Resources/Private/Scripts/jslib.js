@@ -716,8 +716,7 @@ jQuery(document).ready(function() {
 		$dropzones = jQuery('.tx-fileman .drop-zone');
 
 		if ($dropzones.length > 0) {
-			$dropzones.prepend('<div class="drop-overlay"></div>');
-			$dropzones.find('.submit').before('<div class="drop-here" title="###DROP_ZONE_TOOLTIP###">###DROP_ZONE###</div>');
+			$dropzones.prepend('<div class="drop-overlay"></div><div class="drop-here" title="###DROP_ZONE_TOOLTIP###">###DROP_ZONE###</div>');
 			$dropzones.on('drop', function(event) {
 				event.originalEvent.preventDefault();
 				var $overlay = jQuery('.drop-overlay', this);
