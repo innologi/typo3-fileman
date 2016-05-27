@@ -722,7 +722,7 @@ jQuery(document).ready(function() {
 				var $overlay = jQuery('.drop-overlay', this);
 				$overlay.toggleClass('loading');
 				if (!drop_handler(event.originalEvent, this)) {
-					drop_exit(this);
+					drop_exit($overlay);
 					$overlay.toggleClass('loading');
 				}
 			});
@@ -737,18 +737,21 @@ jQuery(document).ready(function() {
 					dropzoneActive = true;
 				}
 			});
-			// @FIX not compatible with IE11?
-			$dropzones.on('dragexit', function(event) {
+			// setting dragleave on $dropzones will result in in a leave after 2 enters, due to the overlay popping up,
+			// so instead, we set the leave on the overlay itself. dragexit did not have this issue, but that one doesn't
+			// fire in chromium and IE.
+			jQuery('.drop-overlay', $dropzones).on('dragleave', function(event) {
 				event.originalEvent.preventDefault();
 				event.originalEvent.stopPropagation();
-				drop_exit(this);
+				drop_exit(jQuery(this));
+				console.log('LEAVE');
 			});
 		}
 	}
 
-	function drop_exit(form) {
+	function drop_exit($overlay) {
 		if (dropzoneActive) {
-			jQuery('.drop-overlay', form).hide();
+			$overlay.hide();
 			dropzoneActive = false;
 		}
 	}
