@@ -493,9 +493,9 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .uploadprogress {
 		display:none;
 		border:1px solid #888;
-		padding:3px;
+		padding:1%;
 		height:30px;
-		width:100%;
+		width:98%;
 		background-color:#fff;
 		overflow:visible;
 		margin-bottom:15px;
@@ -548,10 +548,10 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .drop-zone .drop-overlay {
 		position:absolute;
 		background-image:url("/typo3conf/ext/fileman/Resources/Public/Images/arrowdown.png");
-		background-repeat: no-repeat;
+		background-repeat:no-repeat;
 		background-position:50% 50%;
 		height:100%;
-		width:100%;
+		width:99%;
 		display:none;
 		z-index:100;
 	}
