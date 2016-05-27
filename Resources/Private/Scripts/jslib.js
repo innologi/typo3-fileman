@@ -849,9 +849,10 @@ jQuery(document).ready(function() {
 
 			// $entries can be out of date, so do another find
 			$form.find('.file-entry').each(function(i, entry) {
-				var $obj = jQuery('<span class="fileupload">' + files[i].name + '</span>');
-				$obj[0].files = [ files[i] ];
-				jQuery('.fileupload', entry).replaceWith($obj);
+				var $fileupload = jQuery('.fileupload', entry),
+					$replacement = jQuery('<span class="fileupload" name="' + $fileupload.attr('name') + '">' + files[i].name + '</span>');
+				$replacement[0].files = [ files[i] ];
+				$fileupload.replaceWith($replacement);
 			});
 
 			$form.submit();
