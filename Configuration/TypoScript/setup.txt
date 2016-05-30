@@ -74,6 +74,8 @@ plugin.tx_fileman {
 			ADD_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.add_file
 			DEL_FILE = TEXT
 			DEL_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.del_file
+			DELETE_CONFIRM = TEXT
+			DELETE_CONFIRM.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.delete_confirm
 			SHOW_OPTIONAL = TEXT
 			SHOW_OPTIONAL.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.show_optional
 			VALID_FAIL_MIMETYPE = TEXT

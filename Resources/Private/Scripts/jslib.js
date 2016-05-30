@@ -88,6 +88,22 @@ jQuery(document).ready(function() {
 
 
 
+	//*********************
+	// Delete Confirmation
+	//*********************
+
+	//click function performs a confirm, if TRUE/OK continues button functionality
+	$fileman.find('.button-delete').click(function(e) {
+		if(confirm('###DELETE_CONFIRM###')) {
+			return true;
+		} else {
+			e.stopImmediatePropagation();
+			return false;
+		};
+	});
+
+
+
 	//*****************
 	// Auto fill title
 	//*****************
