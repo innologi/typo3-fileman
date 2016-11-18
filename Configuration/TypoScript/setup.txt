@@ -417,6 +417,11 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		display:inline-block;
 	}
 	
+	.tx-fileman .sorting {
+		clear:both;
+		float:right;
+	}
+	
 	
 	
 	/* Messages */

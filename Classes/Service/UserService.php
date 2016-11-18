@@ -138,4 +138,29 @@ class Tx_Fileman_Service_UserService implements t3lib_Singleton {
 		return $isAdmin;
 	}
 
+	/**
+	 * Returns session data under key
+	 *
+	 * @param string $key
+	 * @return mixed|NULL
+	 */
+	public function getSessionData($key) {
+		/* @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendAuth */
+		$frontendAuth = $GLOBALS['TSFE']->fe_user;
+		return $frontendAuth->getSessionData($key);
+	}
+
+	/**
+	 * Saves session data under key
+	 *
+	 * @param string $key
+	 * @param string $data
+	 * @return void
+	 */
+	public function putSessionData($key, $data) {
+		/* @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendAuth */
+		$frontendAuth = $GLOBALS['TSFE']->fe_user;
+		$frontendAuth->setAndSaveSessionData($key, $data);
+	}
+
 }

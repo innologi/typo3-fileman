@@ -57,18 +57,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * File service
 	 *
 	 * @var Tx_Fileman_Service_FileService
+	 * @inject
 	 */
 	protected $fileService;
-
-	/**
-	 * Injects the File Service
-	 *
-	 * @param Tx_Fileman_Service_FileService $fileService
-	 * @return void
-	 */
-	public function injectFileService(Tx_Fileman_Service_FileService $fileService) {
-		$this->fileService = $fileService;
-	}
 
 	/**
 	 * injectFileRepository
@@ -78,9 +69,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function injectFileRepository(Tx_Fileman_Domain_Repository_FileRepository $fileRepository) {
 		$this->fileRepository = $fileRepository;
-		$fileRepository->setDefaultOrderings(array(
-				'alternateTitle' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
-		));
+		$this->sortRepositoryService->registerSortableRepository($fileRepository, [
+			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'alternateTitle'
+		]);
 	}
 
 	/**
@@ -91,9 +82,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function injectLinkRepository(Tx_Fileman_Domain_Repository_LinkRepository $linkRepository) {
 		$this->linkRepository = $linkRepository;
-		$linkRepository->setDefaultOrderings(array(
-				'linkName' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
-		));
+		$this->sortRepositoryService->registerSortableRepository($linkRepository, [
+			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'linkName'
+		]);
 	}
 
 

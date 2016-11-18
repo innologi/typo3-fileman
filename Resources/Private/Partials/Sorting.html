@@ -1,0 +1,12 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
+<fi:sortRepository choicesAs="options" valueAs="value">
+	<f:form enctype="multipart/form-data" method="post" action="sort">
+		<!-- @TODO llang -->
+		<label>
+			Volgorde:
+			<f:form.select class="select-sort" name="sorting" options="{options}" value="{value}" />
+			<f:form.hidden name="category" value="{category}" />
+		</label>
+		<f:form.submit value="Ok" />
+	</f:form>
+</fi:sortRepository>

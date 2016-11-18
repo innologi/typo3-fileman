@@ -9,6 +9,10 @@
 </f:if>
 </div>
 
+<div class="sorting">
+	<f:render partial="Sorting" />
+</div>
+
 <table summary="{f:translate(key:'tx_fileman_filelist.category_summary')}">
 	<caption><f:translate key="tx_fileman_filelist.category_caption" /></caption>
 	<f:render partial="Category/List" arguments="{categories:categories, isSuperUser:isSuperUser}" />
