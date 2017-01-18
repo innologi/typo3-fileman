@@ -150,7 +150,7 @@ class Tx_Fileman_Validation_ValidatorResolver extends Tx_Extbase_Validation_Vali
 					// @todo: Respect validationGroups
 					$newValidator = $this->createValidator($validateAnnotation['validatorName'], $validateAnnotation['validatorOptions']);
 					if ($newValidator === NULL) {
-						throw new Exception\NoSuchValidatorException('Invalid validate annotation in ' . $targetClassName . '::' . $classPropertyName . ': Could not resolve class name for  validator "' . $validateAnnotation->type . '".', 1241098027);
+						throw new \TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException('Invalid validate annotation in ' . $targetClassName . '::' . $classPropertyName . ': Could not resolve class name for  validator "' . $validateAnnotation->type . '".', 1241098027);
 					}
 					$objectValidator->addPropertyValidator($classPropertyName, $newValidator);
 				}
