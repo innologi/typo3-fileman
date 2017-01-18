@@ -17,14 +17,21 @@ plugin.tx_fileman {
 	persistence {
 		storagePid = {$plugin.tx_fileman.persistence.storagePid}
 		classes {
+			Tx_Fileman_Domain_Model_Category {
+				mapping.columns {
+					fe_group.mapOnProperty = feGroup
+				}
+			}
 			Tx_Fileman_Domain_Model_File {
 				mapping.columns {
 					tstamp.mapOnProperty = tstamp
+					fe_group.mapOnProperty = feGroup
 				}
 			}
 			Tx_Fileman_Domain_Model_Link {
 				mapping.columns {
 					tstamp.mapOnProperty = tstamp
+					fe_group.mapOnProperty = feGroup
 				}
 			}
 			Tx_Fileman_Domain_Model_FrontendUser {

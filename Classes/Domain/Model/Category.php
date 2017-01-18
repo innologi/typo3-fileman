@@ -97,6 +97,13 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	protected $feUser;
 
 	/**
+	 * Category fe_group
+	 *
+	 * @var string
+	 */
+	protected $feGroup;
+
+	/**
 	 * __construct
 	 *
 	 * @return void
@@ -340,5 +347,24 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 		return $this->count;
 	}
 
+	/**
+	 * Return fe_group
+	 *
+	 * @return string
+	 */
+	public function getFeGroup() {
+		return $this->feGroup;
+	}
+
+	/**
+	 * Sets fe_group
+	 *
+	 * @param string $feGroup
+	 * @return $this
+	 */
+	public function setFeGroup($feGroup) {
+		$this->feGroup = $feGroup;
+		return $this;
+	}
+
 }
-?>

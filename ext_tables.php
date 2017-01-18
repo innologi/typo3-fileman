@@ -43,6 +43,7 @@ $TCA['tx_fileman_domain_model_file'] = array(
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
+			'fe_group' => 'fe_group'
 		),
 		'searchFields' => 'filename,file_uri,alternate_title,description,category,links,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/File.php',
@@ -72,6 +73,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
+			'fe_group' => 'fe_group'
 		),
 		'searchFields' => 'title,description,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Category.php',
@@ -102,6 +104,7 @@ $TCA['tx_fileman_domain_model_link'] = array(
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
+			'fe_group' => 'fe_group'
 		),
 		'searchFields' => 'link_uri,link_name,description,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Link.php',

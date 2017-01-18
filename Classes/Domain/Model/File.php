@@ -120,6 +120,13 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	protected $tstamp;
 
 	/**
+	 * Category fe_group
+	 *
+	 * @var string
+	 */
+	protected $feGroup;
+
+	/**
 	 * __construct
 	 *
 	 * @return void
@@ -379,5 +386,24 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 		return $this->tstamp;
 	}
 
+	/**
+	 * Return fe_group
+	 *
+	 * @return string
+	 */
+	public function getFeGroup() {
+		return $this->feGroup;
+	}
+
+	/**
+	 * Sets fe_group
+	 *
+	 * @param string $feGroup
+	 * @return $this
+	 */
+	public function setFeGroup($feGroup) {
+		$this->feGroup = $feGroup;
+		return $this;
+	}
+
 }
-?>

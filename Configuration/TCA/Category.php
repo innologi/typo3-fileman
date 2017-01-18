@@ -11,7 +11,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 	'types' => array(
 		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,parent_category,fe_user,
 			--div--;LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tca_tab_content,sub_category,file,link,
-			--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'
+			--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime,endtime,fe_group'
 		),
 	),
 	'palettes' => array(
@@ -95,6 +95,32 @@ $TCA['tx_fileman_domain_model_category'] = array(
 					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
 				),
 			),
+		),
+		'fe_group' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.fe_group',
+			'config' => array(
+				'type' => 'select',
+				'size' => 7,
+				'maxitems' => 20,
+				'items' => array(
+					array(
+						'LLL:EXT:lang/locallang_general.xlf:LGL.hide_at_login',
+						-1
+					),
+					array(
+						'LLL:EXT:lang/locallang_general.xlf:LGL.any_login',
+						-2
+					),
+					array(
+						'LLL:EXT:lang/locallang_general.xlf:LGL.usergroups',
+						'--div--'
+					)
+				),
+				'exclusiveKeys' => '-1,-2',
+				'foreign_table' => 'fe_groups',
+				'foreign_table_where' => 'ORDER BY fe_groups.title'
+			)
 		),
 		'title' => array(
 			'exclude' => 0,

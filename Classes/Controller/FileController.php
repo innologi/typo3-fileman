@@ -295,6 +295,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 				if ($category !== NULL) {
 					$category->addFile($file); //this is to make the database field counter update reliably
 					$file->addCategory($category);
+					$file->setFeGroup($category->getFeGroup());
 				}
 
 				//finalize creation
