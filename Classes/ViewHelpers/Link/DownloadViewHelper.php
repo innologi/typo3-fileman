@@ -83,7 +83,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 
 		//filepath is relative to document root
 		#$appendUrl = $siteUrl.$filepath;
-		$appendUrl = $siteURL.'uploads/tx_fileman/'.$filepath; #@LOW might as well do it static right now
+		$appendUrl = /*$siteUrl.*/'uploads/tx_fileman/'.$filepath; #@LOW might as well do it static right now
 		if (is_file($appendUrl)) {
 			return $appendUrl;
 		}

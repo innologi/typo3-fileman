@@ -83,9 +83,9 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 	 */
 	public function isValid($file) {
 		$valid = FALSE;
-		$extName = 'Fileman';
+		#$extName = 'Fileman';
 		$this->errors = array();
-		$errorMessage = '';
+		#$errorMessage = '';
 		$errorCode = 0;
 
 		//only proceed if instance matches and an actual file upload took place
