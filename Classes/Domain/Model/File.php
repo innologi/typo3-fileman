@@ -23,7 +23,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * File Domain Model
  *
@@ -31,7 +33,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	#@TODO beveiliging van upload-bestanden?
 	#@TODO flexform configuratie
 
@@ -141,7 +143,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->category = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->category = new ObjectStorage();
 	}
 
 	/**
@@ -265,7 +267,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	public function getLinksFormatted() { #@LOW work with a transient
 		if (isset($this->links[0])) {
 			$links = str_replace("\r\n","\n",$this->links);
-			$linkArray = t3lib_div::trimExplode("\n", $links,1);
+			$linkArray = GeneralUtility::trimExplode("\n", $links,1);
 			return $linkArray;
 		}
 		return array();
@@ -323,7 +325,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the category
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getCategory() {
 		return $this->category;
@@ -332,10 +334,10 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the category
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $category
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $category
 	 * @return void
 	 */
-	public function setCategory(Tx_Extbase_Persistence_ObjectStorage $category) {
+	public function setCategory(ObjectStorage $category) {
 		$this->category = $category;
 	}
 

@@ -22,7 +22,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\File\BasicFileUtility;
 /**
  * Facilitates all file-upload interaction.
  *
@@ -30,7 +32,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Service_FileService implements t3lib_Singleton {
+class Tx_Fileman_Service_FileService implements SingletonInterface {
 
 	/**
 	 * $_FILES ext_plugin name
@@ -80,11 +82,11 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @var boolean
 	 */
 	protected $searchedForSubtitutes = FALSE;
-
+	// @TODO seems to be deprecated. Need to replace the whole thing with something FAL-compatible anyway
 	/**
 	 * Performs some basic file functions
 	 *
-	 * @var t3lib_basicFileFunctions
+	 * @var BasicFileUtility
 	 * @inject
 	 */
 	protected $fileFunctions;
@@ -122,7 +124,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 			$tmpNames = $postData['tmpFiles'];
 			//files once uploaded, have been moved to said location to prevent them from being deleted after the upload script execution
 			$tmpDir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
-			$tmpDir = rtrim(t3lib_div::fixWindowsFilePath($tmpDir), '/') . '/' . $this->ext . '/';
+			$tmpDir = rtrim(GeneralUtility::fixWindowsFilePath($tmpDir), '/') . '/' . $this->ext . '/';
 			foreach ($tmpNames as $index=>$tmpName) {
 				if ($this->validateIndex($index) && $this->validateTmpFileName($tmpName)) { //validate the index and tmpName values as they come from (hidden) fields in a form
 					$tmpName = $tmpDir . $tmpName;
@@ -291,7 +293,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	protected function isUploadSuccessful() {
 		$tmpName = $this->getUploadProperty('tmp_name');
 		if (is_uploaded_file($tmpName)) {
-			$newTmpName = t3lib_div::fixWindowsFilePath(dirname($tmpName)) . '/' . $this->ext . '/';
+			$newTmpName = GeneralUtility::fixWindowsFilePath(dirname($tmpName)) . '/' . $this->ext . '/';
 			if ($this->checkAndCreateDir($newTmpName)) {
 				$newTmpName .= basename($tmpName);
 				if (move_uploaded_file($tmpName,$newTmpName)) {
@@ -363,7 +365,7 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 		$pattern = '=^(([a-z]:)?/)(.*)$=i'; //.. thus windows-paths are assumed to have been corrected!
 		preg_match($pattern,$dirpath,$matches);
 		//if dir doesn't exist, mkdir_deep creates every nonexisting directory from its second argument..
-		if (!is_dir($dirpath) && !is_null(t3lib_div::mkdir_deep($matches[1],$matches[3]))) {
+		if (!is_dir($dirpath) && !is_null(GeneralUtility::mkdir_deep($matches[1],$matches[3]))) {
 			#$temp = t3lib_div::mkdir_deep($matches[1],$matches[3]);
 			#var_dump($temp);die();
 			//mkdir_deep only returns something on errors

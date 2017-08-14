@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Download View Helper
  *
@@ -31,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractTagBasedViewHelper {
+class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends AbstractTagBasedViewHelper {
 
 	/**
 	 * @var string
@@ -79,7 +80,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 	* @return	mixed		String with relative path or boolean false on failure
 	*/
 	private function _resolveSitepath($filepath) {
-		$siteUrl = t3lib_div::getIndpEnv('TYPO3_SITE_URL');
+		$siteUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
 
 		//filepath is relative to document root
 		#$appendUrl = $siteUrl.$filepath;
@@ -94,12 +95,12 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 		}
 
 		//if not yet a valid sitepath, check if filepath lies within document root
-		$docroot = t3lib_div::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
+		$docroot = GeneralUtility::getIndpEnv('TYPO3_DOCUMENT_ROOT') . '/';
 		//in case TYPO3 DOCUMENT ROOT fails (i.e. old FE in BE situations)
 		if (!isset($docroot[1])) {
 			$docroot = $_SERVER['DOCUMENT_ROOT'];
 			if (isset($docroot[0])) {
-				$docroot = t3lib_div::fixWindowsFilePath($docroot);
+				$docroot = GeneralUtility::fixWindowsFilePath($docroot);
 				$docroot_rev = strrev($docroot);
 				if ($docroot_rev[0] !== '/') {
 					$docroot .= '/';

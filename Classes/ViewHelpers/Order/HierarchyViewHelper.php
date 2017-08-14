@@ -24,6 +24,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * Order by Hierarchy Viewhelper
  *
@@ -31,7 +32,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_Order_HierarchyViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_Fileman_ViewHelpers_Order_HierarchyViewHelper extends AbstractViewHelper {
 
 	/**
 	 * @var array

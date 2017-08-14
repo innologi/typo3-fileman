@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Category Domain Model
  *
@@ -31,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Fileman_Domain_Model_Category extends AbstractEntity {
 
 	/**
 	 * Category title
@@ -118,10 +119,10 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->file = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->link = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->subCategory = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->parentCategory = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->file = new ObjectStorage();
+		$this->link = new ObjectStorage();
+		$this->subCategory = new ObjectStorage();
+		$this->parentCategory = new ObjectStorage();
 	}
 
 	/**
@@ -197,7 +198,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @param Tx_Extbase_Persistence_ObjectStorage $subCategory
 	 * @return void
 	 */
-	public function setSubCategory(Tx_Extbase_Persistence_ObjectStorage $subCategory) {
+	public function setSubCategory(ObjectStorage $subCategory) {
 		$this->subCategory = $subCategory;
 	}
 
@@ -236,7 +237,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @param Tx_Extbase_Persistence_ObjectStorage $file
 	 * @return void
 	 */
-	public function setFile(Tx_Extbase_Persistence_ObjectStorage $file) {
+	public function setFile(ObjectStorage $file) {
 		$this->file = $file;
 	}
 
@@ -275,7 +276,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @param Tx_Extbase_Persistence_ObjectStorage $link
 	 * @return void
 	 */
-	public function setLink(Tx_Extbase_Persistence_ObjectStorage $link) {
+	public function setLink(ObjectStorage $link) {
 		$this->link = $link;
 	}
 
@@ -314,7 +315,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @param Tx_Extbase_Persistence_ObjectStorage $parentCategory
 	 * @return void
 	 */
-	public function setParentCategory(Tx_Extbase_Persistence_ObjectStorage $parentCategory) {
+	public function setParentCategory(ObjectStorage $parentCategory) {
 		$this->parentCategory = $parentCategory;
 	}
 

@@ -1,5 +1,7 @@
 <?php
 
+
+
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +25,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 /**
  * Handles additional domain validations for the File domain.
  *
@@ -31,7 +34,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_Fileman_Domain_Validator_FileValidator extends AbstractValidator {
 	// @TODO this file is a travesty, please please PLEASE refactor.
 	/**
 	 * TypoScript settings
@@ -43,7 +46,7 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 	/**
 	 * Necessary to resolve $settings
 	 *
-	 * @var Tx_Extbase_Configuration_ConfigurationManager
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
 	 */
 	protected $configurationManager;
 
@@ -67,12 +70,12 @@ class Tx_Fileman_Domain_Validator_FileValidator extends Tx_Extbase_Validation_Va
 	/**
 	 * Injects the Configuration manager and initializes $settings
 	 *
-	 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
+	 * @param ConfigurationManager $configurationManager
 	 * @return void
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
+	public function injectConfigurationManager(ConfigurationManager $configurationManager) {
 		$this->configurationManager = $configurationManager;
-		$this->settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManager::CONFIGURATION_TYPE_SETTINGS);
+		$this->settings = $this->configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_SETTINGS);
 	}
 
 	/**

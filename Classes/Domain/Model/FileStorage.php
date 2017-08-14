@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * FileStorage Domain Model
  *
@@ -34,7 +35,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_FileStorage extends Tx_Extbase_DomainObject_AbstractValueObject {
+class Tx_Fileman_Domain_Model_FileStorage extends AbstractValueObject {
 
 	/**
 	 * Contains files
@@ -59,7 +60,7 @@ class Tx_Fileman_Domain_Model_FileStorage extends Tx_Extbase_DomainObject_Abstra
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->file = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->file = new ObjectStorage();
 	}
 
 	/**
@@ -97,7 +98,7 @@ class Tx_Fileman_Domain_Model_FileStorage extends Tx_Extbase_DomainObject_Abstra
 	 * @param Tx_Extbase_Persistence_ObjectStorage $file
 	 * @return void
 	 */
-	public function setFile(Tx_Extbase_Persistence_ObjectStorage $file) {
+	public function setFile(ObjectStorage $file) {
 		$this->file = $file;
 	}
 

@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Fluid\ViewHelpers\Form\TextareaViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Changes to support properties from properties. This version simply assumes
  * that such are _ALWAYS_ present, hence it is only usable with such fields.
@@ -34,8 +35,8 @@
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_ViewHelpers_Form_TextareaViewHelper extends Tx_Fluid_ViewHelpers_Form_TextareaViewHelper {
-
+class Tx_Fileman_ViewHelpers_Form_TextareaViewHelper extends TextareaViewHelper {
+	// @FIX everything around propery mapping / errors needs to be reviewed and possibly replaced.
 	#@LOW make a version that copes well with both normal properties and properties of properties (as well as Upload/Textfield)
 	/**
 	 * Get errors for the property and form name of this view helper
@@ -54,7 +55,7 @@ class Tx_Fileman_ViewHelpers_Form_TextareaViewHelper extends Tx_Fluid_ViewHelper
 		$formClass = version_compare(TYPO3_branch, '6.0', '>=') ? 'TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper' : 'Tx_Fluid_ViewHelpers_FormViewHelper';
 		$formObjectName = $this->viewHelperVariableContainer->get($formClass, 'formObjectName');
 		// <!-- CHANGE
-			$propertyName = t3lib_div::trimExplode('.',$this->arguments['property'],1);
+			$propertyName = GeneralUtility::trimExplode('.',$this->arguments['property'],1);
 		// CHANGE -->
 		$formErrors = array();
 		foreach ($errors as $error) {

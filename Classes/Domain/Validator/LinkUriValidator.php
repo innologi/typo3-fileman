@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * LinkUri validator
  *
@@ -31,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Validator_LinkUriValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_Fileman_Domain_Validator_LinkUriValidator extends AbstractValidator {
 
 	/**
 	 * Checks if $link is a valid URL
@@ -40,7 +41,7 @@ class Tx_Fileman_Domain_Validator_LinkUriValidator extends Tx_Extbase_Validation
 	 * @return	boolean
 	 */
 	public function isValid($link) {
-		if (!isset($link[0]) || !is_string($link) || !t3lib_div::isValidUrl($link)) {
+		if (!isset($link[0]) || !is_string($link) || !GeneralUtility::isValidUrl($link)) {
 			$this->addError('There was a problem with linkUri', 40750133704);
 			return FALSE;
 		}

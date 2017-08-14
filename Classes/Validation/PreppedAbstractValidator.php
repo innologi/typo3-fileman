@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 /**
  * Basis for some custom validators.
  *
@@ -31,22 +31,13 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-abstract class Tx_Fileman_Validation_Validator_PreppedAbstractValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+abstract class Tx_Fileman_Validation_Validator_PreppedAbstractValidator extends AbstractValidator {
 
 	/**
-	 * @var $objectManager Tx_Extbase_Object_ObjectManager
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
+	 * @inject
 	 */
 	protected $objectManager;
-
-	/**
-	 * injectObjectManager
-	 *
-	 * @param Tx_Extbase_Object_ObjectManager $objectManager
-	 * @return void
-	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManager $objectManager) {
-		$this->objectManager = $objectManager;
-	}
 
 }
 ?>

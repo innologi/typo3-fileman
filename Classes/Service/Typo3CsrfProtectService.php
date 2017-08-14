@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
@@ -22,7 +23,10 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
+use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Facilitates Cross-Site Request Forgery Protection control,
  * implementation for frontend extbase plugins.
@@ -31,8 +35,8 @@
  * @author Frenck Lutke <typo3@innologi.nl>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_AbstractCsrfProtectService implements t3lib_Singleton {
-
+class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_AbstractCsrfProtectService implements SingletonInterface {
+	// @TODO we might be able to completely replace our CSRF-security implementation with TYPO3's own
 	/**
 	 * @var string
 	 */
@@ -49,20 +53,20 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 	protected $tokenKey = '__stoken';
 
 	/**
-	 * @var Tx_Extbase_MVC_Web_Request
+	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Request
 	 */
 	protected $request;
 
 	/**
-	 * @var Tx_Extbase_Security_Cryptography_HashService
+	 * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
 	 */
 	protected $hashService;
 
 	/**
-	 * @param Tx_Extbase_Security_Cryptography_HashService $hashService
+	 * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
 	 * @return void
 	 */
-	public function injectHashService(Tx_Extbase_Security_Cryptography_HashService $hashService) {
+	public function injectHashService(HashService $hashService) {
 		$this->hashService = $hashService;
 	}
 
@@ -87,14 +91,14 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 	 * Provides the csrf-class and encoded uri to a tag for
 	 * identification by the JavaScript library.
 	 *
-	 * @param Tx_Fluid_Core_ViewHelper_TagBuilder $tag
+	 * @param TagBuilder $tag
 	 * @param string $tokenUri
 	 * @return void
 	 */
-	public function provideTagArguments(Tx_Fluid_Core_ViewHelper_TagBuilder $tag, $tokenUri = '') {
+	public function provideTagArguments(TagBuilder $tag, $tokenUri = '') {
 		$class = array();
 		if ($tag->hasAttribute('class')) {
-			$class = t3lib_div::trimExplode(' ', $tag->getAttribute('class'));
+			$class = GeneralUtility::trimExplode(' ', $tag->getAttribute('class'));
 		}
 
 		$class[] = $this->jsClass;

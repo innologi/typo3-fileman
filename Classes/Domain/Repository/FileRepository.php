@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Persistence\Repository;
 /**
  * File repository
  *
@@ -31,7 +31,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Repository_FileRepository extends Tx_Extbase_Persistence_Repository {
+class Tx_Fileman_Domain_Repository_FileRepository extends Repository {
 
 	/**
 	 * Returns all objects of this repository belonging to the provided category

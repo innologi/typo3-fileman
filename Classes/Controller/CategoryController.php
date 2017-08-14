@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Category controller
  *
@@ -100,7 +100,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 			$category->setFeGroup($parentCategory->getFeGroup());
 		}
 		$this->categoryRepository->add($category);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 
 		if ($parentCategory === NULL) {
@@ -157,7 +157,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 			$category->setFeUser($this->feUser);
 		}
 		$this->categoryRepository->update($category);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_category_success', $this->extensionName);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.edit_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 		if ($parentCategory === NULL) {
 			$this->redirect('list');
@@ -180,7 +180,7 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->categoryRepository->remove($category);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_category_success', $this->extensionName);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.delete_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 		if ($parentCategory === NULL) {
 			$this->redirect('list');

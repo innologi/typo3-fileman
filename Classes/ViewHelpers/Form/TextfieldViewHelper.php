@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Fluid\ViewHelpers\Form\TextfieldViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Changes to support properties from properties. This version simply assumes
  * that such are _ALWAYS_ present, hence it is only usable with such fields.
@@ -36,7 +37,7 @@
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends Tx_Fluid_ViewHelpers_Form_TextfieldViewHelper {
+class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends TextfieldViewHelper {
 
 	/**
 	 * Renders the textfield.
@@ -49,7 +50,7 @@ class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends Tx_Fluid_ViewHelpe
 	 * @param string $type The field type, e.g. "text", "email", "url" etc.
 	 * @param string $realPlaceholder A string used as a placeholder for the value to enter
 	 * @return string
-	 * @see Tx_Fluid_ViewHelpers_Form_TextfieldViewHelper::render()
+	 * @see TextfieldViewHelper::render()
 	 */
 	public function render($required = NULL, $type = 'text', $realPlaceholder = NULL) {
 		$required = ($required === TRUE) ? 'required' : NULL;
@@ -152,7 +153,7 @@ class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends Tx_Fluid_ViewHelpe
 		$formClass = version_compare(TYPO3_branch, '6.0', '>=') ? 'TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper' : 'Tx_Fluid_ViewHelpers_FormViewHelper';
 		$formObjectName = $this->viewHelperVariableContainer->get($formClass, 'formObjectName');
 		// <!-- CHANGE
-			$propertyName = t3lib_div::trimExplode('.',$this->arguments['property'],1);
+			$propertyName = GeneralUtility::trimExplode('.',$this->arguments['property'],1);
 		// CHANGE -->
 		$formErrors = array();
 		foreach ($errors as $error) {

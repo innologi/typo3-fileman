@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Links Validator
  *
@@ -35,7 +36,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Validator_LinksValidator extends Tx_Extbase_Validation_Validator_AbstractValidator {
+class Tx_Fileman_Domain_Validator_LinksValidator extends AbstractValidator {
 
 	/**
 	 * Validate links, one per row
@@ -48,13 +49,13 @@ class Tx_Fileman_Domain_Validator_LinksValidator extends Tx_Extbase_Validation_V
 
 		if (isset($links[0])) {
 			$links = str_replace("\r\n","\n",$links); #@LOW get this from a transient getter, which probably requires us to put this in the File Validator
-			$linkArray = t3lib_div::trimExplode("\n", $links,1);
+			$linkArray = GeneralUtility::trimExplode("\n", $links,1);
 		}
 
 		if (!empty($linkArray)) {
 			foreach ($linkArray as $link) {
 				//each link needs to be a valid URL or errors ensue
-				if (!t3lib_div::isValidUrl($link)) {
+				if (!GeneralUtility::isValidUrl($link)) {
 					$this->addError('There was a problem with links', 40750133703);
 					return FALSE;
 				}

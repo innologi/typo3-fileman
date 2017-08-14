@@ -200,7 +200,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			}
 
 			//in an extbase situation, we're deep in its outputbuffers, which could (and often WILL) corrupt the download
-			t3lib_div::cleanOutputBuffers();
+			while ($content = ob_get_clean()) {
+				$obContent .= $content;
+			}
 			$this->response->sendHeaders(); //send headers after cleaning OB
 			//before reading the file, we need to purge everything in our buffers towards user-agent
 			ob_flush();
@@ -306,10 +308,10 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		if (empty($failedFiles)) {
-			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
+			$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
 			$severity = FlashMessage::OK;
 		} else {
-			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_error', $this->extensionName, array(count($failedFiles)));
+			$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.new_file_error', $this->extensionName, array(count($failedFiles)));
 			$severity = FlashMessage::ERROR;
 		}
 		$this->addFlashMessage($flashMessage, '', $severity);
@@ -369,7 +371,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		$this->fileRepository->update($file);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_file_success', $this->extensionName);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.edit_file_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 
 		//category
@@ -427,10 +429,10 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 				// @LOW log?
 			}
 
-			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
+			$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
 		} else {
 			$this->fileRepository->update($file);
-			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.remove_file_success', $this->extensionName);
+			$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.remove_file_success', $this->extensionName);
 		}
 
 		$this->flashMessageContainer->add($flashMessage);
@@ -490,7 +492,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @api
 	 */
 	protected function getErrorFlashMessage() {
-		return Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.error_message', $this->extensionName);
+		return LocalizationUtility::translate('tx_fileman_filelist.error_message', $this->extensionName);
 	}
 
 

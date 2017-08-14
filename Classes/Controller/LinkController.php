@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Link Controller
  *
@@ -99,7 +99,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		$this->linkRepository->add($link);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_link_success', $this->extensionName);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.new_link_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 		$this->redirect('list','File',NULL,$arguments);
 	}
@@ -138,7 +138,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		$this->linkRepository->update($link);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_link_success', $this->extensionName);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.edit_link_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 
 		//category
@@ -166,7 +166,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
 		$this->linkRepository->remove($link);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_link_success', $this->extensionName);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.delete_link_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);
 
 		//category

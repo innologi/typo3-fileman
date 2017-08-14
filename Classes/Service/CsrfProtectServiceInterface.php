@@ -1,4 +1,6 @@
 <?php
+use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -117,7 +119,7 @@ interface Tx_Fileman_Service_CsrfProtectServiceInterface {
 	 * @param string $tokenUri
 	 * @return void
 	 */
-	 public function provideTagArguments(Tx_Fluid_Core_ViewHelper_TagBuilder $tag, $tokenUri = '');
+	 public function provideTagArguments(TagBuilder $tag, $tokenUri = '');
 
 	/**
 	 * Gets encodedUrl from header.

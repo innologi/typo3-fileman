@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +24,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
 /**
  * Validator Resolver
  *
@@ -36,7 +37,7 @@
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_Validation_ValidatorResolver extends Tx_Extbase_Validation_ValidatorResolver {
+class Tx_Fileman_Validation_ValidatorResolver extends ValidatorResolver {
 
 	/**
 	 * Resolves and returns the base validator conjunction for the given data type.

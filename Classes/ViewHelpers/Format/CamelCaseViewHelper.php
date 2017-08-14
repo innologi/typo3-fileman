@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * CamelCase View Helper
  *
@@ -31,13 +32,13 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_Format_CamelCaseViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_Fileman_ViewHelpers_Format_CamelCaseViewHelper extends AbstractViewHelper {
 
 	/**
 	 * @param string $type Type of conversion [ camelCaseToLowerCaseUnderscored / underscoredToLowerCamelCase / underscoredToUpperCamelCase ]
 	 * @param string $value The value to format
 	 * @return string
-	 * @see t3lib_div::camelCaseToLowerCaseUnderscored(),t3lib_div::underscoredToLowerCamelCase(),t3lib_div::underscoredToUpperCamelCase()
+	 * @see GeneralUtility::camelCaseToLowerCaseUnderscored(),GeneralUtility::underscoredToLowerCamelCase(),GeneralUtility::underscoredToUpperCamelCase()
 	 */
 	public function render($type, $value = NULL) {
 		if ($value === NULL) {
@@ -48,7 +49,7 @@ class Tx_Fileman_ViewHelpers_Format_CamelCaseViewHelper extends Tx_Fluid_Core_Vi
 				case 'camelCaseToLowerCaseUnderscored':
 				case 'underscoredToLowerCamelCase':
 				case 'underscoredToUpperCamelCase':
-					$value = t3lib_div::$type($value);
+					$value = GeneralUtility::$type($value);
 					break;
 				default:
 					break;

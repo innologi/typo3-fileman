@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Link Domain Model
  *
@@ -31,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Fileman_Domain_Model_Link extends AbstractEntity {
 
 	/**
 	 * Link URI
@@ -102,7 +103,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->category = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->category = new ObjectStorage();
 	}
 
 	/**
@@ -216,7 +217,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @param Tx_Extbase_Persistence_ObjectStorage $category
 	 * @return void
 	 */
-	public function setCategory(Tx_Extbase_Persistence_ObjectStorage $category) {
+	public function setCategory(ObjectStorage $category) {
 		$this->category = $category;
 	}
 
