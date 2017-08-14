@@ -38,6 +38,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * linkRepository
 	 *
 	 * @var Tx_Fileman_Domain_Repository_LinkRepository
+	 * @inject
 	 */
 	protected $linkRepository;
 

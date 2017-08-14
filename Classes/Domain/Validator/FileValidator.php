@@ -54,23 +54,14 @@ class Tx_Fileman_Domain_Validator_FileValidator extends AbstractValidator {
 	 * File service
 	 *
 	 * @var Tx_Fileman_Service_FileService
+	 * @inject
 	 */
 	protected $fileService;
 
 	/**
-	 * Injects the File Service
-	 *
-	 * @param Tx_Fileman_Service_FileService $fileService
-	 * @return void
-	 */
-	public function injectFileService(Tx_Fileman_Service_FileService $fileService) {
-		$this->fileService = $fileService;
-	}
-
-	/**
 	 * Injects the Configuration manager and initializes $settings
 	 *
-	 * @param ConfigurationManager $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager
 	 * @return void
 	 */
 	public function injectConfigurationManager(ConfigurationManager $configurationManager) {

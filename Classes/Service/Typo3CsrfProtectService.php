@@ -24,7 +24,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
@@ -59,16 +58,10 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
+	 * @inject
 	 */
 	protected $hashService;
 
-	/**
-	 * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
-	 * @return void
-	 */
-	public function injectHashService(HashService $hashService) {
-		$this->hashService = $hashService;
-	}
 
 
 

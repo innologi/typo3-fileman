@@ -37,18 +37,9 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 	 * File service
 	 *
 	 * @var Tx_Fileman_Service_FileService
+	 * @inject
 	 */
 	protected $fileService;
-
-	/**
-	 * Injects the File Service
-	 *
-	 * @param Tx_Fileman_Service_FileService $fileService
-	 * @return void
-	 */
-	public function injectFileService(Tx_Fileman_Service_FileService $fileService) {
-		$this->fileService = $fileService;
-	}
 
 	/**
 	 * Checks if an object is a valid objectstorage by passing all its objects

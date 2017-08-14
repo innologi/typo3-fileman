@@ -51,6 +51,7 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	 * frontendUserRepository
 	 *
 	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
+	 * @inject
 	 */
 	protected $frontendUserRepository;
 
@@ -58,28 +59,9 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	 * frontendUserGroupRepository
 	 *
 	 * @var Tx_Fileman_Domain_Repository_FrontendUserGroupRepository
+	 * @inject
 	 */
 	protected $frontendUserGroupRepository;
-
-	/**
-	 * injectFrontendUserRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository
-	 * @return void
-	 */
-	public function injectFrontendUserRepository(Tx_Fileman_Domain_Repository_FrontendUserRepository $frontendUserRepository) {
-		$this->frontendUserRepository = $frontendUserRepository;
-	}
-
-	/**
-	 * injectFrontendUserGroupRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository
-	 * @return void
-	 */
-	public function injectFrontendUserGroupRepository(Tx_Fileman_Domain_Repository_FrontendUserGroupRepository $frontendUserGroupRepository) {
-		$this->frontendUserGroupRepository = $frontendUserGroupRepository;
-	}
 
 	/**
 	 * Returns current frontend user.
