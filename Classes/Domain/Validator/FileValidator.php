@@ -25,6 +25,7 @@ namespace Innologi\Fileman\Domain\Validator;
  ***************************************************************/
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Validation\Error;
 /**
  * Handles additional domain validations for the File domain.
  *
@@ -107,7 +108,7 @@ class FileValidator extends AbstractValidator {
 				} else {
 					$propertyError = new Tx_Extbase_Validation_PropertyError('category');
 					$propertyError->addErrors(array(
-						new Tx_Extbase_Validation_Error('There was a problem with category', 40750133705)
+						new Error('There was a problem with category', 40750133705)
 					));
 					$this->errors[] = $propertyError;
 					return FALSE;
@@ -137,7 +138,7 @@ class FileValidator extends AbstractValidator {
 			//setup error message
 			$propertyError = new Tx_Extbase_Validation_PropertyError('uploadData');
 			$propertyError->addErrors(array(
-					new Tx_Extbase_Validation_Error('There was a problem with uploadData',$errorCode)
+					new Error('There was a problem with uploadData',$errorCode)
 			));
 			$this->errors[] = $propertyError;
 		}
