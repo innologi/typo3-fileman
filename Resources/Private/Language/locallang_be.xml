@@ -7,6 +7,33 @@
 	<data type="array">
 		<languageKey index="default" type="array">
 			<label index="tx_fileman_flexform_suGroup">Superuser group</label>
+			<label index="tx_fileman_flexform_searchTypes">Searchable record types</label>
+			
+			<label index="tca_tab_content">Category Content</label>
+			
+			<label index="ts_category_upload">Upload Settings</label>
+			<label index="ts_category_uploadadv">Advanced HTML5 Upload Settings</label>
+			<label index="ts_category_general">General Settings</label>
+			
+			<label index="ts_settings_templateRootPath">Path to template root (FE)</label>
+			<label index="ts_settings_partialRootPath">Path to template partials (FE)</label>
+			<label index="ts_settings_layoutRootPath">Path to template layouts (FE)</label>
+			<label index="ts_settings_storagePid">Default storage PID</label>
+			<label index="ts_settings_includeJquery">Enable jQuery inclusion: Will include the jQuery library through the configured CDN. If for some reason there already is a jQuery library present, you can disable fileman's here to prevent conflicts.</label>
+			<label index="ts_settings_includeJS">Enable Javascript inclusion: Will include fileman Javascript. It's all jQuery dependent, so make sure to have jQuery enabled through this or another extension.</label>
+			<label index="ts_settings_toFooter">Place Javascript in page footer: If enabled, will move the fileman Javascript out of the header and into the footer.</label>
+			<label index="ts_settings_jQueryCDN">jQuery CDN url: The url from which jQuery is included. Configurable to easily allow jQuery version changes.</label>
+			<label index="ts_settings_uploadType">Upload Technique: HTML5 allows for a better and more reliable user-experience, while PHP allows for better compatibility.</label>
+			<label index="ts_settings_uploadProgress">Upload Progress Provider: Setting this to 'none' disables the upload progress bar for both HTML5 and PHP. The other options are all providers for the PHP upload technique. Session is the newest and generally works well with PHP 5.5+. Other possible providers are the optional APC and (the somewhat outdated) UploadProgress modules.</label>
+			<label index="ts_settings_allowMimeType">Mimetype Whitelist: Pipe-separated-values. Enables MimeType-checking for increased security and usability, in addition to the file-extension white-/blacklist. Note that this setting is applied regardless of the HTML5 upload-technique, if the user-agent supports it.</label>
+			<label index="ts_settings_maxFileSize">Max Filesize: Optionally prevents the uploader from uploading any file that exceeds this size. Note that this setting is applied regardless of the HTML5 upload-technique, if the user-agent supports it.</label>
+			<label index="ts_settings_maxTotalFileSize">Total Max Filesize: Optionally prevents the uploader from uploading a number of files that exceed this total size. Note that this setting is applied regardless of the HTML5 upload-technique, if the user-agent supports it.</label>
+			<label index="ts_settings_chunkSize">Chunk size: The HTML5 uploader uploads files in chunks to circumvent any size-restriction set by PHP. Usually, you can leave this at the default value of 1MB. If this does not work well with your PHP setup, you may try to reduce it.</label>
+			<label index="ts_settings_uploadDir">Upload location</label>
+			<label index="ts_settings_allowFileType">Whitelist filetypes: Comma-separated-values. Allow filetypes by their file-extension. This setting overrules the blacklist.</label>
+			<label index="ts_settings_denyFileType">Blacklist filetypes: Comma-separated-values. Deny filetypes by their file-extension. This setting is overruled by the whitelist.</label>
+			<label index="ts_settings_possibleOwnerGroup">Possible Owner Group ID: If set, limits owner/admin choices for categories to members of the configured group.</label>
+			<label index="ts_settings_userLabelField">User Label Field: Determines which fe_user field is used as label for showing possible owners/admins upon editing categories.</label>
 		</languageKey>
 	</data>
 </T3locallang>

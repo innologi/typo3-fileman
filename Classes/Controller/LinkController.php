@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -94,6 +94,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 			$category->addLink($link); //this is to make the database field counter update reliably
 			$this->categoryRepository->update($category); //necessary from 6.1 and upwards
 			$link->addCategory($category);
+			$link->setFeGroup($category->getFeGroup());
 			$arguments = array('category'=>$category);
 		}
 

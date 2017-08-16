@@ -8,6 +8,7 @@
 		<languageKey index="default" type="array">
 			<label index="tx_fileman.csrf_invalid_request">The form or link has expired. Please try again.</label>
 			<label index="tx_fileman_filelist.required">required fields</label>
+			<label index="tx_fileman_filelist.search_title">Search results</label>
 			<label index="tx_fileman_filelist.go_back">Go back</label>
 			<label index="tx_fileman_filelist.go_back_to">Go back to %s</label>
 			<label index="tx_fileman_filelist.new_category">New category</label>
@@ -17,7 +18,10 @@
 			<label index="tx_fileman_filelist.new_file">Upload new file</label>
 			<label index="tx_fileman_filelist.new_file_header">Upload new file in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Upload</label>
-			<label index="tx_fileman_filelist.new_file_success">File uploaded</label>
+			<label index="tx_fileman_filelist.new_file_explanation">You can upload multiple files from your PC by dragging them to the 'Drag &amp; Drop' window below, or a single file per upload field below that. Each upload may consist of a maximum of %1$d files. The size of each file can be no larger than %2$s. The total size of all files of a single upload, can be no larger than %3$s combined.</label>
+			<label index="tx_fileman_filelist.new_file_success">File(s) uploaded</label>
+			<label index="tx_fileman_filelist.new_file_error">Failed uploading %d file(s)</label>
+			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Failed to reconstitute the file '%s', please try again.</label>
 			<label index="tx_fileman_filelist.new_link">Place new link</label>
 			<label index="tx_fileman_filelist.new_link_header">Place new link in '%s'</label>
 			<label index="tx_fileman_filelist.new_link_submit">Place</label>
@@ -44,6 +48,10 @@
 			<label index="tx_fileman_filelist.del_file">Remove upload-field</label>
 			<label index="tx_fileman_filelist.show_optional">Edit details</label>
 			<label index="tx_fileman_filelist.prepped_file">This file was received well and waits at the site-servers until you complete the process successfully.</label>
+			<label index="tx_fileman_filelist.multi_select_title">By holding down CTRL or CMD button, you can select multiple or deselect categories.</label>
+			<label index="tx_fileman_filelist.no_search_results">No results found.</label>
+			<label index="tx_fileman_filelist.search_placeholder">Search keywords</label>
+			<label index="tx_fileman_filelist.delete_confirm">Are you sure you want to delete this?</label>
 			
 			<label index="tx_fileman_filelist.error_message">One or more form-fields need to be corrected before the process can complete. Please take note of the hints below. When you've corrected the issues, resend the form.</label>
 			<label index="tx_fileman_filelist.validation_errors">Fields requiring correction:</label>
@@ -52,6 +60,18 @@
 			<label index="error.file.uploadData.40750133702">You need to select a file for upload.</label>
 			<label index="error.file.links.40750133703">One valid URL per row, or leave the field empty.</label>
 			<label index="error.link.linkUri.40750133704">You need to place a valid link.</label>
+			<label index="error.file.category.40750133705">The file needs to be placed in at least 1 category.</label>
+			
+			<label index="tx_fileman_filelist.validate_failed_mimetype">Filetype of {fileName} not allowed.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilesize">File {fileName} is too large. The maximum allowed file size is {maxFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_totalfilesize">The total size of all files is too large. The maximum total file size is {maxTotalFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilecount">You can only upload {maxFileCount} files at a time.</label>
+			<label index="tx_fileman_filelist.drop_zone_text">Drop files here</label>
+			<label index="tx_fileman_filelist.drop_zone_tooltip">By dropping files here, they will be uploaded immediately. This is a much easier alternative to using the standard form.</label>
+			<label index="tx_fileman_filelist.xhr_retry">No connection, retrying in 30 seconds.</label>
+			<label index="tx_fileman_filelist.xhr_no_progress">Not receiving upload-progress status.</label>
+			<label index="tx_fileman_filelist.error_file_transfer">File transfer halted due to unknown error. Reload the page to retry. If this issue persists, please contact the webmaster.</label>
+			<label index="tx_fileman_filelist.error_xhr_response">File transfer erroneously configured. Please contact the webmaster.</label>
 			
 			<label index="tx_fileman_filelist.category_caption">File categories</label>
 			<label index="tx_fileman_filelist.category_summary">This is a list of file-categories.</label>
@@ -70,6 +90,8 @@
 			<label index="tx_fileman_domain_model_category">Categories</label>
 			<label index="tx_fileman_domain_model_category.title">Category</label>
 			<label index="tx_fileman_domain_model_category.description">Description</label>
+			<label index="tx_fileman_domain_model_category.parent_category">Place in category</label>
+			<label index="tx_fileman_domain_model_category.fe_user">Category admin:</label>
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
@@ -81,6 +103,7 @@
 		<languageKey index="nl" type="array">
 			<label index="tx_fileman.csrf_invalid_request">De geldigheid van het formulier of link is verlopen. Probeer het opnieuw s.v.p.</label>
 			<label index="tx_fileman_filelist.required">vereiste velden</label>
+			<label index="tx_fileman_filelist.search_title">Zoekresultaten</label>
 			<label index="tx_fileman_filelist.go_back">Ga terug</label>
 			<label index="tx_fileman_filelist.go_back_to">Ga terug naar %s</label>
 			<label index="tx_fileman_filelist.new_category">Nieuwe categorie</label>
@@ -90,7 +113,10 @@
 			<label index="tx_fileman_filelist.new_file">Plaats nieuw bestand</label>
 			<label index="tx_fileman_filelist.new_file_header">Plaats nieuw bestand in '%s'</label>
 			<label index="tx_fileman_filelist.new_file_submit">Plaats</label>
-			<label index="tx_fileman_filelist.new_file_success">Bestand geplaatst</label>
+			<label index="tx_fileman_filelist.new_file_explanation">U kunt meerdere bestanden vanaf uw PC tegelijk toevoegen via het 'Drag &amp; Drop' venster hieronder, of een enkel bestand per upload-veld daaronder. Per keer kunnen maximaal %1$d bestanden tegelijk toegevoegd worden. De grootte van elk bestand mag maximaal %2$s zijn. De totaalgrootte bij meerdere bestanden tegelijk plaatsen mag maximaal %3$s zijn.</label>
+			<label index="tx_fileman_filelist.new_file_success">Bestand(en) geplaatst</label>
+			<label index="tx_fileman_filelist.new_file_error">Plaatsen van %d bestand(en) mislukt</label>
+			<label index="tx_fileman_filelist.new_file_failed_reconstitute">Kon bestand '%s' niet terugvinden, probeer het nog eens.</label>
 			<label index="tx_fileman_filelist.new_link">Plaats nieuwe link</label>
 			<label index="tx_fileman_filelist.new_link_header">Plaats nieuwe link in '%s'</label>
 			<label index="tx_fileman_filelist.new_link_submit">Plaats</label>
@@ -117,7 +143,10 @@
 			<label index="tx_fileman_filelist.del_file">Verwijder upload-veld</label>
 			<label index="tx_fileman_filelist.show_optional">Wijzig details</label>
 			<label index="tx_fileman_filelist.prepped_file">Dit bestand was goed ontvangen en wacht op de site-servers tot u het proces succesvol heeft afgerond.</label>
-			
+			<label index="tx_fileman_filelist.multi_select_title">Door CTRL of CMD ingedrukt te houden, kunt u meerdere categoriën selecteren of deselecteren.</label>
+			<label index="tx_fileman_filelist.no_search_results">Geen resultaten gevonden.</label>
+			<label index="tx_fileman_filelist.search_placeholder">Zoek op trefwoorden</label>
+			<label index="tx_fileman_filelist.delete_confirm">Weet u zeker dat u dit wilt verwijderen?</label>
 			
 			<label index="tx_fileman_filelist.error_message">Er zijn problemen met de invulling van één of meerdere formulier-velden, welke hieronder staan vermeld met hints om ze te corrigeren. U dient deze te corrigeren en vervolgens het formulier weer te verzenden, voordat het proces voltooid kan worden.</label>
 			<label index="tx_fileman_filelist.validation_errors">De volgende velden vereisen correctie:</label>
@@ -126,6 +155,18 @@
 			<label index="error.file.uploadData.40750133702">U dient een bestand te selecteren om te plaatsen.</label>
 			<label index="error.file.links.40750133703">U mag één geldig URL per rij invullen, of het veld leeglaten.</label>
 			<label index="error.link.linkUri.40750133704">U dient een geldig URL in te vullen.</label>
+			<label index="error.file.category.40750133705">Het bestand dient in minstens 1 categorie plaats te nemen.</label>
+			
+			<label index="tx_fileman_filelist.validate_failed_mimetype">Bestandstype van {fileName} niet toegestaan.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand {fileName} is groter dan het toegestane limiet van {maxFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_totalfilesize">Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.</label>
+			<label index="tx_fileman_filelist.validate_failed_maxfilecount">Probeer niet meer dan {maxFileCount} bestanden tegelijk te plaatsen.</label>
+			<label index="tx_fileman_filelist.drop_zone_text">Versleep bestanden hier naartoe</label>
+			<label index="tx_fileman_filelist.drop_zone_tooltip">Door bestanden hier naartoe te verslepen, worden zij direct geupload. Dit is een eenvoudiger alternatief op het standaard formulier.</label>
+			<label index="tx_fileman_filelist.xhr_retry">Geen verbinding. Poging om te hervatten: elke 30 seconden.</label>
+			<label index="tx_fileman_filelist.xhr_no_progress">Geen upload-voortgang data ontvangen.</label>
+			<label index="tx_fileman_filelist.error_file_transfer">Upload proces gestopt door onbekende fout. Ververs de pagina om het opnieuw te proberen. Als het probleem aanhoudt, neem dan contact op met de webmaster.</label>
+			<label index="tx_fileman_filelist.error_xhr_response">Upload proces verkeerd geconfigureerd. Neem contact op met de webmaster.</label>
 			
 			<label index="tx_fileman_filelist.category_caption">Bestandscategorieën</label>
 			<label index="tx_fileman_filelist.category_summary">Dit is een lijst van bestandscategorieën.</label>
@@ -144,6 +185,8 @@
 			<label index="tx_fileman_domain_model_category">Categorieën</label>
 			<label index="tx_fileman_domain_model_category.title">Categorie</label>
 			<label index="tx_fileman_domain_model_category.description">Omschrijving</label>
+			<label index="tx_fileman_domain_model_category.parent_category">Plaats in categorie:</label>
+			<label index="tx_fileman_domain_model_category.fe_user">Categorie beheerder:</label>
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
 			<label index="tx_fileman_domain_model_link.link_uri">Link</label>

@@ -3,8 +3,9 @@
 
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.edit_file_header" arguments="{s: category.title}" /></h3>
-
-<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+<div class="buttons">
+	<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+</div>
 
 <f:render partial="FormErrors" arguments="{for: 'file'}" />
 
@@ -21,9 +22,9 @@
 		<f:translate key="tx_fileman_domain_model_file.category" />
 		<br />
 		<f:form.select
-			property="category" options="{categories}"
-			optionValueField="uid" optionLabelField="title"
-			multiple="multiple" size="20"
+			options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
+			optionValueField="uid" optionLabelField="title" property="category" 
+			multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
 		/>
 			
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.edit_file_submit')}" class="submit" />

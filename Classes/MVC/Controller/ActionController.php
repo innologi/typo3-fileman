@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 /**
  * Fileman Action Controller.
  *
@@ -48,8 +49,14 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	 * User service
 	 *
 	 * @var Tx_Fileman_Service_UserService
+	 * @inject
 	 */
 	protected $userService;
+
+	/**
+	 * @var Tx_Fileman_Service_SortRepositoryService
+	 */
+	protected $sortRepositoryService;
 
 	/**
 	 * categoryRepository
@@ -58,18 +65,15 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	 */
 	protected $categoryRepository;
 
-
-
 	/**
-	 * Injects the User Service
+	 * Class constructor
 	 *
-	 * @param Tx_Fileman_Service_UserService $userService
 	 * @return void
 	 */
-	public function injectUserService(Tx_Fileman_Service_UserService $userService) {
-		$this->userService = $userService;
+	public function __construct() {
+		parent::__construct();
+		$this->sortRepositoryService = GeneralUtility::makeInstance(ObjectManager::class)->get('Tx_Fileman_Service_SortRepositoryService');
 	}
-
 	/**
 	 * injectCategoryRepository
 	 *
@@ -77,11 +81,10 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	 * @return void
 	 */
 	public function injectCategoryRepository(Tx_Fileman_Domain_Repository_CategoryRepository $categoryRepository) {
-		//default sorting
-		$categoryRepository->setDefaultOrderings(array(
-				'title' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
-		));
 		$this->categoryRepository = $categoryRepository;
+		$this->sortRepositoryService->registerSortableRepository($categoryRepository, [
+			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'title'
+		]);
 	}
 
 
@@ -95,6 +98,7 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 		parent::initializeAction();
 		//get currently logged in user
 		$this->feUser = $this->userService->getCurrentUser();
+		$this->sortRepositoryService->sortRepositories();
 	}
 
 	/**
@@ -139,5 +143,20 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 		}
 	}
 
+	/**
+	 * Sort action
+	 *
+	 * @param string $sorting
+	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @dontvalidate $category
+	 * @ignorevalidation $category
+	 * @return void
+	 */
+	public function sortAction($sorting, Tx_Fileman_Domain_Model_Category $category = NULL) {
+		$this->sortRepositoryService->setSorting($sorting);
+		$this->clearCacheOnError();
+		$arguments = $category === NULL ? [] : [ 'category' => $category ];
+		$this->redirect('list', NULL, NULL, $arguments);
+	}
 }
 ?>

@@ -1,9 +1,8 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -33,5 +32,35 @@
  */
 class Tx_Fileman_Domain_Repository_FrontendUserRepository extends Tx_Fileman_Persistence_NoPersistRepository {
 
+	/**
+	 * Finds possible owners of categories
+	 *
+	 * @param integer $userGroup
+	 * @param Tx_Fileman_Domain_Model_FrontendUser $currentUser
+	 * @param Tx_Fileman_Domain_Model_FrontendUser $currentOwner
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findPossibleOwners($userGroup = 0, Tx_Fileman_Domain_Model_FrontendUser $currentUser = NULL, Tx_Fileman_Domain_Model_FrontendUser $currentOwner = NULL) {
+		$query = $this->createQuery();
+		$query->getQuerySettings()->setRespectStoragePage(FALSE);
+
+		$conditions = array();
+		if ($userGroup > 0) {
+			$conditions[] = $query->contains('usergroup', $userGroup);
+		}
+		if ($currentUser !== NULL) {
+			$conditions[] = $query->equals('uid', $currentUser->getUid());
+		}
+		if ($currentOwner !== NULL) {
+			$conditions[] = $query->equals('uid', $currentOwner->getUid());
+		}
+		if (!empty($conditions)) {
+			$query->matching(
+				$query->logicalOr($conditions)
+			);
+		}
+
+		return $query->execute();
+	}
+
 }
-?>

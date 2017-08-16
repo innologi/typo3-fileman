@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -32,6 +32,14 @@
  *
  */
 class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller_ActionController {
+
+	/**
+	 * FrontendUserRepository
+	 *
+	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
+	 * @inject
+	 */
+	protected $frontendUserRepository;
 
 	/**
 	 * action list
@@ -63,6 +71,14 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	public function newAction(Tx_Fileman_Domain_Model_Category $category = NULL, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
 		$this->view->assign('parentCategory', $parentCategory);
+		$this->view->assign('feUser', $this->feUser);
+		$this->view->assign('users',
+			$this->frontendUserRepository->findPossibleOwners(
+				(int) $this->settings['possibleOwnerGroup'],
+				$this->feUser,
+				($category !== NULL ? $category->getFeUser() : NULL)
+			)
+		);
 	}
 
 	/**
@@ -76,9 +92,12 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * @return void
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
-		$category->setFeUser($this->feUser);
+		if ($category->getFeUser() === NULL) {
+			$category->setFeUser($this->feUser);
+		}
 		if ($parentCategory !== NULL) {
 			$category->addParentCategory($parentCategory);
+			$category->setFeGroup($parentCategory->getFeGroup());
 		}
 		$this->categoryRepository->add($category);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
@@ -104,7 +123,23 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 */
 	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
+
+		// if the user isn't a superUser, categories should be limited to those he owns
+		$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+		$categories = $isSuperUser
+			? $this->categoryRepository->findInRoot($category)
+			: $this->categoryRepository->findByFeUser($this->feUser, $category);
+
+		$this->view->assign('categories', $categories->toArray());
 		$this->view->assign('parentCategory', $parentCategory);
+		$this->view->assign('isSuperUser', $isSuperUser);
+		$this->view->assign('users',
+			$this->frontendUserRepository->findPossibleOwners(
+				(int) $this->settings['possibleOwnerGroup'],
+				$this->feUser,
+				$category->getFeUser()
+			)
+		);
 	}
 
 	/**
@@ -118,6 +153,9 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 * @return void
 	 */
 	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
+		if ($category->getFeUser() === NULL) {
+			$category->setFeUser($this->feUser);
+		}
 		$this->categoryRepository->update($category);
 		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_category_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);

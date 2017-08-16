@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -45,6 +45,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
  	 * @param string $noDocrootAction Target action in case filepath lies outside docroot
 	 * @param array $noDocrootArguments Arguments in case filepath lies outside docroot
 	 * @param string $noDocrootController Target controller in case filepath lies outside docroot. If NULL current controllerName is used
+	 * @param integer $pageUid Target page
 	 * @return string
 	 */
 	public function render($fileUri, $title = NULL, $noDocrootAction = NULL, array $noDocrootArguments = NULL, $noDocrootController = NULL) {
@@ -58,8 +59,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 			//since the file isn't accessible from docroot, we need to feed the file through a specialized download action
 			$uriBuilder = $this->controllerContext->getUriBuilder();
 			//after a quick look @ Tx_Fluid_ViewHelpers_Link_ActionViewHelper..
-			$uri = $uriBuilder
-				->reset()
+			$uri = $uriBuilder->reset()
 				->setUseCacheHash(FALSE)
 				->setCreateAbsoluteUri(TRUE)
 				->uriFor($noDocrootAction, $noDocrootArguments, $noDocrootController);
@@ -83,7 +83,7 @@ class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends Tx_Fluid_Core_ViewH
 
 		//filepath is relative to document root
 		#$appendUrl = $siteUrl.$filepath;
-		$appendUrl = $siteURL.'uploads/tx_fileman/'.$filepath; #@LOW might as well do it static right now
+		$appendUrl = /*$siteUrl.*/'uploads/tx_fileman/'.$filepath; #@LOW might as well do it static right now
 		if (is_file($appendUrl)) {
 			return $appendUrl;
 		}

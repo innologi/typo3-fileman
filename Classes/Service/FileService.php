@@ -2,7 +2,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -22,7 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Facilitates all file-upload interaction.
  *
@@ -31,12 +31,34 @@
  *
  */
 class Tx_Fileman_Service_FileService implements t3lib_Singleton {
-	#@TODO doc
-	//$_FILES property names
-	protected $ext = 'tx_fileman_filelist'; //ext_plugin name
-	protected $storage = 'files'; //storage name
-	protected $instance = 'file'; //instance name
-	protected $property = 'uploadData'; //property name
+
+	/**
+	 * $_FILES ext_plugin name
+	 *
+	 * @var string
+	 */
+	protected $ext = 'tx_fileman_filelist';
+
+	/**
+	 * $_FILES storage name
+	 *
+	 * @var string
+	 */
+	protected $storage = 'files';
+
+	/**
+	 * $_FILES instance name
+	 *
+	 * @var string
+	 */
+	protected $instance = 'file';
+
+	/**
+	 * $_FILES property name
+	 *
+	 * @var string
+	 */
+	protected $property = 'uploadData';
 
 	/**
 	 * Current $_FILES position
@@ -63,19 +85,9 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * Performs some basic file functions
 	 *
 	 * @var t3lib_basicFileFunctions
+	 * @inject
 	 */
 	protected $fileFunctions;
-
-	/**
-	 * Injects basicFileFunctions
-	 *
-	 * @param t3lib_basicFileFunctions $fileFunctions
-	 * @return void
-	 */
-	public function injectFileFunctions(t3lib_basicFileFunctions $fileFunctions) {
-		$this->fileFunctions = $fileFunctions;
-	}
-
 
 
 	/**
@@ -105,9 +117,9 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 	 * @return void
 	 */
 	public function findSubstitutes() {
-		#@FIX we shouldn't use $_POST..
-		if (isset($_POST[$this->ext]['tmpFiles']) && !$this->searchedForSubtitutes) {
-			$tmpNames = $_POST[$this->ext]['tmpFiles'];
+		$postData = GeneralUtility::_POST($this->ext);
+		if (isset($postData['tmpFiles']) && !$this->searchedForSubtitutes) {
+			$tmpNames = $postData['tmpFiles'];
 			//files once uploaded, have been moved to said location to prevent them from being deleted after the upload script execution
 			$tmpDir = ini_get('upload_tmp_dir') ? ini_get('upload_tmp_dir') : sys_get_temp_dir();
 			$tmpDir = rtrim(t3lib_div::fixWindowsFilePath($tmpDir), '/') . '/' . $this->ext . '/';
@@ -141,6 +153,17 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 			}
 		}
 		return FALSE;
+	}
+
+	/**
+	 * Delete the file at the current index
+	 *
+	 * @return boolean
+	 */
+	public function removeFile() {
+		return isset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance][$this->index][$this->property][0])
+			&& is_file($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance][$this->index][$this->property])
+			&& unlink($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance][$this->index][$this->property]);
 	}
 
 	/**
@@ -241,8 +264,18 @@ class Tx_Fileman_Service_FileService implements t3lib_Singleton {
 				$tmpFile = $file->getTmpFile();
 				$finalPath = $this->fileFunctions->getUniqueName($fileName, $absDirPath);
 				//file might have been renamed because of duplicate
-				$file->setFileUri(basename($finalPath)); #@TODO godver de godver de godver, TCA group verwacht hier de filename, niet het pad! dus voor nu aangepast
+				$file->setFileUri(basename($finalPath));
 				$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
+				if (!success) {
+					$success = copy($tmpFile, $finalPath);
+					try {
+						unlink($tmpFile);
+					} catch (\Exception $e) {
+						// @LOW log?
+					}
+				}
+				// otherwise, permissions might end up non-consistent
+				GeneralUtility::fixPermissions($finalPath);
 				return $success;
 			}
 		}

@@ -3,7 +3,7 @@
  *  Copyright notice
  *
  *	(c) 2010-2013 Extbase Team (http://forge.typo3.org/projects/typo3v4-mvc)
- *  (c) 2012-2014 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2014 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *  Extbase is a backport of TYPO3 Flow. All credits go to the TYPO3 Flow team.
  *  All rights reserved
  *
@@ -115,12 +115,12 @@ class Tx_Fileman_Validation_ValidatorResolver extends Tx_Extbase_Validation_Vali
 					continue;
 				}
 				try {
-					$parsedType = \TYPO3\CMS\Extbase\Utility\TypeHandlingUtility::parseType(trim(implode('', $classPropertyTagsValues['var']), ' \\'));
+					/*$parsedType = */\TYPO3\CMS\Extbase\Utility\TypeHandlingUtility::parseType(trim(implode('', $classPropertyTagsValues['var']), ' \\'));
 				} catch (\TYPO3\CMS\Extbase\Utility\Exception\InvalidTypeException $exception) {
 					throw new \InvalidArgumentException(sprintf(' @var annotation of ' . $exception->getMessage(), 'class "' . $targetClassName . '", property "' . $classPropertyName . '"'), 1315564744, $exception);
 				}
-				$propertyTargetClassName = $parsedType['type'];
-				/*if (\TYPO3\CMS\Extbase\Utility\TypeHandlingUtility::isCollectionType($propertyTargetClassName) === TRUE) {
+				/*$propertyTargetClassName = $parsedType['type'];
+				if (\TYPO3\CMS\Extbase\Utility\TypeHandlingUtility::isCollectionType($propertyTargetClassName) === TRUE) {
 				 $collectionValidator = $this->createValidator('TYPO3\CMS\Extbase\Validation\Validator\CollectionValidator', array('elementType' => $parsedType['elementType'], 'validationGroups' => $validationGroups));
 				$objectValidator->addPropertyValidator($classPropertyName, $collectionValidator);
 				} elseif (class_exists($propertyTargetClassName) && !\TYPO3\CMS\Extbase\Utility\TypeHandlingUtility::isCoreType($propertyTargetClassName) && $this->objectManager->isRegistered($propertyTargetClassName) && $this->objectManager->getScope($propertyTargetClassName) === \TYPO3\CMS\Extbase\Object\Container\Container::SCOPE_PROTOTYPE) {
@@ -150,7 +150,7 @@ class Tx_Fileman_Validation_ValidatorResolver extends Tx_Extbase_Validation_Vali
 					// @todo: Respect validationGroups
 					$newValidator = $this->createValidator($validateAnnotation['validatorName'], $validateAnnotation['validatorOptions']);
 					if ($newValidator === NULL) {
-						throw new Exception\NoSuchValidatorException('Invalid validate annotation in ' . $targetClassName . '::' . $classPropertyName . ': Could not resolve class name for  validator "' . $validateAnnotation->type . '".', 1241098027);
+						throw new \TYPO3\CMS\Extbase\Validation\Exception\NoSuchValidatorException('Invalid validate annotation in ' . $targetClassName . '::' . $classPropertyName . ': Could not resolve class name for  validator "' . $validateAnnotation->type . '".', 1241098027);
 					}
 					$objectValidator->addPropertyValidator($classPropertyName, $newValidator);
 				}

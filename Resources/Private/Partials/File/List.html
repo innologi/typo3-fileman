@@ -1,0 +1,38 @@
+{namespace fi=Tx_Fileman_ViewHelpers}
+<tr>
+	<th scope="col"><f:translate key="tx_fileman_domain_model_file.upload_data" /></th>
+	<th scope="col"><f:translate key="tx_fileman_domain_model_file.description" /></th>
+</tr>
+
+<f:for each="{files}" as="file">
+	
+	<tr>
+		<td class="file">
+			<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file: file}">
+				{file.alternateTitle}
+			</fi:link.download>
+			<f:if condition="{isSuperUser}">
+				<f:link.action action="edit" arguments="{file: file, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+				<fi:form enctype="multipart/form-data" method="post" action="delete" object="{file}" objectName="file" class="delete-form one-button-form" arguments="{category: category}" syncToken="TRUE" absolute="TRUE">
+					<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
+				</fi:form>
+			</f:if>
+				
+			<f:if condition="{file.links}">
+			<f:then>
+				<a href="#" class="rel-switch">&nbsp;</a>
+				<div class="rel-links">
+					<span class="rel-links-header"><f:translate key="tx_fileman_domain_model_file.links" /></span>
+					<ol>
+						<f:for each="{file.linksFormatted}" as="link">
+							<li><f:link.external uri="{link}">{link}</f:link.external></li>
+						</f:for>
+					</ol>
+				</div>
+			</f:then>
+			</f:if>
+		</td>
+		<td class="description">{file.description}</td>
+	</tr>
+ 	
+</f:for>

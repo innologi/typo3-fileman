@@ -8,8 +8,11 @@ $TCA['tx_fileman_domain_model_category'] = array(
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, sub_category, file, link, parent_category, fe_user',
 	),
-	'types' => array( #@TODO add div for content (file, link)
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,sub_category,file,link,parent_category,fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime'),
+	'types' => array(
+		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, title, description,parent_category,fe_user,
+			--div--;LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tca_tab_content,sub_category,file,link,
+			--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime,endtime,fe_group'
+		),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -93,6 +96,32 @@ $TCA['tx_fileman_domain_model_category'] = array(
 				),
 			),
 		),
+		'fe_group' => array(
+			'exclude' => 1,
+			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.fe_group',
+			'config' => array(
+				'type' => 'select',
+				'size' => 7,
+				'maxitems' => 20,
+				'items' => array(
+					array(
+						'LLL:EXT:lang/locallang_general.xlf:LGL.hide_at_login',
+						-1
+					),
+					array(
+						'LLL:EXT:lang/locallang_general.xlf:LGL.any_login',
+						-2
+					),
+					array(
+						'LLL:EXT:lang/locallang_general.xlf:LGL.usergroups',
+						'--div--'
+					)
+				),
+				'exclusiveKeys' => '-1,-2',
+				'foreign_table' => 'fe_groups',
+				'foreign_table_where' => 'ORDER BY fe_groups.title'
+			)
+		),
 		'title' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.title',
@@ -125,7 +154,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'sub_category' => array(
 			'exclude' => 0,
-			'label' => 'Subcategories', #@TODO llang
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.sub_category',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_category',
@@ -162,7 +191,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'file' => array(
 			'exclude' => 0,
-			'label' => 'Files', #@TODO llang
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.file',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_file',
@@ -199,7 +228,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'link' => array(
 			'exclude' => 0,
-			'label' => 'Links', #@TODO llang
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.link',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_link',
@@ -236,7 +265,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 		'parent_category' => array(
 			'exclude' => 0,
-			'label' => 'Parent categories',
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_category.parent_category',
 			'config' => array(
 				'type' => 'select',
 				'foreign_table' => 'tx_fileman_domain_model_category',

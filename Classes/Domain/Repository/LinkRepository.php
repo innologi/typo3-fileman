@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -47,5 +47,28 @@ class Tx_Fileman_Domain_Repository_LinkRepository extends Tx_Extbase_Persistence
 		return $result;
 	}
 
+	/**
+	 * Returns all objects that match all search terms
+	 *
+	 * @param array $searchTerms
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function search(array $searchTerms) {
+		$query = $this->createQuery();
+
+		$conditions = array();
+		foreach ($searchTerms as $searchTerm) {
+			$searchTerm = '%' . $searchTerm . '%';
+			$conditions[] = $query->logicalOr(array(
+				$query->like('link_uri', $searchTerm, FALSE),
+				$query->like('link_name', $searchTerm, FALSE),
+				$query->like('description', $searchTerm, FALSE),
+			));
+		}
+
+		return $query->matching(
+			$query->logicalAnd($conditions)
+		)->execute();
+	}
+
 }
-?>

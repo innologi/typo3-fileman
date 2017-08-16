@@ -7,7 +7,39 @@
      </TCEforms>
      <type>array</type>
      <el>
-      <settings.suGroup>
+      <settings.enableSearch>
+			<TCEforms>
+				<label>Enable Search</label>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.enableSearch>
+		<settings.searchTypes>
+			<TCEforms>
+				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_searchTypes</label>
+				<config>
+					<type>select</type>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="0">Categories</numIndex>
+							<numIndex index="1">0</numIndex>
+						</numIndex>
+						<numIndex index="1" type="array">
+							<numIndex index="0">Files</numIndex>
+							<numIndex index="1">1</numIndex>
+						</numIndex>	
+						<numIndex index="2" type="array">
+							<numIndex index="0">Links</numIndex>
+							<numIndex index="1">2</numIndex>
+						</numIndex>
+					</items>
+					<maxitems>999</maxitems>
+					<size>3</size>
+				</config>
+			</TCEforms>
+		</settings.searchTypes>
+		<settings.suGroup>
 			<TCEforms>
 				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_suGroup</label>
 				<config>

@@ -13,12 +13,9 @@ $pluginSignature = str_replace('_','',$_EXTKEY) . '_filelist';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 t3lib_extMgm::addPiFlexFormValue($pluginSignature, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/flexform_filelist.xml');
 
-#@FIX it seems files don't get consistent chmod permissions, e.g. mp3 got 644, but gz got 600. Can we listen to TYPO3Conf for this?
-#@FIX clean up constants
 #@TODO documenteer pageTS TCEMAIN.clearCacheCmd = pid
 #@TODO namespaces?
 #@TODO what about FAL?
-#@TODO what about system categories instead? is that an option?
 #@TODO locallang_csh_tx_fileman_domain_model_link.xml
 
 t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'File Manager');
@@ -46,6 +43,7 @@ $TCA['tx_fileman_domain_model_file'] = array(
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
+			'fe_group' => 'fe_group'
 		),
 		'searchFields' => 'filename,file_uri,alternate_title,description,category,links,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/File.php',
@@ -75,6 +73,7 @@ $TCA['tx_fileman_domain_model_category'] = array(
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
+			'fe_group' => 'fe_group'
 		),
 		'searchFields' => 'title,description,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Category.php',
@@ -105,6 +104,7 @@ $TCA['tx_fileman_domain_model_link'] = array(
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
+			'fe_group' => 'fe_group'
 		),
 		'searchFields' => 'link_uri,link_name,description,',
 		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Link.php',

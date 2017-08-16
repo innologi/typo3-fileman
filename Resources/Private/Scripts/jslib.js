@@ -11,19 +11,96 @@
 
 jQuery(document).ready(function() {
 
+	var $fileman = jQuery('.tx-fileman');
+
+
+	//*****************
+	// Search features
+	//*****************
+
+	var $searchBox = $fileman.find('.search-form .searchbox');
+
+	if ($searchBox[0]) {
+		var searchWidth = $searchBox.width(),
+			searchTerms = $searchBox[0].value.trim();
+
+		if ($searchBox.val().length > 0) {
+			$searchBox.css({
+				width: '85%'
+			});
+		}
+		$searchBox.on('focus', function() {
+			if (this.value.length < 1) {
+				jQuery(this).animate({
+					width: '85%'
+				});
+			}
+		});
+		$searchBox.on('blur', function() {
+			if (this.value.length < 1) {
+				jQuery(this).animate({
+					width: searchWidth
+				});
+			}
+		});
+
+		if (searchTerms.length > 0) {
+			// split search terms
+			searchTerms = searchTerms.split(' ');
+
+			// remove empty elements (i.e. due to double spaces)
+			for (var i in searchTerms) {
+				if (searchTerms.hasOwnProperty(i)) {
+					if (searchTerms[i].length < 1) {
+						searchTerms.splice(i, 1);
+					}
+				}
+			}
+
+			// create Regexp pattern from searchterms, incl. negative lookbehind to NOT match anything part of an HTML tag
+			var pattern = new RegExp('(' + searchTerms.join('|') + ')(?![^<]*>|[^<>]<\/)', 'ig');
+
+			// replace each match with itself wrapped in a span for styling
+			$fileman.find('table.tx_fileman').each(function(i, table) {
+				var $obj = jQuery(table),
+					replacement = '<span class="search-match">$1</span>';
+				// note that this replacement would destroy event handlers, hence this feature must be applied before all others
+				$obj.html($obj.html().replace(pattern, replacement));
+			});
+		}
+	}
+
+
 	//***********************
 	// Hidden Field Switcher
 	//***********************
 
 	//click function toggles unhide class on all relevant elements
-	jQuery('.tx-fileman .rel-switch').click(function() {
+	var $switches = $fileman.find('.rel-switch');
+	$switches.click(function() {
 		jQuery(this).next('.tx-fileman .rel-links').slideToggle();
 		return false;
 	});
 
 	//by default all is unhidden (in case of no js-support), force once to set initial state hidden
-	jQuery('.tx-fileman .rel-switch').show();
-	jQuery('.tx-fileman .rel-links').hide();
+	$switches.show();
+	$fileman.find('.rel-links').hide();
+
+
+
+	//*********************
+	// Delete Confirmation
+	//*********************
+
+	//click function performs a confirm, if TRUE/OK continues button functionality
+	$fileman.find('.button-delete').click(function(e) {
+		if(confirm('###DELETE_CONFIRM###')) {
+			return true;
+		} else {
+			e.stopImmediatePropagation();
+			return false;
+		};
+	});
 
 
 
@@ -31,7 +108,7 @@ jQuery(document).ready(function() {
 	// Auto fill title
 	//*****************
 
-	jQuery('.tx-fileman .file-entry').each(function(i, entry) {
+	$fileman.find('.file-entry').each(function(i, entry) {
 		initAutoFill(entry);
 	});
 
@@ -43,21 +120,23 @@ jQuery(document).ready(function() {
 
 	//will auto-fill title only if title wasn't fiddled with manually
 	function initAutoFill(entry) {
-		var title = jQuery(entry).find('.optional .textinput:first');
+		var $entry = jQuery(entry),
+			$title = $entry.find('.optional .textinput:first');
 		//setting the var as data, so we can change it when cloned later on
-		jQuery(entry).data('titleUnchanged',true);
+		$entry.data('titleUnchanged',true);
 		//if anything was put in title manually, change the boolean
-		title.keyup(function() {
-			jQuery(entry).data('titleUnchanged',false);
+		$title.keyup(function() {
+			$entry.data('titleUnchanged',false);
 		});
 		//copy the fileupload val to title IF title remains untouched
-		jQuery(entry).find('.fileupload').change(function() {
-			if (jQuery(entry).data('titleUnchanged')) {
+		$entry.find('.fileupload').change(function() {
+			if ($entry.data('titleUnchanged')) {
 				//depending on the browser, you might get more than the filename, so we do basename()
-				title.val(basename(jQuery(this).val()));
+				$title.val(basename(jQuery(this).val()));
 			}
 		});
 	}
+
 
 
 	//*********************
@@ -68,14 +147,15 @@ jQuery(document).ready(function() {
 	var upload_id_gen = '' + new Date().getTime() + Math.random();
 	upload_id_gen = upload_id_gen.replace('.','');
 	//contains interval return values for use by clearInterval
-	var updateProgressInt = {};
-	var apcFieldName = "###APC_FIELD_NAME###";
-	var sesFieldName = "###SES_FIELD_NAME###";
-	var sendingFileText = "###SENDING_FILE###";
-	var debug = "###DEBUG###";
-	var progressType = "###UPLOADPROGRESS###",
+	var updateProgressInt = {},
+		apcFieldName = '###APC_FIELD_NAME###',
+		sesFieldName = '###SES_FIELD_NAME###',
+		sendingFileText = '###SENDING_FILE###',
+		debug = '###DEBUG###',
+		progressType = '###UPLOADPROGRESS###',
 		uploadType = '###UPLOADTYPE###',
 		uploadQueue = [],
+		xhrUploadEnabled = false,
 		xhrUploadDone = false,
 		allowMimeType = '###ALLOW_MIMETYPE###',
 		maxFileSize = parseInt('###MAX_FILESIZE###'),
@@ -84,7 +164,8 @@ jQuery(document).ready(function() {
 		totalSize = 0,
 		totalSizeHR = '',
 		uploadedSize = 0,
-		chunkSize = parseInt('###CHUNKSIZE###');
+		chunkSize = parseInt('###CHUNKSIZE###'),
+		$progress = null;
 
 	if (chunkSize < 1) {
 		// 1 MB default
@@ -94,11 +175,75 @@ jQuery(document).ready(function() {
 
 	if (window.File) {
 
-		jQuery('.tx-fileman form').on('change', 'input[type=file].fileupload', function(e) {
-			var $upload = jQuery(this),
-				name = $upload.attr('name');
-			if (this.files[0]) {
-				var file = this.files[0];
+		$fileman.find('form').on('change', 'input[type=file].fileupload', function(e) {
+			var $upload = jQuery(this);
+			if (!validateFiles(this.files, $upload, $upload.attr('name'))) {
+				return false;
+			}
+		});
+
+		if (window.FileReader) {
+			initXhrUpload();
+		}
+	}
+
+	if (uploadType === 'js' || progressType != 'none') {
+
+		$fileman.find('.init-progressbar').each(function(i, form) {
+			i++;
+			var $form = jQuery(form);
+			$form.after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
+
+			if (uploadType !== 'js') {
+				var upload_id = i + upload_id_gen;
+				if (progressType == 'session') {
+					$form.prepend('<input type="hidden" name="'+sesFieldName+'" value="' + upload_id + '" />');
+				} else if (progressType == 'apc') {
+					$form.prepend('<input type="hidden" name="'+apcFieldName+'" value="' + upload_id + '" />');
+				} else if (progressType == 'uploadprogress') {
+					$form.prepend('<input type="hidden" name="UPLOAD_IDENTIFIER" value="' + upload_id + '" />');
+				}
+
+				$form.on('submit', function(e) {
+					// fileuploadValue will only be empty if none of the fileupload fields have a value
+					var fileuploadValue = $form.find('input[type=file].fileupload').val();
+					// only show the progressbar if fileupload is not empty
+					if (fileuploadValue !== undefined && fileuploadValue !== '') {
+						$form.hide();
+						$fileman.find('#fileman-uploadProgress'+i).show();
+
+						updateProgressInt[i] = setInterval(function() {
+							updateProgress(upload_id,i);
+						}, 100);
+						updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here
+					}
+				});
+			}
+		});
+	}
+
+	/**
+	 * Validates a number of upload files
+	 *
+	 * @param files FileList or array containing files
+	 * @param $upload jQuery object of upload field
+	 * @param basename Base of field name
+	 * @return boolean
+	 */
+	function validateFiles(files, $upload, basename) {
+		// start with no errors
+		if ($upload.hasClass('file-checker-error')) {
+			$upload.removeClass('f3-form-error file-checker-error');
+			$upload.parent('label').prev('.typo3-messages').remove();
+		}
+
+		// by default, this method is only called with 1 file, so set a default name based on that
+		var name = basename + 0,
+			error = false;
+		if (files.length > 0) {
+			for (var i=0; i < files.length; i++) {
+				var file = files[i];
+				name = basename + i;
 
 				// filter on mime types
 				if (allowMimeType.length > 0) {
@@ -109,11 +254,10 @@ jQuery(document).ready(function() {
 					if (!validateField(
 						$upload,
 						!filter.test(testFileType),
-						'File type denied: ' + file.type,
-						// @TODO llang
-						'Bestandstype niet toegestaan.'
+						'File type denied for \'' + file.name + '\': ' + file.type,
+						'###VALID_FAIL_MIMETYPE###'.replace('{fileName}', file.name)
 					)) {
-						return;
+						error = true;
 					}
 				}
 
@@ -122,79 +266,41 @@ jQuery(document).ready(function() {
 					if (!validateField(
 						$upload,
 						file.size > maxFileSize,
-						'File size ' + file.size + ' exceeds set limit: ' + maxFileSize,
-						// @TODO llang
-						'Bestand is groter dan het toegestane limiet van {maxFileSize}.'.replace('{maxFileSize}', bytesToSize(maxFileSize))
+						'File size ' + file.size + ' of \'' + file.name + '\' exceeds set limit: ' + maxFileSize,
+						'###VALID_FAIL_MAXFILESIZE###'.replace('{maxFileSize}', bytesToSize(maxFileSize)).replace('{fileName}', file.name)
 					)) {
-						return;
+						error = true;
 					}
 				}
 
 				fileSizes[name] = file.size;
-			} else if (fileSizes.hasOwnProperty(name)) {
-				delete fileSizes[name];
 			}
-
-			totalSize = 0;
-			for (var i in fileSizes) {
-				if (fileSizes.hasOwnProperty(i)) {
-					totalSize += fileSizes[i];
-				}
-			}
-			totalSizeHR = bytesToSize(totalSize);
-
-			// total file size limit
-			if (maxTotalFileSize > 0) {
-				if (!validateField(
-					$upload,
-					totalSize > maxTotalFileSize,
-					'Total file size ' + totalSize + ' exceeds set limit: ' + maxTotalFileSize,
-					// @TODO llang
-					'Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.'.replace('{maxTotalFileSize}', bytesToSize(maxTotalFileSize))
-				)) {
-					return;
-				}
-			}
-
-		});
-
-		if (window.FileReader) {
-			initXhrUpload();
+		} else if (fileSizes.hasOwnProperty(name)) {
+			delete fileSizes[name];
 		}
-	}
 
-	if (uploadType === 'js' || progressType != 'none') {
-
-		jQuery('.tx-fileman .init-progressbar').each(function(i, form) {
-			i++;
-			jQuery(form).after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
-
-			if (uploadType !== 'js') {
-				var upload_id = i + upload_id_gen;
-				if (progressType == 'session') {
-					jQuery(form).prepend('<input type="hidden" name="'+sesFieldName+'" value="' + upload_id + '" />');
-				} else if (progressType == 'apc') {
-					jQuery(form).prepend('<input type="hidden" name="'+apcFieldName+'" value="' + upload_id + '" />');
-				} else if (progressType == 'uploadprogress') {
-					jQuery(form).prepend('<input type="hidden" name="UPLOAD_IDENTIFIER" value="' + upload_id + '" />');
-				}
-
-				jQuery(form).on('submit', function(e) {
-					// fileuploadValue will only be empty if none of the fileupload fields have a value
-					var fileuploadValue = jQuery(this).find('input[type=file].fileupload').val();
-					// only show the progressbar if fileupload is not empty
-					if (fileuploadValue !== undefined && fileuploadValue !== '') {
-						jQuery(this).hide();
-						jQuery('.tx-fileman #fileman-uploadProgress'+i).show();
-
-						updateProgressInt[i] = setInterval(function() {
-							updateProgress(upload_id,i);
-						}, 100); //@TODO: should be configurable
-						updateProgress(upload_id,i); //the interval runs only AFTER its interval, so we run it at the start here
-					}
-				});
+		// recalculate total size on any fileupload change
+		totalSize = 0;
+		for (var i in fileSizes) {
+			if (fileSizes.hasOwnProperty(i)) {
+				totalSize += fileSizes[i];
 			}
-		});
+		}
+		totalSizeHR = bytesToSize(totalSize);
+
+		// total file size limit
+		if (maxTotalFileSize > 0) {
+			if (!validateField(
+				$upload,
+				totalSize > maxTotalFileSize,
+				'Total file size ' + totalSize + ' exceeds set limit: ' + maxTotalFileSize,
+				'###VALID_FAIL_TOTFILESIZE###'.replace('{maxTotalFileSize}', bytesToSize(maxTotalFileSize))
+			)) {
+				error = true;
+			}
+		}
+
+		return !error;
 	}
 
 	/**
@@ -211,22 +317,22 @@ jQuery(document).ready(function() {
 			console.log(consoleMsg);
 			$upload.val(null);
 			$upload.addClass('f3-form-error file-checker-error');
-
-			var $label = $upload.parent('label'),
-				$errorMsg = $label.prev('.typo3-messages').find('.typo3-message');
-			if ($errorMsg[0]) {
-				$errorMsg.text(errorMsg);
-			} else {
-				$label.before('<div class="typo3-messages"><div class="typo3-message message-error">' + errorMsg + '</div></div>');
-			}
+			errorMessage(errorMsg, $upload.parent('label'));
 			return false;
-		} else {
-			if ($upload.hasClass('file-checker-error')) {
-				$upload.removeClass('f3-form-error file-checker-error');
-				$upload.parent('label').prev('.typo3-messages').remove();
-			}
 		}
 		return true;
+	}
+
+	// produce visual TYPO3-like errormessage
+	function errorMessage(errorMsg, $elemAfter) {
+		errorMsg = '<div class="typo3-message message-error">' + errorMsg + '</div>';
+
+		var $errors = $elemAfter.prev('.typo3-messages');
+		if ($errors[0]) {
+			$errors.append(errorMsg);
+		} else {
+			$elemAfter.before('<div class="typo3-messages">' + errorMsg + '</div>');
+		}
 	}
 
 	/**
@@ -261,25 +367,27 @@ jQuery(document).ready(function() {
 	}
 
 
-	//@TODO: url should be set from TS, no cache should not be necessary once headers in script are set
+	//@TODO url should be set from TS, no cache should not be necessary once headers in script are set
 	//updates progress in progress bar
 	function updateProgress(id,i) {
 		jQuery.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random(), type: progressType}, function(data) {
 			//@TODO: catch script errors
-			var uploaded = parseInt(data);
+			var uploaded = parseInt(data),
+				$progress = $fileman.find('#fileman-uploadProgress'+i),
+				$progressValue = $progress.find('.progressvalue');
 			if (debug == '1' && isNaN(uploaded)) {
-				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').html('Not receiving upload-progress status: '+data);
+				$progressValue.html('Not receiving upload-progress status: '+data);
 			} else {
-				jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar').css({
+				$progress.find('.progressbar').css({
 					'width': uploaded + '%'
 				});
 				if (uploaded == 100) {
 					clearInterval(updateProgressInt[i]);
 					//because the request won't be really "done" at the same time the file is received, we display 99% to indicate a still unfinished state
 					//this way, the user never sees 100% and is (hopefully) not tempted to do something that breaks the process too early
-					jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text(sendingFileText+' 99%');
+					$progressValue.text(sendingFileText+' 99%');
 				} else {
-					jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue').text(sendingFileText+' '+uploaded+'%');
+					$progressValue.text(sendingFileText+' '+uploaded+'%');
 				}
 			}
 		});
@@ -292,7 +400,7 @@ jQuery(document).ready(function() {
 	 */
 	function initXhrUpload() {
 		if (uploadType === 'js') {
-			jQuery('.tx-fileman .init-progressbar').each(function(i, form) {
+			$fileman.find('.init-progressbar').each(function(i, form) {
 				i++;
 				jQuery(form).on('submit', function(e) {
 					if (!xhrUploadDone) {
@@ -303,6 +411,7 @@ jQuery(document).ready(function() {
 					}
 				});
 			});
+			xhrUploadEnabled = true;
 		}
 	}
 
@@ -314,10 +423,14 @@ jQuery(document).ready(function() {
 	 * @return void
 	 */
 	function xhrUploadFiles(form, index) {
-		var previouslyUploaded = 0;
-		jQuery('.fileupload', form).each(function(i, upload) {
-			var $upload = jQuery(upload);
-			i++;
+		var previouslyUploaded = 0,
+			$form = jQuery(form);
+
+		$form.find('.fileupload').each(function(i, upload) {
+			var $upload = jQuery(upload),
+				// the reason we can't just use i+1, is because of the delFileEntry button capable of
+					// producing a non-succeeding index count
+				uIndex = getIndex($upload);
 			if (
 				// these are needed to cover every circumstance for every single browser (read: IE)
 				upload.files !== undefined && upload.files !== null && upload.files.length > 0
@@ -326,8 +439,7 @@ jQuery(document).ready(function() {
 			) {
 				uploadQueue.push({
 					file: upload.files[0],
-					formIndex: index,
-					uploadIndex: i,
+					uploadIndex: uIndex,
 					form: form
 				});
 			} else {
@@ -340,24 +452,26 @@ jQuery(document).ready(function() {
 
 			if (uploadQueue.length > 0) {
 				$upload.after(
-					'<input type="text" name="tx_fileman_filelist[files][file][i' + i + '][fileUri]" readonly="readonly" class="fileupload fill-' + i + '" value="" />' +
-					'<input type="hidden" name="tx_fileman_filelist[tmpFiles][i' + i + ']" class="tmpfile fill-' + i + '" value="" />'
+					'<input type="text" name="tx_fileman_filelist[files][file][i' + uIndex + '][fileUri]" readonly="readonly" class="fileupload fill-' + uIndex + '" value="" />' +
+					'<input type="hidden" name="tx_fileman_filelist[tmpFiles][i' + uIndex + ']" class="tmpfile fill-' + uIndex + '" value="" />'
 				);
 				// disable the original file upload
 				$upload.remove();
 			}
 		});
 
+
 		if (uploadQueue.length > 0) {
-			jQuery(form).hide();
-			jQuery('.tx-fileman #fileman-uploadProgress'+index).show();
+			$form.hide();
+			$progress = $fileman.find('#fileman-uploadProgress'+index);
+			$progress.show();
 
 			var first = uploadQueue.shift();
-			xhrUploadFileInChunks(first.file, first.formIndex, first.uploadIndex, first.form);
+			xhrUploadFileInChunks(first.file, first.uploadIndex, first.form);
 		} else if (previouslyUploaded > 0) {
 			// if there are no upload-files, but there are previously uploaded files, submit the form as normal
 			xhrUploadDone = true;
-			jQuery(form).submit();
+			$form.submit();
 		}
 	}
 
@@ -365,12 +479,11 @@ jQuery(document).ready(function() {
 	 * Upload a file in chunks via XHR mechanism
 	 *
 	 * @param file
-	 * @param i Form index
 	 * @param j Uploadfield index
 	 * @param form
 	 * @return void
 	 */
-	function xhrUploadFileInChunks(file, i, j, form) {
+	function xhrUploadFileInChunks(file, j, form) {
 		var reader = new FileReader(),
 			xhr = new XMLHttpRequest(),
 			startByte = 0,
@@ -405,6 +518,7 @@ jQuery(document).ready(function() {
 					console.log(response);
 				}
 
+				// @TODO log succesful / failed transfers?
 				if (response.success && response.success === 1) {
 					if (response.tmp_name) {
 						filename = response.tmp_name;
@@ -419,36 +533,43 @@ jQuery(document).ready(function() {
 							file.slice(startByte, endByte)
 						);
 					} else {
-						// @TODO log succesful transfer?
-						jQuery('.tmpfile.fill-' + j, form).val(filename);
-						jQuery('.fileupload.fill-' + j, form).val(file.name);
+						var $form = jQuery(form);
+						$form.find('.tmpfile.fill-' + j).val(filename);
+						$form.find('.fileupload.fill-' + j).val(file.name);
+
 						var next = uploadQueue.shift();
 						if (next === undefined) {
 							xhrUploadDone = true;
-							jQuery(form).submit();
+							$form.submit();
 						} else {
-							xhrUploadFileInChunks(next.file, next.formIndex, next.uploadIndex, next.form);
+							xhrUploadFileInChunks(next.file, next.uploadIndex, next.form);
 						}
 					}
 					return;
+				} else {
+					console.log('ERROR: File transfer failure');
+					errorMessage('###ERROR_FILE_TRANSFER###', $progress);
+					return;
 				}
 			} else {
-				// @TODO what if an error occurred, something visual?
 				console.log('ERROR: No valid XHR response');
-				console.log(e);
+				errorMessage('###ERROR_XHR_RESPONSE###', $progress);
+				if (debug == '1') {
+					console.log(e);
+				}
+				return;
 			}
 		}, false);
 		xhr.addEventListener('error', function(e) {
 			console.log('ERROR: No connection, retrying in 30 seconds');
-			var $progressVal = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue');
-			$progressVal.text('Geen verbinding. Poging om te hervatten: elke 30 seconden.');
+			$progress.find('.progressvalue').text('###XHR_RETRY###');
 			setTimeout(function() {
-				xhrUploadFileInChunks(file, i, j, form);
+				xhrUploadFileInChunks(file, j, form);
 			}, 30000);
 		}, false);
 		xhr.upload.addEventListener('progress', function(e) {
-			var $progressVal = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressvalue'),
-				$progressBar = jQuery('.tx-fileman #fileman-uploadProgress'+i+' .progressbar');
+			var $progressVal = $progress.find('.progressvalue'),
+				$progressBar = $progress.find('.progressbar');
 			if ($progressVal[0] && $progressBar[0]) {
 				if (e.lengthComputable) {
 					var uploadedBytes = uploadedSize + e.loaded,
@@ -474,7 +595,7 @@ jQuery(document).ready(function() {
 						uploadedSize += e.total;
 					}
 				} else if (debug == '1') {
-					$progressVal.html('Not receiving upload-progress status.');
+					$progressVal.html('###XHR_NO_PROGRESS###');
 				}
 			}
 		}, false);
@@ -488,115 +609,122 @@ jQuery(document).ready(function() {
 	}
 
 
-
 	//**********************
 	// Multi-file Upload UI
 	//**********************
 
-	var fileCountMax = parseInt("###MAX_FILE_UPLOADS###");
-	var addFileText = "###ADD_FILE###";
-	var delFileText = "###DEL_FILE###";
-	var showOptionalText = "###SHOW_OPTIONAL###";
+	var fileCountMax = parseInt('###MAX_FILE_UPLOADS###'),
+		addFileText = '###ADD_FILE###',
+		delFileText = '###DEL_FILE###',
+		showOptionalText = '###SHOW_OPTIONAL###';
 	//don't enable it unless there are more files allowed than 1
 	if (fileCountMax > 1) {
-		jQuery('.tx-fileman .multi-file').each(function(i, form) {
-			var fileEntries = jQuery(form).find('.file-entry');
-			var formVar = { //can be passed as reference to functions
-					fileCount: fileEntries.size(), //there could be more files initially already, due to validation errors
+		$fileman.find('.multi-file').each(function(i, form) {
+			var $form = jQuery(form),
+				$fileEntries = $form.find('.file-entry'),
+				formVar = { //can be passed as reference to functions
+					fileCount: $fileEntries.size(), //there could be more files initially already, due to validation errors
 					lastIndex: getLastIndex(form)
-			};
+				};
 
 			//create buttons
-			jQuery(form).find('.submit').before('<a href="#" class="add-file-entry" title="'+addFileText+'">'+addFileText+'</a><a href="#" class="del-file-entry" title="'+delFileText+'">'+delFileText+'</a>');
-			var addFileLink = jQuery(form).find('a.add-file-entry');
-			var delFileLink = addFileLink.next('a.del-file-entry');
-			delFileLink.remove(); //remove it here, clone it later
+			$form.find('.submit').before('<a href="#" class="add-file-entry" title="'+addFileText+'">'+addFileText+'</a><a href="#" class="del-file-entry" title="'+delFileText+'">'+delFileText+'</a>');
+			var $addFileLink = $form.find('a.add-file-entry');
+			var $delFileLink = $addFileLink.next('a.del-file-entry');
+			$delFileLink.remove(); //remove it here, clone it later
 
 			//set initial state to disabled where it applies
-			if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //no adds possible if @ max
-			if (formVar.fileCount == 1) delFileLink.addClass('disabled'); //no dels possible if @ min
-			if (!jQuery(form).hasClass('multi-file-add')) addFileLink.hide(); //HIDE button if form doesn't meet requirement
+			if (formVar.fileCount == fileCountMax) $addFileLink.addClass('disabled'); //no adds possible if @ max
+			if (formVar.fileCount == 1) $delFileLink.addClass('disabled'); //no dels possible if @ min
+			if (!$form.hasClass('multi-file-add')) $addFileLink.hide(); //HIDE button if form doesn't meet requirement
 
 			//for each initial file-entry, do the following
-			fileEntries.each(function(i,entry) {
-				var fileUpload = jQuery(entry).find('.fileupload');
+			$fileEntries.each(function(i,entry) {
+				var $entry = jQuery(entry),
+					$fileUpload = $entry.find('.fileupload');
 
 				//place delFileLink clone
-				var clone = delFileLink.clone();
-				jQuery(clone).insertAfter(fileUpload);
+				var $clone = jQuery($delFileLink.clone());
+				$clone.insertAfter($fileUpload);
 
 				//when a delete link is clicked:
-				jQuery(clone).click(function() { //@TODO: undo button?
-					deleteFileEntry(formVar,addFileLink,this,form);
+				$clone.click(function() { //@TODO: undo button?
+					deleteFileEntry(formVar,$addFileLink,this,form);
 					return false;
 				});
 
 				//the multi-file UI can get crowded, so we hide the optional fields under a button
-				var optional = jQuery(entry).find('.optional');
-				optional.hide();
-				optional.addClass('indent'); //indent gives some special styling that should only be visible if multi-file UI is in effect
+				var $optional = $entry.find('.optional');
+				$optional.hide().addClass('indent'); //indent gives some special styling that should only be visible if multi-file UI is in effect
 					//create button
-				fileUpload.after('<a href="#" class="show-optional" title="'+showOptionalText+'">'+showOptionalText+'</a>');
-				jQuery(entry).find('.show-optional').click(function() {
-					toggleOptional(optional,this);
+				$fileUpload.after('<a href="#" class="show-optional" title="'+showOptionalText+'">'+showOptionalText+'</a>');
+				$entry.find('.show-optional').click(function() {
+					toggleOptional($optional,this);
 					return false;
 				});
 			});
 
 
 			//only add this event if form meets requirements
-			if (jQuery(form).hasClass('multi-file-add')) {
+			if ($form.hasClass('multi-file-add')) {
 				//when an add link is clicked:
-				jQuery(form).find('a.add-file-entry').click(function() {
-					if (formVar.fileCount < fileCountMax && !jQuery(this).hasClass('disabled')) { //only works if not disabled and form allows adds
-						if (formVar.fileCount == 1) jQuery(form).find('a.del-file-entry').removeClass('disabled'); //if we were @ min, we can enable the del link again
+				$addFileLink.click(function() {
+					var $addEntry = jQuery(this);
+					if (formVar.fileCount < fileCountMax && !$addEntry.hasClass('disabled')) { //only works if not disabled and form allows adds
+						// note that del-file-entries were cloned and $delFileLink was the original, so don't try to refactor this one!
+						if (formVar.fileCount == 1) $form.find('a.del-file-entry').removeClass('disabled'); //if we were @ min, we can enable the del link again
 						formVar.fileCount++;
 						//clone the last file-entry
-						var fileEntry = jQuery(this).prevAll('.file-entry:first');
-						var clone = fileEntry.clone();
-						//replace its index in the clone
-						var findName = '[file][i' + formVar.lastIndex + ']';
-						var replaceName = '[file][i' + (++formVar.lastIndex) + ']';
+						var clone = $addEntry.prevAll('.file-entry:first').clone(),
+							$clone = jQuery(clone),
+							//replace its index in the clone
+							findName = '[file][i' + formVar.lastIndex + ']';
+							replaceName = '[file][i' + (++formVar.lastIndex) + ']';
 						//empty field values!
-						jQuery(clone).find('input[type=file],input[type=text],textarea').each(function(i, elem) {
-							jQuery(elem).attr('name', jQuery(elem).attr('name').replace(findName,replaceName));
-							//jQuery(elem).attr('value',''); //if input is type=text..
-							jQuery(elem).val(null); //input values are copied with the clone..
+						$clone.find('input[type=file],input[type=text],textarea').each(function(i, elem) {
+							var $elem = jQuery(elem);
+							$elem.attr('name', $elem.attr('name').replace(findName,replaceName));
+							//$elem.attr('value',''); //if input is type=text..
+							$elem.val(null); //input values are copied with the clone..
 						});
 
 						//because clone() doesn't copy events, and clone(true) makes events retain their original targets, we have to assign certain events explicitly
 							//--> show optional
-						jQuery(clone).find('.show-optional').click(function() {
-							toggleOptional(jQuery(clone).find('.optional'), this);
+						$clone.find('.show-optional').click(function() {
+							toggleOptional($clone.find('.optional'), this);
 							return false;
 						});
 							//--> auto fill title
 						initAutoFill(clone);
 							//--> del file link
-						jQuery(clone).find('a.del-file-entry').click(function() {
-							deleteFileEntry(formVar,addFileLink,this,form);
+						$clone.find('a.del-file-entry').click(function() {
+							deleteFileEntry(formVar,$addFileLink,this,form);
 							return false;
 						});
 
 						//place it before the button
-						jQuery(this).before(clone);
+						$addEntry.before(clone);
 
-						if (formVar.fileCount == fileCountMax) addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
+						if (formVar.fileCount == fileCountMax) $addFileLink.addClass('disabled'); //if we are @ max now, we need to disable add link
 					}
 					return false;
 				});
+			} else {
+				// makes other JS funcs not look for add-file-entry button, since multi-file handling is currently depending on it
+				fileCountMax = 1;
 			}
 
 		});
 	}
 
 	//deletes a file entry
-	function deleteFileEntry(countVars, addButton, deleteButton, form) {
-		if (countVars.fileCount > 1  && !jQuery(deleteButton).hasClass('disabled')) { //only works if not disabled
-			if (countVars.fileCount == fileCountMax) addButton.removeClass('disabled'); //if we were @ max, we can enable add link again
+	function deleteFileEntry(countVars, $addButton, deleteButton, form) {
+		var $deleteButton = jQuery(deleteButton);
+		if (countVars.fileCount > 1  && !$deleteButton.hasClass('disabled')) { //only works if not disabled
+			if (countVars.fileCount == fileCountMax) $addButton.removeClass('disabled'); //if we were @ max, we can enable add link again
 			countVars.fileCount--;
 
-			var $parent = jQuery(deleteButton).parents('.file-entry'),
+			var $parent = $deleteButton.parents('.file-entry'),
 				// for the js upload features: removes filesize from fileSizes register
 				$upload = $parent.find('input[type=file].fileupload');
 			$upload.val(null);
@@ -612,14 +740,139 @@ jQuery(document).ready(function() {
 
 	//retrieves the last index from the form
 	function getLastIndex(form) {
+		return getIndex(jQuery(form).find('.fileupload:last'));
+	}
+	function getIndex($fileupload) {
 		//we want 999 from: <input class="fileupload" name="*[file][i999][fileUri]" />
-		return jQuery(form).find('.fileupload:last').attr('name').match(/\[file\]\[i([0-9]+)\]/i)[1];
+		return $fileupload.attr('name').match(/\[file\]\[i([0-9]+)\]/i)[1];
 	}
 
 	//toggle optional fields
-	function toggleOptional(optional, button) {
-		jQuery(optional).slideToggle();
+	function toggleOptional($optional, button) {
+		$optional.slideToggle();
 		jQuery(button).toggleClass('expanded'); //this class helps for indicating an expanded view through styles on the button
+	}
+
+
+
+	//**********************
+	// Drag 'n Drop Support
+	//**********************
+
+	var dropzoneActive = false;
+	// relies on xhr uploading & draggable feature-support
+	if (xhrUploadEnabled && 'draggable' in document.createElement('span')) {
+		var $dropzones = $fileman.find('.drop-zone');
+
+		if ($dropzones.length > 0) {
+			$dropzones.prepend('<div class="drop-overlay"></div><div class="drop-here" title="###DROP_ZONE_TOOLTIP###">###DROP_ZONE###</div>');
+			$dropzones.on('drop', function(e) {
+				e.originalEvent.preventDefault();
+				var $overlay = jQuery('.drop-overlay', this);
+				$overlay.toggleClass('loading');
+				if (!drop_handler(e.originalEvent, this)) {
+					drop_exit($overlay);
+					$overlay.toggleClass('loading');
+				}
+			});
+			$dropzones.on('dragover', function(e) {
+				e.originalEvent.preventDefault();
+			});
+			$dropzones.on('dragenter', function(e) {
+				e.originalEvent.preventDefault();
+				e.originalEvent.stopPropagation();
+				if (!dropzoneActive) {
+					jQuery('.drop-overlay', this).show();
+					dropzoneActive = true;
+				}
+			});
+			// setting dragleave on $dropzones will result in in a leave after 2 enters, due to the overlay popping up,
+			// so instead, we set the leave on the overlay itself. dragexit did not have this issue, but that one doesn't
+			// fire in chromium and IE.
+			$dropzones.find('.drop-overlay').on('dragleave', function(e) {
+				e.originalEvent.preventDefault();
+				e.originalEvent.stopPropagation();
+				drop_exit(jQuery(this));
+			});
+		}
+	}
+
+	// exits/hides dropzone overlay
+	function drop_exit($overlay) {
+		if (dropzoneActive) {
+			$overlay.hide();
+			dropzoneActive = false;
+		}
+	}
+
+	// handles actual drop event
+	function drop_handler(e, form) {
+		var dt = e.dataTransfer,
+			// actual files container
+			files = [];
+
+		if (dt.items) {
+			for (var i=0; i < dt.items.length; i++) {
+				// if dropped items aren't files, reject them
+				if (dt.items[i].kind == "file") {
+					files.push(dt.items[i].getAsFile());
+				}
+			}
+		} else {
+			files = dt.files;
+		}
+
+		// continue only if there are actual files
+		if (files.length > 0) {
+			var $form = jQuery(form),
+				$entries = $form.find('.file-entry'),
+				$upload = $entries.first().find('.fileupload');
+
+			// clean up any previous errors
+			if ($upload.hasClass('file-checker-error')) {
+				$upload.removeClass('f3-form-error file-checker-error');
+				$upload.parent('label').prev('.typo3-messages').remove();
+			}
+
+			// check fileCountMax
+			if (!validateField(
+				$upload,
+				files.length > fileCountMax,
+				'Max file count is ' + fileCountMax + ', tried uploading ' + files.length,
+				'###VALID_FAIL_FILECOUNT###'.replace('{maxFileCount}', fileCountMax)
+			)) {
+				return false;
+			}
+
+			// for dragNdrop, clear the filesizes object to ensure proper validation
+			fileSizes = {};
+			if (!validateFiles(files, $upload, 'dragNdrop')) {
+				fileSizes = {};
+				return false;
+			}
+
+			// adjust the number of file-entries in the form, to match expectancy of PHP processing
+			if (files.length !== $entries.length) {
+				if (files.length > $entries.length) {
+					var addCount = files.length - $entries.length,
+						$button = $form.find('a.add-file-entry');
+					for (var i=0; i < addCount; i++) $button.click();
+				} else {
+					var remCount = ($entries.length - files.length) * -1;
+					$entries.slice(remCount).remove();
+				}
+			}
+
+			// $entries can be out of date, so do another find
+			$form.find('.file-entry').each(function(i, entry) {
+				var $fileupload = jQuery('.fileupload', entry),
+					$replacement = jQuery('<span class="fileupload" name="' + $fileupload.attr('name') + '">' + files[i].name + '</span>');
+				$replacement[0].files = [ files[i] ];
+				$fileupload.replaceWith($replacement);
+			});
+
+			$form.submit();
+		}
 	}
 
 
@@ -629,13 +882,15 @@ jQuery(document).ready(function() {
 	//**********************************************
 
 	// @TODO read class through TS?
-	var $csrfProtectA = jQuery('.tx-fileman a.csrf-protect'),
-		$csrfProtectForm = jQuery('.tx-fileman form.csrf-protect'),
+	var $csrfProtectA = $fileman.find('a.csrf-protect'),
+		$csrfProtectForm = $fileman.find('form.csrf-protect'),
 		xhrPageType = '###XHR_PAGETYPE###',
 		xhrPageId = '###XHR_PAGEID###';
+
 	if ($csrfProtectA[0] || $csrfProtectForm[0]) {
-		var $submitButtons = jQuery(':submit', $csrfProtectForm),
+		var $submitButtons = $csrfProtectForm.find(':submit'),
 			encodedUrls = [];
+
 		$submitButtons.hide();
 		$csrfProtectA.hide();
 		$csrfProtectA.each(function (i, a) {
@@ -656,18 +911,20 @@ jQuery(document).ready(function() {
 				if (tokens !== null) {
 					tokens = tokens.split(',');
 					$csrfProtectA.each(function (i, a) {
-						jQuery(a).attr('data-stoken', tokens[tokenCounter++]);
-						jQuery(a).click(function () {
+						var $a = jQuery(a);
+						$a.attr('data-stoken', tokens[tokenCounter++]);
+						$a.click(function () {
 							verifyToken(
-								jQuery(this).attr('data-stoken'), jQuery(this).attr('data-utoken')
+								$a.attr('data-stoken'), $a.attr('data-utoken')
 							);
 						});
 					});
 					$csrfProtectForm.each(function (i, form) {
-						jQuery(form).attr('data-stoken', tokens[tokenCounter++]);
-						jQuery(form).submit(function () {
+						var $form = jQuery(form);
+						$form.attr('data-stoken', tokens[tokenCounter++]);
+						$form.submit(function () {
 							verifyToken(
-								jQuery(this).attr('data-stoken'), jQuery(this).attr('data-utoken')
+								$form.attr('data-stoken'), $form.attr('data-utoken')
 							);
 						});
 					});

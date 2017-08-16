@@ -1,9 +1,8 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -36,14 +35,24 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persist
 	/**
 	 * Returns all objects of this repository that are in the root (no parents)
 	 *
+	 * @param Tx_Fileman_Domain_Model_Category $excludeCategory
 	 * @return array An array of objects, empty if no objects found
 	 */
-	public function findInRoot() {
+	public function findInRoot(Tx_Fileman_Domain_Model_Category $excludeCategory = NULL) {
 		$query = $this->createQuery();
-		$result = $query->matching(
+
+		$conditions = array(
 			$query->equals('parentCategory', 0)
+		);
+		if ($excludeCategory !== NULL) {
+			$conditions[] = $query->logicalNot(
+				$query->equals('uid', $excludeCategory->getUid())
+			);
+		}
+
+		return $query->matching(
+			$query->logicalAnd($conditions)
 		)->execute();
-		return $result;
 	}
 
 	/**
@@ -60,5 +69,51 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Tx_Extbase_Persist
 		return $result;
 	}
 
+	/**
+	 * Returns all objects with feUser set
+	 *
+	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @param Tx_Fileman_Domain_Model_Category $excludeCategory
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function findByFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser, Tx_Fileman_Domain_Model_Category $excludeCategory = NULL) {
+		$query = $this->createQuery();
+
+		$conditions = array(
+			$query->equals('feUser', $feUser)
+		);
+		if ($excludeCategory !== NULL) {
+			$conditions[] = $query->logicalNot(
+				$query->equals('uid', $excludeCategory->getUid())
+			);
+		}
+
+		return $query->matching(
+			$query->logicalAnd($conditions)
+		)->execute();
+	}
+
+	/**
+	 * Returns all objects that match all search terms
+	 *
+	 * @param array $searchTerms
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+	 */
+	public function search(array $searchTerms) {
+		$query = $this->createQuery();
+
+		$conditions = array();
+		foreach ($searchTerms as $searchTerm) {
+			$searchTerm = '%' . $searchTerm . '%';
+			$conditions[] = $query->logicalOr(array(
+				$query->like('title', $searchTerm, FALSE),
+				$query->like('description', $searchTerm, FALSE),
+			));
+		}
+
+		return $query->matching(
+			$query->logicalAnd($conditions)
+		)->execute();
+	}
+
 }
-?>

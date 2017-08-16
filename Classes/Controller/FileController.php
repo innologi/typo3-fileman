@@ -1,9 +1,8 @@
 <?php
-
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,7 +22,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * File controller
  *
@@ -32,6 +33,11 @@
  *
  */
 class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_ActionController {
+
+	// search constants
+	const SEARCH_CATEGORIES = 0;
+	const SEARCH_FILES = 1;
+	const SEARCH_LINKS = 2;
 
 	/**
 	 * fileRepository
@@ -51,18 +57,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * File service
 	 *
 	 * @var Tx_Fileman_Service_FileService
+	 * @inject
 	 */
 	protected $fileService;
-
-	/**
-	 * Injects the File Service
-	 *
-	 * @param Tx_Fileman_Service_FileService $fileService
-	 * @return void
-	 */
-	public function injectFileService(Tx_Fileman_Service_FileService $fileService) {
-		$this->fileService = $fileService;
-	}
 
 	/**
 	 * injectFileRepository
@@ -72,9 +69,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function injectFileRepository(Tx_Fileman_Domain_Repository_FileRepository $fileRepository) {
 		$this->fileRepository = $fileRepository;
-		$fileRepository->setDefaultOrderings(array(
-				'alternateTitle' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
-		));
+		$this->sortRepositoryService->registerSortableRepository($fileRepository, [
+			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'alternateTitle'
+		]);
 	}
 
 	/**
@@ -85,9 +82,9 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function injectLinkRepository(Tx_Fileman_Domain_Repository_LinkRepository $linkRepository) {
 		$this->linkRepository = $linkRepository;
-		$linkRepository->setDefaultOrderings(array(
-				'linkName' => Tx_Extbase_Persistence_QueryInterface::ORDER_ASCENDING
-		));
+		$this->sortRepositoryService->registerSortableRepository($linkRepository, [
+			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'linkName'
+		]);
 	}
 
 
@@ -156,7 +153,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		$this->view->assign('links', $links);
 
 		if ($this->feUser) {
-			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+			$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup'])) || $this->userService->isCategoryAdmin($category);
 			$this->view->assign('isSuperUser', $isSuperUser);
 			$this->view->assign('isLoggedIn', TRUE);
 		}
@@ -244,18 +241,23 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 			//by fileService during validation, because forward() tells extbase to re-map the request arguments
 			$this->fileService->reset(); //so start over!
 			$fileStorage = $files->getFile();
+			/** @var Tx_Fileman_Domain_Model_File $file */
 			foreach ($fileStorage as $hash=>$file) {
 				if ($this->fileService->next()) {
 					//each uploaded file that was validated, is associated with the matching $file entry
 					//this would obviously not work if their count and order wasn't identical
 					$this->fileService->setFileProperties($file);
 				} else {
-					#@TODO error
 					if (version_compare(TYPO3_branch, '6.2', '<')) {
 						unset($fileStorage[$hash]);
 					} else {
 						unset($fileStorage[$file]);
 					}
+					$this->addFlashMessage(
+						LocalizationUtility::translate('tx_fileman_filelist.new_file_failed_reconstitute', $this->extensionName, array($file->getFileUri())),
+						'',
+						FlashMessage::WARNING
+					);
 				}
 			}
 		}
@@ -279,6 +281,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 */
 	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
 		$fileStorage = $files->getFile();
+		$failedFiles = array();
+		/** @var Tx_Fileman_Domain_Model_File $file */
 		foreach ($fileStorage as $file) {
 			#$absDirPath = PATH_site.$this->settings['uploadDir'];
 			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@LOW might as well do it static right now
@@ -291,19 +295,24 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 				if ($category !== NULL) {
 					$category->addFile($file); //this is to make the database field counter update reliably
 					$file->addCategory($category);
+					$file->setFeGroup($category->getFeGroup());
 				}
 
 				//finalize creation
 				$this->fileRepository->add($file);
 			} else {
-				#@TODO error
-				//move could not take place
-				//unlink?
+				$failedFiles[] = $file;
 			}
 		}
 
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		if (empty($failedFiles)) {
+			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_success', $this->extensionName);
+			$severity = FlashMessage::OK;
+		} else {
+			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_file_error', $this->extensionName, array(count($failedFiles)));
+			$severity = FlashMessage::ERROR;
+		}
+		$this->addFlashMessage($flashMessage, '', $severity);
 
 		$arguments = NULL;
 		if ($category !== NULL) {
@@ -318,18 +327,25 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Note the file/files difference with new action
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $file
 	 * @ignorevalidation $file
 	 * @return void
 	 */
-	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+	public function editAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
 		$this->view->assign('category', $category); //category is given for URL-consistency and redirecting afterwards
-		#@LOW can we make the structure more clear in the selection?
-		$this->view->assign('categories', $this->categoryRepository->findAll());
+
+		// if the user isn't a superUser, categories should be limited to those he owns
+		$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+		$categories = $isSuperUser
+			? $this->categoryRepository->findInRoot()
+			: $this->categoryRepository->findByFeUser($this->feUser);
+
+		$this->view->assign('categories', $categories->toArray());
+		$this->view->assign('isSuperUser', $isSuperUser);
 		$this->view->assign('file', $file);
 	}
 
@@ -338,14 +354,14 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Note the file/files difference with create action
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+	public function updateAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
 		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {
@@ -370,8 +386,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Also explicitly removes $file from $category, to make sure the counters of this bi-directional relation are in order
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param Tx_Fileman_Domain_Model_Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $file
@@ -379,24 +395,37 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_File $file) {
+	public function deleteAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
 		$arguments = NULL;
+		$controller = 'Category';
+		$fileCategories = $file->getCategory();
 
 		//category
 		if ($category !== NULL) {
 			$file->removeCategory($category);
 			//$category->removeFile($file);
 			$arguments = array('category'=>$category);
+			$controller = NULL;
+		} elseif ($fileCategories->count() > 0) {
+			// If we get here, it means file was attempted to be removed outside of its category, e.g. via search.
+			// This action suggests the file needs to be removed ENTIRELY, regardless. So first remove it from any
+			// category.
+			foreach ($fileCategories as $fC) {
+				$file->removeCategory($fC);
+			}
 		}
 
 		// whats next depends on whether it has any remaining category
-		if ($file->getCategory()->count() === 0) {
+		if ($fileCategories->count() === 0) {
 			$this->fileRepository->remove($file);
 
 			#@LOW change this as soon as its no longer static / using FAL
 			$uri = PATH_site . 'uploads/tx_fileman/' . $file->getFileUri();
-			#@TODO try/catch?
-			unlink($uri);
+			try {
+				unlink($uri);
+			} catch (\Exception $e) {
+				// @LOW log?
+			}
 
 			$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_file_success', $this->extensionName);
 		} else {
@@ -405,7 +434,50 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 		}
 
 		$this->flashMessageContainer->add($flashMessage);
-		$this->redirect('list',NULL,NULL,$arguments);
+		$this->redirect('list',$controller,NULL,$arguments);
+	}
+
+	/**
+	 * action search
+	 *
+	 * @param string $search
+	 * @return void
+	 */
+	public function searchAction($search = NULL) {
+		$resultCount = 0;
+		$search = $search === NULL ? '' : trim($search);
+
+		if (isset($search[0])) {
+			$searchTypes = GeneralUtility::intExplode(',', $this->settings['searchTypes']);
+			$searchTerms = GeneralUtility::trimExplode(' ', $search, 1);
+
+			if (in_array(self::SEARCH_CATEGORIES, $searchTypes)) {
+				$categories = $this->categoryRepository->search($searchTerms);
+				$resultCount += $categories->count();
+				$this->view->assign('categories', $categories);
+			}
+			if (in_array(self::SEARCH_FILES, $searchTypes)) {
+				$files = $this->fileRepository->search($searchTerms);
+				$resultCount += $files->count();
+				$this->view->assign('files', $files);
+			}
+			if (in_array(self::SEARCH_LINKS, $searchTypes)) {
+				$links = $this->linkRepository->search($searchTerms);
+				$resultCount += $links->count();
+				$this->view->assign('links', $links);
+			}
+
+			// for now, it suffices to base superuser rights only on the su-group
+			if ($this->feUser) {
+				$isSuperUser = $this->userService->isInGroup(intval($this->settings['suGroup']));
+				$this->view->assign('isSuperUser', $isSuperUser);
+				$this->view->assign('isLoggedIn', TRUE);
+			}
+		}
+
+		// if there are no results (or valid searchterm) ..
+		$this->view->assign('noResults', $resultCount < 1);
+		$this->view->assign('search', $search);
 	}
 
 

@@ -1,0 +1,11 @@
+<f:if condition="{settings.enableSearch}">
+	<f:form enctype="multipart/form-data" method="post" class="search-form"
+		controller="File" action="search"
+		absolute="TRUE" noCache="TRUE" noCacheHash="TRUE"
+	>
+		<fieldset>
+			<f:form.textfield class="searchbox" name="search" value="{search}" placeholder="{f:translate(key:'tx_fileman_filelist.search_placeholder')}" />
+			<f:form.submit class="searchsubmit" value="Zoek" />
+		</fieldset>
+	</f:form>
+</f:if>

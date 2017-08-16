@@ -35,6 +35,7 @@ return array(
 	'tx_fileman_persistence_nopersistrepository' => $extensionClassesPath . 'Persistence/NoPersistRepository.php',
 	'tx_fileman_service_fileservice' => $extensionClassesPath . 'Service/FileService.php',
 	'tx_fileman_service_userservice' => $extensionClassesPath . 'Service/UserService.php',
+	'tx_fileman_service_sortrepositoryservice' => $extensionClassesPath . 'Service/SortRepositoryService.php',
 	'tx_fileman_service_typo3csrfprotectservice' => $extensionClassesPath . 'Service/Typo3CsrfProtectService.php',
 	'tx_fileman_service_csrfprotectserviceinterface' => $extensionClassesPath . 'Service/CsrfProtectServiceInterface.php',
 	'tx_fileman_service_abstractcsrfprotectservice' => $extensionClassesPath . 'Service/AbstractCsrfProtectService.php',

@@ -3,7 +3,7 @@
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <frenck@innologi.nl>, www.innologi.nl
+ *  (c) 2012 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -58,7 +58,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	protected $description;
 
 	/**
-	 * User who created this appointment
+	 * User who created this file
 	 *
 	 * @var Tx_Fileman_Domain_Model_FrontendUser
 	 * @lazy
@@ -79,6 +79,13 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @var integer
 	 */
 	protected $tstamp;
+
+	/**
+	 * Category fe_group
+	 *
+	 * @var string
+	 */
+	protected $feGroup;
 
 	/**
 	 * __construct
@@ -222,5 +229,24 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 		return $this->tstamp;
 	}
 
+	/**
+	 * Return fe_group
+	 *
+	 * @return string
+	 */
+	public function getFeGroup() {
+		return $this->feGroup;
+	}
+
+	/**
+	 * Sets fe_group
+	 *
+	 * @param string $feGroup
+	 * @return $this
+	 */
+	public function setFeGroup($feGroup) {
+		$this->feGroup = $feGroup;
+		return $this;
+	}
+
 }
-?>

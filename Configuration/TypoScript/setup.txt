@@ -5,6 +5,9 @@ config.tx_extbase.objects {
 }
 
 includeLibs.Tx_Fileman_TypoScript = EXT:fileman/Resources/Private/Scripts/Tx_Fileman_Typoscript.php
+lib.tx_fileman.maxFileUploads = USER
+lib.tx_fileman.maxFileUploads.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
+
 plugin.tx_fileman {
 	view {
 		templateRootPath = {$plugin.tx_fileman.view.templateRootPath}
@@ -14,14 +17,21 @@ plugin.tx_fileman {
 	persistence {
 		storagePid = {$plugin.tx_fileman.persistence.storagePid}
 		classes {
+			Tx_Fileman_Domain_Model_Category {
+				mapping.columns {
+					fe_group.mapOnProperty = feGroup
+				}
+			}
 			Tx_Fileman_Domain_Model_File {
 				mapping.columns {
 					tstamp.mapOnProperty = tstamp
+					fe_group.mapOnProperty = feGroup
 				}
 			}
 			Tx_Fileman_Domain_Model_Link {
 				mapping.columns {
 					tstamp.mapOnProperty = tstamp
+					fe_group.mapOnProperty = feGroup
 				}
 			}
 			Tx_Fileman_Domain_Model_FrontendUser {
@@ -50,8 +60,7 @@ plugin.tx_fileman {
 			APC_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getApcFieldName
 			SES_FIELD_NAME = USER
 			SES_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getSesFieldName
-			MAX_FILE_UPLOADS = USER
-			MAX_FILE_UPLOADS.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
+			MAX_FILE_UPLOADS < lib.tx_fileman.maxFileUploads
 			DEBUG = TEXT
 			DEBUG.value = {$plugin.tx_fileman.js.debug}
 			UPLOADPROGRESS = TEXT
@@ -72,17 +81,43 @@ plugin.tx_fileman {
 			ADD_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.add_file
 			DEL_FILE = TEXT
 			DEL_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.del_file
+			DELETE_CONFIRM = TEXT
+			DELETE_CONFIRM.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.delete_confirm
 			SHOW_OPTIONAL = TEXT
 			SHOW_OPTIONAL.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.show_optional
+			VALID_FAIL_MIMETYPE = TEXT
+			VALID_FAIL_MIMETYPE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_mimetype
+			VALID_FAIL_MAXFILESIZE = TEXT
+			VALID_FAIL_MAXFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilesize
+			VALID_FAIL_TOTFILESIZE = TEXT
+			VALID_FAIL_TOTFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_totalfilesize
+			VALID_FAIL_FILECOUNT = TEXT
+			VALID_FAIL_FILECOUNT.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilecount
+			ERROR_FILE_TRANSFER = TEXT
+			ERROR_FILE_TRANSFER.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_file_transfer
+			ERROR_XHR_RESPONSE = TEXT
+			ERROR_XHR_RESPONSE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_xhr_response
+			DROP_ZONE = TEXT
+			DROP_ZONE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_text
+			DROP_ZONE_TOOLTIP = TEXT
+			DROP_ZONE_TOOLTIP.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_tooltip
+			XHR_RETRY = TEXT
+			XHR_RETRY.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_retry
+			XHR_NO_PROGRESS = TEXT
+			XHR_NO_PROGRESS.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_no_progress
 		}
 	}
 	settings {
 		type {
 			xhr = {$plugin.tx_fileman.settings.type.xhr}
 		}
+		possibleOwnerGroup = {$plugin.tx_fileman.settings.possibleOwnerGroup}
+		userLabelField = {$plugin.tx_fileman.settings.userLabelField}
 		uploadDir = {$plugin.tx_fileman.settings.uploadDir}
 		allowFileType = {$plugin.tx_fileman.settings.allowFileType}
 		denyFileType = {$plugin.tx_fileman.settings.denyFileType}
+		maxFileSize = {$plugin.tx_fileman.js.maxFileSize}
+		maxTotalFileSize = {$plugin.tx_fileman.js.maxTotalFileSize}
 	}
 	features {
 		# @TODO support before TYPO3 6.3 release
@@ -190,7 +225,8 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	
 	.tx-fileman table,
 	.tx-fileman form,
-	.tx-fileman .error {
+	.tx-fileman .error,
+	.tx-fileman .buttons {
 		clear:both;
 	}
 
@@ -247,7 +283,28 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	
 	
 	
+	.tx-fileman .search-form {
+		margin:5px 0;
+		text-align:right;
+		width:100%;
+	}
+	.tx-fileman .search-form .searchbox {
+		width:130px;
+	}
+	.tx-fileman .search-form .searchsubmit {
+		padding:0;
+	}
+	.tx-fileman .search-match {
+		background-color:#ff0;
+	}
+	
+	
+	
 	/* Buttons */
+	
+	.tx-fileman .buttons {
+		margin:5px 0;
+	}
 	
 	.tx-fileman .button-back,
 	.tx-fileman .show-optional {
@@ -367,6 +424,11 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		display:inline-block;
 	}
 	
+	.tx-fileman .sorting {
+		clear:both;
+		float:right;
+	}
+	
 	
 	
 	/* Messages */
@@ -453,9 +515,9 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .uploadprogress {
 		display:none;
 		border:1px solid #888;
-		padding:3px;
+		padding:1%;
 		height:30px;
-		width:100%;
+		width:98%;
 		background-color:#fff;
 		overflow:visible;
 		margin-bottom:15px;
@@ -501,4 +563,35 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		font-style:italic;
 	}
 	
+	
+	.tx-fileman .drop-zone {
+		position:relative;
+	}
+	.tx-fileman .drop-zone .drop-overlay {
+		position:absolute;
+		background-image:url("/typo3conf/ext/fileman/Resources/Public/Images/arrowdown.png");
+		background-repeat:no-repeat;
+		background-position:50% 50%;
+		height:100%;
+		width:99%;
+		display:none;
+		z-index:100;
+	}
+	.tx-fileman .drop-zone .drop-overlay.loading {
+		background-image:url("/typo3conf/ext/fileman/Resources/Public/Images/loading.gif");
+	}
+	.tx-fileman .drop-zone .drop-here {
+		height:65px;
+		width:150px;
+		margin-bottom:10px;
+		text-align:center;
+		font-size:1.5em;
+		padding-top:12px;
+		color:#99d
+	}
+	.tx-fileman .drop-zone .drop-overlay,
+	.tx-fileman .drop-zone .drop-here {
+		border:5px dashed #aaf;
+		background-color:#eef;
+	}
 )
