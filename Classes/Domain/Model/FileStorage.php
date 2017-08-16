@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
@@ -35,13 +35,13 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_FileStorage extends AbstractValueObject {
-
+class FileStorage extends AbstractValueObject {
+	// @FIX can we get rid of this class?
 	/**
 	 * Contains files
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File>
-	 * @validate Tx_Fileman_Domain_Validator_ObjectStorageValidator
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\File>
+	 * @validate \Innologi\Fileman\Domain\Validator\ObjectStorageValidator
 	 */
 	protected $file;
 
@@ -55,7 +55,7 @@ class Tx_Fileman_Domain_Model_FileStorage extends AbstractValueObject {
 	}
 
 	/**
-	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 * Initializes all \TYPO3\CMS\Extbase\Persistence\ObjectStorage properties.
 	 *
 	 * @return void
 	 */
@@ -66,27 +66,27 @@ class Tx_Fileman_Domain_Model_FileStorage extends AbstractValueObject {
 	/**
 	 * Adds a File
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @return void
 	 */
-	public function addFile(Tx_Fileman_Domain_Model_File $file) {
+	public function addFile(File $file) {
 		$this->file->attach($file);
 	}
 
 	/**
 	 * Removes a File
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $fileToRemove The File to be removed
+	 * @param \Innologi\Fileman\Domain\Model\File $fileToRemove The File to be removed
 	 * @return void
 	 */
-	public function removeFile(Tx_Fileman_Domain_Model_File $fileToRemove) {
+	public function removeFile(File $fileToRemove) {
 		$this->file->detach($fileToRemove);
 	}
 
 	/**
 	 * Returns file
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getFile() {
 		return $this->file;
@@ -95,7 +95,7 @@ class Tx_Fileman_Domain_Model_FileStorage extends AbstractValueObject {
 	/**
 	 * Sets file
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $file
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $file
 	 * @return void
 	 */
 	public function setFile(ObjectStorage $file) {

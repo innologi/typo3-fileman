@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\MVC\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+
 /**
  * Error On Debug Controller.
  *
@@ -33,7 +33,7 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_MVC_Controller_ErrorOnDebugController extends ActionController {
+class ErrorOnDebugController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * A template method for displaying custom error flash messages, or to
@@ -42,7 +42,7 @@ class Tx_Fileman_MVC_Controller_ErrorOnDebugController extends ActionController 
 	 *
 	 * @return string|boolean The flash message or FALSE if no flash message should be set
 	 */
-	protected function getErrorFlashMessage() { #@TODO document this in manual
+	protected function getErrorFlashMessage() {
 		global $TYPO3_CONF_VARS;
 		if (isset($TYPO3_CONF_VARS['FE']['debug']) && $TYPO3_CONF_VARS['FE']['debug']) {
 			return parent::getErrorFlashMessage();

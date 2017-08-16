@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Validator;
 /***************************************************************
  *  Copyright notice
  *
@@ -32,7 +32,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Validator_LinkUriValidator extends AbstractValidator {
+class LinkUriValidator extends AbstractValidator {
 
 	/**
 	 * Checks if $link is a valid URL

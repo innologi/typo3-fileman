@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,6 +24,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\SingletonInterface;
+use Innologi\Fileman\Domain\Model\Category;
 /**
  * Facilitates user/group control.
  *
@@ -31,12 +32,12 @@ use TYPO3\CMS\Core\SingletonInterface;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Service_UserService implements SingletonInterface {
+class UserService implements SingletonInterface {
 
 	/**
 	 * Logged in frontend user
 	 *
-	 * @var Tx_Fileman_Domain_Model_FrontendUser
+	 * @var \Innologi\Fileman\Domain\Model\FrontendUser
 	 */
 	protected $feUser = NULL;
 
@@ -50,7 +51,7 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	/**
 	 * frontendUserRepository
 	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
+	 * @var \Innologi\Fileman\Domain\Repository\FrontendUserRepository
 	 * @inject
 	 */
 	protected $frontendUserRepository;
@@ -58,7 +59,7 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	/**
 	 * frontendUserGroupRepository
 	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserGroupRepository
+	 * @var \Innologi\Fileman\Domain\Repository\FrontendUserGroupRepository
 	 * @inject
 	 */
 	protected $frontendUserGroupRepository;
@@ -66,7 +67,7 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	/**
 	 * Returns current frontend user.
 	 *
-	 * @return Tx_Fileman_Domain_Model_FrontendUser
+	 * @return \Innologi\Fileman\Domain\Model\FrontendUser
 	 */
 	public function getCurrentUser() {
 		if ($this->feUser === NULL) {
@@ -109,10 +110,10 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	/**
 	 * Returns whether the user is the category admin
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @return boolean
 	 */
-	public function isCategoryAdmin(Tx_Fileman_Domain_Model_Category $category = NULL) {
+	public function isCategoryAdmin(Category $category = NULL) {
 		$isAdmin = FALSE;
 		if ($category !== NULL) {
 			$owner = $category->getFeUser();
@@ -128,7 +129,7 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	 * @return mixed|NULL
 	 */
 	public function getSessionData($key) {
-		/* @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendAuth */
+		/** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendAuth */
 		$frontendAuth = $GLOBALS['TSFE']->fe_user;
 		return $frontendAuth->getSessionData($key);
 	}
@@ -141,7 +142,7 @@ class Tx_Fileman_Service_UserService implements SingletonInterface {
 	 * @return void
 	 */
 	public function putSessionData($key, $data) {
-		/* @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendAuth */
+		/** @var \TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication $frontendAuth */
 		$frontendAuth = $GLOBALS['TSFE']->fe_user;
 		$frontendAuth->setAndSaveSessionData($key, $data);
 	}

@@ -1,4 +1,5 @@
 <?php
+namespace Innologi\Fileman\Domain\Repository;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,25 +23,25 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use Innologi\Fileman\Persistence\NoPersistRepository;
+use Innologi\Fileman\Domain\Model\FrontendUser;
 /**
  * FontendUser repository. Used to ditch the record_type requirement of the original model.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_Fileman_Domain_Repository_FrontendUserRepository extends Tx_Fileman_Persistence_NoPersistRepository {
+class FrontendUserRepository extends NoPersistRepository {
 
 	/**
 	 * Finds possible owners of categories
 	 *
 	 * @param integer $userGroup
-	 * @param Tx_Fileman_Domain_Model_FrontendUser $currentUser
-	 * @param Tx_Fileman_Domain_Model_FrontendUser $currentOwner
+	 * @param FrontendUser $currentUser
+	 * @param FrontendUser $currentOwner
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findPossibleOwners($userGroup = 0, Tx_Fileman_Domain_Model_FrontendUser $currentUser = NULL, Tx_Fileman_Domain_Model_FrontendUser $currentOwner = NULL) {
+	public function findPossibleOwners($userGroup = 0, FrontendUser $currentUser = NULL, FrontendUser $currentOwner = NULL) {
 		$query = $this->createQuery();
 		$query->getQuerySettings()->setRespectStoragePage(FALSE);
 

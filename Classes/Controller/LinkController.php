@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,10 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Innologi\Fileman\MVC\Controller\ActionController;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use Innologi\Fileman\Domain\Model\Category;
+use Innologi\Fileman\Domain\Model\Link;
 /**
  * Link Controller
  *
@@ -31,41 +34,29 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_ActionController {
+class LinkController extends ActionController {
 	#@LOW display the links (and files) more nicely, like with file sizes, file icons, external domain mentioned, etc. This would also make it possible to eventually merge the lists
 
 	/**
 	 * linkRepository
 	 *
-	 * @var Tx_Fileman_Domain_Repository_LinkRepository
+	 * @var \Innologi\Fileman\Domain\Repository\LinkRepository
 	 * @inject
 	 */
 	protected $linkRepository;
 
 	/**
-	 * injectLinkRepository
-	 *
-	 * @param Tx_Fileman_Domain_Repository_LinkRepository $linkRepository
-	 * @return void
-	 */
-	public function injectLinkRepository(Tx_Fileman_Domain_Repository_LinkRepository $linkRepository) {
-		$this->linkRepository = $linkRepository;
-	}
-
-
-
-	/**
 	 * action new
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Link $link
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $link
 	 * @ignorevalidation $link
 	 * @return void
 	 */
-	public function newAction( Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link = NULL) {
+	public function newAction(Category $category, Link $link = NULL) {
 		$this->view->assign('category', $category);
 		$this->view->assign('link', $link);
 	}
@@ -73,14 +64,14 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action create
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Link $link
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
+	public function createAction(Category $category, Link $link) {
 		$link->setFeUser($this->feUser);
 
 		//empty titles are replaced
@@ -108,15 +99,15 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action edit
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Link $link
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $link
 	 * @ignorevalidation $link
 	 * @return void
 	 */
-	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
+	public function editAction(Category $category, Link $link) {
 		$this->view->assign('category', $category);
 		$this->view->assign('link', $link);
 	}
@@ -124,14 +115,14 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action update
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Link $link
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
+	public function updateAction(Category $category, Link $link) {
 		//empty titles get replaced
 		$title = $link->getLinkName();
 		if (empty($title)) {
@@ -156,8 +147,8 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Also explicitly removes $link from $category, to make sure the counters of this bi-directional relation are in order
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Link $link
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $link
@@ -165,7 +156,7 @@ class Tx_Fileman_Controller_LinkController extends Tx_Fileman_MVC_Controller_Act
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Link $link) {
+	public function deleteAction(Category $category, Link $link) {
 		$this->linkRepository->remove($link);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.delete_link_success', $this->extensionName);
 		$this->flashMessageContainer->add($flashMessage);

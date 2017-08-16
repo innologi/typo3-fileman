@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Validation;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,14 +23,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Validation\Error;
 /**
  * This object holds validation errors for an entire object storage.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/lgpl.html GNU Lesser General Public License, version 3 or later
  */
-class Tx_Fileman_Validation_StorageError extends Tx_Extbase_Validation_Error {
+class StorageError extends Error {
 
 	/**
 	 * @var string The default (english) error message.
@@ -48,7 +48,7 @@ class Tx_Fileman_Validation_StorageError extends Tx_Extbase_Validation_Error {
 	protected $propertyName;
 
 	/**
-	 * @var array An array of Tx_Extbase_Validation_Error for the property
+	 * @var array An array of \TYPO3\CMS\Extbase\Validation\Error for the property
 	 */
 	protected $errors = array();
 
@@ -66,7 +66,7 @@ class Tx_Fileman_Validation_StorageError extends Tx_Extbase_Validation_Error {
 	 * Add errors
 	 *
 	 * @param string $identifier ID of storage object to which the errors belong
-	 * @param array $errors Array of Tx_Extbase_Validation_Error for the property
+	 * @param array $errors Array of \TYPO3\CMS\Extbase\Validation\Error for the property
 	 * @return void
 	 */
 	public function addErrors($identifier,$errors) {
@@ -76,7 +76,7 @@ class Tx_Fileman_Validation_StorageError extends Tx_Extbase_Validation_Error {
 	/**
 	 * Get all errors for the property
 	 *
-	 * @return array An array of Tx_Extbase_Validation_Error objects or an empty array if no errors occured for the property
+	 * @return array An array of \TYPO3\CMS\Extbase\Validation\Error objects or an empty array if no errors occured for the property
 	 */
 	public function getErrors() {
 		return $this->errors;

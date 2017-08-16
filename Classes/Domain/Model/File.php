@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
@@ -33,7 +33,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_File extends AbstractEntity {
+class File extends AbstractEntity {
 	#@TODO beveiliging van upload-bestanden?
 	#@TODO flexform configuratie
 
@@ -79,7 +79,7 @@ class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	 * Links related to this file (one per row)
 	 *
 	 * @var string
-	 * @validate Tx_Fileman_Domain_Validator_LinksValidator
+	 * @validate \Innologi\Fileman\Domain\Validator\LinksValidator
 	 */
 	protected $links;
 
@@ -101,7 +101,7 @@ class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	/**
 	 * Categories related to this file entity
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
 	 * @lazy
 	 */
 	protected $category;
@@ -109,7 +109,7 @@ class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	/**
 	 * User who created this file
 	 *
-	 * @var Tx_Fileman_Domain_Model_FrontendUser
+	 * @var \Innologi\Fileman\Domain\Model\FrontendUser
 	 * @lazy
 	 */
 	protected $feUser;
@@ -138,7 +138,7 @@ class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	}
 
 	/**
-	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 * Initializes all \TYPO3\CMS\Extbase\Persistence\ObjectStorage properties.
 	 *
 	 * @return void
 	 */
@@ -305,20 +305,20 @@ class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	/**
 	 * Adds a Category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @return void
 	 */
-	public function addCategory(Tx_Fileman_Domain_Model_Category $category) {
+	public function addCategory(Category $category) {
 		$this->category->attach($category);
 	}
 
 	/**
 	 * Removes a Category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $categoryToRemove The Category to be removed
+	 * @param \Innologi\Fileman\Domain\Model\Category $categoryToRemove The Category to be removed
 	 * @return void
 	 */
-	public function removeCategory(Tx_Fileman_Domain_Model_Category $categoryToRemove) {
+	public function removeCategory(Category $categoryToRemove) {
 		$this->category->detach($categoryToRemove);
 	}
 
@@ -344,7 +344,7 @@ class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	/**
 	 * Returns the feUser
 	 *
-	 * @return Tx_Fileman_Domain_Model_FrontendUser
+	 * @return \Innologi\Fileman\Domain\Model\FrontendUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -353,10 +353,10 @@ class Tx_Fileman_Domain_Model_File extends AbstractEntity {
 	/**
 	 * Sets the feUser
 	 *
-	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @param \Innologi\Fileman\Domain\Model\FrontendUser $feUser
 	 * @return void
 	 */
-	public function setFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
+	public function setFeUser(FrontendUser $feUser) {
 		$this->feUser = $feUser;
 	}
 

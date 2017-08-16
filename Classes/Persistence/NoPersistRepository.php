@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Persistence;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,6 +24,7 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use Innologi\Fileman\MVC\Exception;
 /**
  * This repository prevents registration @ persistence manager.
  *
@@ -36,7 +37,7 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Persistence_NoPersistRepository extends Repository {
+class NoPersistRepository extends Repository {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface
@@ -50,7 +51,7 @@ class Tx_Fileman_Persistence_NoPersistRepository extends Repository {
 	public function injectPersistenceManager($persistenceManager) {
 		$this->persistenceManager = $persistenceManager;
 		//don't register this repository
-		// @FIX this is completely outdated!
+		// @FIX this is completely outdated! Find out if we can get rid of this class
 		#$this->persistenceManager->registerRepositoryClassName($this->getRepositoryClassName());
 	}
 
@@ -59,11 +60,10 @@ class Tx_Fileman_Persistence_NoPersistRepository extends Repository {
 	 *
 	 * @param object $object
 	 * @return void
-	 * @see ::add()
-	 * @throws Tx_Fileman_MVC_Exception_NoPersistRepository
+	 * @throws Exception\NoPersistRepository
 	 */
 	public function add($object) {
-		throw new Tx_Fileman_MVC_Exception_NoPersistRepository();
+		throw new Exception\NoPersistRepository();
 	}
 
 	/**
@@ -71,11 +71,10 @@ class Tx_Fileman_Persistence_NoPersistRepository extends Repository {
 	 *
 	 * @param object $object
 	 * @return void
-	 * @see ::remove()
-	 * @throws Tx_Fileman_MVC_Exception_NoPersistRepository
+	 * @throws Exception\NoPersistRepository
 	 */
 	public function remove($object) {
-		throw new Tx_Fileman_MVC_Exception_NoPersistRepository();
+		throw new Exception\NoPersistRepository();
 	}
 
 	/**
@@ -83,11 +82,10 @@ class Tx_Fileman_Persistence_NoPersistRepository extends Repository {
 	 *
 	 * @param object $modifiedObject
 	 * @return void
-	 * @see ::update()
-	 * @throws Tx_Fileman_MVC_Exception_NoPersistRepository
+	 * @throws Exception\NoPersistRepository
 	 */
 	public function update($modifiedObject) {
-		throw new Tx_Fileman_MVC_Exception_NoPersistRepository();
+		throw new Exception\NoPersistRepository();
 	}
 
 	/**
@@ -96,11 +94,10 @@ class Tx_Fileman_Persistence_NoPersistRepository extends Repository {
 	 * @param object $existingObject
 	 * @param object $newObject
 	 * @return void
-	 * @see ::replace()
-	 * @throws Tx_Fileman_MVC_Exception_NoPersistRepository
+	 * @throws Exception\NoPersistRepository
 	 */
 	public function replace($existingObject, $newObject) {
-		throw new Tx_Fileman_MVC_Exception_NoPersistRepository();
+		throw new Exception\NoPersistRepository();
 	}
 }
 ?>

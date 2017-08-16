@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Form;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,14 +23,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use Innologi\Fileman\Validation\StorageError;
 /**
  * Changes to support storageError index properties.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_ViewHelpers_Form_ErrorsViewHelper extends Tx_Fluid_ViewHelpers_Form_ErrorsViewHelper {
+class ErrorsViewHelper extends Tx_Fluid_ViewHelpers_Form_ErrorsViewHelper {
 
 	/**
 	 * Iterates through selected errors of the request.
@@ -70,7 +70,7 @@ class Tx_Fileman_ViewHelpers_Form_ErrorsViewHelper extends Tx_Fluid_ViewHelpers_
 				if ($error->getPropertyName() === $propertyName) {
 					return $error->getErrors();
 				}
-			} elseif ($error instanceof Tx_Fileman_Validation_StorageError) { #@LOW see if we can get storageError to extend propertyerror, and take debugging from there
+			} elseif ($error instanceof StorageError) { #@LOW see if we can get storageError to extend propertyerror, and take debugging from there
 				$errorArray = $error->getErrors();
 				if (isset($errorArray[$propertyName])) {
 					return $errorArray[$propertyName];

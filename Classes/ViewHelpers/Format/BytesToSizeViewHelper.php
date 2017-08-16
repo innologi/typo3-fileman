@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Format;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,8 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Bytes To Size View Helper
  *
@@ -32,7 +32,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_Format_BytesToSizeViewHelper extends AbstractViewHelper {
+class BytesToSizeViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Initialize all arguments.

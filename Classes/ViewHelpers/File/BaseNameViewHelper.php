@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\File;
 /***************************************************************
  *  Copyright notice
  *
@@ -31,7 +31,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_File_BaseNameViewHelper extends AbstractViewHelper {
+class BaseNameViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Gets basename from file URI

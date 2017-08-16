@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\MVC\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,6 +25,7 @@
  ***************************************************************/
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use Innologi\Fileman\Service\SortRepositoryService;
 /**
  * Fileman Action Controller.
  *
@@ -36,32 +37,32 @@ use TYPO3\CMS\Extbase\Object\ObjectManager;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controller_CsrfProtectController {
+class ActionController extends CsrfProtectController {
 
 	/**
 	 * Logged in frontend user
 	 *
-	 * @var Tx_Fileman_Domain_Model_FrontendUser
+	 * @var \Innologi\Fileman\Domain\Model\FrontendUser
 	 */
 	protected $feUser;
 
 	/**
 	 * User service
 	 *
-	 * @var Tx_Fileman_Service_UserService
+	 * @var \Innologi\Fileman\Service\UserService
 	 * @inject
 	 */
 	protected $userService;
 
 	/**
-	 * @var Tx_Fileman_Service_SortRepositoryService
+	 * @var \Innologi\Fileman\Service\SortRepositoryService
 	 */
 	protected $sortRepositoryService;
 
 	/**
 	 * categoryRepository
 	 *
-	 * @var Tx_Fileman_Domain_Repository_CategoryRepository
+	 * @var \Innologi\Fileman\Domain\Repository\CategoryRepository
 	 */
 	protected $categoryRepository;
 
@@ -72,18 +73,18 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->sortRepositoryService = GeneralUtility::makeInstance(ObjectManager::class)->get('Tx_Fileman_Service_SortRepositoryService');
+		$this->sortRepositoryService = GeneralUtility::makeInstance(ObjectManager::class)->get(SortRepositoryService::class);
 	}
 	/**
 	 * injectCategoryRepository
 	 *
-	 * @param Tx_Fileman_Domain_Repository_CategoryRepository $categoryRepository
+	 * @param \Innologi\Fileman\Domain\Repository\CategoryRepository $categoryRepository
 	 * @return void
 	 */
-	public function injectCategoryRepository(Tx_Fileman_Domain_Repository_CategoryRepository $categoryRepository) {
+	public function injectCategoryRepository(\Innologi\Fileman\Domain\Repository\CategoryRepository $categoryRepository) {
 		$this->categoryRepository = $categoryRepository;
 		$this->sortRepositoryService->registerSortableRepository($categoryRepository, [
-			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'title'
+			SortRepositoryService::SORT_FIELD_TITLE => 'title'
 		]);
 	}
 
@@ -119,6 +120,7 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 		if (version_compare(TYPO3_branch, '6.2', '<')) {
 			parent::initializeActionMethodValidators();
 		} else {
+			// @FIX yeah this isn't going to fly anymore
 			// @deprecated since Extbase 1.4.0, will be removed two versions after Extbase 6.1
 
 			$parameterValidators = $this->validatorResolver->buildMethodArgumentsValidatorConjunctions(get_class($this), $this->actionMethodName);
@@ -147,12 +149,12 @@ class Tx_Fileman_MVC_Controller_ActionController extends Tx_Fileman_MVC_Controll
 	 * Sort action
 	 *
 	 * @param string $sorting
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @return void
 	 */
-	public function sortAction($sorting, Tx_Fileman_Domain_Model_Category $category = NULL) {
+	public function sortAction($sorting, \Innologi\Fileman\Domain\Model\Category $category = NULL) {
 		$this->sortRepositoryService->setSorting($sorting);
 		$this->clearCacheOnError();
 		$arguments = $category === NULL ? [] : [ 'category' => $category ];

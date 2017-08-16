@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Validator;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use Innologi\Fileman\Validation\Validator\PreppedAbstractValidator;
+use Innologi\Fileman\Validation\ValidatorResolver;
 /**
  * Object Properties Validator, validates an object based on its properties' validation.
  *
@@ -31,7 +32,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Validator_ObjectPropertiesValidator extends Tx_Fileman_Validation_Validator_PreppedAbstractValidator {
+class ObjectPropertiesValidator extends PreppedAbstractValidator {
 
 	/**
 	 * Checks if an object is valid according to all its properties by passing
@@ -49,7 +50,7 @@ class Tx_Fileman_Domain_Validator_ObjectPropertiesValidator extends Tx_Fileman_V
 			#@LOW error?
 		}
 
-		$validatorResolver = $this->objectManager->get('Tx_Fileman_Validation_ValidatorResolver'); //the original resolver creates a single conjunction instance which accumulates errors, so we use our own
+		$validatorResolver = $this->objectManager->get(ValidatorResolver::class); //the original resolver creates a single conjunction instance which accumulates errors, so we use our own
 		$validator = $validatorResolver->getBaseValidatorConjunction(get_class($value),TRUE); //TRUE enables the noStorage workaround, that prevents multiple same-class instances to accumulate their siblings errors
 		if ($validator->isValid($value)) {
 			return TRUE;

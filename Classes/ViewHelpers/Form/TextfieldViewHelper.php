@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Form;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,8 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Fluid\ViewHelpers\Form\TextfieldViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Innologi\Fileman\Validation\StorageError;
 /**
  * Changes to support properties from properties. This version simply assumes
  * that such are _ALWAYS_ present, hence it is only usable with such fields.
@@ -37,7 +37,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends TextfieldViewHelper {
+class TextfieldViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\TextfieldViewHelper {
 
 	/**
 	 * Renders the textfield.
@@ -85,18 +85,10 @@ class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends TextfieldViewHelpe
 	 * @see Tx_Fluid_ViewHelpers_Form_AbstractFormViewHelper::getValue()
 	 */
 	protected function getValue($convertObjects = TRUE) {
-		if ($this->arguments instanceof Tx_Fluid_Core_ViewHelper_Arguments) { //TYPO3 4.5 compatibility #@LOW remove once dependency is raised
-			$value = $this->getOrChangeValue($convertObjects);
-			if ($value !== NULL && empty($value)) { //4.5 still checks !empty($value) instead of !== NULL in parent::render()
-				$this->tag->addAttribute('value', $value); //.. so we'll add it ourselves in that specific case
-			}
-			return $value;
-		} else {
-			if ($this->arguments['value'] === NULL) {
-				$this->arguments['value'] = '';
-			}
-			return parent::getValue($convertObjects);
+		if ($this->arguments['value'] === NULL) {
+			$this->arguments['value'] = '';
 		}
+		return parent::getValue($convertObjects);
 	}
 
 	/**
@@ -167,7 +159,7 @@ class Tx_Fileman_ViewHelpers_Form_TextfieldViewHelper extends TextfieldViewHelpe
 								//if property of property
 								if ($propertyError instanceof Tx_Extbase_Validation_PropertyError && $propertyError->getPropertyName() === $propertyName[1]) {
 									return $propertyError->getErrors();
-								} elseif ($propertyError instanceof Tx_Fileman_Validation_StorageError) { //if property of storage-property
+								} elseif ($propertyError instanceof StorageError) { //if property of storage-property
 									$storageErrors = $propertyError->getErrors();
 									foreach ($storageErrors as $id=>$storageError) {
 										if (is_array($storageError)) {

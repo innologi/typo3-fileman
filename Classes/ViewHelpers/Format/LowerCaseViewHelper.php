@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Format;
 /***************************************************************
  *  Copyright notice
  *
@@ -29,9 +29,8 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_Fileman_ViewHelpers_Format_LowerCaseViewHelper extends AbstractViewHelper {
+class LowerCaseViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Formats a string to lowercase

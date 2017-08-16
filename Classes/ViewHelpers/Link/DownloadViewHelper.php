@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Link;
 /***************************************************************
  *  Copyright notice
  *
@@ -32,7 +32,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_Link_DownloadViewHelper extends AbstractTagBasedViewHelper {
+class DownloadViewHelper extends AbstractTagBasedViewHelper {
 
 	/**
 	 * @var string

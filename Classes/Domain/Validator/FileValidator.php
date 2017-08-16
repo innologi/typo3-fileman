@@ -1,7 +1,5 @@
 <?php
-
-
-
+namespace Innologi\Fileman\Domain\Validator;
 /***************************************************************
  *  Copyright notice
  *
@@ -32,9 +30,8 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_Fileman_Domain_Validator_FileValidator extends AbstractValidator {
+class FileValidator extends AbstractValidator {
 	// @TODO this file is a travesty, please please PLEASE refactor.
 	/**
 	 * TypoScript settings
@@ -53,7 +50,7 @@ class Tx_Fileman_Domain_Validator_FileValidator extends AbstractValidator {
 	/**
 	 * File service
 	 *
-	 * @var Tx_Fileman_Service_FileService
+	 * @var \Innologi\Fileman\Service\FileService
 	 * @inject
 	 */
 	protected $fileService;
@@ -83,7 +80,7 @@ class Tx_Fileman_Domain_Validator_FileValidator extends AbstractValidator {
 		$errorCode = 0;
 
 		//only proceed if instance matches and an actual file upload took place
-		if ($file instanceof Tx_Fileman_Domain_Model_File) {
+		if ($file instanceof \Innologi\Fileman\Domain\Model\File) {
 			if ($this->fileService->next()) {
 				$file->setIndex($this->fileService->getIndex()); //we need this regardless, to bind errors from this and other validators to the right file
 				// note @ fileUri: NULL @ first-time create, NOT NULL after validation error / js upload

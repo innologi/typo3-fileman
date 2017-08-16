@@ -1,6 +1,5 @@
 <?php
-use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
-
+namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,7 +23,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
 /**
  * Interface for Cross-Site Request Forgery Protection service.
  *
@@ -32,7 +31,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder;
  * @author Frenck Lutke <typo3@innologi.nl>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-interface Tx_Fileman_Service_CsrfProtectServiceInterface {
+interface CsrfProtectServiceInterface {
 
 	/*
 	 * These constants represent the methods of protection, each with its own trade-off.
@@ -115,7 +114,7 @@ interface Tx_Fileman_Service_CsrfProtectServiceInterface {
 	 * Provides the csrf-class and encoded uri to a tag for
 	 * identification by the JavaScript library.
 	 *
-	 * @param Tx_Fluid_Core_ViewHelper_TagBuilder $tag
+	 * @param \TYPO3\CMS\Fluid\Core\ViewHelper\TagBuilder $tag
 	 * @param string $tokenUri
 	 * @return void
 	 */

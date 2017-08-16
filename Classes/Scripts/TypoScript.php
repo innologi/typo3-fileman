@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Scripts;
 /***************************************************************
  *  Copyright notice
  *
@@ -31,7 +31,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_TypoScript {
+class TypoScript {
 
 	/**
 	 * Retrieves 'max_file_uploads' from php.ini

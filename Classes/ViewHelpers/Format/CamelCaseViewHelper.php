@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Format;
 /***************************************************************
  *  Copyright notice
  *
@@ -32,13 +32,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_Format_CamelCaseViewHelper extends AbstractViewHelper {
+class CamelCaseViewHelper extends AbstractViewHelper {
 
 	/**
 	 * @param string $type Type of conversion [ camelCaseToLowerCaseUnderscored / underscoredToLowerCamelCase / underscoredToUpperCamelCase ]
 	 * @param string $value The value to format
 	 * @return string
-	 * @see GeneralUtility::camelCaseToLowerCaseUnderscored(),GeneralUtility::underscoredToLowerCamelCase(),GeneralUtility::underscoredToUpperCamelCase()
+	 * @see GeneralUtility::camelCaseToLowerCaseUnderscored()
+	 * @see GeneralUtility::underscoredToLowerCamelCase()
+	 * @see GeneralUtility::underscoredToUpperCamelCase()
 	 */
 	public function render($type, $value = NULL) {
 		if ($value === NULL) {

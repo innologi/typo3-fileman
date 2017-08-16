@@ -14,8 +14,8 @@ if (isset($TYPO3_CONF_VARS['EXT']['extConf'][$_EXTKEY])) {
 			array(
 				// using ext-constants in this file produces problems when the extension
 				// is uninstalled but the cache isn't cleared yet
-				3, //Tx_Fileman_Service_CsrfProtectServiceInterface::STRONG,
-				4, //Tx_Fileman_Service_CsrfProtectServiceInterface::STRONG_PLUS
+				3,
+				4,
 			)
 		) ? ', list' : '';
 	}

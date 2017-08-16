@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Link;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelper;
+
 /**
  * Link Action ViewHelper
  *
@@ -34,7 +34,7 @@ use TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelper;
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_ViewHelpers_Link_ActionViewHelper extends ActionViewHelper {
+class ActionViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Link\ActionViewHelper {
 	#@TODO _______ use DI override instead once we lose 4.x compatibility
 
 	/**
@@ -43,15 +43,15 @@ class Tx_Fileman_ViewHelpers_Link_ActionViewHelper extends ActionViewHelper {
 	protected $extensionKey = 'fileman';
 
 	/**
-	 * @var Tx_Fileman_Service_CsrfProtectServiceInterface
+	 * @var \Innologi\Fileman\Service\CsrfProtectServiceInterface
 	 */
 	protected $csrfProtectService;
 
 	/**
-	 * @param Tx_Fileman_Service_CsrfProtectServiceInterface $csrfProtectService
+	 * @param \Innologi\Fileman\Service\CsrfProtectServiceInterface $csrfProtectService
 	 * @return void
 	 */
-	public function injectCsrfProtectService(Tx_Fileman_Service_CsrfProtectServiceInterface $csrfProtectService) {
+	public function injectCsrfProtectService(\Innologi\Fileman\Service\CsrfProtectServiceInterface $csrfProtectService) {
 		$csrfProtectService->setProtectionLevelByExtConf($this->extensionKey);
 		$this->csrfProtectService = $csrfProtectService;
 	}

@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\MVC\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -34,7 +34,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_MVC_Controller_CsrfProtectController extends Tx_Fileman_MVC_Controller_ErrorOnDebugController {
+class CsrfProtectController extends ErrorOnDebugController {
 
 	// @LOW review public/protected in service
 	// @LOW pull apart service into different files?
@@ -51,15 +51,15 @@ class Tx_Fileman_MVC_Controller_CsrfProtectController extends Tx_Fileman_MVC_Con
 	protected $enableCsrfProtect = TRUE;
 
 	/**
-	 * @var Tx_Fileman_Service_CsrfProtectServiceInterface
+	 * @var \Innologi\Fileman\Service\CsrfProtectServiceInterface
 	 */
 	protected $csrfProtectService;
 
 	/**
-	 * @param Tx_Fileman_Service_CsrfProtectServiceInterface $csrfProtectService
+	 * @param \Innologi\Fileman\Service\CsrfProtectServiceInterface $csrfProtectService
 	 * @return void
 	 */
-	public function injectCsrfProtectService(Tx_Fileman_Service_CsrfProtectServiceInterface $csrfProtectService) {
+	public function injectCsrfProtectService(\Innologi\Fileman\Service\CsrfProtectServiceInterface $csrfProtectService) {
 		// note that strtolower wouldnt suffice in case of underscores in extension key
 		$csrfProtectService->setProtectionLevelByExtConf(strtolower($this->extensionName));
 		$this->csrfProtectService = $csrfProtectService;

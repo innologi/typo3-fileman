@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -34,7 +34,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Frenck Lutke <typo3@innologi.nl>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_AbstractCsrfProtectService implements SingletonInterface {
+class Typo3CsrfProtectService extends AbstractCsrfProtectService implements SingletonInterface {
 	// @TODO we might be able to completely replace our CSRF-security implementation with TYPO3's own
 	/**
 	 * @var string
@@ -70,7 +70,7 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 	 * Initializes class properties
 	 *
 	 * @return void
-	 * @see Tx_Fileman_Service_AbstractCsrfProtectService::initialize()
+	 * @see AbstractCsrfProtectService::initialize()
 	 */
 	protected function initialize() {
 		$this->executionTime = (int)$GLOBALS['EXEC_TIME'];
@@ -115,11 +115,11 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 			$this->tokenUri = $this->getRequestUri();
 
 			if ($this->request->getMethod() === 'GET') {
-				$this->tokenUri = Tx_Fileman_Utility_GeneralUtility::stripGetParameters(
+				$this->tokenUri = \Innologi\Fileman\Utility\GeneralUtility::stripGetParameters(
 					$this->tokenUri, array(
 						'chash',
 						urlencode(
-							Tx_Fileman_Utility_GeneralUtility::wrapGetParameter(
+							\Innologi\Fileman\Utility\GeneralUtility::wrapGetParameter(
 								$this->getTokenKey(),
 								$this->request->getControllerExtensionKey(),
 								$this->request->getPluginName()
@@ -158,7 +158,7 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 	 * @param string $uri
 	 * @param string $hash
 	 * @return string
-	 * @see Tx_Fileman_Service_AbstractCsrfProtectService::getToken()
+	 * @see AbstractCsrfProtectService::getToken()
 	 */
 	protected function getToken($uri, $hash) {
 		return $this->hashService->generateHmac(
@@ -171,7 +171,7 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 	 * to determine the token's location.
 	 *
 	 * @return string
-	 * @see Tx_Fileman_Service_AbstractCsrfProtectService::getRequestToken()
+	 * @see AbstractCsrfProtectService::getRequestToken()
 	 */
 	protected function getRequestToken() {
 		return $this->hasJsDependency()
@@ -191,7 +191,7 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 	 *
 	 * @param boolean $fromReferrer
 	 * @return string
-	 * @see Tx_Fileman_Service_AbstractCsrfProtectService::getHashSource()
+	 * @see AbstractCsrfProtectService::getHashSource()
 	 */
 	protected function getHashSource($fromReferrer = FALSE) {
 		if ($this->hasReferrerDependency()) {
@@ -199,7 +199,7 @@ class Tx_Fileman_Service_Typo3CsrfProtectService extends Tx_Fileman_Service_Abst
 				? $this->getHeader('REFERER')
 				: $this->getRequestUri();
 			$sourceUri = serialize(
-				Tx_Fileman_Utility_GeneralUtility::splitUrlAndSortInArray($sourceUri)
+				\Innologi\Fileman\Utility\GeneralUtility::splitUrlAndSortInArray($sourceUri)
 			);
 		} else {
 			$sourceUri = $this->getBaseUri();

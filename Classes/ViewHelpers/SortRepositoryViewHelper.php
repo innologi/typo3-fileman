@@ -1,4 +1,5 @@
 <?php
+namespace Innologi\Fileman\ViewHelpers;
 /***************************************************************
 *  Copyright notice
 *
@@ -22,9 +23,7 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
-
 /**
  * Sort Repository ViewHelper
  *
@@ -32,10 +31,10 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @author Frenck Lutke <typo3@innologi.nl>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_ViewHelpers_SortRepositoryViewHelper extends AbstractViewHelper {
+class SortRepositoryViewHelper extends AbstractViewHelper {
 
 	/**
-	 * @var Tx_Fileman_Service_SortRepositoryService
+	 * @var \Innologi\Fileman\Service\SortRepositoryService
 	 * @inject
 	 */
 	protected $sortRepositoryService;

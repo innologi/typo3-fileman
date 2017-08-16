@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\MVC\Exception;
 /***************************************************************
  *  Copyright notice
 *
@@ -31,7 +31,7 @@ use TYPO3\CMS\Extbase\Exception;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_MVC_Exception_NoPersistRepository extends Exception {
+class NoPersistRepository extends Exception {
 
 	protected $message = 'Persisting objects through a no-persist-repository is not possible.';
 

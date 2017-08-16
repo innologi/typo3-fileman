@@ -1,6 +1,5 @@
 <?php
 namespace Innologi\Fileman\Persistence;
-
 /***************************************************************
  *  Copyright notice
  *

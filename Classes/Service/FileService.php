@@ -1,4 +1,5 @@
 <?php
+namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -25,6 +26,7 @@
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\File\BasicFileUtility;
+use Innologi\Fileman\Domain\Model\File;
 /**
  * Facilitates all file-upload interaction.
  *
@@ -32,7 +34,7 @@ use TYPO3\CMS\Core\Utility\File\BasicFileUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Service_FileService implements SingletonInterface {
+class FileService implements SingletonInterface {
 
 	/**
 	 * $_FILES ext_plugin name
@@ -171,10 +173,10 @@ class Tx_Fileman_Service_FileService implements SingletonInterface {
 	/**
 	 * Sets all relevant uploadfile attributes in the $file instance
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param File $file
 	 * @return void
 	 */
-	public function setFileProperties(Tx_Fileman_Domain_Model_File $file) {
+	public function setFileProperties(File $file) {
 		if ($this->getUploadProperty('clear')) {
 			// necessary for js uploads, which will maintain their fileUri by themselves
 			$file->setFileUri(NULL);
@@ -254,11 +256,11 @@ class Tx_Fileman_Service_FileService implements SingletonInterface {
 	 *
 	 * We call it finalize, because it assumes it already has been moved around and should now rely on rename()
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param File $file
 	 * @param string $absDirPath
 	 * @return boolean
 	 */
-	public function finalizeMove(Tx_Fileman_Domain_Model_File $file, $absDirPath) {
+	public function finalizeMove(File $file, $absDirPath) {
 		if ($this->checkAndCreateDir($absDirPath)) {
 			$fileName = $file->getFileUri();
 			// if something goes wrong somewhere and we get an empty file name, we'll get exceptions here, so don't even try

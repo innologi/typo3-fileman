@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Repository;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,22 +24,23 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\Persistence\Repository;
+use Innologi\Fileman\Domain\Model\Category;
+use Innologi\Fileman\Domain\Model\FrontendUser;
 /**
  * Category repository
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_Fileman_Domain_Repository_CategoryRepository extends Repository {
+class CategoryRepository extends Repository {
 
 	/**
 	 * Returns all objects of this repository that are in the root (no parents)
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $excludeCategory
+	 * @param Category $excludeCategory
 	 * @return array An array of objects, empty if no objects found
 	 */
-	public function findInRoot(Tx_Fileman_Domain_Model_Category $excludeCategory = NULL) {
+	public function findInRoot(Category $excludeCategory = NULL) {
 		$query = $this->createQuery();
 
 		$conditions = array(
@@ -59,10 +60,10 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Repository {
 	/**
 	 * Returns all objects of this repository belonging to the provided category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category The category to show subcategories of
+	 * @param Category $category The category to show subcategories of
 	 * @return array An array of objects, empty if no objects found
 	 */
-	public function findAllByParentCategory(Tx_Fileman_Domain_Model_Category $category) {
+	public function findAllByParentCategory(Category $category) {
 		$query = $this->createQuery();
 		$result = $query->matching(
 			$query->contains('parentCategory', $category)
@@ -73,11 +74,11 @@ class Tx_Fileman_Domain_Repository_CategoryRepository extends Repository {
 	/**
 	 * Returns all objects with feUser set
 	 *
-	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
-	 * @param Tx_Fileman_Domain_Model_Category $excludeCategory
+	 * @param FrontendUser $feUser
+	 * @param Category $excludeCategory
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
-	public function findByFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser, Tx_Fileman_Domain_Model_Category $excludeCategory = NULL) {
+	public function findByFeUser(FrontendUser $feUser, Category $excludeCategory = NULL) {
 		$query = $this->createQuery();
 
 		$conditions = array(

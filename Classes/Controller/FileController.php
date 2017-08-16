@@ -1,4 +1,5 @@
 <?php
+namespace Innologi\Fileman\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -22,9 +23,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Innologi\Fileman\MVC\Controller\ActionController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use Innologi\Fileman\Service\SortRepositoryService;
+use Innologi\Fileman\Domain\Model\Category;
+use Innologi\Fileman\Domain\Model\File;
+use Innologi\Fileman\Domain\Model\FileStorage;
 /**
  * File controller
  *
@@ -32,7 +38,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_ActionController {
+class FileController extends ActionController {
 
 	// search constants
 	const SEARCH_CATEGORIES = 0;
@@ -42,21 +48,21 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * fileRepository
 	 *
-	 * @var Tx_Fileman_Domain_Repository_FileRepository
+	 * @var \Innologi\Fileman\Domain\Repository\FileRepository
 	 */
 	protected $fileRepository;
 
 	/**
 	 * linkRepository
 	 *
-	 * @var Tx_Fileman_Domain_Repository_LinkRepository
+	 * @var \Innologi\Fileman\Domain\Repository\LinkRepository
 	 */
 	protected $linkRepository;
 
 	/**
 	 * File service
 	 *
-	 * @var Tx_Fileman_Service_FileService
+	 * @var \Innologi\Fileman\Service\FileService
 	 * @inject
 	 */
 	protected $fileService;
@@ -64,26 +70,26 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * injectFileRepository
 	 *
-	 * @param Tx_Fileman_Domain_Repository_FileRepository $fileRepository
+	 * @param \Innologi\Fileman\Domain\Repository\FileRepository $fileRepository
 	 * @return void
 	 */
-	public function injectFileRepository(Tx_Fileman_Domain_Repository_FileRepository $fileRepository) {
+	public function injectFileRepository(\Innologi\Fileman\Domain\Repository\FileRepository $fileRepository) {
 		$this->fileRepository = $fileRepository;
 		$this->sortRepositoryService->registerSortableRepository($fileRepository, [
-			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'alternateTitle'
+			SortRepositoryService::SORT_FIELD_TITLE => 'alternateTitle'
 		]);
 	}
 
 	/**
 	 * injectLinkRepository
 	 *
-	 * @param Tx_Fileman_Domain_Repository_LinkRepository $linkRepository
+	 * @param \Innologi\Fileman\Domain\Repository\LinkRepository $linkRepository
 	 * @return void
 	 */
-	public function injectLinkRepository(Tx_Fileman_Domain_Repository_LinkRepository $linkRepository) {
+	public function injectLinkRepository(\Innologi\Fileman\Domain\Repository\LinkRepository $linkRepository) {
 		$this->linkRepository = $linkRepository;
 		$this->sortRepositoryService->registerSortableRepository($linkRepository, [
-			Tx_Fileman_Service_SortRepositoryService::SORT_FIELD_TITLE => 'linkName'
+			SortRepositoryService::SORT_FIELD_TITLE => 'linkName'
 		]);
 	}
 
@@ -129,12 +135,12 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Also shows links
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category The category to show files of
+	 * @param \Innologi\Fileman\Domain\Model\Category $category The category to show files of
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @return void
 	 */
-	public function listAction(Tx_Fileman_Domain_Model_Category $category = NULL) {
+	public function listAction(Category $category = NULL) {
 		if ($category === NULL) {
 			$subCategories = $this->categoryRepository->findAll();
 			$files = $this->fileRepository->findAll();
@@ -162,11 +168,11 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	/**
 	 * action download
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param boolean $no_cache
 	 * @return void
 	 */
-	public function downloadAction(Tx_Fileman_Domain_Model_File $file, $no_cache = FALSE) { #@LOW currently unused
+	public function downloadAction(File $file, $no_cache = FALSE) { #@LOW currently unused
 		$fileUri = $file->getFileUri();
 
 		if(is_file($fileUri)) {
@@ -228,8 +234,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Requires @dontverifyrequesthash because of the forward when a validation error occurs @ create action.
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_FileStorage $files
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $files
@@ -237,13 +243,13 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @dontverifyrequesthash
 	 * @return void
 	 */
-	public function newAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_FileStorage $files = NULL) {
+	public function newAction(Category $category, FileStorage $files = NULL) {
 		if ($files !== NULL) {
 			//when a validation error occurs, $files will contain all file entries, but not the attributes given
 			//by fileService during validation, because forward() tells extbase to re-map the request arguments
 			$this->fileService->reset(); //so start over!
 			$fileStorage = $files->getFile();
-			/** @var Tx_Fileman_Domain_Model_File $file */
+			/** @var File $file */
 			foreach ($fileStorage as $hash=>$file) {
 				if ($this->fileService->next()) {
 					//each uploaded file that was validated, is associated with the matching $file entry
@@ -273,18 +279,18 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Because the new action allows us to alter the form, we have to issue a @dontverifyrequesthash here.
 	 *
-	 * @param Tx_Fileman_Domain_Model_FileStorage $files
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontverifyrequesthash
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function createAction(Tx_Fileman_Domain_Model_FileStorage $files, Tx_Fileman_Domain_Model_Category $category) {
+	public function createAction(FileStorage $files, Category $category) {
 		$fileStorage = $files->getFile();
 		$failedFiles = array();
-		/** @var Tx_Fileman_Domain_Model_File $file */
+		/** @var File $file */
 		foreach ($fileStorage as $file) {
 			#$absDirPath = PATH_site.$this->settings['uploadDir'];
 			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@LOW might as well do it static right now
@@ -329,15 +335,15 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Note the file/files difference with new action
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\File $file
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $file
 	 * @ignorevalidation $file
 	 * @return void
 	 */
-	public function editAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
+	public function editAction(File $file, Category $category = NULL) {
 		$this->view->assign('category', $category); //category is given for URL-consistency and redirecting afterwards
 
 		// if the user isn't a superUser, categories should be limited to those he owns
@@ -356,14 +362,14 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Note the file/files difference with create action
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\File $file
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function updateAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
+	public function updateAction(File $file, Category $category = NULL) {
 		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {
@@ -388,8 +394,8 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 *
 	 * Also explicitly removes $file from $category, to make sure the counters of this bi-directional relation are in order
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\File $file
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontvalidate $file
@@ -397,7 +403,7 @@ class Tx_Fileman_Controller_FileController extends Tx_Fileman_MVC_Controller_Act
 	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function deleteAction(Tx_Fileman_Domain_Model_File $file, Tx_Fileman_Domain_Model_Category $category = NULL) {
+	public function deleteAction(File $file, Category $category = NULL) {
 		$arguments = NULL;
 		$controller = 'Category';
 		$fileCategories = $file->getCategory();

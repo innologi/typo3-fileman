@@ -1,4 +1,5 @@
 <?php
+namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -33,7 +34,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Frenck Lutke <typo3@innologi.nl>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_Service_SortRepositoryService implements SingletonInterface{
+class SortRepositoryService implements SingletonInterface{
 
 	const SORT_FIELD_TITLE = 1;
 	const SORT_FIELD_CREATION_TIME = 2;
@@ -53,7 +54,7 @@ class Tx_Fileman_Service_SortRepositoryService implements SingletonInterface{
 	/**
 	 * User service
 	 *
-	 * @var Tx_Fileman_Service_UserService
+	 * @var \Innologi\Fileman\Service\UserService
 	 * @inject
 	 */
 	protected $userService;

@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Form;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,8 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Innologi\Fileman\Validation\StorageError;
 /**
  * Changes to support properties from properties. This version simply assumes
  * that such are _ALWAYS_ present, hence it is only usable with such fields.
@@ -35,7 +35,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_ViewHelpers_Form_UploadViewHelper extends UploadViewHelper {
+class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper {
 
 	/**
 	 * Initialize the arguments.
@@ -78,7 +78,7 @@ class Tx_Fileman_ViewHelpers_Form_UploadViewHelper extends UploadViewHelper {
 								//if property of property
 								if ($propertyError instanceof Tx_Extbase_Validation_PropertyError && $propertyError->getPropertyName() === $propertyName[1]) {
 									return $propertyError->getErrors();
-								} elseif ($propertyError instanceof Tx_Fileman_Validation_StorageError) { //if property of storage-property
+								} elseif ($propertyError instanceof StorageError) { //if property of storage-property
 									$storageErrors = $propertyError->getErrors();
 									foreach ($storageErrors as $id=>$storageError) {
 										if (is_array($storageError)) {

@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,15 +23,14 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup;
+
 /**
  * FontendUserGroup domain model. Used to ditch the record_type requirement of the original model.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_Fileman_Domain_Model_FrontendUserGroup extends FrontendUserGroup {
+class FrontendUserGroup extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup {
 	// @FIX we might not need these kind of shells anymore for the old recordType-shit
 }
 ?>

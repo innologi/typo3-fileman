@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Validator;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,20 +23,23 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use Innologi\Fileman\Validation\Validator\PreppedAbstractValidator;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
+use Innologi\Fileman\Domain\Model\File;
+use Innologi\Fileman\Validation\StorageError;
 /**
  * Object Storage Validator, validates an ObjectStorage's objects.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Validation_Validator_PreppedAbstractValidator {
+class ObjectStorageValidator extends PreppedAbstractValidator {
 
 	/**
 	 * File service
 	 *
-	 * @var Tx_Fileman_Service_FileService
+	 * @var \Innologi\Fileman\Service\FileService
 	 * @inject
 	 */
 	protected $fileService;
@@ -63,11 +66,11 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 			$storageError = NULL;
 
 			if ($value instanceof ObjectStorage) {
-				$validator = $this->objectManager->get('Tx_Extbase_Validation_ValidatorResolver')->createValidator('Tx_Fileman_Domain_Validator_ObjectPropertiesValidator',$this->options);
+				$validator = $this->objectManager->get(ValidatorResolver::class)->createValidator(ObjectPropertiesValidator::class, $this->options);
 				$valid = TRUE;
 
 				//if the storage is a File ObjectStorage, we need to initialize some stuff for fileService that need to happen exactly once per storage
-				if ($value->current() instanceof Tx_Fileman_Domain_Model_File) {
+				if ($value->current() instanceof File) {
 					$this->fileService->findSubstitutes();
 					$this->fileService->reset();
 				} //we could really only remove this if we create a FileStorage validator from which the objectStorage validation originates, and place it there instead
@@ -77,9 +80,9 @@ class Tx_Fileman_Domain_Validator_ObjectStorageValidator extends Tx_Fileman_Vali
 						$valid = FALSE;
 
 						if (!isset($storageError)) {
-							$propertyName = str_replace('Tx_Fileman_Domain_Model_','',get_class($obj));
+							$propertyName = str_replace('Innologi\\Fileman\\Domain\\Model\\','',get_class($obj));
 							$propertyName[0] = strtolower($propertyName[0]);
-							$storageError = new Tx_Fileman_Validation_StorageError($propertyName);
+							$storageError = new StorageError($propertyName);
 						}
 
 						$storageError->addErrors($obj->getIndex(), $validator->getErrors());

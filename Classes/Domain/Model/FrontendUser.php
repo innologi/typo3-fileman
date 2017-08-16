@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+
 /**
  * FrontendUser, allows us to include fe_users of any recordType.
  *
@@ -38,10 +38,10 @@ use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_FrontendUser extends FrontendUser {
+class FrontendUser extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 
 	/**
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_FrontendUserGroup>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\FrontendUserGroup>
 	 */
 	protected $usergroup;
 
@@ -59,20 +59,20 @@ class Tx_Fileman_Domain_Model_FrontendUser extends FrontendUser {
 	/**
 	 * Adds a usergroup to the frontend user
 	 *
-	 * @param Tx_Fileman_Domain_Model_FrontendUserGroup $usergroup
+	 * @param \Innologi\Fileman\Domain\Model\FrontendUserGroup $usergroup
 	 * @return void
 	 */
-	public function addUsergroup(Tx_Fileman_Domain_Model_FrontendUserGroup $usergroup) {
+	public function addUsergroup(FrontendUserGroup $usergroup) {
 		$this->usergroup->attach($usergroup);
 	}
 
 	/**
 	 * Removes a usergroup from the frontend user
 	 *
-	 * @param Tx_Fileman_Domain_Model_FrontendUserGroup $usergroup
+	 * @param \Innologi\Fileman\Domain\Model\FrontendUserGroup $usergroup
 	 * @return void
 	 */
-	public function removeUsergroup(Tx_Fileman_Domain_Model_FrontendUserGroup $usergroup) {
+	public function removeUsergroup(FrontendUserGroup $usergroup) {
 		$this->usergroup->detach($usergroup);
 	}
 

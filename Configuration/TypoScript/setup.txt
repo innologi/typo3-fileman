@@ -1,10 +1,10 @@
 config.tx_extbase.objects {
-	Tx_Fileman_Service_CsrfProtectServiceInterface {
-		className = Tx_Fileman_Service_Typo3CsrfProtectService
+	Innologi\Fileman\Service\CsrfProtectServiceInterface {
+		className = Innologi\Fileman\Service\Typo3CsrfProtectService
 	}
 }
 
-includeLibs.Tx_Fileman_TypoScript = EXT:fileman/Resources/Private/Scripts/Tx_Fileman_Typoscript.php
+includeLibs.Tx_Fileman_TypoScript = EXT:fileman/Classes/Scripts/Typoscript.php
 lib.tx_fileman.maxFileUploads = USER
 lib.tx_fileman.maxFileUploads.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
 
@@ -17,27 +17,27 @@ plugin.tx_fileman {
 	persistence {
 		storagePid = {$plugin.tx_fileman.persistence.storagePid}
 		classes {
-			Tx_Fileman_Domain_Model_Category {
+			Innologi\Fileman\Domain\Model\Category {
 				mapping.columns {
 					fe_group.mapOnProperty = feGroup
 				}
 			}
-			Tx_Fileman_Domain_Model_File {
-				mapping.columns {
-					tstamp.mapOnProperty = tstamp
-					fe_group.mapOnProperty = feGroup
-				}
-			}
-			Tx_Fileman_Domain_Model_Link {
+			Innologi\Fileman\Domain\Model\File {
 				mapping.columns {
 					tstamp.mapOnProperty = tstamp
 					fe_group.mapOnProperty = feGroup
 				}
 			}
-			Tx_Fileman_Domain_Model_FrontendUser {
+			Innologi\Fileman\Domain\Model\Link {
+				mapping.columns {
+					tstamp.mapOnProperty = tstamp
+					fe_group.mapOnProperty = feGroup
+				}
+			}
+			Innologi\Fileman\Domain\Model\FrontendUser {
 				mapping.tableName = fe_users
 			}
-			Tx_Fileman_Domain_Model_FrontendUserGroup {
+			Innologi\Fileman\Domain\Model\FrontendUserGroup {
 				mapping.tableName = fe_groups
 			}
 		}
@@ -133,7 +133,7 @@ plugin.tx_fileman {
 		}
 		# extbase 6.2+ bugfix for rewrittenPropertyMapper=0
 		TYPO3\CMS\Extbase\Validation\ValidatorResolver {
-			className = Tx_Fileman_Validation_ValidatorResolver
+			className = Innologi\Fileman\Validation\ValidatorResolver
 		}
 	}
 }

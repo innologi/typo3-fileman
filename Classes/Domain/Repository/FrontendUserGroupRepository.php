@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Repository;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use Innologi\Fileman\Persistence\NoPersistRepository;
 /**
  * FontendUserGroup repository. Used to ditch the record_type requirement of the original model.
  *
@@ -31,7 +31,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Repository_FrontendUserGroupRepository extends Tx_Fileman_Persistence_NoPersistRepository {
+class FrontendUserGroupRepository extends NoPersistRepository {
 
 }
 ?>

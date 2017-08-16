@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Validation;
 /***************************************************************
  *  Copyright notice
  *
@@ -24,7 +24,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
+
 /**
  * Validator Resolver
  *
@@ -37,7 +37,7 @@ use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_Validation_ValidatorResolver extends ValidatorResolver {
+class ValidatorResolver extends \TYPO3\CMS\Extbase\Validation\ValidatorResolver {
 
 	/**
 	 * Resolves and returns the base validator conjunction for the given data type.
@@ -49,7 +49,7 @@ class Tx_Fileman_Validation_ValidatorResolver extends ValidatorResolver {
 	 *
 	 * @param string $dataType The data type to search a validator for. Usually the fully qualified object name
 	 * @param boolean $dontStoreConjunction If true, will not store the result or use it from storage
-	 * @return Tx_Extbase_Validation_Validator_ConjunctionValidator The validator conjunction or NULL
+	 * @return \TYPO3\CMS\Extbase\Validation\Validator\ConjunctionValidator The validator conjunction or NULL
 	 */
 	public function getBaseValidatorConjunction($dataType, $dontStoreConjunction = FALSE) {
 		// <!-- CHANGE
