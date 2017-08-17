@@ -276,4 +276,3 @@ class Typo3CsrfProtectService extends AbstractCsrfProtectService implements Sing
 	}
 
 }
-?>

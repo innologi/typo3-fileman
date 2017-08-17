@@ -66,4 +66,3 @@ class LinksValidator extends AbstractValidator {
 		return TRUE;
 	}
 }
-?>

@@ -79,5 +79,3 @@ class ErrorsViewHelper extends Tx_Fluid_ViewHelpers_Form_ErrorsViewHelper {
 		return array();
 	}
 }
-
-?>

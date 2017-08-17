@@ -161,4 +161,3 @@ class ActionController extends CsrfProtectController {
 		$this->redirect('list', NULL, NULL, $arguments);
 	}
 }
-?>

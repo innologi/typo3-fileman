@@ -82,4 +82,3 @@ class PersistenceManager extends \TYPO3\CMS\Extbase\Persistence\Generic\Persiste
 	}
 
 }
-?>

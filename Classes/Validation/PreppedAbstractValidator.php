@@ -40,4 +40,3 @@ abstract class PreppedAbstractValidator extends AbstractValidator {
 	protected $objectManager;
 
 }
-?>

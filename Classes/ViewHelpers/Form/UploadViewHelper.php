@@ -100,5 +100,3 @@ class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelpe
 	}
 
 }
-
-?>

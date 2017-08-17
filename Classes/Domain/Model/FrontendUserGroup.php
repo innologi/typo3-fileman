@@ -33,4 +33,3 @@ namespace Innologi\Fileman\Domain\Model;
 class FrontendUserGroup extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUserGroup {
 	// @FIX we might not need these kind of shells anymore for the old recordType-shit
 }
-?>

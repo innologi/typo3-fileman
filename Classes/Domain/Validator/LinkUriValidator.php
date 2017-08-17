@@ -50,4 +50,3 @@ class LinkUriValidator extends AbstractValidator {
 		return TRUE;
 	}
 }
-?>

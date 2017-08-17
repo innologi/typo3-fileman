@@ -51,4 +51,3 @@ class BaseNameViewHelper extends AbstractViewHelper {
 	}
 
 }
-?>

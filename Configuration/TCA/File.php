@@ -237,5 +237,3 @@ $TCA['tx_fileman_domain_model_file'] = array(
 		),
 	),
 );
-
-?>

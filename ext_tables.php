@@ -111,5 +111,3 @@ $TCA['tx_fileman_domain_model_link'] = array(
 		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_fileman_domain_model_link.gif'
 	),
 );
-
-?>

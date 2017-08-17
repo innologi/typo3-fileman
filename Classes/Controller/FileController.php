@@ -528,4 +528,3 @@ class FileController extends ActionController {
 	}
 
 }
-?>

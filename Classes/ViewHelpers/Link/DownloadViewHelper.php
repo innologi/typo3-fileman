@@ -122,5 +122,3 @@ class DownloadViewHelper extends AbstractTagBasedViewHelper {
 	}
 
 }
-
-?>

@@ -147,4 +147,3 @@ class FileValidator extends AbstractValidator {
 	}
 
 }
-?>

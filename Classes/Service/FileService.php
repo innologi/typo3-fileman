@@ -377,4 +377,3 @@ class FileService implements SingletonInterface {
 	}
 
 }
-?>

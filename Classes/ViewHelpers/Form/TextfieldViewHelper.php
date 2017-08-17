@@ -181,5 +181,3 @@ class TextfieldViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\TextfieldVie
 	}
 
 }
-
-?>

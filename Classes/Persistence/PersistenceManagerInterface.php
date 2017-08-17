@@ -33,4 +33,3 @@ namespace Innologi\Fileman\Persistence;
 interface PersistenceManagerInterface extends \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface {
 
 }
-?>

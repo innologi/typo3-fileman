@@ -34,4 +34,3 @@ use Innologi\Fileman\Persistence\NoPersistRepository;
 class FrontendUserGroupRepository extends NoPersistRepository {
 
 }
-?>

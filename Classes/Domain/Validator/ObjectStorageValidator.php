@@ -97,4 +97,3 @@ class ObjectStorageValidator extends PreppedAbstractValidator {
 	}
 
 }
-?>

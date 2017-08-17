@@ -72,4 +72,3 @@ class TypoScript {
 		return ini_get('session.upload_progress.name');
 	}
 }
-?>

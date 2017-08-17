@@ -311,5 +311,3 @@ $TCA['tx_fileman_domain_model_category'] = array(
 		),
 	),
 );
-
-?>
