@@ -9,28 +9,24 @@
 				<f:render partial="FormErrorsDetail" arguments="{entity: error.propertyName, id: identity, error: realErrorDetail}" />
 			</f:for>
 		</f:then>
-		<f:else>
-			<f:if condition="{errorDetail.code} == 1242859509">
+		<f:else if="{errorDetail.code} == 1242859509">
+			<f:then>
+				<f:render partial="FormErrorsDetail" arguments="{entity: error.propertyName, id: id, error: errorDetail}" />
+			</f:then>
+			<f:else if condition="{errorDetail.code} == 133713371337">
 				<f:then>
-					<f:render partial="FormErrorsDetail" arguments="{entity: error.propertyName, id: id, error: errorDetail}" />
+					<f:render partial="FormErrorsDetail" arguments="{entity: error.propertyName, isStorageObject: 1, error: errorDetail}" />
 				</f:then>
 				<f:else>
-					<f:if condition="{errorDetail.code} == 133713371337">
-						<f:then>
-							<f:render partial="FormErrorsDetail" arguments="{entity: error.propertyName, isStorageObject: 1, error: errorDetail}" />
-						</f:then>
-						<f:else>
-							<li>
-								<f:alias map="{title: 'tx_fileman_domain_model_{fi:format.lowerCase(value: entity)}.{fi:format.camelCase(type:\'camelCaseToLowerCaseUnderscored\',value: error.propertyName)}'}">
-									<!-- error.{entity}.{error.propertyName}.{errorDetail.code} -->
-									<span class="validation-fieldname"><f:translate key="{title}">{title}</f:translate>:</span>
-									<f:translate key="error.{entity}.{error.propertyName}.{errorDetail.code}">{errorDetail.message}</f:translate>
-								</f:alias>
-							</li>
-						</f:else>
-					</f:if>
+					<li>
+						<f:alias map="{title: 'tx_fileman_domain_model_{fi:format.lowerCase(value: entity)}.{fi:format.camelCase(type:\'camelCaseToLowerCaseUnderscored\',value: error.propertyName)}'}">
+							<!-- error.{entity}.{error.propertyName}.{errorDetail.code} -->
+							<span class="validation-fieldname"><f:translate key="{title}">{title}</f:translate>:</span>
+							<f:translate key="error.{entity}.{error.propertyName}.{errorDetail.code}">{errorDetail.message}</f:translate>
+						</f:alias>
+					</li>
 				</f:else>
-			</f:if>
+			</f:else>
 		</f:else> 
 	</f:if>
 </f:for>
