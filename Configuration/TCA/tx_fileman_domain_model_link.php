@@ -1,10 +1,32 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
-	die ('Access denied.');
-}
+defined('TYPO3_MODE') or die();
 
-$TCA['tx_fileman_domain_model_link'] = array(
-	'ctrl' => $TCA['tx_fileman_domain_model_link']['ctrl'],
+return [
+	'ctrl' => array(
+		'title'	=> 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link',
+		'label' => 'link_name',
+		'label_alt' => 'link_uri',
+		'tstamp' => 'tstamp',
+		'crdate' => 'crdate',
+		'cruser_id' => 'cruser_id',
+		'dividers2tabs' => TRUE,
+		'sortby' => 'sorting',
+		'versioningWS' => 2,
+		'versioning_followPages' => TRUE,
+		'origUid' => 't3_origuid',
+		'languageField' => 'sys_language_uid',
+		'transOrigPointerField' => 'l10n_parent',
+		'transOrigDiffSourceField' => 'l10n_diffsource',
+		'delete' => 'deleted',
+		'enablecolumns' => array(
+			'disabled' => 'hidden',
+			'starttime' => 'starttime',
+			'endtime' => 'endtime',
+			'fe_group' => 'fe_group'
+		),
+		'searchFields' => 'link_uri,link_name,description,',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('fileman') . 'Resources/Public/Icons/tx_fileman_domain_model_link.gif'
+	),
 	'interface' => array(
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, link_uri, link_name, description, category, fe_user, fe_group',
 	),
@@ -205,4 +227,4 @@ $TCA['tx_fileman_domain_model_link'] = array(
 				),
 		),
 	),
-);
+];
