@@ -24,9 +24,8 @@ namespace Innologi\Fileman\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use Innologi\Fileman\MVC\Controller\ActionController;
+use Innologi\Fileman\Domain\Model\{Category, Link};
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use Innologi\Fileman\Domain\Model\Category;
-use Innologi\Fileman\Domain\Model\Link;
 /**
  * Link Controller
  *

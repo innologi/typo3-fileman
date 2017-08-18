@@ -23,11 +23,11 @@ namespace Innologi\Fileman\Domain\Validator;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use Innologi\Fileman\Validation\Validator\PreppedAbstractValidator;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Extbase\Validation\ValidatorResolver;
-use Innologi\Fileman\Domain\Model\File;
+use Innologi\Fileman\Validation\Validator\PreppedAbstractValidator;
 use Innologi\Fileman\Validation\StorageError;
+use Innologi\Fileman\Domain\Model\File;
 /**
  * Object Storage Validator, validates an ObjectStorage's objects.
  *

@@ -23,14 +23,12 @@ namespace Innologi\Fileman\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use Innologi\Fileman\MVC\Controller\ActionController;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use Innologi\Fileman\MVC\Controller\ActionController;
 use Innologi\Fileman\Service\SortRepositoryService;
-use Innologi\Fileman\Domain\Model\Category;
-use Innologi\Fileman\Domain\Model\File;
-use Innologi\Fileman\Domain\Model\FileStorage;
+use Innologi\Fileman\Domain\Model\{Category, File, FileStorage};
 /**
  * File controller
  *

@@ -24,8 +24,7 @@ namespace Innologi\Fileman\Domain\Repository;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use Innologi\Fileman\Domain\Model\Category;
-use Innologi\Fileman\Domain\Model\FrontendUser;
+use Innologi\Fileman\Domain\Model\{Category, FrontendUser};
 /**
  * Category repository
  *
