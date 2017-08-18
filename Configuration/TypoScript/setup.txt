@@ -1,9 +1,3 @@
-config.tx_extbase.objects {
-	Innologi\Fileman\Service\CsrfProtectServiceInterface {
-		className = Innologi\Fileman\Service\Typo3CsrfProtectService
-	}
-}
-
 includeLibs.Tx_Fileman_TypoScript = EXT:fileman/Classes/Scripts/Typoscript.php
 lib.tx_fileman.maxFileUploads = USER
 lib.tx_fileman.maxFileUploads.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
@@ -16,31 +10,6 @@ plugin.tx_fileman {
 	}
 	persistence {
 		storagePid = {$plugin.tx_fileman.persistence.storagePid}
-		classes {
-			Innologi\Fileman\Domain\Model\Category {
-				mapping.columns {
-					fe_group.mapOnProperty = feGroup
-				}
-			}
-			Innologi\Fileman\Domain\Model\File {
-				mapping.columns {
-					tstamp.mapOnProperty = tstamp
-					fe_group.mapOnProperty = feGroup
-				}
-			}
-			Innologi\Fileman\Domain\Model\Link {
-				mapping.columns {
-					tstamp.mapOnProperty = tstamp
-					fe_group.mapOnProperty = feGroup
-				}
-			}
-			Innologi\Fileman\Domain\Model\FrontendUser {
-				mapping.tableName = fe_users
-			}
-			Innologi\Fileman\Domain\Model\FrontendUserGroup {
-				mapping.tableName = fe_groups
-			}
-		}
 	}
 	jslib {
 		jQuery.external = 1
@@ -118,23 +87,6 @@ plugin.tx_fileman {
 		denyFileType = {$plugin.tx_fileman.settings.denyFileType}
 		maxFileSize = {$plugin.tx_fileman.js.maxFileSize}
 		maxTotalFileSize = {$plugin.tx_fileman.js.maxTotalFileSize}
-	}
-	features {
-		# @TODO support before TYPO3 6.3 release
-		rewrittenPropertyMapper = 0
-	}
-	objects {
-		# extbase 6.1+ bugfix for rewrittenPropertyMapper=0
-		TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager {
-			className = Innologi\Fileman\Persistence\PersistenceManager
-		}
-		TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface {
-			className = Innologi\Fileman\Persistence\PersistenceManagerInterface
-		}
-		# extbase 6.2+ bugfix for rewrittenPropertyMapper=0
-		TYPO3\CMS\Extbase\Validation\ValidatorResolver {
-			className = Innologi\Fileman\Validation\ValidatorResolver
-		}
 	}
 }
 
