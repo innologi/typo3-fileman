@@ -2,7 +2,7 @@
 defined('TYPO3_MODE') or die();
 
 return [
-	'ctrl' => array(
+	'ctrl' => [
 		'title'	=> 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link',
 		'label' => 'link_name',
 		'label_alt' => 'link_uri',
@@ -11,220 +11,204 @@ return [
 		'cruser_id' => 'cruser_id',
 		'dividers2tabs' => TRUE,
 		'sortby' => 'sorting',
-		'versioningWS' => 2,
-		'versioning_followPages' => TRUE,
+		'versioningWS' => TRUE,
 		'origUid' => 't3_origuid',
 		'languageField' => 'sys_language_uid',
 		'transOrigPointerField' => 'l10n_parent',
 		'transOrigDiffSourceField' => 'l10n_diffsource',
 		'delete' => 'deleted',
-		'enablecolumns' => array(
+		'enablecolumns' => [
 			'disabled' => 'hidden',
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 			'fe_group' => 'fe_group'
-		),
+		],
 		'searchFields' => 'link_uri,link_name,description,',
-		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('fileman') . 'Resources/Public/Icons/tx_fileman_domain_model_link.gif'
-	),
-	'interface' => array(
+		'iconfile' => 'EXT:fileman/Resources/Public/Icons/tx_fileman_domain_model_link.gif'
+	],
+	'interface' => [
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, link_uri, link_name, description, category, fe_user, fe_group',
-	),
-	'types' => array(
-		'1' => array('showitem' => 'sys_language_uid;;;;1-1-1, l10n_parent, l10n_diffsource, hidden;;1, link_uri, link_name,description,category, fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime, fe_group'),
-	),
-	'palettes' => array(
-		'1' => array('showitem' => ''),
-	),
-	'columns' => array(
-		'sys_language_uid' => array(
-			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.language',
-			'config' => array(
+	],
+	'types' => [
+		'1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, link_uri, link_name,description,category, fe_user,--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime, endtime, fe_group'],
+	],
+	'palettes' => [
+		'1' => ['showitem' => ''],
+	],
+	'columns' => [
+		'sys_language_uid' => [
+			'exclude' => TRUE,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.language',
+			'config' => [
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'foreign_table' => 'sys_language',
 				'foreign_table_where' => 'ORDER BY sys_language.title',
-				'items' => array(
-					array('LLL:EXT:lang/locallang_general.xml:LGL.allLanguages', -1),
-					array('LLL:EXT:lang/locallang_general.xml:LGL.default_value', 0)
-				),
-			),
-		),
-		'l10n_parent' => array(
+				'items' => [
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages', -1],
+					['LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.default_value', 0]
+				],
+				'default' => 0,
+				'fieldWizard' => [
+					'selectIcons' => [
+						'disabled' => FALSE,
+					],
+				],
+			]
+		],
+		'l10n_parent' => [
 			'displayCond' => 'FIELD:sys_language_uid:>:0',
-			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.l18n_parent',
-			'config' => array(
+			'exclude' => TRUE,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.l18n_parent',
+			'config' => [
 				'type' => 'select',
-				'items' => array(
-					array('', 0),
-				),
-				'foreign_table' => 'tx_fileman_domain_model_link',
-				'foreign_table_where' => 'AND tx_fileman_domain_model_link.pid=###CURRENT_PID### AND tx_fileman_domain_model_link.sys_language_uid IN (-1,0)',
-			),
-		),
-		'l10n_diffsource' => array(
-			'config' => array(
+				'renderType' => 'selectSingle',
+				'items' => [
+					['', 0]
+				],
+				'foreign_table' => 'sys_category',
+				'foreign_table_where' => 'AND sys_category.uid=###REC_FIELD_l10n_parent### AND sys_category.sys_language_uid IN (-1,0)',
+				'default' => 0
+			]
+		],
+		'l10n_diffsource' => [
+			'config' => [
 				'type' => 'passthrough',
-			),
-		),
-		't3ver_label' => array(
+				'default' => ''
+			]
+		],
+		't3ver_label' => [
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
-			'config' => array(
+			'config' => [
 				'type' => 'input',
 				'size' => 30,
 				'max' => 255,
-			)
-		),
-		'hidden' => array(
+			]
+		],
+		'hidden' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-			'config' => array(
+			'config' => [
 				'type' => 'check',
-			),
-		),
-		'starttime' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.starttime',
-			'config' => array(
+			],
+		],
+		'starttime' => [
+			'exclude' => TRUE,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
-				'range' => array(
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
-		'endtime' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.endtime',
-			'config' => array(
+				'behaviour' => [
+					'allowLanguageSynchronization' => TRUE,
+				]
+			]
+		],
+		'endtime' => [
+			'exclude' => TRUE,
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+			'config' => [
 				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
+				'renderType' => 'inputDateTime',
 				'eval' => 'datetime',
-				'checkbox' => 0,
 				'default' => 0,
-				'range' => array(
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
-		'fe_group' => array(
+				'range' => [
+					'upper' => mktime(0, 0, 0, 1, 1, 2038),
+				],
+				'behaviour' => [
+					'allowLanguageSynchronization' => TRUE,
+				]
+			]
+		],
+		'fe_group' => [
 			'exclude' => 1,
 			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.fe_group',
-			'config' => array(
+			'config' => [
 				'type' => 'select',
+				'renderType' => 'selectMultipleSideBySide',
 				'size' => 7,
 				'maxitems' => 20,
-				'items' => array(
-					array(
+				'items' => [
+					[
 						'LLL:EXT:lang/locallang_general.xlf:LGL.hide_at_login',
 						-1
-					),
-					array(
+					],
+					[
 						'LLL:EXT:lang/locallang_general.xlf:LGL.any_login',
 						-2
-					),
-					array(
+					],
+					[
 						'LLL:EXT:lang/locallang_general.xlf:LGL.usergroups',
 						'--div--'
-					)
-				),
+					]
+				],
 				'exclusiveKeys' => '-1,-2',
 				'foreign_table' => 'fe_groups',
 				'foreign_table_where' => 'ORDER BY fe_groups.title'
-			)
-		),
-		'link_uri' => array(
+			]
+		],
+		'link_uri' => [
 			'exclude' => 0,
 			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.link_uri',
-			'config' => array(
+			'config' => [
 				'type' => 'input',
 				'size' => 48,
 				'eval' => 'trim,required'
-			),
-		),
-		'link_name' => array(
+			],
+		],
+		'link_name' => [
 			'exclude' => 0,
 			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.link_name',
-			'config' => array(
+			'config' => [
 				'type' => 'input',
 				'size' => 48,
 				'eval' => 'trim,required'
-			),
-		),
-		'description' => array(
-				'exclude' => 0,
-				'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.description',
-				'config' => array(
-						'type' => 'text',
-						'cols' => 48,
-						'rows' => 20,
-						'eval' => 'trim',
-						'wizards' => array(
-								'RTE' => array(
-										'icon' => 'wizard_rte2.gif',
-										'notNewRecords'=> 1,
-										'RTEonly' => 1,
-										'script' => 'wizard_rte.php',
-										'title' => 'LLL:EXT:cms/locallang_ttc.xml:bodytext.W.RTE',
-										'type' => 'script'
-								)
-						)
-				),
-				'defaultExtras' => 'richtext[]',
-		),
-		'category' => array(
-				'exclude' => 0,
-				'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.category',
-				'config' => array(
-						'type' => 'select',
-						'foreign_table' => 'tx_fileman_domain_model_category',
-						'MM' => 'tx_fileman_link_category_mm',
-						'size' => 10,
-						'autoSizeMax' => 30,
-						'maxitems' => 999,
-						'multiple' => 0,
-						'wizards' => array(
-								'_PADDING' => 1,
-								'_VERTICAL' => 1,
-								'edit' => array(
-										'type' => 'popup',
-										'title' => 'Edit',
-										'script' => 'wizard_edit.php',
-										'icon' => 'edit2.gif',
-										'popup_onlyOpenIfSelected' => 1,
-										'JSopenParams' => 'height=350,width=580,status=0,menubar=0,scrollbars=1',
-								),
-								'add' => Array(
-										'type' => 'script',
-										'title' => 'Create new',
-										'icon' => 'add.gif',
-										'params' => array(
-												'table' => 'tx_fileman_domain_model_category',
-												'pid' => '###CURRENT_PID###',
-												'setValue' => 'prepend'
-										),
-										'script' => 'wizard_add.php',
-								),
-						),
-				),
-		),
-		'fe_user' => array(
-				'exclude' => 0,
-				'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.fe_user',
-				'config' => array(
-						'type' => 'select',
-						'foreign_table' => 'fe_users',
-						'minitems' => 0,
-						'maxitems' => 1,
-				),
-		),
-	),
+			],
+		],
+		'description' => [
+			'exclude' => 0,
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.description',
+			'config' => [
+				'type' => 'text',
+				'cols' => 48,
+				'rows' => 20,
+				'eval' => 'trim',
+				'enableRichtext' => TRUE
+			],
+		],
+		'category' => [
+			'exclude' => 0,
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.category',
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectMultipleSideBySide',
+				'foreign_table' => 'tx_fileman_domain_model_category',
+				'MM' => 'tx_fileman_link_category_mm',
+				'size' => 10,
+				'autoSizeMax' => 30,
+				'maxitems' => 999,
+				'multiple' => 0,
+				'fieldControl' => [
+					'editPopup' => [
+						'disabled' => FALSE,
+					],
+					'addRecord' => [
+						'disabled' => FALSE,
+					],
+				],
+			],
+		],
+		'fe_user' => [
+			'exclude' => 0,
+			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_link.fe_user',
+			'config' => [
+				'type' => 'select',
+				'renderType' => 'selectSingle',
+				'foreign_table' => 'fe_users',
+				'minitems' => 0,
+				'maxitems' => 1,
+			],
+		],
+	],
 ];
