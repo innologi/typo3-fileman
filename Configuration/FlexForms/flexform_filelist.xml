@@ -20,6 +20,7 @@
 				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_searchTypes</label>
 				<config>
 					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
 					<items type="array">
 						<numIndex index="0" type="array">
 							<numIndex index="0">Categories</numIndex>
@@ -44,6 +45,7 @@
 				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_suGroup</label>
 				<config>
 					<type>select</type>
+					<renderType>selectSingle</renderType>
 					<foreign_table>fe_groups</foreign_table>
 					<foreign_table_where>ORDER BY fe_groups.title</foreign_table_where>
 					<size>1</size>
