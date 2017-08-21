@@ -32,7 +32,7 @@ return [
 	'types' => [
 		'1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, file_uri, alternate_title, description, category,
 			links, fe_user,
-			--div--;LLL:EXT:cms/locallang_ttc.xml:tabs.access,starttime,endtime,fe_group'
+			--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime,fe_group'
 		], #@LOW currently unused: --palette--;LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.palette.linkcombo;linkcombo,
 	],
 	'palettes' => [
@@ -85,7 +85,7 @@ return [
 			]
 		],
 		't3ver_label' => [
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.versionLabel',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.versionLabel',
 			'config' => [
 				'type' => 'input',
 				'size' => 30,
@@ -94,7 +94,7 @@ return [
 		],
 		'hidden' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
 			'config' => [
 				'type' => 'check',
 			],
