@@ -121,7 +121,7 @@ return [
 		],
 		'fe_group' => [
 			'exclude' => 1,
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.fe_group',
+			'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.fe_group',
 			'config' => [
 				'type' => 'select',
 				'renderType' => 'selectMultipleSideBySide',
@@ -129,15 +129,15 @@ return [
 				'maxitems' => 20,
 				'items' => [
 					[
-						'LLL:EXT:lang/locallang_general.xlf:LGL.hide_at_login',
+						'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
 						-1
 					],
 					[
-						'LLL:EXT:lang/locallang_general.xlf:LGL.any_login',
+						'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
 						-2
 					],
 					[
-						'LLL:EXT:lang/locallang_general.xlf:LGL.usergroups',
+						'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
 						'--div--'
 					]
 				],
