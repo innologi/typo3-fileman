@@ -34,9 +34,7 @@ return [
 			--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime,fe_group'
 		],
 	],
-	'palettes' => [
-		'1' => ['showitem' => ''],
-	],
+	'palettes' => [],
 	'columns' => [
 		'sys_language_uid' => [
 			'exclude' => TRUE,

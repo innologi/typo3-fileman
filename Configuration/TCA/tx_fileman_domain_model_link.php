@@ -32,9 +32,7 @@ return [
 	'types' => [
 		'1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, link_uri, link_name,description,category, fe_user,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime, endtime, fe_group'],
 	],
-	'palettes' => [
-		'1' => ['showitem' => ''],
-	],
+	'palettes' => [],
 	'columns' => [
 		'sys_language_uid' => [
 			'exclude' => TRUE,

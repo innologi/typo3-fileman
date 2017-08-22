@@ -36,10 +36,8 @@ return [
 		], #@LOW currently unused: --palette--;LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.palette.linkcombo;linkcombo,
 	],
 	'palettes' => [
-		'1' => ['showitem' => ''],
 		/*'linkcombo' => [ #@LOW currently unused: linkcombo
-			'showitem' => 'links, link_names',
-			'canNotCollapse' => 1,
+			'showitem' => 'links, link_names'
 		],*/
 	],
 	'columns' => [
