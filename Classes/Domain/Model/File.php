@@ -92,13 +92,6 @@ class File extends AbstractEntity {
 	protected $uploadData = array();
 
 	/**
-	 * Alternative name per link (one per row)
-	 *
-	 * @var string
-	 */
-	protected $linkNames; #@LOW currently unused
-
-	/**
 	 * Categories related to this file entity
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
@@ -281,25 +274,6 @@ class File extends AbstractEntity {
 	 */
 	public function setLinks($links) {
 		$this->links = trim($links);
-	}
-
-	/**
-	 * Returns the linkNames
-	 *
-	 * @return string
-	 */
-	public function getLinkNames() { #@LOW currently unused
-		return $this->linkNames;
-	}
-
-	/**
-	 * Sets the linkNames
-	 *
-	 * @param string $linkNames
-	 * @return void
-	 */
-	public function setLinkNames($linkNames) { #@LOW currently unused
-		$this->linkNames = $linkNames;
 	}
 
 	/**

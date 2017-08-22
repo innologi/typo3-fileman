@@ -33,13 +33,9 @@ return [
 		'0' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, file_uri, alternate_title, description, category,
 			links, fe_user,
 			--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime,fe_group'
-		], #@LOW currently unused: --palette--;LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.palette.linkcombo;linkcombo,
+		],
 	],
-	'palettes' => [
-		/*'linkcombo' => [ #@LOW currently unused: linkcombo
-			'showitem' => 'links, link_names'
-		],*/
-	],
+	'palettes' => [],
 	'columns' => [
 		'sys_language_uid' => [
 			'exclude' => TRUE,
@@ -196,16 +192,6 @@ return [
 				'eval' => 'trim'
 			],
 		],
-		/*'link_names' => [ #@LOW currently unused: link_names
-			'exclude' => 0,
-			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.link_names',
-			'config' => [
-				'type' => 'text',
-				'cols' => 40,
-				'rows' => 15,
-				'eval' => 'trim'
-			],
-		],*/
 		'category' => [
 			'exclude' => 0,
 			'label' => 'LLL:EXT:fileman/Resources/Private/Language/locallang_db.xml:tx_fileman_domain_model_file.category',
