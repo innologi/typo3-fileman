@@ -29,7 +29,7 @@ return [
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description, sub_category, file, link, parent_category, fe_user',
 	],
 	'types' => [
-		'1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description,parent_category,fe_user,
+		'0' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, title, description,parent_category,fe_user,
 			--div--;LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tca_tab_content,sub_category,file,link,
 			--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime,endtime,fe_group'
 		],

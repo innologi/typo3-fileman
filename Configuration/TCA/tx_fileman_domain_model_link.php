@@ -30,7 +30,7 @@ return [
 		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, link_uri, link_name, description, category, fe_user, fe_group',
 	],
 	'types' => [
-		'1' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, link_uri, link_name,description,category, fe_user,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime, endtime, fe_group'],
+		'0' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, link_uri, link_name,description,category, fe_user,--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,starttime, endtime, fe_group'],
 	],
 	'palettes' => [],
 	'columns' => [
