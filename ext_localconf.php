@@ -1,8 +1,5 @@
 <?php
-
-if (!defined('TYPO3_MODE')) {
-	die ('Access denied.');
-}
+defined('TYPO3_MODE') or die();
 
 // STRONG csrf protection levels prevent caching of some views
 $noCache = '';
@@ -22,7 +19,7 @@ if (isset($TYPO3_CONF_VARS['EXT']['extConf'][$_EXTKEY])) {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	$_EXTKEY,
+	'Innologi.' . $_EXTKEY,
 	'Filelist',
 	array(
 		'Category' => 'list, sort, new, create, edit, update, delete, ajaxVerifyToken, ajaxGenerateTokens',
