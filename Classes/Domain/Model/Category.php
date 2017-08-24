@@ -48,7 +48,7 @@ class Category extends AbstractEntity {
 	 * @var string
 	 * @validate Text
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * Subcategories

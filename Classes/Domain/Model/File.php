@@ -73,7 +73,7 @@ class File extends AbstractEntity {
 	 * @var string
 	 * @validate Text
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * Links related to this file (one per row)
@@ -81,7 +81,7 @@ class File extends AbstractEntity {
 	 * @var string
 	 * @validate \Innologi\Fileman\Domain\Validator\LinksValidator
 	 */
-	protected $links;
+	protected $links = '';
 
 	/**
 	 * Array with upload data from the $_FILES array, filled by either rewrittenPropertyManager or fileService

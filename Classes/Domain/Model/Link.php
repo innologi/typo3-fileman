@@ -56,7 +56,7 @@ class Link extends AbstractEntity {
 	 * @var string
 	 * @validate Text
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * User who created this file
