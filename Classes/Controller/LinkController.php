@@ -91,7 +91,7 @@ class LinkController extends ActionController {
 
 		$this->linkRepository->add($link);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.new_link_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 		$this->redirect('list','File',NULL,$arguments);
 	}
 
@@ -130,7 +130,7 @@ class LinkController extends ActionController {
 
 		$this->linkRepository->update($link);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.edit_link_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 
 		//category
 		$arguments = NULL;
@@ -158,7 +158,7 @@ class LinkController extends ActionController {
 	public function deleteAction(Category $category, Link $link) {
 		$this->linkRepository->remove($link);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.delete_link_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 
 		//category
 		$arguments = NULL;

@@ -102,7 +102,7 @@ class CategoryController extends ActionController {
 		}
 		$this->categoryRepository->add($category);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 
 		if ($parentCategory === NULL) {
 			$this->redirect('list');
@@ -159,7 +159,7 @@ class CategoryController extends ActionController {
 		}
 		$this->categoryRepository->update($category);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.edit_category_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 		if ($parentCategory === NULL) {
 			$this->redirect('list');
 		} else {
@@ -182,7 +182,7 @@ class CategoryController extends ActionController {
 	public function deleteAction(Category $category, Category $parentCategory = NULL) {
 		$this->categoryRepository->remove($category);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.delete_category_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 		if ($parentCategory === NULL) {
 			$this->redirect('list');
 		} else {

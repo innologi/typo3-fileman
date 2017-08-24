@@ -376,7 +376,7 @@ class FileController extends ActionController {
 
 		$this->fileRepository->update($file);
 		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.edit_file_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 
 		//category
 		$arguments = NULL;
@@ -439,7 +439,7 @@ class FileController extends ActionController {
 			$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.remove_file_success', $this->extensionName);
 		}
 
-		$this->flashMessageContainer->add($flashMessage);
+		$this->addFlashMessage($flashMessage);
 		$this->redirect('list',$controller,NULL,$arguments);
 	}
 
