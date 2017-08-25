@@ -150,7 +150,6 @@ class ActionController extends CsrfProtectController {
 	 *
 	 * @param string $sorting
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @return void
 	 */

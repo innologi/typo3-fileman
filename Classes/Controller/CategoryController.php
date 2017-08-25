@@ -63,9 +63,7 @@ class CategoryController extends ActionController {
 	 *
 	 * @param $category
 	 * @param $parentCategory
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
@@ -87,7 +85,6 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
-	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
 	 * @verifycsrftoken
 	 * @return void
@@ -116,8 +113,6 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
-	 * @dontvalidate $category
-	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $category
 	 * @ignorevalidation $parentCategory
 	 * @return void
@@ -148,7 +143,6 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
-	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
 	 * @verifycsrftoken
 	 * @return void
@@ -172,9 +166,7 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
 	 * @verifycsrftoken
 	 * @return void

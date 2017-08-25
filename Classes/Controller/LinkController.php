@@ -49,9 +49,7 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $link
 	 * @ignorevalidation $link
 	 * @return void
 	 */
@@ -65,7 +63,6 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
@@ -100,9 +97,7 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $link
 	 * @ignorevalidation $link
 	 * @return void
 	 */
@@ -116,7 +111,6 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
@@ -148,9 +142,7 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $link
 	 * @ignorevalidation $link
 	 * @verifycsrftoken
 	 * @return void

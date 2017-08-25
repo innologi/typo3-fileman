@@ -134,7 +134,6 @@ class FileController extends ActionController {
 	 * Also shows links
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category The category to show files of
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @return void
 	 */
@@ -234,9 +233,7 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $files
 	 * @ignorevalidation $files
 	 * @dontverifyrequesthash
 	 * @return void
@@ -279,7 +276,6 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @dontverifyrequesthash
 	 * @verifycsrftoken
@@ -335,9 +331,7 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $file
 	 * @ignorevalidation $file
 	 * @return void
 	 */
@@ -362,7 +356,6 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
@@ -394,9 +387,7 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $file
 	 * @ignorevalidation $file
 	 * @verifycsrftoken
 	 * @return void
