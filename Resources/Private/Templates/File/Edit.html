@@ -10,7 +10,7 @@
 	<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 </div>
 
-<f:render partial="FormErrors" arguments="{for: 'file'}" />
+<f:render partial="FormErrors" />
 
 <fi:form enctype="multipart/form-data" method="post" action="update"  name="file" object="{file}" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
 	<fieldset>
@@ -22,7 +22,7 @@
 		
 		<f:render partial="File/FormFields" />
 		
-		<f:translate key="tx_fileman_domain_model_file.category" />
+		<f:translate key="property.file.category" />
 		<br />
 		<f:form.select
 			options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"

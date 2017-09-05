@@ -38,7 +38,7 @@ class Link extends AbstractEntity {
 	 * Link URI
 	 *
 	 * @var string
-	 * @validate \Innologi\Fileman\Domain\Validator\LinkUriValidator
+	 * @validate NotEmpty,\Innologi\Fileman\Domain\Validator\LinkUriValidator
 	 */
 	protected $linkUri;
 
@@ -46,7 +46,7 @@ class Link extends AbstractEntity {
 	 * Name of link
 	 *
 	 * @var string
-	 * @validate String
+	 * @validate Text
 	 */
 	protected $linkName;
 

@@ -36,12 +36,11 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  *
  */
 class FileStorage extends AbstractValueObject {
-	// @FIX can we get rid of this class?
+	// @LOW can we get rid of this class at some point?
 	/**
 	 * Contains files
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\File>
-	 * @validate \Innologi\Fileman\Domain\Validator\ObjectStorageValidator
 	 */
 	protected $file;
 

@@ -1,27 +1,26 @@
 <html data-namespace-typo3-fluid="true"
-	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 	
 <label>
-	<f:translate key="tx_fileman_domain_model_file.alternate_title" />
+	<f:translate key="property.file.alternateTitle" />
 	<br />
-	<fi:form.textfield property="file.{index}.alternateTitle" class="textinput" value="{file.alternateTitle}" />
+	<f:form.textfield property="file.{index}.alternateTitle" class="textinput" value="{file.alternateTitle}" />
 </label>
 <br />
 <br />
 
 <label>
-	<f:translate key="tx_fileman_domain_model_file.description" />
+	<f:translate key="property.file.description" />
 	<br />
-	<fi:form.textarea property="file.{index}.description" cols="40" rows="15" value="{file.description}" />
+	<f:form.textarea property="file.{index}.description" cols="40" rows="15" value="{file.description}" />
 </label>
 <br />
 <br />
 	
 <label>
-	<f:translate key="tx_fileman_domain_model_file.links" />
+	<f:translate key="property.file.links" />
 	<br />
-	<fi:form.textarea property="file.{index}.links" cols="40" rows="15" value="{file.links}" class="small-textarea" />
+	<f:form.textarea property="file.{index}.links" cols="40" rows="15" value="{file.links}" class="small-textarea" />
 </label>
 <br />
 <br />

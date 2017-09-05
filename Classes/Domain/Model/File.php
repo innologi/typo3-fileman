@@ -29,6 +29,13 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * File Domain Model
  *
+ * Validation is defined from within the OptionFileValidator class,
+ * so that we can exert control over how validation is handled without
+ * overruling Core classes again.
+ *
+ * Objects/ObjectStorages being forced to validate is no problem as our
+ * use-case for exerting control does not concern those properties.
+ *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
@@ -71,7 +78,6 @@ class File extends AbstractEntity {
 	 * File description
 	 *
 	 * @var string
-	 * @validate Text
 	 */
 	protected $description = '';
 
@@ -79,7 +85,6 @@ class File extends AbstractEntity {
 	 * Links related to this file (one per row)
 	 *
 	 * @var string
-	 * @validate \Innologi\Fileman\Domain\Validator\LinksValidator
 	 */
 	protected $links = '';
 
@@ -89,7 +94,7 @@ class File extends AbstractEntity {
 	 * @var array
 	 * @transient
 	 */
-	protected $uploadData = array();
+	protected $uploadData = [];
 
 	/**
 	 * Categories related to this file entity

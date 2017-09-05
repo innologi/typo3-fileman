@@ -38,15 +38,11 @@ class LinkUriValidator extends AbstractValidator {
 	 * Checks if $link is a valid URL
 	 *
 	 * @param	string	$link	The link to validate
-	 * @return	boolean
+	 * @return	void
 	 */
 	public function isValid($link) {
-		if (!isset($link[0]) || !is_string($link) || !GeneralUtility::isValidUrl($link)) {
+		if ( !(isset($link[0]) && is_string($link) && GeneralUtility::isValidUrl($link)) ) {
 			$this->addError('There was a problem with linkUri', 40750133704);
-			return FALSE;
 		}
-
-		//link is okay
-		return TRUE;
 	}
 }

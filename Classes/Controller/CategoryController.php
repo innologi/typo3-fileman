@@ -23,7 +23,7 @@ namespace Innologi\Fileman\Controller;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use Innologi\Fileman\MVC\Controller\ActionController;
+use Innologi\Fileman\Mvc\Controller\ActionController;
 use Innologi\Fileman\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**

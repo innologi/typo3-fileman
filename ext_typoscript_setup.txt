@@ -4,21 +4,13 @@ config.tx_extbase.objects {
 	}
 }
 plugin.tx_fileman {
-	features {
-		# @TODO support before TYPO3 6.3 release
-		rewrittenPropertyMapper = 0
-	}
 	objects {
-		# extbase 6.1+ bugfix for rewrittenPropertyMapper=0
-		TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager {
-			className = Innologi\Fileman\Persistence\PersistenceManager
+		# fix validation bug for same-object-relations
+		TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator {
+			className = Innologi\Fileman\Domain\Validator\GenericObjectValidator
 		}
-		TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface {
-			className = Innologi\Fileman\Persistence\PersistenceManagerInterface
-		}
-		# extbase 6.2+ bugfix for rewrittenPropertyMapper=0
-		TYPO3\CMS\Extbase\Validation\ValidatorResolver {
-			className = Innologi\Fileman\Validation\ValidatorResolver
+		TYPO3\CMS\Extbase\Validation\Validator\CollectionValidator {
+			className = Innologi\Fileman\Domain\Validator\CollectionValidator
 		}
 	}
 	persistence.classes {

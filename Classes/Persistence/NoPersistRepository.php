@@ -24,7 +24,7 @@ namespace Innologi\Fileman\Persistence;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use Innologi\Fileman\MVC\Exception;
+use Innologi\Fileman\Mvc\Exception;
 /**
  * This repository prevents registration @ persistence manager.
  *
@@ -48,7 +48,7 @@ class NoPersistRepository extends Repository {
 	 * @param \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $persistenceManager
 	 * @return void
 	 */
-	public function injectPersistenceManager($persistenceManager) {
+	public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $persistenceManager) {
 		$this->persistenceManager = $persistenceManager;
 		//don't register this repository
 		// @FIX this is completely outdated! Find out if we can get rid of this class

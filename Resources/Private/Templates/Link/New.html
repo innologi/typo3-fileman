@@ -12,7 +12,7 @@
 
 <div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 
-<f:render partial="FormErrors" arguments="{for: 'link'}" />
+<f:render partial="FormErrors" />
 
 <fi:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
 	<fieldset>

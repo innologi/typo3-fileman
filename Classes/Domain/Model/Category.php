@@ -38,7 +38,7 @@ class Category extends AbstractEntity {
 	 * Category title
 	 *
 	 * @var string
-	 * @validate NotEmpty,String
+	 * @validate NotEmpty,Text
 	 */
 	protected $title;
 

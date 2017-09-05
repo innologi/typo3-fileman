@@ -41,11 +41,11 @@ class LinksValidator extends AbstractValidator {
 	/**
 	 * Validate links, one per row
 	 *
-	 * @param	string	$links	The links to validate
-	 * @return	boolean
+	 * @param string $links The links to validate
+	 * @return void
 	 */
 	public function isValid($links) { #@LOW don't forget TCA
-		$linkArray = array();
+		$linkArray = [];
 
 		if (isset($links[0])) {
 			$links = str_replace("\r\n","\n",$links); #@LOW get this from a transient getter, which probably requires us to put this in the File Validator
@@ -57,12 +57,8 @@ class LinksValidator extends AbstractValidator {
 				//each link needs to be a valid URL or errors ensue
 				if (!GeneralUtility::isValidUrl($link)) {
 					$this->addError('There was a problem with links', 40750133703);
-					return FALSE;
 				}
 			}
 		}
-
-		//either the field is empty, or the links are all okay
-		return TRUE;
 	}
 }

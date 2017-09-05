@@ -1,5 +1,5 @@
 <?php
-namespace Innologi\Fileman\MVC\Exception;
+namespace Innologi\Fileman\Mvc\Exception;
 /***************************************************************
  *  Copyright notice
 *

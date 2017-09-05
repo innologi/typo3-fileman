@@ -3,8 +3,8 @@
 	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
 
 <tr>
-	<th scope="col"><f:translate key="tx_fileman_domain_model_file.upload_data" /></th>
-	<th scope="col"><f:translate key="tx_fileman_domain_model_file.description" /></th>
+	<th scope="col"><f:translate key="property.file.uploadData" /></th>
+	<th scope="col"><f:translate key="property.file.description" /></th>
 </tr>
 
 <f:for each="{files}" as="file">
@@ -25,7 +25,7 @@
 			<f:then>
 				<a href="#" class="rel-switch">&nbsp;</a>
 				<div class="rel-links">
-					<span class="rel-links-header"><f:translate key="tx_fileman_domain_model_file.links" /></span>
+					<span class="rel-links-header"><f:translate key="property.file.links" /></span>
 					<ol>
 						<f:for each="{file.linksFormatted}" as="link">
 							<li><f:link.external uri="{link}">{link}</f:link.external></li>

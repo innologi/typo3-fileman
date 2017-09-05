@@ -56,11 +56,20 @@
 			<label index="tx_fileman_filelist.error_message">One or more form-fields need to be corrected before the process can complete. Please take note of the hints below. When you've corrected the issues, resend the form.</label>
 			<label index="tx_fileman_filelist.validation_errors">Fields requiring correction:</label>
 			<label index="error.category.title.1221560718">Can not be empty.</label>
+			<label index="error.category.title.1221565786">Only text without any special formatting or tags is allowed.</label>
+			<label index="error.category.description.1221565786">Only text without any special formatting or tags is allowed.</label>
+			<label index="error.category.parentCategory">A chosen category cannot be validated.</label>
 			<label index="error.file.uploadData.40750133701">The file is not allowed due to its filetype. Please refer to the info at the field to determine which filetypes are or aren't allowed.</label>
 			<label index="error.file.uploadData.40750133702">You need to select a file for upload.</label>
+			<label index="error.file.alternateTitle.1221565786">Only text without any special formatting or tags is allowed.</label>
+			<label index="error.file.description.1221565786">Only text without any special formatting or tags is allowed.</label>
 			<label index="error.file.links.40750133703">One valid URL per row, or leave the field empty.</label>
+			<label index="error.file.category.1347992453">The file needs to be placed in at least 1 category.</label>
+			<label index="error.file.category">A chosen category cannot be validated.</label>
 			<label index="error.link.linkUri.40750133704">You need to place a valid link.</label>
-			<label index="error.file.category.40750133705">The file needs to be placed in at least 1 category.</label>
+			<label index="error.link.linkUri.1221560718">You need to place a valid link.</label>
+			<label index="error.link.linkName.1221565786">Only text without any special formatting or tags is allowed.</label>
+			<label index="error.link.description.1221565786">Only text without any special formatting or tags is allowed.</label>
 			
 			<label index="tx_fileman_filelist.validate_failed_mimetype">Filetype of {fileName} not allowed.</label>
 			<label index="tx_fileman_filelist.validate_failed_maxfilesize">File {fileName} is too large. The maximum allowed file size is {maxFileSize}.</label>
@@ -79,24 +88,25 @@
 			<label index="tx_fileman_filelist.file_summary">This is a list of files and links.</label>
 			
 			<label index="tx_fileman_domain_model_file">Files</label>
-			<label index="tx_fileman_domain_model_file.upload_data">File</label>
-			<label index="tx_fileman_domain_model_file.alternate_title">Displayed title</label>
-			<label index="tx_fileman_domain_model_file.description">Description</label>
-			<label index="tx_fileman_domain_model_file.links">Related links</label>
+			<label index="property.file.uploadData">File</label>
+			<label index="tx_fileman_domain_model_file.file_uri">Filename</label>
+			<label index="property.file.alternateTitle">Displayed title</label>
+			<label index="property.file.description">Description</label>
+			<label index="property.file.links">Related links</label>
 			<label index="tx_fileman_domain_model_file.link_names">Alternative name per link (one per row)</label>
-			<label index="tx_fileman_domain_model_file.category">Category</label>
+			<label index="property.file.category">Category</label>
 			<label index="tx_fileman_domain_model_file.tstamp">Uploaded on</label>
 			
 			<label index="tx_fileman_domain_model_category">Categories</label>
-			<label index="tx_fileman_domain_model_category.title">Category</label>
-			<label index="tx_fileman_domain_model_category.description">Description</label>
-			<label index="tx_fileman_domain_model_category.parent_category">Place in category</label>
+			<label index="property.category.title">Category</label>
+			<label index="property.category.description">Description</label>
+			<label index="property.category.parentCategory">Place in category</label>
 			<label index="tx_fileman_domain_model_category.fe_user">Category admin:</label>
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
-			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
-			<label index="tx_fileman_domain_model_link.link_name">Displayed title</label>
-			<label index="tx_fileman_domain_model_link.description">Description</label>
+			<label index="property.link.linkUri">Link</label>
+			<label index="property.link.linkName">Displayed title</label>
+			<label index="property.link.description">Description</label>
 			<label index="tx_fileman_domain_model_link.category">Category</label>
 			<label index="tx_fileman_domain_model_link.tstamp">Placed on</label>
 		</languageKey>
@@ -151,11 +161,21 @@
 			<label index="tx_fileman_filelist.error_message">Er zijn problemen met de invulling van één of meerdere formulier-velden, welke hieronder staan vermeld met hints om ze te corrigeren. U dient deze te corrigeren en vervolgens het formulier weer te verzenden, voordat het proces voltooid kan worden.</label>
 			<label index="tx_fileman_filelist.validation_errors">De volgende velden vereisen correctie:</label>
 			<label index="error.category.title.1221560718">Mag niet leeg zijn.</label>
+			<label index="error.category.title.1221565786">Alleen platte tekst is toegestaan.</label>
+			<label index="error.category.description.1221565786">Alleen platte tekst is toegestaan.</label>
+			<label index="error.category.parentCategory">Een gekozen categorie kan niet gevalideerd worden.</label>
 			<label index="error.file.uploadData.40750133701">Het bestand is niet toegestaan door zijn bestandstype. Bekijk de info bij het upload-veld voor welke bestandstypen wel of niet zijn toegestaan.</label>
 			<label index="error.file.uploadData.40750133702">U dient een bestand te selecteren om te plaatsen.</label>
+			<label index="error.file.alternateTitle.1221565786">Alleen platte tekst is toegestaan.</label>
+			<label index="error.file.description.1221565786">Alleen platte tekst is toegestaan.</label>
 			<label index="error.file.links.40750133703">U mag één geldig URL per rij invullen, of het veld leeglaten.</label>
+			<label index="error.file.category.1347992453">Het bestand dient in minstens 1 categorie plaats te nemen.</label>
+			<label index="error.file.category">Een gekozen categorie kan niet gevalideerd worden.</label>
 			<label index="error.link.linkUri.40750133704">U dient een geldig URL in te vullen.</label>
-			<label index="error.file.category.40750133705">Het bestand dient in minstens 1 categorie plaats te nemen.</label>
+			<label index="error.link.linkUri.1221560718">U dient een geldig URL in te vullen.</label>
+			<label index="error.link.linkName.1221565786">Alleen platte tekst is toegestaan.</label>
+			<label index="error.link.description.1221565786">Alleen platte tekst is toegestaan.</label>
+			
 			
 			<label index="tx_fileman_filelist.validate_failed_mimetype">Bestandstype van {fileName} niet toegestaan.</label>
 			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand {fileName} is groter dan het toegestane limiet van {maxFileSize}.</label>
@@ -174,24 +194,25 @@
 			<label index="tx_fileman_filelist.file_summary">Dit is een lijst van bestanden en links.</label>
 		
 			<label index="tx_fileman_domain_model_file">Bestanden</label>
-			<label index="tx_fileman_domain_model_file.upload_data">Bestand</label>
-			<label index="tx_fileman_domain_model_file.alternate_title">Bestandstitel</label>
-			<label index="tx_fileman_domain_model_file.description">Omschrijving</label>
-			<label index="tx_fileman_domain_model_file.links">Gerelateerde links</label>
+			<label index="property.file.uploadData">Bestand</label>
+			<label index="tx_fileman_domain_model_file.file_uri">Bestandsnaam</label>
+			<label index="property.file.alternateTitle">Bestandstitel</label>
+			<label index="property.file.description">Omschrijving</label>
+			<label index="property.file.links">Gerelateerde links</label>
 			<label index="tx_fileman_domain_model_file.link_names">Alternatieve naam per link (één per rij)</label>
-			<label index="tx_fileman_domain_model_file.category">Categorie</label>
+			<label index="property.file.category">Categorie</label>
 			<label index="tx_fileman_domain_model_file.tstamp">Geplaatst op</label>
 			
 			<label index="tx_fileman_domain_model_category">Categorieën</label>
-			<label index="tx_fileman_domain_model_category.title">Categorie</label>
-			<label index="tx_fileman_domain_model_category.description">Omschrijving</label>
-			<label index="tx_fileman_domain_model_category.parent_category">Plaats in categorie:</label>
+			<label index="property.category.title">Categorie</label>
+			<label index="property.category.description">Omschrijving</label>
+			<label index="property.category.parentCategory">Plaats in categorie</label>
 			<label index="tx_fileman_domain_model_category.fe_user">Categorie beheerder:</label>
 			
 			<label index="tx_fileman_domain_model_link">Links</label>
-			<label index="tx_fileman_domain_model_link.link_uri">Link</label>
-			<label index="tx_fileman_domain_model_link.link_name">Titel</label>
-			<label index="tx_fileman_domain_model_link.description">Omschrijving</label>
+			<label index="property.link.linkUri">Link</label>
+			<label index="property.link.linkName">Titel</label>
+			<label index="property.link.description">Omschrijving</label>
 			<label index="tx_fileman_domain_model_link.category">Categorie</label>
 			<label index="tx_fileman_domain_model_link.tstamp">Geplaatst op</label>
 		</languageKey>

@@ -1,5 +1,5 @@
 <?php
-namespace Innologi\Fileman\MVC\Controller;
+namespace Innologi\Fileman\Mvc\Controller;
 /***************************************************************
  *  Copyright notice
  *

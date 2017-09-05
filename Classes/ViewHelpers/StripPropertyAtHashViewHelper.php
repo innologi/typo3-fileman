@@ -1,9 +1,9 @@
 <?php
-namespace Innologi\Fileman\ViewHelpers\Format;
+namespace Innologi\Fileman\ViewHelpers;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,42 +23,42 @@ namespace Innologi\Fileman\ViewHelpers\Format;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
- * CamelCase View Helper
+ * Strip Property At Hash Viewhelper
+ *
+ * Strips properties from ObjectStorage hashes and onward for use by validation results.
+ *
+ * @TODO what if we could get one step further and get the title/name of the object
+ * causing the error this VH is being used on?
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class CamelCaseViewHelper extends AbstractViewHelper {
+class StripPropertyAtHashViewHelper extends AbstractViewHelper {
+	use CompileWithRenderStatic;
 
 	/**
-	 * @param string $type Type of conversion [ camelCaseToLowerCaseUnderscored / underscoredToLowerCamelCase / underscoredToUpperCamelCase ]
-	 * @param string $value The value to format
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param RenderingContextInterface $renderingContext
 	 * @return string
-	 * @see GeneralUtility::camelCaseToLowerCaseUnderscored()
-	 * @see GeneralUtility::underscoredToLowerCamelCase()
-	 * @see GeneralUtility::underscoredToUpperCamelCase()
 	 */
-	public function render($type, $value = NULL) {
-		if ($value === NULL) {
-			$value = $this->renderChildren();
-		}
-		if (is_string($value)) {
-			switch ($type) {
-				case 'camelCaseToLowerCaseUnderscored':
-				case 'underscoredToLowerCamelCase':
-				case 'underscoredToUpperCamelCase':
-					$value = GeneralUtility::$type($value);
-					break;
-				default:
-					break;
+	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext) {
+		$indexFound = FALSE;
+		$parts = GeneralUtility::trimExplode('.', $renderChildrenClosure(), TRUE);
+		foreach ($parts as $i => $part) {
+			if ($indexFound || strpos($part, '000') === 0) {
+				$indexFound = TRUE;
+				unset($parts[$i]);
 			}
 		}
 
-		return $value;
+		return join('.', $parts);
 	}
 
 }

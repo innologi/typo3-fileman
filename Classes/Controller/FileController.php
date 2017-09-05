@@ -26,7 +26,7 @@ namespace Innologi\Fileman\Controller;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
-use Innologi\Fileman\MVC\Controller\ActionController;
+use Innologi\Fileman\Mvc\Controller\ActionController;
 use Innologi\Fileman\Service\SortRepositoryService;
 use Innologi\Fileman\Domain\Model\{Category, File, FileStorage};
 /**
@@ -95,35 +95,52 @@ class FileController extends ActionController {
 	/**
 	 * Initializes create action
 	 *
-	 * Mainly propertymapping configuration for rewritten property mapper.
-	 * This is preliminary, the rewrittenPropertyMapper is explicitly disabled
-	 * in this extension for now.
-	 *
 	 * @return void
 	 */
 	public function initializeCreateAction() {
-		if ($this->configurationManager->isFeatureEnabled('rewrittenPropertyMapper')) {
-			if ($this->request->hasArgument('files')) {
-				$value = $this->request->getArgument('files');
-				// i2 - iN
-				$indexArray = preg_grep('/^i([2-9]|([1-9][0-9]*))$/', array_keys($value['file']));
-				$propertyMapConfig = $this->arguments->getArgument('files')->getPropertyMappingConfiguration();
-				if (empty($indexArray)) {
-					$propertyMapConfig->setTargetTypeForSubProperty('file.i1.uploadData', 'array');
-				} else {
-					$subPropertyMapConfig = $propertyMapConfig->getConfigurationFor('file');
-					foreach ($indexArray as $index) {
-						// $propertyMapConfig->allowAllProperties();
-						$propertyMapConfig->allowCreationForSubProperty('file.' . $index);
-						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.uploadData', 'array');
-						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.fileUri', 'string');
-						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.alternateTitle', 'string');
-						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.description', 'string');
-						$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.links', 'string');
-						$subPropertyMapConfig->allowProperties($index);
-						$subPropertyMapConfig->forProperty($index)->allowProperties('uploadData', 'alternateTitle', 'description', 'links');
-					}
-				}
+		if ($this->arguments->hasArgument('files')) {
+			$this->addFilesPropertyMapping();
+		}
+	}
+
+	/**
+	 * Initializes new action
+	 *
+	 * @return void
+	 */
+	public function initializeNewAction() {
+		$originalRequest = $this->request->getOriginalRequest();
+		// if validation failed, the new request will not have a files argument as opposed to 4.5
+		if ($originalRequest !== NULL && $originalRequest->hasArgument('files')) {
+			$this->request->setArgument('files', $originalRequest->getArgument('files'));
+			$this->addFilesPropertyMapping();
+		}
+	}
+
+	/**
+	 * Adds property mapping for a previously unknown number of files
+	 *
+	 * @return void
+	 */
+	protected function addFilesPropertyMapping() {
+		$value = $this->request->getArgument('files');
+		// i2 - iN
+		$indexArray = preg_grep('/^i([2-9]|([1-9][0-9]*))$/', array_keys($value['file']));
+		$propertyMapConfig = $this->arguments->getArgument('files')->getPropertyMappingConfiguration();
+		if (empty($indexArray)) {
+			$propertyMapConfig->setTargetTypeForSubProperty('file.i1.uploadData', 'array');
+		} else {
+			$subPropertyMapConfig = $propertyMapConfig->getConfigurationFor('file');
+			foreach ($indexArray as $index) {
+				// $propertyMapConfig->allowAllProperties();
+				$propertyMapConfig->allowCreationForSubProperty('file.' . $index);
+				$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.uploadData', 'array');
+				$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.fileUri', 'string');
+				$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.alternateTitle', 'string');
+				$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.description', 'string');
+				$propertyMapConfig->setTargetTypeForSubProperty('file.' . $index . '.links', 'string');
+				$subPropertyMapConfig->allowProperties($index);
+				$subPropertyMapConfig->forProperty($index)->allowProperties('uploadData', 'fileUri', 'alternateTitle', 'description', 'links');
 			}
 		}
 	}
@@ -245,17 +262,13 @@ class FileController extends ActionController {
 			$this->fileService->reset(); //so start over!
 			$fileStorage = $files->getFile();
 			/** @var File $file */
-			foreach ($fileStorage as $hash=>$file) {
+			foreach ($fileStorage as $file) {
 				if ($this->fileService->next()) {
 					//each uploaded file that was validated, is associated with the matching $file entry
 					//this would obviously not work if their count and order wasn't identical
 					$this->fileService->setFileProperties($file);
 				} else {
-					if (version_compare(TYPO3_branch, '6.2', '<')) {
-						unset($fileStorage[$hash]);
-					} else {
-						unset($fileStorage[$file]);
-					}
+					unset($fileStorage[$file]);
 					$this->addFlashMessage(
 						LocalizationUtility::translate('tx_fileman_filelist.new_file_failed_reconstitute', $this->extensionName, array($file->getFileUri())),
 						'',
@@ -356,11 +369,13 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @validate $file \Innologi\Fileman\Domain\Validator\OptionalFileValidator
 	 * @ignorevalidation $category
 	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function updateAction(File $file, Category $category = NULL) {
+		// @LOW this is also done in the validator.. so, redundant?
 		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {

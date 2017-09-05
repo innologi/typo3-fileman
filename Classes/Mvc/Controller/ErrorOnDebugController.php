@@ -1,9 +1,9 @@
 <?php
-namespace Innologi\Fileman\ViewHelpers\Format;
+namespace Innologi\Fileman\Mvc\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,30 +23,32 @@ namespace Innologi\Fileman\ViewHelpers\Format;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+
 /**
- * Lower Case Viewhelper
+ * Error On Debug Controller.
+ *
+ * Hides the standard Extbase error flash message, unless FE debug is enabled.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
  */
-class LowerCaseViewHelper extends AbstractViewHelper {
+class ErrorOnDebugController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
-	 * Formats a string to lowercase
+	 * A template method for displaying custom error flash messages, or to
+	 * display no flash message at all on errors. Override this to customize
+	 * the flash message in your action controller.
 	 *
-	 * @param string $value The value to format
-	 * @return string
+	 * @return string|boolean The flash message or FALSE if no flash message should be set
 	 */
-	public function render($value = NULL) {
-		if ($value === NULL) {
-			$value = $this->renderChildren();
+	protected function getErrorFlashMessage() {
+		global $TYPO3_CONF_VARS;
+		if (isset($TYPO3_CONF_VARS['FE']['debug']) && $TYPO3_CONF_VARS['FE']['debug']) {
+			return parent::getErrorFlashMessage();
+		} else {
+			return FALSE;
 		}
-		if (is_string($value)) {
-			$value = strtolower($value);
-		}
-
-		return $value;
 	}
 
 }
