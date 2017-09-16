@@ -27,6 +27,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Innologi\Fileman\Service\SortRepositoryService;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractCompositeValidator;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 /**
  * Fileman Action Controller.
  *
@@ -54,6 +56,15 @@ class ActionController extends CsrfProtectController {
 	 * @inject
 	 */
 	protected $userService;
+
+	/**
+	 * Indicates if user needs to be logged in
+	 *
+	 * Can be overridden by extending domain controllers
+	 *
+	 * @var boolean
+	 */
+	protected $requireLogin = TRUE;
 
 	/**
 	 * @var \Innologi\Fileman\Service\SortRepositoryService
@@ -89,6 +100,16 @@ class ActionController extends CsrfProtectController {
 		]);
 	}
 
+	/**
+	 * Disables (or enables) requireLogin by action
+	 *
+	 * @param array $actions For which to disable requireLogin
+	 * @return void
+	 */
+	protected function disableRequireLogin(array $actions = []) {
+		$this->requireLogin = !in_array(substr($this->actionMethodName, 0, -6), $actions);
+	}
+
 
 
 	/**
@@ -98,8 +119,23 @@ class ActionController extends CsrfProtectController {
 	 */
 	protected function initializeAction() {
 		parent::initializeAction();
-		//get currently logged in user
+		$errors = [];
+
+		//is user logged in as required?
 		$this->feUser = $this->userService->getCurrentUser();
+		if ($this->requireLogin && !$this->feUser) {
+			$errors[] = LocalizationUtility::translate('tx_fileman.login_error', $this->extensionName);
+		}
+		//errors!
+		if (!empty($errors)) {
+			// we'll need it for the FlashMessageQueue
+			$this->controllerContext = $this->buildControllerContext();
+			foreach ($errors as $flashMessage) {
+				$this->addFlashMessage($flashMessage, '', FlashMessage::ERROR);
+			}
+			$this->redirect('list', 'category');
+		}
+
 		$this->sortRepositoryService->sortRepositories();
 	}
 

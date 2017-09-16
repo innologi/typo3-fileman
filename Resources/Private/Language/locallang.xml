@@ -6,6 +6,7 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_fileman.login_error">You need to be logged-in with a valid user account.</label>
 			<label index="tx_fileman.csrf_invalid_request">The form or link has expired. Please try again.</label>
 			<label index="tx_fileman_filelist.required">required fields</label>
 			<label index="tx_fileman_filelist.search_title">Search results</label>
@@ -110,6 +111,7 @@
 			<label index="property.link.tstamp">Placed on</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
+			<label index="tx_fileman.login_error">U dient ingelogd te zijn met een geldig gebruikersaccount.</label>
 			<label index="tx_fileman.csrf_invalid_request">De geldigheid van het formulier of link is verlopen. Probeer het opnieuw s.v.p.</label>
 			<label index="tx_fileman_filelist.required">vereiste velden</label>
 			<label index="tx_fileman_filelist.search_title">Zoekresultaten</label>

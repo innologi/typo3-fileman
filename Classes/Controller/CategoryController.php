@@ -43,6 +43,16 @@ class CategoryController extends ActionController {
 	protected $frontendUserRepository;
 
 	/**
+	 * {@inheritDoc}
+	 * @see \Innologi\Fileman\Mvc\Controller\ActionController::initializeAction()
+	 */
+	protected function initializeAction() {
+		// doing this in the appropriate initialize methods is too late, so..
+		$this->disableRequireLogin(['list', 'sort']);
+		parent::initializeAction();
+	}
+
+	/**
 	 * action list
 	 *
 	 * @return void

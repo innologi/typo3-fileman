@@ -93,6 +93,16 @@ class FileController extends ActionController {
 
 
 	/**
+	 * {@inheritDoc}
+	 * @see \Innologi\Fileman\Mvc\Controller\ActionController::initializeAction()
+	 */
+	protected function initializeAction() {
+		// doing this in the appropriate initialize methods is too late, so..
+		$this->disableRequireLogin(['list', 'sort', 'search']);
+		parent::initializeAction();
+	}
+
+	/**
 	 * Initializes create action
 	 *
 	 * @return void
