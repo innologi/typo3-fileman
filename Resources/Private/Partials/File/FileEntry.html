@@ -15,7 +15,7 @@
 				<f:form.hidden name="tmpFiles[{index}]" value="{fi:file.basename(uri:file.tmpFile)}" />
 			</f:then>
 			<f:else>
-				<f:form.upload property="file.{index}.uploadData" class="fileupload" /> <!-- required="required" -->
+				<fi:form.upload property="file.{index}.uploadData" class="fileupload" required="TRUE" />
 			</f:else>
 		</f:if>
 	</label>
