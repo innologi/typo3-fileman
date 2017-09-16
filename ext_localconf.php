@@ -29,7 +29,8 @@ if (isset($TYPO3_CONF_VARS['EXT']['extConf'][$_EXTKEY])) {
 	// non-cacheable actions
 	array(
 		'Category' => 'sort, create, update, delete, ajaxVerifyToken, ajaxGenerateTokens' . $noCache,
-		'File' => 'sort, download, create, update, delete, search' . $noCache,
+		// we don't cache list because of the category owner permissions (quick workaround)
+		'File' => 'list, sort, download, create, update, delete, search' . $noCache,
 		'Link' => 'create, update, delete',
 	)
 );
