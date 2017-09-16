@@ -13,7 +13,7 @@
 <p class="explanation">
 	<f:translate
 		key="tx_fileman_filelist.new_file_explanation"
-		arguments="{0: '{f:cObject(typoscriptObjectPath:\'lib.tx_fileman.maxFileUploads\')}', 1: '{settings.maxFileSize -> fi:format.bytesToSize()}', 2: '{settings.maxTotalFileSize -> fi:format.bytesToSize()}'}"
+		arguments="{0: '{f:cObject(typoscriptObjectPath:\'lib.tx_fileman.maxFileUploads\')}', 1: '{fi:format.bytesToSize(bytes:settings.maxFileSize)}', 2: '{fi:format.bytesToSize(bytes:settings.maxTotalFileSize)}'}"
 	/>
 </p>
 

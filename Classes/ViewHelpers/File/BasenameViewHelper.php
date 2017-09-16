@@ -3,7 +3,7 @@ namespace Innologi\Fileman\ViewHelpers\File;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,6 +23,8 @@ namespace Innologi\Fileman\ViewHelpers\File;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * Base Name Viewhelper
@@ -32,21 +34,28 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  *
  */
 class BasenameViewHelper extends AbstractViewHelper {
+	use CompileWithRenderStatic;
 
 	/**
-	 * Gets basename from file URI
-	 *
-	 * @param string $uri The value to format
+	 * {@inheritDoc}
+	 * @see \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper::initializeArguments()
+	 */
+	public function initializeArguments() {
+		parent::initializeArguments();
+		$this->registerArgument('uri', 'string', 'Filepath', TRUE);
+	}
+
+	/**
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param RenderingContextInterface $renderingContext
 	 * @return string
 	 */
-	public function render($uri = NULL) {
-		if ($uri === NULL) {
-			$uri = $this->renderChildren();
-		}
+	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext) {
+		$uri = $arguments['uri'];
 		if (is_string($uri) && is_file($uri)) {
 			$uri = basename($uri);
 		}
-
 		return $uri;
 	}
 

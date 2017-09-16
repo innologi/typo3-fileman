@@ -3,7 +3,7 @@ namespace Innologi\Fileman\ViewHelpers;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+*  (c) 2016-2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
 *
 *  All rights reserved
 *
@@ -23,7 +23,12 @@ namespace Innologi\Fileman\ViewHelpers;
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use Innologi\Fileman\Service\SortRepositoryService;
 /**
  * Sort Repository ViewHelper
  *
@@ -32,6 +37,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
 class SortRepositoryViewHelper extends AbstractViewHelper {
+	use CompileWithRenderStatic;
 
 	/**
 	 * @var boolean
@@ -42,12 +48,6 @@ class SortRepositoryViewHelper extends AbstractViewHelper {
 	 * @var boolean
 	 */
 	protected $escapeOutput = FALSE;
-
-	/**
-	 * @var \Innologi\Fileman\Service\SortRepositoryService
-	 * @inject
-	 */
-	protected $sortRepositoryService;
 
 	/**
 	 * Initialize arguments.
@@ -61,16 +61,19 @@ class SortRepositoryViewHelper extends AbstractViewHelper {
 	}
 
 	/**
-	 * Sets choices and value variables in template and renders children.
-	 *
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param RenderingContextInterface $renderingContext
 	 * @return string
 	 */
-	public function render() {
-		$this->templateVariableContainer->add($this->arguments['choicesAs'], $this->sortRepositoryService->getSortingChoices());
-		$this->templateVariableContainer->add($this->arguments['valueAs'], $this->sortRepositoryService->getCurrentValue());
-		$result = $this->renderChildren();
-		$this->templateVariableContainer->remove($this->arguments['choicesAs']);
-		$this->templateVariableContainer->remove($this->arguments['valueAs']);
+	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext) {
+		$sortRepositoryService = GeneralUtility::makeInstance(ObjectManager::class)->get(SortRepositoryService::class);
+		$templateVariableContainer = $renderingContext->getVariableProvider();
+		$templateVariableContainer->add($arguments['choicesAs'], $sortRepositoryService->getSortingChoices());
+		$templateVariableContainer->add($arguments['valueAs'], $sortRepositoryService->getCurrentValue());
+		$result = $renderChildrenClosure();
+		$templateVariableContainer->remove($arguments['choicesAs']);
+		$templateVariableContainer->remove($arguments['valueAs']);
 		return $result;
 	}
 
