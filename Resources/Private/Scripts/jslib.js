@@ -621,7 +621,7 @@ jQuery(document).ready(function() {
 			var $form = jQuery(form),
 				$fileEntries = $form.find('.file-entry'),
 				formVar = { //can be passed as reference to functions
-					fileCount: $fileEntries.size(), //there could be more files initially already, due to validation errors
+					fileCount: $fileEntries.length, //there could be more files initially already, due to validation errors
 					lastIndex: getLastIndex(form)
 				};
 
