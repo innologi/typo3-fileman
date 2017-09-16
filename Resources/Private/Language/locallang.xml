@@ -87,28 +87,27 @@
 			<label index="tx_fileman_filelist.file_caption">Files and links</label>
 			<label index="tx_fileman_filelist.file_summary">This is a list of files and links.</label>
 			
-			<label index="tx_fileman_domain_model_file">Files</label>
+			<label index="property.file">Files</label>
 			<label index="property.file.uploadData">File</label>
-			<label index="tx_fileman_domain_model_file.file_uri">Filename</label>
+			<label index="property.file.fileUri">Filename</label>
 			<label index="property.file.alternateTitle">Displayed title</label>
 			<label index="property.file.description">Description</label>
 			<label index="property.file.links">Related links</label>
-			<label index="tx_fileman_domain_model_file.link_names">Alternative name per link (one per row)</label>
 			<label index="property.file.category">Category</label>
-			<label index="tx_fileman_domain_model_file.tstamp">Uploaded on</label>
+			<label index="property.file.tstamp">Uploaded on</label>
 			
-			<label index="tx_fileman_domain_model_category">Categories</label>
+			<label index="property.category">Categories</label>
 			<label index="property.category.title">Category</label>
 			<label index="property.category.description">Description</label>
 			<label index="property.category.parentCategory">Place in category</label>
-			<label index="tx_fileman_domain_model_category.fe_user">Category admin:</label>
+			<label index="property.category.feUser">Category admin:</label>
 			
-			<label index="tx_fileman_domain_model_link">Links</label>
+			<label index="property.link">Links</label>
 			<label index="property.link.linkUri">Link</label>
 			<label index="property.link.linkName">Displayed title</label>
 			<label index="property.link.description">Description</label>
-			<label index="tx_fileman_domain_model_link.category">Category</label>
-			<label index="tx_fileman_domain_model_link.tstamp">Placed on</label>
+			<label index="property.link.category">Category</label>
+			<label index="property.link.tstamp">Placed on</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
 			<label index="tx_fileman.csrf_invalid_request">De geldigheid van het formulier of link is verlopen. Probeer het opnieuw s.v.p.</label>
@@ -176,7 +175,6 @@
 			<label index="error.link.linkName.1221565786">Alleen platte tekst is toegestaan.</label>
 			<label index="error.link.description.1221565786">Alleen platte tekst is toegestaan.</label>
 			
-			
 			<label index="tx_fileman_filelist.validate_failed_mimetype">Bestandstype van {fileName} niet toegestaan.</label>
 			<label index="tx_fileman_filelist.validate_failed_maxfilesize">Bestand {fileName} is groter dan het toegestane limiet van {maxFileSize}.</label>
 			<label index="tx_fileman_filelist.validate_failed_totalfilesize">Grootte van het totale aantal gekozen bestanden is groter dan het toegestane limiet van {maxTotalFileSize}.</label>
@@ -193,28 +191,27 @@
 			<label index="tx_fileman_filelist.file_caption">Bestanden en links</label>
 			<label index="tx_fileman_filelist.file_summary">Dit is een lijst van bestanden en links.</label>
 		
-			<label index="tx_fileman_domain_model_file">Bestanden</label>
+			<label index="property.file">Bestanden</label>
 			<label index="property.file.uploadData">Bestand</label>
-			<label index="tx_fileman_domain_model_file.file_uri">Bestandsnaam</label>
+			<label index="property.file.fileUri">Bestandsnaam</label>
 			<label index="property.file.alternateTitle">Bestandstitel</label>
 			<label index="property.file.description">Omschrijving</label>
 			<label index="property.file.links">Gerelateerde links</label>
-			<label index="tx_fileman_domain_model_file.link_names">Alternatieve naam per link (één per rij)</label>
 			<label index="property.file.category">Categorie</label>
-			<label index="tx_fileman_domain_model_file.tstamp">Geplaatst op</label>
+			<label index="property.file.tstamp">Geplaatst op</label>
 			
-			<label index="tx_fileman_domain_model_category">Categorieën</label>
+			<label index="property.category">Categorieën</label>
 			<label index="property.category.title">Categorie</label>
 			<label index="property.category.description">Omschrijving</label>
 			<label index="property.category.parentCategory">Plaats in categorie</label>
-			<label index="tx_fileman_domain_model_category.fe_user">Categorie beheerder:</label>
+			<label index="property.category.feUser">Categorie beheerder</label>
 			
-			<label index="tx_fileman_domain_model_link">Links</label>
+			<label index="property.link">Links</label>
 			<label index="property.link.linkUri">Link</label>
 			<label index="property.link.linkName">Titel</label>
 			<label index="property.link.description">Omschrijving</label>
-			<label index="tx_fileman_domain_model_link.category">Categorie</label>
-			<label index="tx_fileman_domain_model_link.tstamp">Geplaatst op</label>
+			<label index="property.link.category">Categorie</label>
+			<label index="property.link.tstamp">Geplaatst op</label>
 		</languageKey>
 	</data>
 </T3locallang>
