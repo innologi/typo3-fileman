@@ -442,21 +442,19 @@ jQuery(document).ready(function() {
 					uploadIndex: uIndex,
 					form: form
 				});
-			} else {
-				var value = $upload.val();
-				if (value !== undefined && value.length > 0) {
-					// this field represents a previously uploaded file
-					previouslyUploaded++;
-				}
-			}
-
-			if (uploadQueue.length > 0) {
+			
 				$upload.after(
 					'<input type="text" name="tx_fileman_filelist[files][file][i' + uIndex + '][fileUri]" readonly="readonly" class="fileupload fill-' + uIndex + '" value="" />' +
 					'<input type="hidden" name="tx_fileman_filelist[tmpFiles][i' + uIndex + ']" class="tmpfile fill-' + uIndex + '" value="" />'
 				);
 				// disable the original file upload
 				$upload.remove();
+			} else {
+				var value = $upload.val();
+				if (value !== undefined && value.length > 0) {
+					// this field represents a previously uploaded file
+					previouslyUploaded++;
+				}
 			}
 		});
 
