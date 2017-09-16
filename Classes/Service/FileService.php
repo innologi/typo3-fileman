@@ -89,9 +89,18 @@ class FileService implements SingletonInterface {
 	 * Performs some basic file functions
 	 *
 	 * @var BasicFileUtility
-	 * @inject
 	 */
 	protected $fileFunctions;
+
+	/**
+	 * @return \TYPO3\CMS\Core\Utility\File\BasicFileUtility
+	 */
+	protected function getFileFunc() {
+		if ($this->fileFunctions === NULL) {
+			$this->fileFunctions = GeneralUtility::makeInstance(BasicFileUtility::class);
+		}
+		return $this->fileFunctions;
+	}
 
 
 	/**
@@ -266,7 +275,7 @@ class FileService implements SingletonInterface {
 			// if something goes wrong somewhere and we get an empty file name, we'll get exceptions here, so don't even try
 			if (isset($fileName[0])) {
 				$tmpFile = $file->getTmpFile();
-				$finalPath = $this->fileFunctions->getUniqueName($fileName, $absDirPath);
+				$finalPath = $this->getFileFunc()->getUniqueName($fileName, $absDirPath);
 				//file might have been renamed because of duplicate
 				$file->setFileUri(basename($finalPath));
 				$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
