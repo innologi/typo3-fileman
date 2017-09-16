@@ -65,7 +65,6 @@ class FileRepository extends Repository {
 				$query->like('alternate_title', $searchTerm, FALSE),
 				$query->like('description', $searchTerm, FALSE),
 				$query->like('links', $searchTerm, FALSE),
-				$query->like('link_names', $searchTerm, FALSE),
 			));
 		}
 
