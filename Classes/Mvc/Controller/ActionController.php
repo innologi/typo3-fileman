@@ -43,7 +43,7 @@ class ActionController extends CsrfProtectController {
 	/**
 	 * Logged in frontend user
 	 *
-	 * @var \Innologi\Fileman\Domain\Model\FrontendUser
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	protected $feUser;
 

@@ -23,8 +23,9 @@ namespace Innologi\Fileman\Domain\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use Innologi\Fileman\Domain\Model\{Category, FrontendUser};
+use Innologi\Fileman\Domain\Model\Category;
 /**
  * Category repository
  *
@@ -73,7 +74,7 @@ class CategoryRepository extends Repository {
 	/**
 	 * Returns all objects with feUser set
 	 *
-	 * @param FrontendUser $feUser
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
 	 * @param Category $excludeCategory
 	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */

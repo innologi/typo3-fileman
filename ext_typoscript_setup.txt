@@ -31,11 +31,5 @@ plugin.tx_fileman {
 				fe_group.mapOnProperty = feGroup
 			}
 		}
-		Innologi\Fileman\Domain\Model\FrontendUser {
-			mapping.tableName = fe_users
-		}
-		Innologi\Fileman\Domain\Model\FrontendUserGroup {
-			mapping.tableName = fe_groups
-		}
 	}
 }

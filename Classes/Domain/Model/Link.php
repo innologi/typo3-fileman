@@ -24,6 +24,7 @@ namespace Innologi\Fileman\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Link Domain Model
@@ -61,7 +62,7 @@ class Link extends AbstractEntity {
 	/**
 	 * User who created this file
 	 *
-	 * @var \Innologi\Fileman\Domain\Model\FrontendUser
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @lazy
 	 */
 	protected $feUser; #@TODO some of these things are shared between different models, so might as well extend from an abstract
@@ -166,7 +167,7 @@ class Link extends AbstractEntity {
 	/**
 	 * Returns the feUser
 	 *
-	 * @return \Innologi\Fileman\Domain\Model\FrontendUser feUser
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser feUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -175,7 +176,7 @@ class Link extends AbstractEntity {
 	/**
 	 * Sets the feUser
 	 *
-	 * @param \Innologi\Fileman\Domain\Model\FrontendUser $feUser
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
 	 * @return void
 	 */
 	public function setFeUser(FrontendUser $feUser) {

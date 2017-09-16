@@ -24,6 +24,7 @@ namespace Innologi\Fileman\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Category Domain Model
@@ -93,7 +94,7 @@ class Category extends AbstractEntity {
 	/**
 	 * Owner of category
 	 *
-	 * @var \Innologi\Fileman\Domain\Model\FrontendUser
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	protected $feUser;
 
@@ -322,7 +323,7 @@ class Category extends AbstractEntity {
 	/**
 	 * Returns the feUser
 	 *
-	 * @return \Innologi\Fileman\Domain\Model\FrontendUser feUser
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser feUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -331,7 +332,7 @@ class Category extends AbstractEntity {
 	/**
 	 * Sets the feUser
 	 *
-	 * @param \Innologi\Fileman\Domain\Model\FrontendUser $feUser
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
 	 * @return void
 	 */
 	public function setFeUser(FrontendUser $feUser) {

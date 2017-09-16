@@ -24,6 +24,7 @@ namespace Innologi\Fileman\Domain\Model;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
@@ -107,7 +108,7 @@ class File extends AbstractEntity {
 	/**
 	 * User who created this file
 	 *
-	 * @var \Innologi\Fileman\Domain\Model\FrontendUser
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @lazy
 	 */
 	protected $feUser;
@@ -323,7 +324,7 @@ class File extends AbstractEntity {
 	/**
 	 * Returns the feUser
 	 *
-	 * @return \Innologi\Fileman\Domain\Model\FrontendUser
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -332,7 +333,7 @@ class File extends AbstractEntity {
 	/**
 	 * Sets the feUser
 	 *
-	 * @param \Innologi\Fileman\Domain\Model\FrontendUser $feUser
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
 	 * @return void
 	 */
 	public function setFeUser(FrontendUser $feUser) {
