@@ -325,13 +325,13 @@ jQuery(document).ready(function() {
 
 	// produce visual TYPO3-like errormessage
 	function errorMessage(errorMsg, $elemAfter) {
-		errorMsg = '<div class="typo3-message message-error">' + errorMsg + '</div>';
+		errorMsg = '<li class="alert alert-danger"><p class="alert-message">' + errorMsg + '</p></li>';
 
 		var $errors = $elemAfter.prev('.typo3-messages');
 		if ($errors[0]) {
 			$errors.append(errorMsg);
 		} else {
-			$elemAfter.before('<div class="typo3-messages">' + errorMsg + '</div>');
+			$elemAfter.before('<ul class="typo3-messages">' + errorMsg + '</ul>');
 		}
 	}
 
@@ -442,7 +442,7 @@ jQuery(document).ready(function() {
 					uploadIndex: uIndex,
 					form: form
 				});
-			
+
 				$upload.after(
 					'<input type="text" name="tx_fileman_filelist[files][file][i' + uIndex + '][fileUri]" readonly="readonly" class="fileupload fill-' + uIndex + '" value="" />' +
 					'<input type="hidden" name="tx_fileman_filelist[tmpFiles][i' + uIndex + ']" class="tmpfile fill-' + uIndex + '" value="" />'
