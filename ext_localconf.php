@@ -1,23 +1,6 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-// STRONG csrf protection levels prevent caching of some views
-$noCache = '';
-if (isset($TYPO3_CONF_VARS['EXT']['extConf'][$_EXTKEY])) {
-	$extConf = unserialize($TYPO3_CONF_VARS['EXT']['extConf'][$_EXTKEY]);
-	if (isset($extConf['csrf_protection_level'])) {
-		$noCache = in_array(
-			(int)$extConf['csrf_protection_level'],
-			array(
-				// using ext-constants in this file produces problems when the extension
-				// is uninstalled but the cache isn't cleared yet
-				3,
-				4,
-			)
-		) ? ', list' : '';
-	}
-}
-
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'Innologi.' . $_EXTKEY,
 	'Filelist',
@@ -28,9 +11,10 @@ if (isset($TYPO3_CONF_VARS['EXT']['extConf'][$_EXTKEY])) {
 	),
 	// non-cacheable actions
 	array(
-		'Category' => 'sort, create, update, delete, ajaxVerifyToken, ajaxGenerateTokens' . $noCache,
+		// we don't cache new because feUser-id might be used in token generation
+		'Category' => 'new, sort, create, update, delete, ajaxVerifyToken, ajaxGenerateTokens',
 		// we don't cache list because of the category owner permissions (quick workaround)
-		'File' => 'list, sort, download, create, update, delete, search' . $noCache,
+		'File' => 'list, sort, download, create, update, delete, search',
 		'Link' => 'create, update, delete',
 	)
 );

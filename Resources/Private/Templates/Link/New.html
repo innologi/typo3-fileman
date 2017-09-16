@@ -14,13 +14,13 @@
 
 <f:render partial="FormErrors" />
 
-<fi:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
+<f:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}" absolute="TRUE">
 	<fieldset>
 		<f:render partial="Link/FormFields" />
-			
+		<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
 		<f:form.submit class="submit" value="{f:translate(key:'tx_fileman_filelist.new_link_submit')}" />
 	</fieldset>
-</fi:form>
+</f:form>
 </f:section>
 
 </html>

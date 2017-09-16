@@ -46,10 +46,6 @@ plugin.tx_fileman {
 		debug = 0
 	}
 	settings {
-		# @TODO remove this when eid is utilized, do so before TER release!
-		type.xhr = 201412011983
-		pages.xhr = 2123
-	
 		# cat=plugin.tx_fileman/a_upload/10; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadDir
 		uploadDir = uploads/tx_fileman/
 		

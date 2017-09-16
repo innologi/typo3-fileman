@@ -45,6 +45,36 @@ class LinkController extends ActionController {
 	protected $linkRepository;
 
 	/**
+	 * Initializes create action
+	 *
+	 * @return void
+	 */
+	protected function initializeCreateAction() {
+		$id = $this->request->hasArgument('category') && isset($this->request->getArgument('category')[0])
+			? $this->request->getArgument('category')
+			: NULL;
+		$this->validateRequest('stoken', $id);
+	}
+
+	/**
+	 * Initializes update action
+	 *
+	 * @return void
+	 */
+	protected function initializeUpdateAction() {
+		$this->validateRequest();
+	}
+
+	/**
+	 * Initializes delete action
+	 *
+	 * @return void
+	 */
+	protected function initializeDeleteAction() {
+		$this->validateRequest('stoken', NULL, 'link');
+	}
+
+	/**
 	 * action new
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
@@ -64,7 +94,6 @@ class LinkController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @ignorevalidation $category
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function createAction(Category $category, Link $link) {
@@ -112,7 +141,6 @@ class LinkController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @ignorevalidation $category
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function updateAction(Category $category, Link $link) {
@@ -144,7 +172,6 @@ class LinkController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @ignorevalidation $category
 	 * @ignorevalidation $link
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function deleteAction(Category $category, Link $link) {

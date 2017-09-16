@@ -53,6 +53,36 @@ class CategoryController extends ActionController {
 	}
 
 	/**
+	 * Initializes create action
+	 *
+	 * @return void
+	 */
+	protected function initializeCreateAction() {
+		$id = $this->request->hasArgument('parentCategory') && isset($this->request->getArgument('parentCategory')[0])
+			? $this->request->getArgument('parentCategory')
+			: $this->feUser->getUid();
+		$this->validateRequest('stoken', $id);
+	}
+
+	/**
+	 * Initializes update action
+	 *
+	 * @return void
+	 */
+	protected function initializeUpdateAction() {
+		$this->validateRequest();
+	}
+
+	/**
+	 * Initializes delete action
+	 *
+	 * @return void
+	 */
+	protected function initializeDeleteAction() {
+		$this->validateRequest('stoken', NULL, 'category');
+	}
+
+	/**
 	 * action list
 	 *
 	 * @return void
@@ -96,7 +126,6 @@ class CategoryController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @ignorevalidation $parentCategory
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function createAction(Category $category, Category $parentCategory = NULL) {
@@ -154,7 +183,6 @@ class CategoryController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @ignorevalidation $parentCategory
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function updateAction(Category $category, Category $parentCategory = NULL) {
@@ -178,7 +206,6 @@ class CategoryController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @ignorevalidation $category
 	 * @ignorevalidation $parentCategory
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function deleteAction(Category $category, Category $parentCategory = NULL) {

@@ -17,8 +17,8 @@
 	/>
 </p>
 
-<fi:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category: category}"
-	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add drop-zone')}" syncToken="TRUE" absolute="TRUE"
+<f:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category: category}"
+	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add drop-zone')}" absolute="TRUE"
 >
 	<div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 	<fieldset>
@@ -32,9 +32,10 @@
 				<f:render partial="File/FileEntry" arguments="{index : 'i1', settings : settings}"/>
 			</f:else>
 		</f:if>
+		<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" class="submit" />
 	</fieldset>
-</fi:form>
+</f:form>
 
 </f:section>
 

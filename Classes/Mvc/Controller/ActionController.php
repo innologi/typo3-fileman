@@ -29,6 +29,7 @@ use Innologi\Fileman\Service\SortRepositoryService;
 use TYPO3\CMS\Extbase\Validation\Validator\AbstractCompositeValidator;
 use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
 /**
  * Fileman Action Controller.
  *
@@ -40,7 +41,7 @@ use TYPO3\CMS\Core\Messaging\FlashMessage;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class ActionController extends CsrfProtectController {
+class ActionController extends ErrorOnDebugController {
 
 	/**
 	 * Logged in frontend user
@@ -108,6 +109,46 @@ class ActionController extends CsrfProtectController {
 	 */
 	protected function disableRequireLogin(array $actions = []) {
 		$this->requireLogin = !in_array(substr($this->actionMethodName, 0, -6), $actions);
+	}
+
+	/**
+	 * Validates a request based on $tokenArgument, through TYPO3's internal
+	 * CSRF protection. If invalid, will automatically stop
+	 *
+	 * @param string $tokenArgument
+	 * @return boolean
+	 * @throws StopActionException
+	 */
+	protected function validateRequest($tokenArgument = 'stoken', $id = NULL, $objectType = NULL) {
+		/** @var \TYPO3\CMS\Extbase\Mvc\Web\ReferringRequest $referringRequest */
+		$referringRequest = $this->request->getReferringRequest();
+		if ($referringRequest !== NULL) {
+			if ($objectType === NULL) {
+				$objectType = strtolower($referringRequest->getControllerName());
+			}
+			if ($this->request->hasArgument($tokenArgument) &&
+				$this->request->hasArgument($objectType) &&
+				\TYPO3\CMS\Core\FormProtection\FormProtectionFactory::get()->validateToken(
+					$this->request->getArgument($tokenArgument),
+					$referringRequest->getControllerName(),
+					$referringRequest->getControllerActionName(),
+					$id ?? ($this->request->getArgument($objectType)['__identity'] ?? '')
+				)
+			) {
+				return TRUE;
+			}
+		}
+
+		$this->controllerContext = $this->buildControllerContext();
+		$this->addFlashMessage(
+			LocalizationUtility::translate('tx_fileman.csrf_invalid', $this->extensionName),
+			'',
+			FlashMessage::ERROR
+		);
+		// this will actually end up rebuilding the referringRequest, but who cares, we're in an error state
+		$this->errorAction();
+		// in case errorAction fails to forward the request
+		throw new StopActionException('invalid request', 1503940139);
 	}
 
 

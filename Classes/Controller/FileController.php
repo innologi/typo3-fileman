@@ -107,10 +107,33 @@ class FileController extends ActionController {
 	 *
 	 * @return void
 	 */
-	public function initializeCreateAction() {
+	protected function initializeCreateAction() {
+		$id = $this->request->hasArgument('category') && isset($this->request->getArgument('category')[0])
+			? $this->request->getArgument('category')
+			: NULL;
+		$this->validateRequest('stoken', $id, 'files');
+
 		if ($this->arguments->hasArgument('files')) {
 			$this->addFilesPropertyMapping();
 		}
+	}
+
+	/**
+	 * Initializes update action
+	 *
+	 * @return void
+	 */
+	protected function initializeUpdateAction() {
+		$this->validateRequest();
+	}
+
+	/**
+	 * Initializes delete action
+	 *
+	 * @return void
+	 */
+	protected function initializeDeleteAction() {
+		$this->validateRequest();
 	}
 
 	/**
@@ -118,7 +141,7 @@ class FileController extends ActionController {
 	 *
 	 * @return void
 	 */
-	public function initializeNewAction() {
+	protected function initializeNewAction() {
 		$originalRequest = $this->request->getOriginalRequest();
 		// if validation failed, the new request will not have a files argument as opposed to 4.5
 		if ($originalRequest !== NULL && $originalRequest->hasArgument('files')) {
@@ -301,7 +324,6 @@ class FileController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @ignorevalidation $category
 	 * @dontverifyrequesthash
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function createAction(FileStorage $files, Category $category) {
@@ -381,7 +403,6 @@ class FileController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @validate $file \Innologi\Fileman\Domain\Validator\OptionalFileValidator
 	 * @ignorevalidation $category
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function updateAction(File $file, Category $category = NULL) {
@@ -414,7 +435,6 @@ class FileController extends ActionController {
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @ignorevalidation $category
 	 * @ignorevalidation $file
-	 * @verifycsrftoken
 	 * @return void
 	 */
 	public function deleteAction(File $file, Category $category = NULL) {
