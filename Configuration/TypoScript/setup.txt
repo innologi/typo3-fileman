@@ -1,6 +1,5 @@
-includeLibs.Tx_Fileman_TypoScript = EXT:fileman/Classes/Scripts/Typoscript.php
 lib.tx_fileman.maxFileUploads = USER
-lib.tx_fileman.maxFileUploads.userFunc = Tx_Fileman_TypoScript->getMaxFileUploads
+lib.tx_fileman.maxFileUploads.userFunc = Innologi\Fileman\Scripts\TypoScript->getMaxFileUploads
 
 plugin.tx_fileman {
 	view {
@@ -26,9 +25,9 @@ plugin.tx_fileman {
 			XHR_PAGEID = TEXT
 			XHR_PAGEID.value = {$plugin.tx_fileman.settings.pages.xhr}
 			APC_FIELD_NAME = USER
-			APC_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getApcFieldName
+			APC_FIELD_NAME.userFunc = Innologi\Fileman\Scripts\TypoScript->getApcFieldName
 			SES_FIELD_NAME = USER
-			SES_FIELD_NAME.userFunc = Tx_Fileman_TypoScript->getSesFieldName
+			SES_FIELD_NAME.userFunc = Innologi\Fileman\Scripts\TypoScript->getSesFieldName
 			MAX_FILE_UPLOADS < lib.tx_fileman.maxFileUploads
 			DEBUG = TEXT
 			DEBUG.value = {$plugin.tx_fileman.js.debug}
