@@ -31,7 +31,7 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class BaseNameViewHelper extends AbstractViewHelper {
+class BasenameViewHelper extends AbstractViewHelper {
 
 	/**
 	 * Gets basename from file URI
