@@ -219,7 +219,7 @@ class FileController extends ActionController {
 	 * @param boolean $no_cache
 	 * @return void
 	 */
-	public function downloadAction(File $file, $no_cache = FALSE) { #@LOW currently unused
+	public function downloadAction(File $file, $no_cache = FALSE) { //@LOW currently unused
 		$fileUri = $file->getFileUri();
 
 		if(is_file($fileUri)) {

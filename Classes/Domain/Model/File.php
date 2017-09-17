@@ -42,8 +42,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  */
 class File extends AbstractEntity {
-	#@TODO beveiliging van upload-bestanden?
-	#@TODO flexform configuratie
 
 	/**
 	 * Filepath
@@ -68,12 +66,13 @@ class File extends AbstractEntity {
 	 */
 	protected $index;
 
+	// @LOW rename
 	/**
 	 * Displayed name of the file.
 	 *
 	 * @var string
 	 */
-	protected $alternateTitle; #@LOW be renamed
+	protected $alternateTitle;
 
 	/**
 	 * File description
@@ -150,7 +149,7 @@ class File extends AbstractEntity {
 	 *
 	 * @return string
 	 */
-	public function getFilename() { #@LOW currently unused
+	public function getFilename() { // @LOW currently unused
 		return basename($this->getFileUri());
 	}
 
@@ -160,7 +159,7 @@ class File extends AbstractEntity {
 	 * @return string
 	 */
 	public function getFileUri() {
-		return /*t3lib_div::fixWindowsFilePath(*/$this->fileUri/*)*/; # @TODO replace with FAL?
+		return $this->fileUri; // @TODO replace with FAL?
 	}
 
 	/**
@@ -263,7 +262,7 @@ class File extends AbstractEntity {
 	 *
 	 * @return array
 	 */
-	public function getLinksFormatted() { #@LOW work with a transient
+	public function getLinksFormatted() { // @LOW work with a transient
 		if (isset($this->links[0])) {
 			$links = str_replace("\r\n","\n",$this->links);
 			$linkArray = GeneralUtility::trimExplode("\n", $links,1);

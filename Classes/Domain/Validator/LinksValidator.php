@@ -44,11 +44,11 @@ class LinksValidator extends AbstractValidator {
 	 * @param string $links The links to validate
 	 * @return void
 	 */
-	public function isValid($links) { #@LOW don't forget TCA
+	public function isValid($links) { // @LOW don't forget TCA
 		$linkArray = [];
 
 		if (isset($links[0])) {
-			$links = str_replace("\r\n","\n",$links); #@LOW get this from a transient getter, which probably requires us to put this in the File Validator
+			$links = str_replace("\r\n","\n",$links); // @LOW get this from a transient getter, which probably requires us to put this in the File Validator
 			$linkArray = GeneralUtility::trimExplode("\n", $links,1);
 		}
 

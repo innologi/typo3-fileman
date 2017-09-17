@@ -127,7 +127,6 @@ class SortRepositoryService implements SingletonInterface{
 			}
 
 			foreach ($this->sortableRepositories as $repositoryData) {
-				// @TODO improve validation of values
 				if (isset($repositoryData['mappings'][$sortField]) && isset($this->querySortOrder[$sortOrder])) {
 					$repositoryData['repository']->setDefaultOrderings([
 						$repositoryData['mappings'][$sortField] => $this->querySortOrder[$sortOrder]

@@ -84,7 +84,7 @@ class FileService implements SingletonInterface {
 	 * @var boolean
 	 */
 	protected $searchedForSubtitutes = FALSE;
-	// @TODO seems to be deprecated. Need to replace the whole thing with something FAL-compatible anyway
+	// @TODO most of its methods are deprecated, so need to replace. Might not need it once we go full-on FAL though.
 	/**
 	 * Performs some basic file functions
 	 *

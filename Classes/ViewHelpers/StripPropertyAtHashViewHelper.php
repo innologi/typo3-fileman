@@ -33,7 +33,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * Strips properties from ObjectStorage hashes and onward for use by validation results.
  *
  * @TODO what if we could get one step further and get the title/name of the object
- * causing the error this VH is being used on?
+ * causing the error this VH is being used on? Use-case: WHICH parentCategory is the cause?
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
