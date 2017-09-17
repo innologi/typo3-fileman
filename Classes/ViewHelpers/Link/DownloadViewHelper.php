@@ -26,6 +26,7 @@ namespace Innologi\Fileman\ViewHelpers\Link;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Innologi\Fileman\Domain\Model\File;
+use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentTypeException;
 /**
  * Download View Helper
  *
@@ -62,7 +63,10 @@ class DownloadViewHelper extends AbstractTagBasedViewHelper {
 	public function render() {
 		$file = $this->arguments['file'];
 		if (!$file instanceof File) {
-			// @TODO throw exception
+			throw new InvalidArgumentTypeException(
+				'DownloadViewHelper expects \'file\' attribute to be of class ' . File::class . ', instead got ' . get_class($file),
+				1505665616
+			);
 		}
 
 		//if the fileUri lies within docroot, this will resolve the valid sitepath to file, otherwise: boolean false
