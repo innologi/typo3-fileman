@@ -179,7 +179,6 @@ return [
 				'cols' => 48,
 				'rows' => 20,
 				'eval' => 'trim',
-				'enableRichtext' => TRUE
 			],
 		],
 		'links' => [

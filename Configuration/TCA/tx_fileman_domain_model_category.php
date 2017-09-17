@@ -164,8 +164,7 @@ return [
 				'type' => 'text',
 				'cols' => 48,
 				'rows' => 20,
-				'eval' => 'trim',
-				'enableRichtext' => TRUE
+				'eval' => 'trim'
 			],
 		],
 		'sub_category' => [
