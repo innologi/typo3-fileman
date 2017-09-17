@@ -2,16 +2,13 @@
  * Fileman Javascript Library
  * -----
  * jQuery dependent.
- * Yes, I know of $.
- * Yes, I know of noConflict().
- * @TODO this entire lib needs to be refactored
  * -----
- * @author Frenck Lutke <http://frencklutke.nl/>
+ * @author Frenck Lutke <typo3@innologi.nl>
  */
 
-jQuery(document).ready(function() {
+(function($) {
 
-	var $fileman = jQuery('.tx-fileman');
+	var $fileman = $('.tx-fileman');
 
 
 	//*****************
@@ -31,14 +28,14 @@ jQuery(document).ready(function() {
 		}
 		$searchBox.on('focus', function() {
 			if (this.value.length < 1) {
-				jQuery(this).animate({
+				$(this).animate({
 					width: '85%'
 				});
 			}
 		});
 		$searchBox.on('blur', function() {
 			if (this.value.length < 1) {
-				jQuery(this).animate({
+				$(this).animate({
 					width: searchWidth
 				});
 			}
@@ -62,7 +59,7 @@ jQuery(document).ready(function() {
 
 			// replace each match with itself wrapped in a span for styling
 			$fileman.find('table.tx_fileman').each(function(i, table) {
-				var $obj = jQuery(table),
+				var $obj = $(table),
 					replacement = '<span class="search-match">$1</span>';
 				// note that this replacement would destroy event handlers, hence this feature must be applied before all others
 				$obj.html($obj.html().replace(pattern, replacement));
@@ -78,7 +75,7 @@ jQuery(document).ready(function() {
 	//click function toggles unhide class on all relevant elements
 	var $switches = $fileman.find('.rel-switch');
 	$switches.click(function() {
-		jQuery(this).next('.tx-fileman .rel-links').slideToggle();
+		$(this).next('.tx-fileman .rel-links').slideToggle();
 		return false;
 	});
 
@@ -120,7 +117,7 @@ jQuery(document).ready(function() {
 
 	//will auto-fill title only if title wasn't fiddled with manually
 	function initAutoFill(entry) {
-		var $entry = jQuery(entry),
+		var $entry = $(entry),
 			$title = $entry.find('.optional .textinput:first');
 		//setting the var as data, so we can change it when cloned later on
 		$entry.data('titleUnchanged',true);
@@ -132,7 +129,7 @@ jQuery(document).ready(function() {
 		$entry.find('.fileupload').change(function() {
 			if ($entry.data('titleUnchanged')) {
 				//depending on the browser, you might get more than the filename, so we do basename()
-				$title.val(basename(jQuery(this).val()));
+				$title.val(basename($(this).val()));
 			}
 		});
 	}
@@ -176,7 +173,7 @@ jQuery(document).ready(function() {
 	if (window.File) {
 
 		$fileman.find('form').on('change', 'input[type=file].fileupload', function(e) {
-			var $upload = jQuery(this);
+			var $upload = $(this);
 			if (!validateFiles(this.files, $upload, $upload.attr('name'))) {
 				return false;
 			}
@@ -191,7 +188,7 @@ jQuery(document).ready(function() {
 
 		$fileman.find('.init-progressbar').each(function(i, form) {
 			i++;
-			var $form = jQuery(form);
+			var $form = $(form);
 			$form.after('<div id="fileman-uploadProgress'+i+'" class="uploadprogress"><div class="progressbar"></div><div class="progressvalue"></div></div>');
 
 			if (uploadType !== 'js') {
@@ -370,7 +367,7 @@ jQuery(document).ready(function() {
 	//@TODO url should be set from TS, no cache should not be necessary once headers in script are set
 	//updates progress in progress bar
 	function updateProgress(id,i) {
-		jQuery.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random(), type: progressType}, function(data) {
+		$.get('/typo3conf/ext/fileman/Resources/Public/Scripts/UploadProgress.php', {upload_id: id, no_cache: Math.random(), type: progressType}, function(data) {
 			//@TODO: catch script errors
 			var uploaded = parseInt(data),
 				$progress = $fileman.find('#fileman-uploadProgress'+i),
@@ -402,7 +399,7 @@ jQuery(document).ready(function() {
 		if (uploadType === 'js') {
 			$fileman.find('.init-progressbar').each(function(i, form) {
 				i++;
-				jQuery(form).on('submit', function(e) {
+				$(form).on('submit', function(e) {
 					if (!xhrUploadDone) {
 						// prevent actual submitting
 						e.preventDefault();
@@ -424,10 +421,10 @@ jQuery(document).ready(function() {
 	 */
 	function xhrUploadFiles(form, index) {
 		var previouslyUploaded = 0,
-			$form = jQuery(form);
+			$form = $(form);
 
 		$form.find('.fileupload').each(function(i, upload) {
-			var $upload = jQuery(upload),
+			var $upload = $(upload),
 				// the reason we can't just use i+1, is because of the delFileEntry button capable of
 					// producing a non-succeeding index count
 				uIndex = getIndex($upload);
@@ -531,7 +528,7 @@ jQuery(document).ready(function() {
 							file.slice(startByte, endByte)
 						);
 					} else {
-						var $form = jQuery(form);
+						var $form = $(form);
 						$form.find('.tmpfile.fill-' + j).val(filename);
 						$form.find('.fileupload.fill-' + j).val(file.name);
 
@@ -618,7 +615,7 @@ jQuery(document).ready(function() {
 	//don't enable it unless there are more files allowed than 1
 	if (fileCountMax > 1) {
 		$fileman.find('.multi-file').each(function(i, form) {
-			var $form = jQuery(form),
+			var $form = $(form),
 				$fileEntries = $form.find('.file-entry'),
 				formVar = { //can be passed as reference to functions
 					fileCount: $fileEntries.length, //there could be more files initially already, due to validation errors
@@ -638,11 +635,11 @@ jQuery(document).ready(function() {
 
 			//for each initial file-entry, do the following
 			$fileEntries.each(function(i,entry) {
-				var $entry = jQuery(entry),
+				var $entry = $(entry),
 					$fileUpload = $entry.find('.fileupload');
 
 				//place delFileLink clone
-				var $clone = jQuery($delFileLink.clone());
+				var $clone = $($delFileLink.clone());
 				$clone.insertAfter($fileUpload);
 
 				//when a delete link is clicked:
@@ -667,20 +664,20 @@ jQuery(document).ready(function() {
 			if ($form.hasClass('multi-file-add')) {
 				//when an add link is clicked:
 				$addFileLink.click(function() {
-					var $addEntry = jQuery(this);
+					var $addEntry = $(this);
 					if (formVar.fileCount < fileCountMax && !$addEntry.hasClass('disabled')) { //only works if not disabled and form allows adds
 						// note that del-file-entries were cloned and $delFileLink was the original, so don't try to refactor this one!
 						if (formVar.fileCount == 1) $form.find('a.del-file-entry').removeClass('disabled'); //if we were @ min, we can enable the del link again
 						formVar.fileCount++;
 						//clone the last file-entry
 						var clone = $addEntry.prevAll('.file-entry:first').clone(),
-							$clone = jQuery(clone),
+							$clone = $(clone),
 							//replace its index in the clone
 							findName = '[file][i' + formVar.lastIndex + ']';
 							replaceName = '[file][i' + (++formVar.lastIndex) + ']';
 						//empty field values!
 						$clone.find('input[type=file],input[type=text],textarea').each(function(i, elem) {
-							var $elem = jQuery(elem);
+							var $elem = $(elem);
 							$elem.attr('name', $elem.attr('name').replace(findName,replaceName));
 							//$elem.attr('value',''); //if input is type=text..
 							$elem.val(null); //input values are copied with the clone..
@@ -717,7 +714,7 @@ jQuery(document).ready(function() {
 
 	//deletes a file entry
 	function deleteFileEntry(countVars, $addButton, deleteButton, form) {
-		var $deleteButton = jQuery(deleteButton);
+		var $deleteButton = $(deleteButton);
 		if (countVars.fileCount > 1  && !$deleteButton.hasClass('disabled')) { //only works if not disabled
 			if (countVars.fileCount == fileCountMax) $addButton.removeClass('disabled'); //if we were @ max, we can enable add link again
 			countVars.fileCount--;
@@ -732,13 +729,13 @@ jQuery(document).ready(function() {
 			$parent.remove();
 			countVars.lastIndex = getLastIndex(form);
 
-			if (countVars.fileCount == 1) jQuery(form).find('a.del-file-entry').addClass('disabled'); //if we are @ min now, we need to disable ALL del links
+			if (countVars.fileCount == 1) $(form).find('a.del-file-entry').addClass('disabled'); //if we are @ min now, we need to disable ALL del links
 		}
 	}
 
 	//retrieves the last index from the form
 	function getLastIndex(form) {
-		return getIndex(jQuery(form).find('.fileupload:last'));
+		return getIndex($(form).find('.fileupload:last'));
 	}
 	function getIndex($fileupload) {
 		//we want 999 from: <input class="fileupload" name="*[file][i999][fileUri]" />
@@ -748,7 +745,7 @@ jQuery(document).ready(function() {
 	//toggle optional fields
 	function toggleOptional($optional, button) {
 		$optional.slideToggle();
-		jQuery(button).toggleClass('expanded'); //this class helps for indicating an expanded view through styles on the button
+		$(button).toggleClass('expanded'); //this class helps for indicating an expanded view through styles on the button
 	}
 
 
@@ -766,7 +763,7 @@ jQuery(document).ready(function() {
 			$dropzones.prepend('<div class="drop-overlay"></div><div class="drop-here" title="###DROP_ZONE_TOOLTIP###">###DROP_ZONE###</div>');
 			$dropzones.on('drop', function(e) {
 				e.originalEvent.preventDefault();
-				var $overlay = jQuery('.drop-overlay', this);
+				var $overlay = $('.drop-overlay', this);
 				$overlay.toggleClass('loading');
 				if (!drop_handler(e.originalEvent, this)) {
 					drop_exit($overlay);
@@ -780,7 +777,7 @@ jQuery(document).ready(function() {
 				e.originalEvent.preventDefault();
 				e.originalEvent.stopPropagation();
 				if (!dropzoneActive) {
-					jQuery('.drop-overlay', this).show();
+					$('.drop-overlay', this).show();
 					dropzoneActive = true;
 				}
 			});
@@ -790,7 +787,7 @@ jQuery(document).ready(function() {
 			$dropzones.find('.drop-overlay').on('dragleave', function(e) {
 				e.originalEvent.preventDefault();
 				e.originalEvent.stopPropagation();
-				drop_exit(jQuery(this));
+				drop_exit($(this));
 			});
 		}
 	}
@@ -822,7 +819,7 @@ jQuery(document).ready(function() {
 
 		// continue only if there are actual files
 		if (files.length > 0) {
-			var $form = jQuery(form),
+			var $form = $(form),
 				$entries = $form.find('.file-entry'),
 				$upload = $entries.first().find('.fileupload');
 
@@ -863,8 +860,8 @@ jQuery(document).ready(function() {
 
 			// $entries can be out of date, so do another find
 			$form.find('.file-entry').each(function(i, entry) {
-				var $fileupload = jQuery('.fileupload', entry),
-					$replacement = jQuery('<span class="fileupload" name="' + $fileupload.attr('name') + '">' + files[i].name + '</span>');
+				var $fileupload = $('.fileupload', entry),
+					$replacement = $('<span class="fileupload" name="' + $fileupload.attr('name') + '">' + files[i].name + '</span>');
 				$replacement[0].files = [ files[i] ];
 				$fileupload.replaceWith($replacement);
 			});
@@ -873,4 +870,4 @@ jQuery(document).ready(function() {
 		}
 	}
 
-});
+})(jQuery);
