@@ -417,12 +417,11 @@
 	background-image:url("/typo3conf/ext/fileman/Resources/Public/Images/loading.gif");
 }
 .tx-fileman .drop-zone .drop-here {
-	height:65px;
 	width:150px;
 	margin-bottom:10px;
 	text-align:center;
 	font-size:1.5em;
-	padding-top:12px;
+	padding:21px;
 	color:#99d
 }
 .tx-fileman .drop-zone .drop-overlay,
