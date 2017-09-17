@@ -266,7 +266,7 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 	.tx-fileman .add-file-entry:before,
 	.tx-fileman .del-file-entry:before,
 	.tx-fileman .show-optional:before,
-	.tx-fileman .typo3-message .message-body:before,
+	.tx-fileman .typo3-messages .alert .alert-message:before,
 	.tx-fileman .validation-errors .validation-header:before {
 		background-image:url("/typo3conf/ext/fileman/Resources/Public/Icons/t3skin.png");
 		content:"";
@@ -285,7 +285,7 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		margin:2px 8px 0 0;
 	}
 	
-	.tx-fileman .typo3-message .message-body:before,
+	.tx-fileman .typo3-messages .alert .alert-message:before,
 	.tx-fileman .validation-errors .validation-header:before {
 		margin:0 8px 0 0;
 	}
@@ -359,6 +359,7 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 
 	.tx-fileman .typo3-messages {
 		overflow:hidden;
+		list-style:none;
 	}
 	.tx-fileman .typo3-messages .alert {
 		margin:8px 0;
@@ -417,6 +418,23 @@ plugin.tx_fileman._CSS_DEFAULT_STYLE (
 		background-color:#fcb;
 		border:1px solid #ea9;
 		color:#a33;
+	}
+	
+	.tx-fileman .typo3-messages .alert-danger .alert-message:before,
+	.tx-fileman .validation-errors .validation-header:before {
+		background-position:-306px -198px;
+	}
+	.tx-fileman .typo3-messages .alert-warning .alert-message:before {
+		background-position:-54px -216px;
+	}
+	.tx-fileman .typo3-messages .alert-notice .alert-message:before {
+		background-position:-18px -216px;
+	}
+	.tx-fileman .typo3-messages .alert-info .alert-message:before {
+		background-position:0 -216px;
+	}
+	.tx-fileman .typo3-messages .alert-success .alert-message:before {
+		background-position:-36px -216px;
 	}
 	
 	
