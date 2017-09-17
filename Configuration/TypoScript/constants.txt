@@ -49,7 +49,7 @@ plugin.tx_fileman {
 	}
 	settings {
 		# cat=plugin.tx_fileman/a_upload/10; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadDir
-		uploadDir = uploads/tx_fileman/
+		uploadDir = fileadmin/fileman/
 		
 		# e.g. txt,doc,docx,rtf,odf,xls,xlsx,ppt,pptx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
 		# cat=plugin.tx_fileman/a_upload/20; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_allowFileType

@@ -157,7 +157,7 @@ return [
 				'internal_type' => 'file',
 				'size' => 1,
 				'maxitems' => 1,
-				'uploadfolder' => 'uploads/tx_fileman',
+				'uploadfolder' => 'fileadmin/fileman',
 				'allowed' => '*',
 				'disallowed' => 'php,php3,php4,php5,html,htm,xhtml,js,css',
 			],

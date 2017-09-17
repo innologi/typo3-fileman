@@ -331,8 +331,7 @@ class FileController extends ActionController {
 		$failedFiles = array();
 		/** @var File $file */
 		foreach ($fileStorage as $file) {
-			#$absDirPath = PATH_site.$this->settings['uploadDir'];
-			$absDirPath = PATH_site.'uploads/tx_fileman/'; #@LOW might as well do it static right now
+			$absDirPath = PATH_site . $this->settings['uploadDir'];
 			//moves a file from it's tmp location to it final destination
 			if ($this->fileService->finalizeMove($file,$absDirPath)) {
 				//feUser
@@ -465,8 +464,7 @@ class FileController extends ActionController {
 		if ($fileCategories->count() === 0) {
 			$this->fileRepository->remove($file);
 
-			#@LOW change this as soon as its no longer static / using FAL
-			$uri = PATH_site . 'uploads/tx_fileman/' . $file->getFileUri();
+			$uri = PATH_site . $this->settings['uploadDir'] . $file->getFileUri();
 			try {
 				unlink($uri);
 			} catch (\Exception $e) {

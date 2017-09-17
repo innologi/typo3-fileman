@@ -105,7 +105,7 @@ class DownloadViewHelper extends AbstractTagBasedViewHelper {
 	*/
 	protected function resolveSitepath($filepath) {
 		//filepath is relative to document root
-		$appendUrl = 'uploads/tx_fileman/' . $filepath; #@LOW might as well do it static right now
+		$appendUrl = $this->renderingContext->getVariableProvider()->get('settings')['uploadDir'] . $filepath; #@LOW might as well do it static right now
 		if (is_file($appendUrl)) {
 			return $appendUrl;
 		}
