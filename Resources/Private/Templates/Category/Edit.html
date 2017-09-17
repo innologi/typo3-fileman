@@ -6,16 +6,7 @@
 
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.edit_category_header" /></h3>
-<div class="buttons">
-	<f:if condition="{parentCategory}">
-	<f:then>
-		<f:link.action title="{f:translate(key:'link.title.back')}" action="list" controller="File" arguments="{category: parentCategory}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
-	</f:then>
-	<f:else>
-		<f:link.page title="{f:translate(key:'link.title.back')}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
-	</f:else>
-	</f:if>
-</div>
+<f:render partial="BackButton" arguments="{category: parentCategory}"/>
 
 <div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 
