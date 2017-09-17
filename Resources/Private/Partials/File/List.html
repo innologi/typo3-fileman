@@ -12,7 +12,7 @@
 	<tr>
 		<td class="file">
 			<fi:link.download title="{f:translate(key:'link.title.file_download')}" file="{file}">
-				{file.alternateTitle}
+				<f:format.htmlentities>{file.alternateTitle}</f:format.htmlentities>
 			</fi:link.download>
 			<f:if condition="{isSuperUser}">
 				<f:link.action title="{f:translate(key:'link.title.file_edit')}" action="edit" arguments="{file: file, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
@@ -38,7 +38,7 @@
 			</f:then>
 			</f:if>
 		</td>
-		<td class="description">{file.description}</td>
+		<td class="description"><f:format.htmlentities>{file.description}</f:format.htmlentities></td>
 	</tr>
  	
 </f:for>

@@ -12,7 +12,7 @@
 	<tr>
 		<td class="link">
 			<f:link.external title="{f:translate(key:'link.title.link_show')}" uri="{link.linkUri}" >
-				{link.linkName}
+				<f:format.htmlentities>{link.linkName}</f:format.htmlentities>
 			</f:link.external>
 			<f:if condition="{isSuperUser}">
 				<f:link.action title="{f:translate(key:'link.title.link_edit')}" action="edit" controller="Link" arguments="{link: link, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
@@ -24,7 +24,7 @@
 				</f:form>
 			</f:if>
 		</td>
-		<td class="description">{link.description}</td>
+		<td class="description"><f:format.htmlentities>{link.description}</f:format.htmlentities></td>
 	</tr>
  	
 </f:for>

@@ -11,7 +11,7 @@
 	
 	<tr>
 		<td class="category">
-			<f:link.action title="{f:translate(key:'link.title.category_show')}" action="list" controller="File" arguments="{category: category}">{category.title} ({category.count})</f:link.action>
+			<f:link.action title="{f:translate(key:'link.title.category_show')}" action="list" controller="File" arguments="{category: category}"><f:format.htmlentities>{category.title} ({category.count})</f:format.htmlentities></f:link.action>
 			<f:if condition="{isSuperUser}" >
 				<f:link.action title="{f:translate(key:'link.title.category_edit')}" action="edit" controller="Category" arguments="{category: category, parentCategory: parentCategory}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 				<f:if condition="{category.count} == 0">
@@ -24,7 +24,7 @@
 				</f:if>
 			</f:if>
 		</td>
-		<td class="description">{category.description}</td>
+		<td class="description"><f:format.htmlentities>{category.description}</f:format.htmlentities></td>
 	</tr>
 	
 </f:for>

@@ -4,7 +4,7 @@
 <f:layout name="Default" />
 
 <f:section name="main">
-<h3>{category.title}</h3>
+<h3><f:format.htmlentities>{category.title}</f:format.htmlentities></h3>
 <f:render partial="Search" arguments="{settings: settings}" />
 <div class="buttons">
 <f:if condition="{category.parentCategory}">
