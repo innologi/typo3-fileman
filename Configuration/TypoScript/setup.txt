@@ -3,9 +3,9 @@ lib.tx_fileman.maxFileUploads.userFunc = Innologi\Fileman\Scripts\TypoScript->ge
 
 plugin.tx_fileman {
 	view {
-		templateRootPath = {$plugin.tx_fileman.view.templateRootPath}
-		partialRootPath = {$plugin.tx_fileman.view.partialRootPath}
-		layoutRootPath = {$plugin.tx_fileman.view.layoutRootPath}
+		templateRootPaths.10 = {$plugin.tx_fileman.view.templateRootPath}
+		partialRootPaths.10 = {$plugin.tx_fileman.view.partialRootPath}
+		layoutRootPaths.10 = {$plugin.tx_fileman.view.layoutRootPath}
 	}
 	persistence {
 		storagePid = {$plugin.tx_fileman.persistence.storagePid}
