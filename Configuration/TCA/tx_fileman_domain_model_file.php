@@ -27,7 +27,7 @@ return [
 		'iconfile' => 'EXT:fileman/Resources/Public/Icons/tx_fileman_domain_model_file.gif'
 	],
 	'interface' => [
-		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, file_uri, alternate_title, description, category, links, fe_user, fe_group', #@LOW currently unused: link_names,
+		'showRecordFieldList' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, file_uri, alternate_title, description, category, links, fe_user, fe_group',
 	],
 	'types' => [
 		'0' => ['showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, file_uri, alternate_title, description, category,

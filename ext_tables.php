@@ -1,10 +1,7 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-#@TODO documenteer pageTS TCEMAIN.clearCacheCmd = pid
-#@TODO namespaces?
 #@TODO what about FAL?
-#@TODO locallang_csh_tx_fileman_domain_model_link.xml
 
 // add tca csh
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr(
