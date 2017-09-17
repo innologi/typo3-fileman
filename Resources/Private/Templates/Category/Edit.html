@@ -13,18 +13,24 @@
 <f:render partial="FormErrors" />
 
 <f:form enctype="multipart/form-data" method="post" action="update" name="category" object="{category}" arguments="{parentCategory : parentCategory}" absolute="TRUE">
-	<f:render partial="Category/FormFields" arguments="{category:category, users:users, feUser:feUser}" />
-	
-	<f:translate key="property.category.parentCategory" />
-	<br />
-	<f:form.select
-		options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
-		optionValueField="uid" optionLabelField="title" property="parentCategory" 
-		multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
-	/>
-	
-	<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
-	<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
+	<fieldset>
+		<f:render partial="Category/FormFields" arguments="{category:category, users:users, feUser:feUser}" />
+		
+		<div class="fieldwrap">
+			<label>
+				<f:translate key="property.category.parentCategory" />
+				<br />
+				<f:form.select
+					options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
+					optionValueField="uid" optionLabelField="title" property="parentCategory" 
+					multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
+				/>
+			</label>
+		</div>
+		
+		<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
+		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
+	</fieldset>
 </f:form>
 </f:section>
 

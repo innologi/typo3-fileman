@@ -13,9 +13,11 @@
 <f:render partial="FormErrors" />
 
 <f:form enctype="multipart/form-data" method="post" action="create" name="category" object="{category}" arguments="{parentCategory : parentCategory}" absolute="TRUE">
-	<f:render partial="Category/FormFields" arguments="{category:category, users:users, feUser:feUser}" />
-	<f:form.hidden name="stoken" value="{f:if(condition:parentCategory,then:'{fi:csrf(uid:parentCategory.uid)}',else:'{fi:csrf(uid:feUser.uid)}')}" />
-	<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
+	<fieldset>
+		<f:render partial="Category/FormFields" arguments="{category:category, users:users, feUser:feUser}" />
+		<f:form.hidden name="stoken" value="{f:if(condition:parentCategory,then:'{fi:csrf(uid:parentCategory.uid)}',else:'{fi:csrf(uid:feUser.uid)}')}" />
+		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
+	</fieldset>
 </f:form>
 </f:section>
 

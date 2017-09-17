@@ -1,31 +1,28 @@
 <html data-namespace-typo3-fluid="true"
 	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 
-<label>
-	<f:translate key="property.link.linkUri" /> <span class="required">*</span>
-	<br />
-	<f:form.textfield property="linkUri" required="TRUE" class="textinput" />
-</label>
+<div class="fieldwrap">
+	<label>
+		<f:translate key="property.link.linkUri" /> <span class="required">*</span>
+		<br />
+		<f:form.textfield property="linkUri" required="TRUE" class="textinput" />
+	</label>
+</div>
 
-<br />
-<br />
+<div class="fieldwrap">
+	<label>
+		<f:translate key="property.link.linkName" />
+		<br />
+		<f:form.textfield property="linkName" class="textinput" />
+	</label>
+</div>
 
-<label>
-	<f:translate key="property.link.linkName" />
-	<br />
-	<f:form.textfield property="linkName" class="textinput" />
-</label>
-
-<br />
-<br />
-
-<label>
-	<f:translate key="property.link.description" />
-	<br />
-	<f:form.textarea property="description" cols="40" rows="15" />
-</label>
-
-<br />
-<br />
+<div class="fieldwrap">
+	<label>
+		<f:translate key="property.link.description" />
+		<br />
+		<f:form.textarea property="description" cols="40" rows="15" />
+	</label>
+</div>
 
 </html>

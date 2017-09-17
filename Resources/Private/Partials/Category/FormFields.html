@@ -1,25 +1,23 @@
 <html data-namespace-typo3-fluid="true"
 	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 
-<fieldset>
+<div class="fieldwrap">
 	<label>
 		<f:translate key="property.category.title" /> <span class="required">*</span>
 		<br />
 		<f:form.textfield property="title" required="TRUE" class="textinput" />
 	</label>
-	
-	<br /> <!-- @TODO: remove the extra br's and do it in css -->
-	<br />
-	
+</div>
+
+<div class="fieldwrap">
 	<label>
 		<f:translate key="property.category.description" />
 		<br />
 		<f:form.textarea property="description" cols="40" rows="15" />
 	</label>
-	
-	<br />
-	<br />
-	
+</div>
+
+<div class="fieldwrap">
 	<label>
 		<f:translate key="property.category.feUser" />
 		<br />
@@ -29,10 +27,6 @@
 			size="1" value="{feUser}"
 		/>
 	</label>
-	
-	<br />
-	<br />
-	
-</fieldset>
+</div>
 
 </html>

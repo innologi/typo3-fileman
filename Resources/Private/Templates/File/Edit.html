@@ -12,21 +12,27 @@
 
 <f:form enctype="multipart/form-data" method="post" action="update"  name="file" object="{file}" arguments="{category : category}" absolute="TRUE">
 	<fieldset>
-		<f:translate key="property.file.fileUri" />
-		<br />
-		<input type="text" readonly="readonly" disabled="disabled" value="{file.fileUri}" class="textinput" />
-		<br />
-		<br />
+		<div class="fieldwrap">
+			<label>
+				<f:translate key="property.file.fileUri" />
+				<br />
+				<input type="text" readonly="readonly" disabled="disabled" value="{file.fileUri}" class="textinput" />
+			</label>
+		</div>
 		
 		<f:render partial="File/FormFields" />
 		
-		<f:translate key="property.file.category" />
-		<br />
-		<f:form.select
-			options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
-			optionValueField="uid" optionLabelField="title" property="category" 
-			multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
-		/>
+		<div class="fieldwrap">
+			<label>
+				<f:translate key="property.file.category" />
+				<br />
+				<f:form.select
+					options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
+					optionValueField="uid" optionLabelField="title" property="category" 
+					multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
+				/>
+			</label>
+		</div>
 		
 		<f:form.hidden name="stoken" value="{fi:csrf(uid:file.uid)}" />
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.edit_file_submit')}" class="submit" />

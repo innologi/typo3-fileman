@@ -21,7 +21,6 @@
 	border:1px solid #999;
 	background-color:#ccc;
 	display:block;
-	margin-top:30px;
 }
 
 .tx-fileman .textinput,
@@ -34,6 +33,11 @@
 
 .tx-fileman .small-textarea {
 	height:100px;
+}
+
+.tx-fileman .fieldwrap,
+.tx-fileman .add-file-entry {
+	margin-bottom:1em;
 }
 
 
