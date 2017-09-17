@@ -25,10 +25,8 @@ plugin.tx_fileman {
 		includeJquery = 1
 		# cat=plugin.tx_fileman/file/50; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_includeJS
 		includeJS = 1
-		# cat=plugin.tx_fileman/file/60; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_toFooter
-		toFooter = 1
 		# cat=plugin.tx_fileman/file/70; type=text; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_jQueryCDN
-		jQueryCDN = https://code.jquery.com/jquery-3.2.1.min.js
+		jQueryCDN = EXT:fileman/Resources/Public/JavaScript/jQuery/jquery-3.2.1.min.js
 		
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.closure.js
 		

@@ -10,65 +10,79 @@ plugin.tx_fileman {
 	persistence {
 		storagePid = {$plugin.tx_fileman.persistence.storagePid}
 	}
-	jslib {
-		jQuery.external = 1
-		jQuery = {$plugin.tx_fileman.js.jQueryCDN}
-		#TYPO3 4.6.0, http://forge.typo3.org/issues/29695 resolved? Clearly not, so for now:
-		jQuery.disableCompression = 1
-		
-		inlineJS = TEMPLATE
-		inlineJS.template = FILE
-		inlineJS.template.file = {$plugin.tx_fileman.js.libFile}
-		inlineJS.marks {
-			APC_FIELD_NAME = USER
-			APC_FIELD_NAME.userFunc = Innologi\Fileman\Scripts\TypoScript->getApcFieldName
-			SES_FIELD_NAME = USER
-			SES_FIELD_NAME.userFunc = Innologi\Fileman\Scripts\TypoScript->getSesFieldName
-			MAX_FILE_UPLOADS < lib.tx_fileman.maxFileUploads
-			DEBUG = TEXT
-			DEBUG.value = {$plugin.tx_fileman.js.debug}
-			UPLOADPROGRESS = TEXT
-			UPLOADPROGRESS.value = {$plugin.tx_fileman.js.uploadProgress}
-			UPLOADTYPE = TEXT
-			UPLOADTYPE.value = {$plugin.tx_fileman.js.uploadType}
-			ALLOW_MIMETYPE = TEXT
-			ALLOW_MIMETYPE.value = {$plugin.tx_fileman.js.allowMimeType}
-			MAX_FILESIZE = TEXT
-			MAX_FILESIZE.value = {$plugin.tx_fileman.js.maxFileSize}
-			MAX_TOTAL_FILESIZE = TEXT
-			MAX_TOTAL_FILESIZE.value = {$plugin.tx_fileman.js.maxTotalFileSize}
-			CHUNKSIZE = TEXT
-			CHUNKSIZE.value = {$plugin.tx_fileman.js.chunkSize}
-			SENDING_FILE = TEXT
-			SENDING_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.sending_file
-			ADD_FILE = TEXT
-			ADD_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.add_file
-			DEL_FILE = TEXT
-			DEL_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.del_file
-			DELETE_CONFIRM = TEXT
-			DELETE_CONFIRM.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.delete_confirm
-			SHOW_OPTIONAL = TEXT
-			SHOW_OPTIONAL.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.show_optional
-			VALID_FAIL_MIMETYPE = TEXT
-			VALID_FAIL_MIMETYPE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_mimetype
-			VALID_FAIL_MAXFILESIZE = TEXT
-			VALID_FAIL_MAXFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilesize
-			VALID_FAIL_TOTFILESIZE = TEXT
-			VALID_FAIL_TOTFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_totalfilesize
-			VALID_FAIL_FILECOUNT = TEXT
-			VALID_FAIL_FILECOUNT.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilecount
-			ERROR_FILE_TRANSFER = TEXT
-			ERROR_FILE_TRANSFER.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_file_transfer
-			ERROR_XHR_RESPONSE = TEXT
-			ERROR_XHR_RESPONSE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_xhr_response
-			DROP_ZONE = TEXT
-			DROP_ZONE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_text
-			DROP_ZONE_TOOLTIP = TEXT
-			DROP_ZONE_TOOLTIP.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_tooltip
-			XHR_RETRY = TEXT
-			XHR_RETRY.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_retry
-			XHR_NO_PROGRESS = TEXT
-			XHR_NO_PROGRESS.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_no_progress
+	# assets provider configuration
+	assets {
+		default {
+			javascript {
+				inline {
+					tx_fileman_jsInline {
+						# jQuery
+						10 = FILE
+						10.file = {$plugin.tx_fileman.js.jQueryCDN}
+						10.stdWrap.if.value = {$plugin.tx_fileman.js.includeJquery}
+						10.stdWrap.if.equals = 1
+						
+						# jslib
+						20 = TEMPLATE
+						20.template = FILE
+						20.template.file = {$plugin.tx_fileman.js.libFile}
+						20.marks {
+							APC_FIELD_NAME = USER
+							APC_FIELD_NAME.userFunc = Innologi\Fileman\Scripts\TypoScript->getApcFieldName
+							SES_FIELD_NAME = USER
+							SES_FIELD_NAME.userFunc = Innologi\Fileman\Scripts\TypoScript->getSesFieldName
+							MAX_FILE_UPLOADS < lib.tx_fileman.maxFileUploads
+							DEBUG = TEXT
+							DEBUG.value = {$plugin.tx_fileman.js.debug}
+							UPLOADPROGRESS = TEXT
+							UPLOADPROGRESS.value = {$plugin.tx_fileman.js.uploadProgress}
+							UPLOADTYPE = TEXT
+							UPLOADTYPE.value = {$plugin.tx_fileman.js.uploadType}
+							ALLOW_MIMETYPE = TEXT
+							ALLOW_MIMETYPE.value = {$plugin.tx_fileman.js.allowMimeType}
+							MAX_FILESIZE = TEXT
+							MAX_FILESIZE.value = {$plugin.tx_fileman.js.maxFileSize}
+							MAX_TOTAL_FILESIZE = TEXT
+							MAX_TOTAL_FILESIZE.value = {$plugin.tx_fileman.js.maxTotalFileSize}
+							CHUNKSIZE = TEXT
+							CHUNKSIZE.value = {$plugin.tx_fileman.js.chunkSize}
+							SENDING_FILE = TEXT
+							SENDING_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.sending_file
+							ADD_FILE = TEXT
+							ADD_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.add_file
+							DEL_FILE = TEXT
+							DEL_FILE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.del_file
+							DELETE_CONFIRM = TEXT
+							DELETE_CONFIRM.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.delete_confirm
+							SHOW_OPTIONAL = TEXT
+							SHOW_OPTIONAL.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.show_optional
+							VALID_FAIL_MIMETYPE = TEXT
+							VALID_FAIL_MIMETYPE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_mimetype
+							VALID_FAIL_MAXFILESIZE = TEXT
+							VALID_FAIL_MAXFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilesize
+							VALID_FAIL_TOTFILESIZE = TEXT
+							VALID_FAIL_TOTFILESIZE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_totalfilesize
+							VALID_FAIL_FILECOUNT = TEXT
+							VALID_FAIL_FILECOUNT.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.validate_failed_maxfilecount
+							ERROR_FILE_TRANSFER = TEXT
+							ERROR_FILE_TRANSFER.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_file_transfer
+							ERROR_XHR_RESPONSE = TEXT
+							ERROR_XHR_RESPONSE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.error_xhr_response
+							DROP_ZONE = TEXT
+							DROP_ZONE.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_text
+							DROP_ZONE_TOOLTIP = TEXT
+							DROP_ZONE_TOOLTIP.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.drop_zone_tooltip
+							XHR_RETRY = TEXT
+							XHR_RETRY.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_retry
+							XHR_NO_PROGRESS = TEXT
+							XHR_NO_PROGRESS.data = LLL:EXT:fileman/Resources/Private/Language/locallang.xml:tx_fileman_filelist.xhr_no_progress
+						}
+						20.stdWrap.if.value = {$plugin.tx_fileman.js.includeJS}
+						20.stdWrap.if.equals = 1
+						placeInFooter = 1
+					}
+				}
+			}
 		}
 	}
 	settings {
@@ -81,18 +95,5 @@ plugin.tx_fileman {
 		maxTotalFileSize = {$plugin.tx_fileman.js.maxTotalFileSize}
 	}
 }
-
-[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJquery}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}] 
-page.includeJSFooterlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
-
-[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJquery}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}] 
-page.includeJSlibs.fileman_jQuery < plugin.tx_fileman.jslib.jQuery
-
-[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:0 < {$plugin.tx_fileman.js.toFooter}]
-page.jsFooterInline.198311310 < plugin.tx_fileman.jslib.inlineJS
-
-[globalVar = LIT:0 < {$plugin.tx_fileman.js.includeJS}] && [globalVar = LIT:1 > {$plugin.tx_fileman.js.toFooter}]
-page.jsInline.198311310 < plugin.tx_fileman.jslib.inlineJS
-[global]
 
 page.includeCSS.filemanFrontend = {$plugin.tx_fileman.css.frontendFile}
