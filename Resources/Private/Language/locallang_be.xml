@@ -20,6 +20,7 @@
 			<label index="ts_settings_partialRootPath">Path to template partials (FE)</label>
 			<label index="ts_settings_layoutRootPath">Path to template layouts (FE)</label>
 			<label index="ts_settings_storagePid">Default storage PID</label>
+			<label index="ts_css_frontendFile">Frontend CSS path: Provides frontend styling to plugin</label>			
 			<label index="ts_settings_includeJquery">Enable jQuery inclusion: Will include the jQuery library through the configured CDN. If for some reason there already is a jQuery library present, you can disable fileman's here to prevent conflicts.</label>
 			<label index="ts_settings_includeJS">Enable Javascript inclusion: Will include fileman Javascript. It's all jQuery dependent, so make sure to have jQuery enabled through this or another extension.</label>
 			<label index="ts_settings_toFooter">Place Javascript in page footer: If enabled, will move the fileman Javascript out of the header and into the footer.</label>

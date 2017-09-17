@@ -16,6 +16,10 @@ plugin.tx_fileman {
 		# cat=plugin.tx_fileman/0_general/010; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_storagePid
 		storagePid = 
 	}
+	css {
+		# cat=plugin.tx_fileman/file/035; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_css_frontendFile
+		frontendFile = EXT:fileman/Resources/Public/Css/frontend.min.css
+	}
 	js {
 		# cat=plugin.tx_fileman/file/40; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_includeJquery
 		includeJquery = 1
