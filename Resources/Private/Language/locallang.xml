@@ -121,6 +121,17 @@
 			<label index="link.title.link_edit">Edit link</label>
 			<label index="link.title.link_new">Add link</label>
 			<label index="link.title.back">Go back</label>
+			
+			<label index="sort.title.asc">Title: ascending</label>
+			<label index="sort.title.desc">Title: descending</label>
+			<label index="sort.crdate.asc">Created first</label>
+			<label index="sort.crdate.desc">Created last</label>
+			<label index="sort.tstamp.desc">Changed last</label>
+			
+			<label index="button.search.submit">Search</label>
+			<label index="button.sort.submit">Ok</label>
+			
+			<label index="label.sort.sorting">Sort order:</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
 			<label index="tx_fileman.login_error">U dient ingelogd te zijn met een geldig gebruikersaccount.</label>
@@ -237,6 +248,17 @@
 			<label index="link.title.link_edit">Wijzig link</label>
 			<label index="link.title.link_new">Link toevoegen</label>
 			<label index="link.title.back">Ga terug</label>
+			
+			<label index="sort.title.asc">Titel: oplopend</label>
+			<label index="sort.title.desc">Titel: aflopend</label>
+			<label index="sort.crdate.asc">Vroegst aangemaakt</label>
+			<label index="sort.crdate.desc">Laatst aangemaakt</label>
+			<label index="sort.tstamp.desc">Laatst gewijzigd</label>
+			
+			<label index="button.search.submit">Zoek</label>
+			<label index="button.sort.submit">Ok</label>
+			
+			<label index="label.sort.sorting">Volgorde:</label>
 		</languageKey>
 	</data>
 </T3locallang>

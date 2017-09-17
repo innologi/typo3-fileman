@@ -4,13 +4,12 @@
 	
 <fi:sortRepository choicesAs="options" valueAs="value">
 	<f:form enctype="multipart/form-data" method="post" action="sort">
-		<!-- @TODO llang -->
 		<label>
-			Volgorde:
+			<f:translate key="label.sort.sorting"/>
 			<f:form.select class="select-sort" name="sorting" options="{options}" value="{value}" />
 			<f:form.hidden name="category" value="{category}" />
 		</label>
-		<f:form.submit value="Ok" />
+		<f:form.submit value="{f:translate(key:'button.sort.submit')}" />
 	</f:form>
 </fi:sortRepository>
 

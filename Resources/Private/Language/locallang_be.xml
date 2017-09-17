@@ -7,8 +7,10 @@
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="tx_fileman_flexform_sheet">Configuration</label>
 			<label index="tx_fileman_flexform_suGroup">Superuser group</label>
 			<label index="tx_fileman_flexform_searchTypes">Searchable record types</label>
+			<label index="tx_fileman_flexform_enableSearch">Enable search</label>
 			
 			<label index="tca_tab_content">Category Content</label>
 			

@@ -26,6 +26,7 @@ namespace Innologi\Fileman\Service;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\{Repository, QueryInterface};
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Service to ease the automatic sorting configuration of repositories
  *
@@ -143,14 +144,14 @@ class SortRepositoryService implements SingletonInterface{
 	 */
 	public function getSortingChoices() {
 		if ($this->sortingChoices === NULL) {
+			$extName = 'fileman';
 			$this->sortingChoices = [
 				// @TODO make this dynamic / configurable
-				// @TODO llang
-				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_ASC => 'Titel: Oplopend',
-				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_DESC => 'Titel: Aflopend',
-				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_ASC => 'Vroegst Aangemaakt',
-				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_DESC => 'Laatst Aangemaakt',
-				self::SORT_FIELD_UPDATE_TIME . '::' . self::SORT_ORDER_DESC => 'Laatst Gewijzigd',
+				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_ASC => LocalizationUtility::translate('sort.title.asc', $extName),
+				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_DESC => LocalizationUtility::translate('sort.title.desc', $extName),
+				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_ASC => LocalizationUtility::translate('sort.crdate.asc', $extName),
+				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_DESC => LocalizationUtility::translate('sort.crdate.desc', $extName),
+				self::SORT_FIELD_UPDATE_TIME . '::' . self::SORT_ORDER_DESC => LocalizationUtility::translate('sort.tstamp.desc', $extName),
 			];
 		}
 		return $this->sortingChoices;

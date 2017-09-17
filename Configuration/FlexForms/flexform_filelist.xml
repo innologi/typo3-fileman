@@ -5,13 +5,13 @@
   <sDEF>
    <ROOT>
      <TCEforms>
-      <sheetTitle>Function</sheetTitle> <!-- @TODO: llang -->
+      <sheetTitle>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_sheet</sheetTitle>
      </TCEforms>
      <type>array</type>
      <el>
       <settings.enableSearch>
 			<TCEforms>
-				<label>Enable Search</label>
+				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_enableSearch</label>
 				<config>
 					<type>check</type>
 				</config>
