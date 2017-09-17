@@ -150,14 +150,6 @@ class OptionalFileValidator extends AbstractValidator {
 				$this->result->forProperty('category')->merge($result);
 			}
 		}
-
-		// if no errors
-		if (!$this->result->hasMessages()) {
-			//replace empty title
-			if (empty($title)) {
-				$file->setAlternateTitle($file->getFileUri());
-			}
-		}
 	}
 
 }

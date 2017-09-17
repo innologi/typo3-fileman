@@ -337,7 +337,12 @@ class FileController extends ActionController {
 			if ($this->fileService->finalizeMove($file,$absDirPath)) {
 				//feUser
 				$file->setFeUser($this->feUser);
-				#@TODO do the alternate title stuff here
+
+				$title = $file->getAlternateTitle();
+				if (empty($title)) {
+					$file->setAlternateTitle($file->getFileUri());
+				}
+
 				//category
 				if ($category !== NULL) {
 					$category->addFile($file); //this is to make the database field counter update reliably
@@ -406,7 +411,6 @@ class FileController extends ActionController {
 	 * @return void
 	 */
 	public function updateAction(File $file, Category $category = NULL) {
-		// @LOW this is also done in the validator.. so, redundant?
 		//empty titles are replaced
 		$title = $file->getAlternateTitle();
 		if (empty($title)) {
