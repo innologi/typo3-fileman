@@ -7,7 +7,7 @@
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.edit_file_header" arguments="{s: category.title}" /></h3>
 <div class="buttons">
-	<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
+	<f:link.action title="{f:translate(key:'link.title.back')}" action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
 </div>
 
 <f:render partial="FormErrors" />

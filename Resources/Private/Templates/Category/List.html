@@ -8,7 +8,7 @@
 <f:render partial="Search" arguments="{settings: settings}" />
 <div class="buttons">
 <f:if condition="{isLoggedIn}">
-	<f:link.action action="new" controller="Category" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
+	<f:link.action title="{f:translate(key:'link.title.category_new')}" action="new" controller="Category" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
 </f:if>
 </div>
 

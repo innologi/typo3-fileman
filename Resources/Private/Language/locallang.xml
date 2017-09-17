@@ -110,6 +110,17 @@
 			<label index="property.link.description">Description</label>
 			<label index="property.link.category">Category</label>
 			<label index="property.link.tstamp">Placed on</label>
+			
+			<label index="link.title.category_show">View category</label>
+			<label index="link.title.category_edit">Edit category</label>
+			<label index="link.title.category_new">Create category</label>
+			<label index="link.title.file_download">Open file</label>
+			<label index="link.title.file_edit">Edit file</label>
+			<label index="link.title.file_new">Upload file(s)</label>
+			<label index="link.title.link_show">Follow link</label>
+			<label index="link.title.link_edit">Edit link</label>
+			<label index="link.title.link_new">Add link</label>
+			<label index="link.title.back">Go back</label>
 		</languageKey>
 		<languageKey index="nl" type="array">
 			<label index="tx_fileman.login_error">U dient ingelogd te zijn met een geldig gebruikersaccount.</label>
@@ -215,6 +226,17 @@
 			<label index="property.link.description">Omschrijving</label>
 			<label index="property.link.category">Categorie</label>
 			<label index="property.link.tstamp">Geplaatst op</label>
+			
+			<label index="link.title.category_show">Bekijk categorie</label>
+			<label index="link.title.category_edit">Wijzig categorie</label>
+			<label index="link.title.category_new">Categorie aanmaken</label>
+			<label index="link.title.file_download">Bestand openen</label>
+			<label index="link.title.file_edit">Wijzig bestand</label>
+			<label index="link.title.file_new">Upload bestand(en)</label>
+			<label index="link.title.link_show">Volg link</label>
+			<label index="link.title.link_edit">Wijzig link</label>
+			<label index="link.title.link_new">Link toevoegen</label>
+			<label index="link.title.back">Ga terug</label>
 		</languageKey>
 	</data>
 </T3locallang>

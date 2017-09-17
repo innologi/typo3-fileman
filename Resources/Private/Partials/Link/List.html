@@ -11,11 +11,11 @@
 	
 	<tr>
 		<td class="link">
-			<f:link.external uri="{link.linkUri}" >
+			<f:link.external title="{f:translate(key:'link.title.link_show')}" uri="{link.linkUri}" >
 				{link.linkName}
 			</f:link.external>
 			<f:if condition="{isSuperUser}">
-				<f:link.action action="edit" controller="Link" arguments="{link: link, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+				<f:link.action title="{f:translate(key:'link.title.link_edit')}" action="edit" controller="Link" arguments="{link: link, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 				<f:form enctype="multipart/form-data" method="post" controller="Link" action="delete" object="{link}" objectName="link" class="delete-form one-button-form" arguments="{category: category}" absolute="TRUE">
 					<fieldset>
 						<f:form.hidden name="stoken" value="{fi:csrf(uid:link.uid)}" />
