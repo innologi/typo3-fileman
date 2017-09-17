@@ -1,4 +1,5 @@
 <?php
+namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,9 +24,9 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\{Repository, QueryInterface};
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Service to ease the automatic sorting configuration of repositories
  *
@@ -33,7 +34,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Frenck Lutke <typo3@innologi.nl>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  */
-class Tx_Fileman_Service_SortRepositoryService implements SingletonInterface{
+class SortRepositoryService implements SingletonInterface{
 
 	const SORT_FIELD_TITLE = 1;
 	const SORT_FIELD_CREATION_TIME = 2;
@@ -53,7 +54,7 @@ class Tx_Fileman_Service_SortRepositoryService implements SingletonInterface{
 	/**
 	 * User service
 	 *
-	 * @var Tx_Fileman_Service_UserService
+	 * @var \Innologi\Fileman\Service\UserService
 	 * @inject
 	 */
 	protected $userService;
@@ -127,7 +128,6 @@ class Tx_Fileman_Service_SortRepositoryService implements SingletonInterface{
 			}
 
 			foreach ($this->sortableRepositories as $repositoryData) {
-				// @TODO improve validation of values
 				if (isset($repositoryData['mappings'][$sortField]) && isset($this->querySortOrder[$sortOrder])) {
 					$repositoryData['repository']->setDefaultOrderings([
 						$repositoryData['mappings'][$sortField] => $this->querySortOrder[$sortOrder]
@@ -144,14 +144,14 @@ class Tx_Fileman_Service_SortRepositoryService implements SingletonInterface{
 	 */
 	public function getSortingChoices() {
 		if ($this->sortingChoices === NULL) {
+			$extName = 'fileman';
 			$this->sortingChoices = [
 				// @TODO make this dynamic / configurable
-				// @TODO llang
-				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_ASC => 'Titel: Oplopend',
-				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_DESC => 'Titel: Aflopend',
-				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_ASC => 'Vroegst Aangemaakt',
-				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_DESC => 'Laatst Aangemaakt',
-				self::SORT_FIELD_UPDATE_TIME . '::' . self::SORT_ORDER_DESC => 'Laatst Gewijzigd',
+				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_ASC => LocalizationUtility::translate('sort.title.asc', $extName),
+				self::SORT_FIELD_TITLE . '::' . self::SORT_ORDER_DESC => LocalizationUtility::translate('sort.title.desc', $extName),
+				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_ASC => LocalizationUtility::translate('sort.crdate.asc', $extName),
+				self::SORT_FIELD_CREATION_TIME . '::' . self::SORT_ORDER_DESC => LocalizationUtility::translate('sort.crdate.desc', $extName),
+				self::SORT_FIELD_UPDATE_TIME . '::' . self::SORT_ORDER_DESC => LocalizationUtility::translate('sort.tstamp.desc', $extName),
 			];
 		}
 		return $this->sortingChoices;

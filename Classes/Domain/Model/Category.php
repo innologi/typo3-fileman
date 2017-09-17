@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Category Domain Model
  *
@@ -31,13 +33,13 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractEntity {
+class Category extends AbstractEntity {
 
 	/**
 	 * Category title
 	 *
 	 * @var string
-	 * @validate NotEmpty,String
+	 * @validate NotEmpty,Text
 	 */
 	protected $title;
 
@@ -47,12 +49,12 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	 * @var string
 	 * @validate Text
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * Subcategories
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
 	 * @lazy
 	 */
 	protected $subCategory;
@@ -60,7 +62,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Files within this category
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_File>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\File>
 	 * @lazy
 	 */
 	protected $file;
@@ -68,7 +70,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Links within this category
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Link>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Link>
 	 * @lazy
 	 */
 	protected $link;
@@ -76,7 +78,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Parent-categories
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
 	 * @lazy
 	 */
 	protected $parentCategory;
@@ -92,7 +94,7 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Owner of category
 	 *
-	 * @var Tx_Fileman_Domain_Model_FrontendUser
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	protected $feUser;
 
@@ -113,15 +115,15 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	}
 
 	/**
-	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 * Initializes all \TYPO3\CMS\Extbase\Persistence\ObjectStorage properties.
 	 *
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->file = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->link = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->subCategory = new Tx_Extbase_Persistence_ObjectStorage();
-		$this->parentCategory = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->file = new ObjectStorage();
+		$this->link = new ObjectStorage();
+		$this->subCategory = new ObjectStorage();
+		$this->parentCategory = new ObjectStorage();
 	}
 
 	/**
@@ -165,27 +167,27 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Adds a SubCategory
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $subCategory
+	 * @param \Innologi\Fileman\Domain\Model\Category $subCategory
 	 * @return void
 	 */
-	public function addSubCategory(Tx_Fileman_Domain_Model_Category $subCategory) {
+	public function addSubCategory(Category $subCategory) {
 		$this->subCategory->attach($subCategory);
 	}
 
 	/**
 	 * Removes a SubCategory
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $subCategoryToRemove The SubCategory to be removed
+	 * @param \Innologi\Fileman\Domain\Model\Category $subCategoryToRemove The SubCategory to be removed
 	 * @return void
 	 */
-	public function removeSubCategory(Tx_Fileman_Domain_Model_Category $subCategoryToRemove) {
+	public function removeSubCategory(Category $subCategoryToRemove) {
 		$this->subCategory->detach($subCategoryToRemove);
 	}
 
 	/**
 	 * Returns the subCategory
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage $subCategory
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $subCategory
 	 */
 	public function getSubCategory() {
 		return $this->subCategory;
@@ -194,37 +196,37 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the subCategory
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $subCategory
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $subCategory
 	 * @return void
 	 */
-	public function setSubCategory(Tx_Extbase_Persistence_ObjectStorage $subCategory) {
+	public function setSubCategory(ObjectStorage $subCategory) {
 		$this->subCategory = $subCategory;
 	}
 
 	/**
 	 * Adds a File
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $file
+	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @return void
 	 */
-	public function addFile(Tx_Fileman_Domain_Model_File $file) {
+	public function addFile(File $file) {
 		$this->file->attach($file);
 	}
 
 	/**
 	 * Removes a File
 	 *
-	 * @param Tx_Fileman_Domain_Model_File $fileToRemove The File to be removed
+	 * @param \Innologi\Fileman\Domain\Model\File $fileToRemove The File to be removed
 	 * @return void
 	 */
-	public function removeFile(Tx_Fileman_Domain_Model_File $fileToRemove) {
+	public function removeFile(File $fileToRemove) {
 		$this->file->detach($fileToRemove);
 	}
 
 	/**
 	 * Returns the file
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage $file
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $file
 	 */
 	public function getFile() {
 		return $this->file;
@@ -233,37 +235,37 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the file
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $file
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $file
 	 * @return void
 	 */
-	public function setFile(Tx_Extbase_Persistence_ObjectStorage $file) {
+	public function setFile(ObjectStorage $file) {
 		$this->file = $file;
 	}
 
 	/**
 	 * Adds a Link
 	 *
-	 * @param Tx_Fileman_Domain_Model_Link $link
+	 * @param \Innologi\Fileman\Domain\Model\Link $link
 	 * @return void
 	 */
-	public function addLink(Tx_Fileman_Domain_Model_Link $link) {
+	public function addLink(Link $link) {
 		$this->link->attach($link);
 	}
 
 	/**
 	 * Removes a Link
 	 *
-	 * @param Tx_Fileman_Domain_Model_Link $linkToRemove The Link to be removed
+	 * @param \Innologi\Fileman\Domain\Model\Link $linkToRemove The Link to be removed
 	 * @return void
 	 */
-	public function removeLink(Tx_Fileman_Domain_Model_Link $linkToRemove) {
+	public function removeLink(Link $linkToRemove) {
 		$this->link->detach($linkToRemove);
 	}
 
 	/**
 	 * Returns the link
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage $link
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $link
 	 */
 	public function getLink() {
 		return $this->link;
@@ -272,37 +274,37 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the link
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $link
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $link
 	 * @return void
 	 */
-	public function setLink(Tx_Extbase_Persistence_ObjectStorage $link) {
+	public function setLink(ObjectStorage $link) {
 		$this->link = $link;
 	}
 
 	/**
 	 * Adds a ParentCategory
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
+	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @return void
 	 */
-	public function addParentCategory(Tx_Fileman_Domain_Model_Category $parentCategory) {
+	public function addParentCategory(Category $parentCategory) {
 		$this->parentCategory->attach($parentCategory);
 	}
 
 	/**
 	 * Removes a ParentCategory
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $parentCategoryToRemove The ParentCategory to be removed
+	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategoryToRemove The ParentCategory to be removed
 	 * @return void
 	 */
-	public function removeParentCategory(Tx_Fileman_Domain_Model_Category $parentCategoryToRemove) {
+	public function removeParentCategory(Category $parentCategoryToRemove) {
 		$this->parentCategory->detach($parentCategoryToRemove);
 	}
 
 	/**
 	 * Returns the parentCategory
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage $parentCategory
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $parentCategory
 	 */
 	public function getParentCategory() {
 		return $this->parentCategory;
@@ -311,17 +313,17 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the parentCategory
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $parentCategory
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $parentCategory
 	 * @return void
 	 */
-	public function setParentCategory(Tx_Extbase_Persistence_ObjectStorage $parentCategory) {
+	public function setParentCategory(ObjectStorage $parentCategory) {
 		$this->parentCategory = $parentCategory;
 	}
 
 	/**
 	 * Returns the feUser
 	 *
-	 * @return Tx_Fileman_Domain_Model_FrontendUser feUser
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser feUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -330,10 +332,10 @@ class Tx_Fileman_Domain_Model_Category extends Tx_Extbase_DomainObject_AbstractE
 	/**
 	 * Sets the feUser
 	 *
-	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
 	 * @return void
 	 */
-	public function setFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
+	public function setFeUser(FrontendUser $feUser) {
 		$this->feUser = $feUser;
 	}
 

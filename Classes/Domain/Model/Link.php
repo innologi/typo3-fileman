@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,9 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Link Domain Model
  *
@@ -31,13 +33,13 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntity {
+class Link extends AbstractEntity {
 
 	/**
 	 * Link URI
 	 *
 	 * @var string
-	 * @validate Tx_Fileman_Domain_Validator_LinkUriValidator
+	 * @validate NotEmpty,\Innologi\Fileman\Domain\Validator\LinkUriValidator
 	 */
 	protected $linkUri;
 
@@ -45,7 +47,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * Name of link
 	 *
 	 * @var string
-	 * @validate String
+	 * @validate Text
 	 */
 	protected $linkName;
 
@@ -55,12 +57,12 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @var string
 	 * @validate Text
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * User who created this file
 	 *
-	 * @var Tx_Fileman_Domain_Model_FrontendUser
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @lazy
 	 */
 	protected $feUser; #@TODO some of these things are shared between different models, so might as well extend from an abstract
@@ -68,7 +70,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Categories related to this link entity
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
 	 * @lazy
 	 */
 	protected $category;
@@ -97,12 +99,12 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 * Initializes all \TYPO3\CMS\Extbase\Persistence\ObjectStorage properties.
 	 *
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->category = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->category = new ObjectStorage();
 	}
 
 	/**
@@ -165,7 +167,7 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Returns the feUser
 	 *
-	 * @return Tx_Fileman_Domain_Model_FrontendUser feUser
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser feUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -174,37 +176,37 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the feUser
 	 *
-	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
 	 * @return void
 	 */
-	public function setFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
+	public function setFeUser(FrontendUser $feUser) {
 		$this->feUser = $feUser;
 	}
 
 	/**
 	 * Adds a Category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @return void
 	 */
-	public function addCategory(Tx_Fileman_Domain_Model_Category $category) {
+	public function addCategory(Category $category) {
 		$this->category->attach($category);
 	}
 
 	/**
 	 * Removes a Category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $categoryToRemove The Category to be removed
+	 * @param \Innologi\Fileman\Domain\Model\Category $categoryToRemove The Category to be removed
 	 * @return void
 	 */
-	public function removeCategory(Tx_Fileman_Domain_Model_Category $categoryToRemove) {
+	public function removeCategory(Category $categoryToRemove) {
 		$this->category->detach($categoryToRemove);
 	}
 
 	/**
 	 * Returns the category
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage $category
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage $category
 	 */
 	public function getCategory() {
 		return $this->category;
@@ -213,10 +215,10 @@ class Tx_Fileman_Domain_Model_Link extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the category
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $category
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $category
 	 * @return void
 	 */
-	public function setCategory(Tx_Extbase_Persistence_ObjectStorage $category) {
+	public function setCategory(ObjectStorage $category) {
 		$this->category = $category;
 	}
 

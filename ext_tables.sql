@@ -10,7 +10,6 @@ CREATE TABLE tx_fileman_domain_model_file (
 	alternate_title varchar(255) DEFAULT '' NOT NULL,
 	description text NOT NULL,
 	links text NOT NULL,
-	link_names text NOT NULL,
 	category int(11) unsigned DEFAULT '0' NOT NULL,
 	fe_user int(11) unsigned DEFAULT '0' NOT NULL,
 

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
@@ -10,9 +11,7 @@
 			<label index="tx_fileman_domain_model_file.file_uri">File</label>
 			<label index="tx_fileman_domain_model_file.alternate_title">Title</label>
 			<label index="tx_fileman_domain_model_file.description">File Description</label>
-			<label index="tx_fileman_domain_model_file.palette.linkcombo">Links</label>
 			<label index="tx_fileman_domain_model_file.links">Related Links</label>
-			<label index="tx_fileman_domain_model_file.link_names">Link Names</label> <!-- @TODO: Currently unused -->
 			<label index="tx_fileman_domain_model_file.category">Category</label>
 			<label index="tx_fileman_domain_model_file.fe_user">Creator</label>
 
@@ -37,9 +36,7 @@
 			<label index="tx_fileman_domain_model_file.file_uri">Bestand</label>
 			<label index="tx_fileman_domain_model_file.alternate_title">Titel</label>
 			<label index="tx_fileman_domain_model_file.description">Bestandsomschrijving</label>
-			<label index="tx_fileman_domain_model_file.palette.linkcombo">Links</label>
 			<label index="tx_fileman_domain_model_file.links">Gerelateerde Links</label>
-			<label index="tx_fileman_domain_model_file.link_names">Link Names</label> <!-- @TODO: Currently unused -->
 			<label index="tx_fileman_domain_model_file.category">Categorie</label>
 			<label index="tx_fileman_domain_model_file.fe_user">Plaatser</label>
 

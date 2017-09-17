@@ -1,12 +1,32 @@
-<f:form.errors>
-<div class="validation">
-	<div class="validation-errors">
-		<div class="validation-header"><f:translate key="tx_fileman_filelist.validation_errors">tx_fileman_filelist.validation_errors</f:translate></div>
-		<ul class="validation-error-messages">
-			<f:for each="{error.errors}" as="err">
-				<f:render partial="FormErrorsDetail" arguments="{entity: for, error: err}" />
-			</f:for>
-		</ul>
-	</div>
-</div>
-</f:form.errors>
+<html data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+	
+<f:form.validationResults>
+	<f:if condition="{validationResults.flattenedErrors}">
+		<div class="validation">
+			<div class="validation-errors">
+				<div class="validation-header"><f:translate key="tx_fileman_filelist.validation_errors" /></div>
+				<ul class="validation-error-messages">
+					<f:for each="{validationResults.flattenedErrors}" as="errors" key="property">
+						<li>
+							<h4 class="alert-title"><f:translate key="property.{property -> fi:stripPropertyAtHash()}">{property}</f:translate></h4>
+							<ul>
+								<f:for each="{errors}" as="error">
+									<f:alias map="{errorKey: 'error.{property}.{error.code}'}">
+										<li>
+											<!-- {errorKey} -->
+											<f:translate key="{errorKey -> fi:stripPropertyAtHash()}">{error}</f:translate>
+										</li>
+									</f:alias>
+								</f:for>
+							</ul>
+						</li>
+					</f:for>
+				</ul>
+			</div>
+		</div>
+	</f:if>
+</f:form.validationResults>
+
+</html>

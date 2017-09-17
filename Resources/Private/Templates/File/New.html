@@ -1,21 +1,22 @@
-{namespace fi=Tx_Fileman_ViewHelpers}
+<html data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+	
 <f:layout name="Default" />
 
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.new_file_header" arguments="{s: category.title}" /></h3>
-<div class="buttons">
-	<f:link.action action="list" controller="File" arguments="{category: category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
-</div>
+<f:render partial="BackButton" arguments="{category: category}"/>
 
 <p class="explanation">
 	<f:translate
 		key="tx_fileman_filelist.new_file_explanation"
-		arguments="{0: '{f:cObject(typoscriptObjectPath:\'lib.tx_fileman.maxFileUploads\')}', 1: '{settings.maxFileSize -> fi:format.bytesToSize()}', 2: '{settings.maxTotalFileSize -> fi:format.bytesToSize()}'}"
+		arguments="{0: '{f:cObject(typoscriptObjectPath:\'lib.tx_fileman.maxFileUploads\')}', 1: '{fi:format.bytesToSize(bytes:settings.maxFileSize)}', 2: '{fi:format.bytesToSize(bytes:settings.maxTotalFileSize)}'}"
 	/>
 </p>
 
-<fi:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category: category}"
-	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add drop-zone')}" syncToken="TRUE" absolute="TRUE"
+<f:form enctype="multipart/form-data" method="post" action="create"  name="files" object="{files}" arguments="{category: category}"
+	class="init-progressbar multi-file{f:if(condition:files.file,else:' multi-file-add drop-zone')}" absolute="TRUE"
 >
 	<div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 	<fieldset>
@@ -29,8 +30,11 @@
 				<f:render partial="File/FileEntry" arguments="{index : 'i1', settings : settings}"/>
 			</f:else>
 		</f:if>
+		<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
 		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_file_submit')}" class="submit" />
 	</fieldset>
-</fi:form>
+</f:form>
 
 </f:section>
+
+</html>

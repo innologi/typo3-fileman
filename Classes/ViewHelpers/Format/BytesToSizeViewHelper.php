@@ -1,9 +1,9 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Format;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2016-2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,8 +23,10 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
+use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * Bytes To Size View Helper
  *
@@ -32,7 +34,8 @@ use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_ViewHelpers_Format_BytesToSizeViewHelper extends AbstractViewHelper {
+class BytesToSizeViewHelper extends AbstractViewHelper {
+	use CompileWithRenderStatic;
 
 	/**
 	 * Initialize all arguments.
@@ -40,20 +43,19 @@ class Tx_Fileman_ViewHelpers_Format_BytesToSizeViewHelper extends AbstractViewHe
 	 * @return void
 	 */
 	public function initializeArguments() {
+		parent::initializeArguments();
 		$this->registerArgument('labels', 'string', 'Labels for different sizes', FALSE, ' | Kb| MB| GB');
+		$this->registerArgument('bytes', 'integer', 'Bytes to format', TRUE);
 	}
 
 	/**
-	 *
-	 * @param integer $bytes Bytes to format
+	 * @param array $arguments
+	 * @param \Closure $renderChildrenClosure
+	 * @param RenderingContextInterface $renderingContext
 	 * @return string
-	 * @see GeneralUtility::formatSize()
 	 */
-	public function render($bytes = NULL) {
-		if ($bytes === NULL) {
-			$bytes = $this->renderChildren();
-		}
-		return GeneralUtility::formatSize($bytes, $this->arguments['labels']);
+	public static function renderStatic(array $arguments, \Closure $renderChildrenClosure, RenderingContextInterface $renderingContext) {
+		return GeneralUtility::formatSize($arguments['bytes'], $arguments['labels']);
 	}
 
 }

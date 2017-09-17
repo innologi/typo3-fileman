@@ -1,24 +1,27 @@
+<html data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+
 <f:layout name="Default" />
 
 <f:section name="main">
-<h3>{category.title}</h3>
+<h3><f:format.htmlentities>{category.title}</f:format.htmlentities></h3>
 <f:render partial="Search" arguments="{settings: settings}" />
 <div class="buttons">
 <f:if condition="{category.parentCategory}">
 <f:then>
 	<f:for each="{category.parentCategory}" as="parent">
-		<f:link.action class="button-back" action="list" controller="File" arguments="{category: parent}"><f:translate key="tx_fileman_filelist.go_back_to" arguments="{0: parent.title}" /></f:link.action>
+		<f:link.action title="{f:translate(key:'link.title.back')}" class="button-back" action="list" controller="File" arguments="{category: parent}"><f:translate key="tx_fileman_filelist.go_back_to" arguments="{0: parent.title}" /></f:link.action>
 	</f:for>
 </f:then>
 <f:else>
-	<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
+	<f:link.page title="{f:translate(key:'link.title.back')}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
 </f:else>
 </f:if>
 
 <f:if condition="{isLoggedIn}">
-	<f:link.action action="new" controller="Category" arguments="{parentCategory: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
-	<f:link.action action="new" controller="File" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_file" /></f:link.action>
-	<f:link.action action="new" controller="Link" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link" /></f:link.action>
+	<f:link.action title="{f:translate(key:'link.title.category_new')}" action="new" controller="Category" arguments="{parentCategory: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_category" /></f:link.action>
+	<f:link.action title="{f:translate(key:'link.title.file_new')}" action="new" controller="File" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_file" /></f:link.action>
+	<f:link.action title="{f:translate(key:'link.title.link_new')}" action="new" controller="Link" arguments="{category: category}" class="button-new"><f:translate key="tx_fileman_filelist.new_link" /></f:link.action>
 </f:if>
 
 </div>
@@ -44,3 +47,5 @@
 </table>
 
 </f:section>
+
+</html>

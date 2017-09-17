@@ -1,38 +1,46 @@
-{namespace fi=Tx_Fileman_ViewHelpers}
+<table data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+
 <tr>
-	<th scope="col"><f:translate key="tx_fileman_domain_model_file.upload_data" /></th>
-	<th scope="col"><f:translate key="tx_fileman_domain_model_file.description" /></th>
+	<th scope="col"><f:translate key="property.file.uploadData" /></th>
+	<th scope="col"><f:translate key="property.file.description" /></th>
 </tr>
 
 <f:for each="{files}" as="file">
 	
 	<tr>
 		<td class="file">
-			<fi:link.download fileUri="{file.fileUri}" noDocrootAction="download" noDocrootArguments="{file: file}">
-				{file.alternateTitle}
+			<fi:link.download title="{f:translate(key:'link.title.file_download')}" file="{file}">
+				<f:format.htmlentities>{file.alternateTitle}</f:format.htmlentities>
 			</fi:link.download>
 			<f:if condition="{isSuperUser}">
-				<f:link.action action="edit" arguments="{file: file, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-				<fi:form enctype="multipart/form-data" method="post" action="delete" object="{file}" objectName="file" class="delete-form one-button-form" arguments="{category: category}" syncToken="TRUE" absolute="TRUE">
-					<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
-				</fi:form>
+				<f:link.action title="{f:translate(key:'link.title.file_edit')}" action="edit" arguments="{file: file, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+				<f:form enctype="multipart/form-data" method="post" action="delete" object="{file}" objectName="file" class="delete-form one-button-form" arguments="{category: category}" absolute="TRUE">
+					<fieldset>
+						<f:form.hidden name="stoken" value="{fi:csrf(uid:file.uid)}" />
+						<f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/>
+					</fieldset>
+				</f:form>
 			</f:if>
 				
 			<f:if condition="{file.links}">
 			<f:then>
 				<a href="#" class="rel-switch">&nbsp;</a>
 				<div class="rel-links">
-					<span class="rel-links-header"><f:translate key="tx_fileman_domain_model_file.links" /></span>
+					<span class="rel-links-header"><f:translate key="property.file.links" /></span>
 					<ol>
 						<f:for each="{file.linksFormatted}" as="link">
-							<li><f:link.external uri="{link}">{link}</f:link.external></li>
+							<li><f:link.external title="{f:translate(key:'link.title.link_show')}" uri="{link}">{link}</f:link.external></li>
 						</f:for>
 					</ol>
 				</div>
 			</f:then>
 			</f:if>
 		</td>
-		<td class="description">{file.description}</td>
+		<td class="description"><f:format.htmlentities>{file.description}</f:format.htmlentities></td>
 	</tr>
  	
 </f:for>
+
+</table>

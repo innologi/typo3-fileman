@@ -1,15 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <T3DataStructure>
  <sheets>
   <sDEF>
    <ROOT>
      <TCEforms>
-      <sheetTitle>Function</sheetTitle> <!-- TODO: llang -->
+      <sheetTitle>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_sheet</sheetTitle>
      </TCEforms>
      <type>array</type>
      <el>
       <settings.enableSearch>
 			<TCEforms>
-				<label>Enable Search</label>
+				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_enableSearch</label>
 				<config>
 					<type>check</type>
 				</config>
@@ -20,6 +22,7 @@
 				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_searchTypes</label>
 				<config>
 					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
 					<items type="array">
 						<numIndex index="0" type="array">
 							<numIndex index="0">Categories</numIndex>
@@ -44,6 +47,7 @@
 				<label>LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:tx_fileman_flexform_suGroup</label>
 				<config>
 					<type>select</type>
+					<renderType>selectSingle</renderType>
 					<foreign_table>fe_groups</foreign_table>
 					<foreign_table_where>ORDER BY fe_groups.title</foreign_table_where>
 					<size>1</size>

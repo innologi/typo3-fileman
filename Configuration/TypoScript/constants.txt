@@ -16,15 +16,17 @@ plugin.tx_fileman {
 		# cat=plugin.tx_fileman/0_general/010; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_storagePid
 		storagePid = 
 	}
+	css {
+		# cat=plugin.tx_fileman/file/035; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_css_frontendFile
+		frontendFile = EXT:fileman/Resources/Public/Css/frontend.min.css
+	}
 	js {
 		# cat=plugin.tx_fileman/file/40; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_includeJquery
 		includeJquery = 1
 		# cat=plugin.tx_fileman/file/50; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_includeJS
 		includeJS = 1
-		# cat=plugin.tx_fileman/file/60; type=boolean; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_toFooter
-		toFooter = 1
 		# cat=plugin.tx_fileman/file/70; type=text; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_jQueryCDN
-		jQueryCDN = https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js
+		jQueryCDN = EXT:fileman/Resources/Public/JavaScript/jQuery/jquery-3.2.1.min.js
 		
 		libFile = EXT:fileman/Resources/Private/Scripts/jslib.closure.js
 		
@@ -46,12 +48,8 @@ plugin.tx_fileman {
 		debug = 0
 	}
 	settings {
-		# @TODO remove this when eid is utilized, do so before TER release!
-		type.xhr = 201412011983
-		pages.xhr = 2123
-	
 		# cat=plugin.tx_fileman/a_upload/10; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_uploadDir
-		uploadDir = uploads/tx_fileman/
+		uploadDir = fileadmin/fileman/
 		
 		# e.g. txt,doc,docx,rtf,odf,xls,xlsx,ppt,pptx,ods,pdf,jpeg,jpg,gif,png,mp4,flv,avi,mp3
 		# cat=plugin.tx_fileman/a_upload/20; type=string; label=LLL:EXT:fileman/Resources/Private/Language/locallang_be.xml:ts_settings_allowFileType

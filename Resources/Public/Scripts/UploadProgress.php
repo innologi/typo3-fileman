@@ -84,4 +84,3 @@ if(isset($_GET['type']) && isset($_GET['upload_id']) && is_numeric($_GET['upload
 
 #@LOW be a more thorough check, like a referrer that was explicitly set by jslib's ajax call
 die('ERROR: This script is not supposed to be called manually.');
-?>

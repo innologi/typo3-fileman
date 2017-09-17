@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,17 +23,25 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /**
  * File Domain Model
+ *
+ * Validation is defined from within the OptionFileValidator class,
+ * so that we can exert control over how validation is handled without
+ * overruling Core classes again.
+ *
+ * Objects/ObjectStorages being forced to validate is no problem as our
+ * use-case for exerting control does not concern those properties.
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntity {
-	#@TODO beveiliging van upload-bestanden?
-	#@TODO flexform configuratie
+class File extends AbstractEntity {
 
 	/**
 	 * Filepath
@@ -58,28 +66,27 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 */
 	protected $index;
 
+	// @LOW rename
 	/**
 	 * Displayed name of the file.
 	 *
 	 * @var string
 	 */
-	protected $alternateTitle; #@LOW be renamed
+	protected $alternateTitle;
 
 	/**
 	 * File description
 	 *
 	 * @var string
-	 * @validate Text
 	 */
-	protected $description;
+	protected $description = '';
 
 	/**
 	 * Links related to this file (one per row)
 	 *
 	 * @var string
-	 * @validate Tx_Fileman_Domain_Validator_LinksValidator
 	 */
-	protected $links;
+	protected $links = '';
 
 	/**
 	 * Array with upload data from the $_FILES array, filled by either rewrittenPropertyManager or fileService
@@ -87,19 +94,12 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @var array
 	 * @transient
 	 */
-	protected $uploadData = array();
-
-	/**
-	 * Alternative name per link (one per row)
-	 *
-	 * @var string
-	 */
-	protected $linkNames; #@LOW currently unused
+	protected $uploadData = [];
 
 	/**
 	 * Categories related to this file entity
 	 *
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Fileman_Domain_Model_Category>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
 	 * @lazy
 	 */
 	protected $category;
@@ -107,7 +107,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * User who created this file
 	 *
-	 * @var Tx_Fileman_Domain_Model_FrontendUser
+	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 * @lazy
 	 */
 	protected $feUser;
@@ -136,12 +136,12 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Initializes all Tx_Extbase_Persistence_ObjectStorage properties.
+	 * Initializes all \TYPO3\CMS\Extbase\Persistence\ObjectStorage properties.
 	 *
 	 * @return void
 	 */
 	protected function initStorageObjects() {
-		$this->category = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->category = new ObjectStorage();
 	}
 
 	/**
@@ -149,7 +149,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return string
 	 */
-	public function getFilename() { #@LOW currently unused
+	public function getFilename() { // @LOW currently unused
 		return basename($this->getFileUri());
 	}
 
@@ -159,7 +159,7 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 * @return string
 	 */
 	public function getFileUri() {
-		return /*t3lib_div::fixWindowsFilePath(*/$this->fileUri/*)*/; # @TODO replace with FAL?
+		return $this->fileUri; // @TODO replace with FAL?
 	}
 
 	/**
@@ -262,10 +262,10 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	 *
 	 * @return array
 	 */
-	public function getLinksFormatted() { #@LOW work with a transient
+	public function getLinksFormatted() { // @LOW work with a transient
 		if (isset($this->links[0])) {
 			$links = str_replace("\r\n","\n",$this->links);
-			$linkArray = t3lib_div::trimExplode("\n", $links,1);
+			$linkArray = GeneralUtility::trimExplode("\n", $links,1);
 			return $linkArray;
 		}
 		return array();
@@ -282,48 +282,29 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	}
 
 	/**
-	 * Returns the linkNames
-	 *
-	 * @return string
-	 */
-	public function getLinkNames() { #@LOW currently unused
-		return $this->linkNames;
-	}
-
-	/**
-	 * Sets the linkNames
-	 *
-	 * @param string $linkNames
-	 * @return void
-	 */
-	public function setLinkNames($linkNames) { #@LOW currently unused
-		$this->linkNames = $linkNames;
-	}
-
-	/**
 	 * Adds a Category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @return void
 	 */
-	public function addCategory(Tx_Fileman_Domain_Model_Category $category) {
+	public function addCategory(Category $category) {
 		$this->category->attach($category);
 	}
 
 	/**
 	 * Removes a Category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $categoryToRemove The Category to be removed
+	 * @param \Innologi\Fileman\Domain\Model\Category $categoryToRemove The Category to be removed
 	 * @return void
 	 */
-	public function removeCategory(Tx_Fileman_Domain_Model_Category $categoryToRemove) {
+	public function removeCategory(Category $categoryToRemove) {
 		$this->category->detach($categoryToRemove);
 	}
 
 	/**
 	 * Returns the category
 	 *
-	 * @return Tx_Extbase_Persistence_ObjectStorage
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getCategory() {
 		return $this->category;
@@ -332,17 +313,17 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the category
 	 *
-	 * @param Tx_Extbase_Persistence_ObjectStorage $category
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $category
 	 * @return void
 	 */
-	public function setCategory(Tx_Extbase_Persistence_ObjectStorage $category) {
+	public function setCategory(ObjectStorage $category) {
 		$this->category = $category;
 	}
 
 	/**
 	 * Returns the feUser
 	 *
-	 * @return Tx_Fileman_Domain_Model_FrontendUser
+	 * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
 	 */
 	public function getFeUser() {
 		return $this->feUser;
@@ -351,10 +332,10 @@ class Tx_Fileman_Domain_Model_File extends Tx_Extbase_DomainObject_AbstractEntit
 	/**
 	 * Sets the feUser
 	 *
-	 * @param Tx_Fileman_Domain_Model_FrontendUser $feUser
+	 * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $feUser
 	 * @return void
 	 */
-	public function setFeUser(Tx_Fileman_Domain_Model_FrontendUser $feUser) {
+	public function setFeUser(FrontendUser $feUser) {
 		$this->feUser = $feUser;
 	}
 

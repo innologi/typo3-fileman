@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Domain\Repository;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,7 +23,8 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use Innologi\Fileman\Domain\Model\Category;
 /**
  * File repository
  *
@@ -31,15 +32,15 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Domain_Repository_FileRepository extends Tx_Extbase_Persistence_Repository {
+class FileRepository extends Repository {
 
 	/**
 	 * Returns all objects of this repository belonging to the provided category
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category The category to show files of
+	 * @param Category $category The category to show files of
 	 * @return array An array of objects, empty if no objects found
 	 */
-	public function findAllByCategory(Tx_Fileman_Domain_Model_Category $category) {
+	public function findAllByCategory(Category $category) {
 		$query = $this->createQuery();
 		$result = $query->matching(
 				$query->contains('category', $category)
@@ -64,7 +65,6 @@ class Tx_Fileman_Domain_Repository_FileRepository extends Tx_Extbase_Persistence
 				$query->like('alternate_title', $searchTerm, FALSE),
 				$query->like('description', $searchTerm, FALSE),
 				$query->like('links', $searchTerm, FALSE),
-				$query->like('link_names', $searchTerm, FALSE),
 			));
 		}
 

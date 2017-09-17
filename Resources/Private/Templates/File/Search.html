@@ -1,11 +1,12 @@
+<html data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
+
 <f:layout name="Default" />
 
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.search_title" /></h3>
 <f:render partial="Search" arguments="{settings: settings, search: search}" />
-<div class="buttons">
-	<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
-</div>
+<f:render partial="BackButton"/>
 
 <f:if condition="{noResults}">
 <f:then>
@@ -32,3 +33,5 @@
 </f:if>
 
 </f:section>
+
+</html>

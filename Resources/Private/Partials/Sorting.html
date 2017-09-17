@@ -1,12 +1,16 @@
-{namespace fi=Tx_Fileman_ViewHelpers}
+<html data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+	
 <fi:sortRepository choicesAs="options" valueAs="value">
 	<f:form enctype="multipart/form-data" method="post" action="sort">
-		<!-- @TODO llang -->
 		<label>
-			Volgorde:
+			<f:translate key="label.sort.sorting"/>
 			<f:form.select class="select-sort" name="sorting" options="{options}" value="{value}" />
 			<f:form.hidden name="category" value="{category}" />
 		</label>
-		<f:form.submit value="Ok" />
+		<f:form.submit value="{f:translate(key:'button.sort.submit')}" />
 	</f:form>
 </fi:sortRepository>
+
+</html>

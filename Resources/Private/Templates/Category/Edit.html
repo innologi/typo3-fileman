@@ -1,34 +1,37 @@
-{namespace fi=Tx_Fileman_ViewHelpers}
+<html data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+	
 <f:layout name="Default" />
 
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.edit_category_header" /></h3>
-<div class="buttons">
-	<f:if condition="{parentCategory}">
-	<f:then>
-		<f:link.action action="list" controller="File" arguments="{category: parentCategory}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
-	</f:then>
-	<f:else>
-		<f:link.page class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.page>
-	</f:else>
-	</f:if>
-</div>
+<f:render partial="BackButton" arguments="{category: parentCategory}"/>
 
 <div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 
-<f:render partial="FormErrors" arguments="{for: 'category'}" />
+<f:render partial="FormErrors" />
 
-<fi:form enctype="multipart/form-data" method="post" action="update" name="category" object="{category}" arguments="{parentCategory : parentCategory}" syncToken="TRUE" absolute="TRUE">
-	<f:render partial="Category/FormFields" arguments="{category:category, users:users, feUser:feUser}" />
-	
-	<f:translate key="tx_fileman_domain_model_category.parent_category" />
-	<br />
-	<f:form.select
-		options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
-		optionValueField="uid" optionLabelField="title" property="parentCategory" 
-		multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
-	/>
-	
-	<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
-</fi:form>
+<f:form enctype="multipart/form-data" method="post" action="update" name="category" object="{category}" arguments="{parentCategory : parentCategory}" absolute="TRUE">
+	<fieldset>
+		<f:render partial="Category/FormFields" arguments="{category:category, users:users, feUser:feUser}" />
+		
+		<div class="fieldwrap">
+			<label>
+				<f:translate key="property.category.parentCategory" />
+				<br />
+				<f:form.select
+					options="{f:if(condition: isSuperUser, then: '{fi:order.hierarchy(collection: categories, recursionProperty: \'subCategory\', labelProperty: \'title\', noDuplicates: 1)}', else: categories)}"
+					optionValueField="uid" optionLabelField="title" property="parentCategory" 
+					multiple="multiple" size="20" title="{f:translate(key:'tx_fileman_filelist.multi_select_title')}"
+				/>
+			</label>
+		</div>
+		
+		<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
+		<f:form.submit value="{f:translate(key:'tx_fileman_filelist.new_category_submit')}" class="submit" />
+	</fieldset>
+</f:form>
 </f:section>
+
+</html>

@@ -1,21 +1,24 @@
-{namespace fi=Tx_Fileman_ViewHelpers}
+<html data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+	
 <f:layout name="Default" />
 
 <f:section name="main">
 <h3><f:translate key="tx_fileman_filelist.new_link_header" arguments="{s: category.title}" /></h3>
-<div class="buttons">
-	<f:link.action action="list" controller="File" arguments="{category : category}" class="button-back"><f:translate key="tx_fileman_filelist.go_back" /></f:link.action>
-</div>
+<f:render partial="BackButton" arguments="{category: category}"/>
 
 <div class="legenda"><span class="required">*</span> = <f:translate key="tx_fileman_filelist.required" /></div>
 
-<f:render partial="FormErrors" arguments="{for: 'link'}" />
+<f:render partial="FormErrors" />
 
-<fi:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}" syncToken="TRUE" absolute="TRUE">
+<f:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}" absolute="TRUE">
 	<fieldset>
 		<f:render partial="Link/FormFields" />
-			
+		<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
 		<f:form.submit class="submit" value="{f:translate(key:'tx_fileman_filelist.new_link_submit')}" />
 	</fieldset>
-</fi:form>
+</f:form>
 </f:section>
+
+</html>

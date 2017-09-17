@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Controller;
 /***************************************************************
  *  Copyright notice
  *
@@ -23,23 +23,64 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use Innologi\Fileman\Mvc\Controller\ActionController;
+use Innologi\Fileman\Domain\Model\Category;
+use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /**
  * Category controller
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  */
-class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller_ActionController {
+class CategoryController extends ActionController {
 
 	/**
 	 * FrontendUserRepository
 	 *
-	 * @var Tx_Fileman_Domain_Repository_FrontendUserRepository
+	 * @var \Innologi\Fileman\Domain\Repository\FrontendUserRepository
 	 * @inject
 	 */
 	protected $frontendUserRepository;
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Innologi\Fileman\Mvc\Controller\ActionController::initializeAction()
+	 */
+	protected function initializeAction() {
+		// doing this in the appropriate initialize methods is too late, so..
+		$this->disableRequireLogin(['list', 'sort']);
+		parent::initializeAction();
+	}
+
+	/**
+	 * Initializes create action
+	 *
+	 * @return void
+	 */
+	protected function initializeCreateAction() {
+		$id = $this->request->hasArgument('parentCategory') && isset($this->request->getArgument('parentCategory')[0])
+			? $this->request->getArgument('parentCategory')
+			: $this->feUser->getUid();
+		$this->validateRequest('stoken', $id);
+	}
+
+	/**
+	 * Initializes update action
+	 *
+	 * @return void
+	 */
+	protected function initializeUpdateAction() {
+		$this->validateRequest();
+	}
+
+	/**
+	 * Initializes delete action
+	 *
+	 * @return void
+	 */
+	protected function initializeDeleteAction() {
+		$this->validateRequest('stoken', NULL, 'category');
+	}
 
 	/**
 	 * action list
@@ -62,13 +103,11 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	 *
 	 * @param $category
 	 * @param $parentCategory
-	 * @dontvalidate $category
 	 * @ignorevalidation $category
-	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
-	public function newAction(Tx_Fileman_Domain_Model_Category $category = NULL, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
+	public function newAction(Category $category = NULL, Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
 		$this->view->assign('parentCategory', $parentCategory);
 		$this->view->assign('feUser', $this->feUser);
@@ -84,14 +123,12 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	/**
 	 * action create
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
-	 * @dontvalidate $parentCategory
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @ignorevalidation $parentCategory
-	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function createAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
+	public function createAction(Category $category, Category $parentCategory = NULL) {
 		if ($category->getFeUser() === NULL) {
 			$category->setFeUser($this->feUser);
 		}
@@ -100,8 +137,8 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 			$category->setFeGroup($parentCategory->getFeGroup());
 		}
 		$this->categoryRepository->add($category);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.new_category_success', $this->extensionName);
+		$this->addFlashMessage($flashMessage);
 
 		if ($parentCategory === NULL) {
 			$this->redirect('list');
@@ -113,15 +150,13 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	/**
 	 * action edit
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
-	 * @dontvalidate $category
-	 * @dontvalidate $parentCategory
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @ignorevalidation $category
 	 * @ignorevalidation $parentCategory
 	 * @return void
 	 */
-	public function editAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
+	public function editAction(Category $category, Category $parentCategory = NULL) {
 		$this->view->assign('category', $category);
 
 		// if the user isn't a superUser, categories should be limited to those he owns
@@ -145,20 +180,18 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	/**
 	 * action update
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
-	 * @dontvalidate $parentCategory
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @ignorevalidation $parentCategory
-	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function updateAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
+	public function updateAction(Category $category, Category $parentCategory = NULL) {
 		if ($category->getFeUser() === NULL) {
 			$category->setFeUser($this->feUser);
 		}
 		$this->categoryRepository->update($category);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.edit_category_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.edit_category_success', $this->extensionName);
+		$this->addFlashMessage($flashMessage);
 		if ($parentCategory === NULL) {
 			$this->redirect('list');
 		} else {
@@ -169,19 +202,16 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	/**
 	 * action delete
 	 *
-	 * @param Tx_Fileman_Domain_Model_Category $category
-	 * @param Tx_Fileman_Domain_Model_Category $parentCategory
-	 * @dontvalidate $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
 	 * @ignorevalidation $category
-	 * @dontvalidate $parentCategory
 	 * @ignorevalidation $parentCategory
-	 * @verifycsrftoken
 	 * @return void
 	 */
-	public function deleteAction(Tx_Fileman_Domain_Model_Category $category, Tx_Fileman_Domain_Model_Category $parentCategory = NULL) {
+	public function deleteAction(Category $category, Category $parentCategory = NULL) {
 		$this->categoryRepository->remove($category);
-		$flashMessage = Tx_Extbase_Utility_Localization::translate('tx_fileman_filelist.delete_category_success', $this->extensionName);
-		$this->flashMessageContainer->add($flashMessage);
+		$flashMessage = LocalizationUtility::translate('tx_fileman_filelist.delete_category_success', $this->extensionName);
+		$this->addFlashMessage($flashMessage);
 		if ($parentCategory === NULL) {
 			$this->redirect('list');
 		} else {
@@ -190,4 +220,3 @@ class Tx_Fileman_Controller_CategoryController extends Tx_Fileman_MVC_Controller
 	}
 
 }
-?>

@@ -1,5 +1,5 @@
 <?php
-
+namespace Innologi\Fileman\Utility;
 /***************************************************************
  *  Copyright notice
  *
@@ -31,7 +31,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  *
  */
-class Tx_Fileman_Utility_GeneralUtility {
+class GeneralUtility {
 
 	/**
 	 * Strips designated GET parameters from any URL
@@ -95,4 +95,3 @@ class Tx_Fileman_Utility_GeneralUtility {
 	}
 
 }
-?>

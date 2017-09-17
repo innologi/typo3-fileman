@@ -1,9 +1,9 @@
 <?php
-
+namespace Innologi\Fileman\ViewHelpers\Form;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,18 +23,16 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
 /**
- * Changes to support properties from properties. This version simply assumes
- * that such are _ALWAYS_ present, hence it is only usable with such fields.
+ * Form.Upload ViewHelper
  *
- * e.g.
- * - files.file.1.fileUri
+ * Adds support for the required attribute
  *
  * @package fileman
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
  */
-class Tx_Fileman_ViewHelpers_Form_UploadViewHelper extends Tx_Fluid_ViewHelpers_Form_UploadViewHelper {
+class UploadViewHelper extends \TYPO3\CMS\Fluid\ViewHelpers\Form\UploadViewHelper {
 
 	/**
 	 * Initialize the arguments.
@@ -43,61 +41,18 @@ class Tx_Fileman_ViewHelpers_Form_UploadViewHelper extends Tx_Fluid_ViewHelpers_
 	 */
 	public function initializeArguments() {
 		parent::initializeArguments();
-		$this->registerTagAttribute('required', 'string', 'Specifies that the input element is required.');
+		$this->registerArgument('required', 'bool', 'If the field is required or not', FALSE, FALSE);
 	}
 
 	/**
-	 * Get errors for the property and form name of this view helper
+	 * Renders the upload field.
 	 *
-	 * CHANGES to the original function are marked.
-	 *
-	 * @return array An array of Tx_Fluid_Error_Error objects
-	 * @deprecated since Extbase 1.4.0, will be removed in Extbase 1.6.0.
-	 * @see Tx_Fluid_ViewHelpers_Form_AbstractFormViewHelper::getErrorsForProperty()
+	 * @return string @api
 	 */
-	public function getErrorsForProperty() {
-		if (!$this->isObjectAccessorMode()) {
-			return array();
+	public function render() {
+		if ($this->arguments['required'] !== FALSE) {
+			$this->tag->addAttribute('required', 'required');
 		}
-		$errors = $this->controllerContext->getRequest()->getErrors();
-		$formClass = version_compare(TYPO3_branch, '6.0', '>=') ? 'TYPO3\\CMS\\Fluid\\ViewHelpers\\FormViewHelper' : 'Tx_Fluid_ViewHelpers_FormViewHelper';
-		$formObjectName = $this->viewHelperVariableContainer->get($formClass, 'formObjectName');
-		// <!-- CHANGE
-			$propertyName = t3lib_div::trimExplode('.',$this->arguments['property'],1);
-		// CHANGE -->
-		$formErrors = array();
-		foreach ($errors as $error) {
-			if ($error instanceof Tx_Extbase_Validation_PropertyError && $error->getPropertyName() === $formObjectName) {
-				$formErrors = $error->getErrors();
-				foreach ($formErrors as $formError) {
-					if ($formError instanceof Tx_Extbase_Validation_PropertyError && $formError->getPropertyName() === $propertyName[0]) {
-						// <!-- CHANGE
-							$propertyErrors = $formError->getErrors();
-							foreach ($propertyErrors as $propertyError) {
-								//if property of property
-								if ($propertyError instanceof Tx_Extbase_Validation_PropertyError && $propertyError->getPropertyName() === $propertyName[1]) {
-									return $propertyError->getErrors();
-								} elseif ($propertyError instanceof Tx_Fileman_Validation_StorageError) { //if property of storage-property
-									$storageErrors = $propertyError->getErrors();
-									foreach ($storageErrors as $id=>$storageError) {
-										if (is_array($storageError)) {
-											foreach($storageError as $storagePropertyError) {
-												if ($storagePropertyError instanceof Tx_Extbase_Validation_PropertyError && strval($id) === $propertyName[1] && $storagePropertyError->getPropertyName() === $propertyName[2]) {
-													return $storagePropertyError->getErrors();
-												}
-											}
-										}
-									}
-								}
-							}
-						// CHANGE -->
-					}
-				}
-			}
-		}
-		return array();
+		return parent::render();
 	}
-
 }
-
-?>

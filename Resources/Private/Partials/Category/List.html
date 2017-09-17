@@ -1,24 +1,32 @@
-{namespace fi=Tx_Fileman_ViewHelpers}
+<table data-namespace-typo3-fluid="true"
+	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+	xmlns:fi="http://typo3.org/ns/Innologi/Fileman/ViewHelpers">
+	
 <tr>
-	<th scope="col"><f:translate key="tx_fileman_domain_model_category.title" /></th>
-	<th scope="col"><f:translate key="tx_fileman_domain_model_category.description" /></th>
+	<th scope="col"><f:translate key="property.category.title" /></th>
+	<th scope="col"><f:translate key="property.category.description" /></th>
 </tr>
 
 <f:for each="{categories}" as="category">
 	
 	<tr>
 		<td class="category">
-			<f:link.action action="list" controller="File" arguments="{category: category}">{category.title} ({category.count})</f:link.action>
+			<f:link.action title="{f:translate(key:'link.title.category_show')}" action="list" controller="File" arguments="{category: category}"><f:format.htmlentities>{category.title} ({category.count})</f:format.htmlentities></f:link.action>
 			<f:if condition="{isSuperUser}" >
-				<f:link.action action="edit" controller="Category" arguments="{category: category, parentCategory: parentCategory}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
+				<f:link.action title="{f:translate(key:'link.title.category_edit')}" action="edit" controller="Category" arguments="{category: category, parentCategory: parentCategory}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 				<f:if condition="{category.count} == 0">
-					<fi:form enctype="multipart/form-data" method="post" controller="Category" action="delete" object="{category}" objectName="category" class="delete-form one-button-form" arguments="{parentCategory: parentCategory}" syncToken="TRUE" absolute="TRUE">
-						<fieldset><f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/></fieldset>
-					</fi:form>
+					<f:form enctype="multipart/form-data" method="post" controller="Category" action="delete" object="{category}" objectName="category" class="delete-form one-button-form" arguments="{parentCategory: parentCategory}" absolute="TRUE">
+						<fieldset>
+							<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
+							<f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/>
+						</fieldset>
+					</f:form>
 				</f:if>
 			</f:if>
 		</td>
-		<td class="description">{category.description}</td>
+		<td class="description"><f:format.htmlentities>{category.description}</f:format.htmlentities></td>
 	</tr>
 	
 </f:for>
+
+</table>

@@ -10,7 +10,7 @@
 # "version" and "dependencies" must not be touched!
 ########################################################################
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
 	'title' => 'File Manager',
 	'description' => 'File manager for category-based uploading, viewing and managing files on frontend. Includes complete management in backend.',
 	'category' => 'plugin',
@@ -22,22 +22,24 @@ $EM_CONF[$_EXTKEY] = array(
 	'module' => '',
 	'state' => 'stable',
 	'internal' => '',
-	'uploadfolder' => 1,
+	'uploadfolder' => 0,
 	'createDirs' => '',
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'version' => '1.0.0',
-	'constraints' => array(
-		'depends' => array(
-			'php' => '5.3.8',
-			'typo3' => '4.5.0-6.2.99',
-		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
-);
-
-?>
+	'constraints' => [
+		'depends' => [
+			'php' => '7.1',
+			'typo3' => '8.7.0-8.7.99'
+		],
+		'conflicts' => [],
+		'suggests' => [],
+	],
+	'autoload' => [
+		'psr-4' => [
+			'Innologi\\Fileman\\' => 'Classes'
+		]
+	]
+];
+	

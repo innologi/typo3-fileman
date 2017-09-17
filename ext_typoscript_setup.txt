@@ -1,0 +1,35 @@
+config.tx_extbase.objects {
+	Innologi\Fileman\Service\CsrfProtectServiceInterface {
+		className = Innologi\Fileman\Service\Typo3CsrfProtectService
+	}
+}
+plugin.tx_fileman {
+	objects {
+		# fix validation bug for same-object-relations
+		TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator {
+			className = Innologi\Fileman\Domain\Validator\GenericObjectValidator
+		}
+		TYPO3\CMS\Extbase\Validation\Validator\CollectionValidator {
+			className = Innologi\Fileman\Domain\Validator\CollectionValidator
+		}
+	}
+	persistence.classes {
+		Innologi\Fileman\Domain\Model\Category {
+			mapping.columns {
+				fe_group.mapOnProperty = feGroup
+			}
+		}
+		Innologi\Fileman\Domain\Model\File {
+			mapping.columns {
+				tstamp.mapOnProperty = tstamp
+				fe_group.mapOnProperty = feGroup
+			}
+		}
+		Innologi\Fileman\Domain\Model\Link {
+			mapping.columns {
+				tstamp.mapOnProperty = tstamp
+				fe_group.mapOnProperty = feGroup
+			}
+		}
+	}
+}
