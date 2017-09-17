@@ -2,28 +2,34 @@
 	xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers">
 
 <fieldset>
-	<!-- @TODO: remove the ID's -->
-	<label for="fileman-title">
+	<label>
 		<f:translate key="property.category.title" /> <span class="required">*</span>
-	</label><br />
-	<f:form.textfield id="fileman-title" property="title" required="TRUE" class="textinput" />
+		<br />
+		<f:form.textfield property="title" required="TRUE" class="textinput" />
+	</label>
+	
 	<br /> <!-- @TODO: remove the extra br's and do it in css -->
 	<br />
 	
-	<label for="fileman-description">
+	<label>
 		<f:translate key="property.category.description" />
-	</label><br />
-	<f:form.textarea id="fileman-description" property="description" cols="40" rows="15" />
+		<br />
+		<f:form.textarea property="description" cols="40" rows="15" />
+	</label>
+	
 	<br />
 	<br />
 	
-	<f:translate key="property.category.feUser" />
-	<br />
-	<f:form.select
-		property="feUser" options="{users}"
-		optionValueField="uid" optionLabelField="{settings.userLabelField}"
-		size="1" value="{feUser}"
-	/>
+	<label>
+		<f:translate key="property.category.feUser" />
+		<br />
+		<f:form.select
+			property="feUser" options="{users}"
+			optionValueField="uid" optionLabelField="{settings.userLabelField}"
+			size="1" value="{feUser}"
+		/>
+	</label>
+	
 	<br />
 	<br />
 	
