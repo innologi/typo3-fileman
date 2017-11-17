@@ -1,8 +1,3 @@
-config.tx_extbase.objects {
-	Innologi\Fileman\Service\CsrfProtectServiceInterface {
-		className = Innologi\Fileman\Service\Typo3CsrfProtectService
-	}
-}
 plugin.tx_fileman {
 	objects {
 		# fix validation bug for same-object-relations
