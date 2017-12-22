@@ -55,7 +55,7 @@ class LinksValidator extends AbstractValidator {
 		if (!empty($linkArray)) {
 			foreach ($linkArray as $link) {
 				//each link needs to be a valid URL or errors ensue
-				if (!GeneralUtility::isValidUrl($link)) {
+				if ( !(strpos($link, 'http') === 0 && GeneralUtility::isValidUrl($link)) ) {
 					$this->addError('There was a problem with links', 40750133703);
 				}
 			}
