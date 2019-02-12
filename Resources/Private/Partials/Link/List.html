@@ -16,7 +16,7 @@
 			</f:link.external>
 			<f:if condition="{isSuperUser}">
 				<f:link.action title="{f:translate(key:'link.title.link_edit')}" action="edit" controller="Link" arguments="{link: link, category: category}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
-				<f:form enctype="multipart/form-data" method="post" controller="Link" action="delete" object="{link}" objectName="link" class="delete-form one-button-form" arguments="{category: category}" absolute="TRUE">
+				<f:form enctype="multipart/form-data" method="post" controller="Link" action="delete" object="{link}" objectName="link" class="delete-form one-button-form" arguments="{category: category}">
 					<fieldset>
 						<f:form.hidden name="stoken" value="{fi:csrf(uid:link.uid)}" />
 						<f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/>

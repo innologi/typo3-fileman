@@ -12,7 +12,7 @@
 
 <f:render partial="FormErrors" />
 
-<f:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}" absolute="TRUE">
+<f:form enctype="multipart/form-data" method="post" action="create"  name="link" object="{link}" arguments="{category : category}">
 	<fieldset>
 		<f:render partial="Link/FormFields" />
 		<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />

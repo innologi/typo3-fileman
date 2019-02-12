@@ -15,7 +15,7 @@
 			<f:if condition="{isSuperUser}" >
 				<f:link.action title="{f:translate(key:'link.title.category_edit')}" action="edit" controller="Category" arguments="{category: category, parentCategory: parentCategory}" class="button-edit"><f:translate key="tx_fileman_filelist.button_edit" /></f:link.action>
 				<f:if condition="{category.count} == 0">
-					<f:form enctype="multipart/form-data" method="post" controller="Category" action="delete" object="{category}" objectName="category" class="delete-form one-button-form" arguments="{parentCategory: parentCategory}" absolute="TRUE">
+					<f:form enctype="multipart/form-data" method="post" controller="Category" action="delete" object="{category}" objectName="category" class="delete-form one-button-form" arguments="{parentCategory: parentCategory}">
 						<fieldset>
 							<f:form.hidden name="stoken" value="{fi:csrf(uid:category.uid)}" />
 							<f:form.button type="submit" name="submit" value="{f:translate(key: 'tx_fileman_filelist.button_delete')}" class="button-delete"/>
