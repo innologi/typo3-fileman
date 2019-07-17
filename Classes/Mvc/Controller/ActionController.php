@@ -82,7 +82,7 @@ class ActionController extends ErrorOnDebugController {
 	protected $categoryRepository;
 
 	/**
-	 * @var \Innologi\Fileman\Library\AssetProvider\ProviderServiceInterface
+	 * @var \Innologi\TYPO3AssetProvider\ProviderServiceInterface
 	 * @inject
 	 */
 	protected $assetProviderService;
@@ -174,6 +174,7 @@ class ActionController extends ErrorOnDebugController {
 		if ($view instanceof AbstractTemplateView && $this->request->getFormat() === 'html') {
 			// provide assets as configured per action
 			$this->assetProviderService->provideAssets(
+			    \strtolower($this->extensionName),
 				$this->request->getControllerName(),
 				$this->request->getControllerActionName()
 			);
