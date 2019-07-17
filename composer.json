@@ -11,8 +11,10 @@
 		}
 	],
 	"require": {
-		"typo3/cms-core": "^8.7",
-		"php": "^7.1"
+		"php": ">=7.1 <7.4",
+		"typo3/cms-core": "~8.7.0 || ~9.5.0",
+		"typo3/cms-felogin": "~8.7.0 || ~9.5.0",
+		"innologi/typo3-asset-provider": "~0.3.0 || dev-develop"
 	},
 	"autoload": {
 		"psr-4": {
@@ -22,9 +24,5 @@
 	"replace": {
 		"fileman": "self.version",
 		"typo3-ter/fileman": "self.version"
-	},
-	"config": {
-		"vendor-dir": ".Build/vendor",
-		"bin-dir": ".Build/bin"
 	}
 }
