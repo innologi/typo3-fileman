@@ -159,9 +159,10 @@ class FileService implements SingletonInterface {
 	 */
 	public function next() {
 		if (isset($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance])) {
-			$tmpNameContainer = each($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
-			if ($tmpNameContainer !== FALSE) {
-				$this->index = $tmpNameContainer['key'];
+			$tmpName = current($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
+			if ($tmpName !== FALSE) {
+			    $this->index = key($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
+			    next($_FILES[$this->ext]['tmp_name'][$this->storage][$this->instance]);
 				return TRUE;
 			}
 		}
