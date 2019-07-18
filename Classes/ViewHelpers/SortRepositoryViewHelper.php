@@ -3,7 +3,7 @@ namespace Innologi\Fileman\ViewHelpers;
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2016-2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+*  (c) 2016-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
 *
 *  All rights reserved
 *
@@ -24,8 +24,8 @@ namespace Innologi\Fileman\ViewHelpers;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use Innologi\Fileman\Service\SortRepositoryService;

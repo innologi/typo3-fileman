@@ -3,7 +3,7 @@ namespace Innologi\Fileman\ViewHelpers\File;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -24,8 +24,8 @@ namespace Innologi\Fileman\ViewHelpers\File;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * Base Name Viewhelper
  *

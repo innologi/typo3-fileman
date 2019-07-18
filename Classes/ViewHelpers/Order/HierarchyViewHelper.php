@@ -3,7 +3,7 @@ namespace Innologi\Fileman\ViewHelpers\Order;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2016-2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2016-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -25,8 +25,8 @@ namespace Innologi\Fileman\ViewHelpers\Order;
  ***************************************************************/
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 use TYPO3\CMS\Extbase\DomainObject\AbstractDomainObject;
-use TYPO3\CMS\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 /**
  * Order by Hierarchy Viewhelper
  *

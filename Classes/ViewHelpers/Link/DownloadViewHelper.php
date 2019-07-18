@@ -3,7 +3,7 @@ namespace Innologi\Fileman\ViewHelpers\Link;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -23,7 +23,7 @@ namespace Innologi\Fileman\ViewHelpers\Link;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-use TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Innologi\Fileman\Domain\Model\File;
 use TYPO3\CMS\Extbase\Mvc\Exception\InvalidArgumentTypeException;
