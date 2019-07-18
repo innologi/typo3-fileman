@@ -61,9 +61,18 @@ class FileController extends ActionController {
 	 * File service
 	 *
 	 * @var \Innologi\Fileman\Service\FileService
-	 * @inject
 	 */
 	protected $fileService;
+
+	/**
+	 *
+	 * @param \Innologi\Fileman\Service\FileService $fileService
+	 * @return void
+	 */
+	public function injectFileService(\Innologi\Fileman\Service\FileService $fileService)
+	{
+	    $this->fileService = $fileService;
+	}
 
 	/**
 	 * injectFileRepository

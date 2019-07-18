@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Domain\Validator;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2017 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2017-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -35,7 +35,6 @@ class FileStorageValidator extends AbstractValidator {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Validation\ValidatorResolver
-	 * @inject
 	 */
 	protected $validatorResolver;
 
@@ -43,9 +42,28 @@ class FileStorageValidator extends AbstractValidator {
 	 * File service
 	 *
 	 * @var \Innologi\Fileman\Service\FileService
-	 * @inject
 	 */
 	protected $fileService;
+
+	/**
+	 *
+	 * @param \TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver
+	 * @return void
+	 */
+	public function injectValidatorResolver(\TYPO3\CMS\Extbase\Validation\ValidatorResolver $validatorResolver)
+	{
+	    $this->validatorResolver = $validatorResolver;
+	}
+
+	/**
+	 *
+	 * @param \Innologi\Fileman\Service\FileService $fileService
+	 * @return void
+	 */
+	public function injectFileService(\Innologi\Fileman\Service\FileService $fileService)
+	{
+	    $this->fileService = $fileService;
+	}
 
 	/**
 	 * Validates FileStorage object

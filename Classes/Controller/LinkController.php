@@ -40,9 +40,18 @@ class LinkController extends ActionController {
 	 * linkRepository
 	 *
 	 * @var \Innologi\Fileman\Domain\Repository\LinkRepository
-	 * @inject
 	 */
 	protected $linkRepository;
+
+    /**
+     *
+     * @param \Innologi\Fileman\Domain\Repository\LinkRepository $linkRepository
+     * @return void
+     */
+	public function injectLinkRepository(\Innologi\Fileman\Domain\Repository\LinkRepository $linkRepository)
+	{
+	    $this->linkRepository = $linkRepository;
+	}
 
 	/**
 	 * Initializes create action

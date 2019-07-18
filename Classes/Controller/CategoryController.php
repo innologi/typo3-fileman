@@ -38,9 +38,18 @@ class CategoryController extends ActionController {
 	 * FrontendUserRepository
 	 *
 	 * @var \Innologi\Fileman\Domain\Repository\FrontendUserRepository
-	 * @inject
 	 */
 	protected $frontendUserRepository;
+
+	/**
+	 *
+	 * @param \Innologi\Fileman\Domain\Repository\FrontendUserRepository $frontendUserRepository
+	 * @return void
+	 */
+	public function injectFrontendUserRepository(\Innologi\Fileman\Domain\Repository\FrontendUserRepository $frontendUserRepository)
+	{
+	    $this->frontendUserRepository = $frontendUserRepository;
+	}
 
 	/**
 	 * {@inheritDoc}

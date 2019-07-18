@@ -56,7 +56,6 @@ class ActionController extends ErrorOnDebugController {
 	 * User service
 	 *
 	 * @var \Innologi\Fileman\Service\UserService
-	 * @inject
 	 */
 	protected $userService;
 
@@ -83,7 +82,6 @@ class ActionController extends ErrorOnDebugController {
 
 	/**
 	 * @var \Innologi\TYPO3AssetProvider\ProviderServiceInterface
-	 * @inject
 	 */
 	protected $assetProviderService;
 
@@ -96,6 +94,7 @@ class ActionController extends ErrorOnDebugController {
 		parent::__construct();
 		$this->sortRepositoryService = GeneralUtility::makeInstance(ObjectManager::class)->get(SortRepositoryService::class);
 	}
+
 	/**
 	 * injectCategoryRepository
 	 *
@@ -107,6 +106,26 @@ class ActionController extends ErrorOnDebugController {
 		$this->sortRepositoryService->registerSortableRepository($categoryRepository, [
 			SortRepositoryService::SORT_FIELD_TITLE => 'title'
 		]);
+	}
+
+	/**
+	 *
+	 * @param \Innologi\Fileman\Service\UserService $userService
+	 * @return void
+	 */
+	public function injectUserService(\Innologi\Fileman\Service\UserService $userService)
+	{
+	    $this->userService = $userService;
+	}
+
+	/**
+	 *
+	 * @param \Innologi\TYPO3AssetProvider\ProviderServiceInterface $assetProviderService
+	 * @return void
+	 */
+	public function injectAssetProviderService(\Innologi\TYPO3AssetProvider\ProviderServiceInterface $assetProviderService)
+	{
+	    $this->assetProviderService = $assetProviderService;
 	}
 
 	/**

@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -52,7 +52,6 @@ class UserService implements SingletonInterface {
 	 * frontendUserRepository
 	 *
 	 * @var \Innologi\Fileman\Domain\Repository\FrontendUserRepository
-	 * @inject
 	 */
 	protected $frontendUserRepository;
 
@@ -60,9 +59,28 @@ class UserService implements SingletonInterface {
 	 * frontendUserGroupRepository
 	 *
 	 * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
-	 * @inject
 	 */
 	protected $frontendUserGroupRepository;
+
+	/**
+	 *
+	 * @param \Innologi\Fileman\Domain\Repository\FrontendUserRepository $frontendUserRepository
+	 * @return void
+	 */
+	public function injectFrontendUserRepository(\Innologi\Fileman\Domain\Repository\FrontendUserRepository $frontendUserRepository)
+	{
+	    $this->frontendUserRepository = $frontendUserRepository;
+	}
+
+	/**
+	 *
+	 * @param \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository $frontendUserGroupRepository
+	 * @return void
+	 */
+	public function injectFrontendUserGroupRepository(\TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository $frontendUserGroupRepository)
+	{
+	    $this->frontendUserGroupRepository = $frontendUserGroupRepository;
+	}
 
 	/**
 	 * Returns current frontend user.

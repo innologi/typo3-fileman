@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Service;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2016-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -55,7 +55,6 @@ class SortRepositoryService implements SingletonInterface{
 	 * User service
 	 *
 	 * @var \Innologi\Fileman\Service\UserService
-	 * @inject
 	 */
 	protected $userService;
 
@@ -82,6 +81,16 @@ class SortRepositoryService implements SingletonInterface{
 	 * @var string
 	 */
 	protected $currentValue;
+
+	/**
+	 *
+	 * @param \Innologi\Fileman\Service\UserService $userService
+	 * @return void
+	 */
+	public function injectUserService(\Innologi\Fileman\Service\UserService $userService)
+	{
+	    $this->userService = $userService;
+	}
 
 	/**
 	 * Set repository sorting
