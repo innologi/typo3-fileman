@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Domain\Repository;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -57,15 +57,15 @@ class FileRepository extends Repository {
 	public function search(array $searchTerms) {
 		$query = $this->createQuery();
 
-		$conditions = array();
+		$conditions = [];
 		foreach ($searchTerms as $searchTerm) {
 			$searchTerm = '%' . $searchTerm . '%';
-			$conditions[] = $query->logicalOr(array(
-				$query->like('file_uri', $searchTerm, FALSE),
-				$query->like('alternate_title', $searchTerm, FALSE),
-				$query->like('description', $searchTerm, FALSE),
-				$query->like('links', $searchTerm, FALSE),
-			));
+			$conditions[] = $query->logicalOr([
+				$query->like('file_uri', $searchTerm),
+				$query->like('alternate_title', $searchTerm),
+				$query->like('description', $searchTerm),
+				$query->like('links', $searchTerm),
+			]);
 		}
 
 		return $query->matching(
