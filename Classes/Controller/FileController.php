@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -184,7 +184,9 @@ class FileController extends ActionController {
 	 * Also shows links
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category The category to show files of
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
 	 * @return void
 	 */
 	public function listAction(Category $category = NULL) {
@@ -283,8 +285,12 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $files
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("files")
 	 * @dontverifyrequesthash
 	 * @return void
 	 */
@@ -322,7 +328,9 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
 	 * @dontverifyrequesthash
 	 * @return void
 	 */
@@ -380,8 +388,12 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $file
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("file")
 	 * @return void
 	 */
 	public function editAction(File $file, Category $category = NULL) {
@@ -405,8 +417,12 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @extensionScannerIgnoreLine
 	 * @validate $file \Innologi\Fileman\Domain\Validator\OptionalFileValidator
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("\Innologi\Fileman\Domain\Validator\OptionalFileValidator", param="file")
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
 	 * @return void
 	 */
 	public function updateAction(File $file, Category $category = NULL) {
@@ -436,8 +452,12 @@ class FileController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\File $file
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $file
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("file")
 	 * @return void
 	 */
 	public function deleteAction(File $file, Category $category = NULL) {

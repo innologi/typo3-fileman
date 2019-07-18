@@ -54,7 +54,9 @@ class File extends AbstractEntity {
 	 * Temporary upload file path
 	 *
 	 * @var string
+	 * @extensionScannerIgnoreLine
 	 * @transient
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
 	 */
 	protected $tmpFile;
 
@@ -62,7 +64,9 @@ class File extends AbstractEntity {
 	 * Index of uploaded file
 	 *
 	 * @var integer
+	 * @extensionScannerIgnoreLine
 	 * @transient
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
 	 */
 	protected $index;
 
@@ -92,7 +96,9 @@ class File extends AbstractEntity {
 	 * Array with upload data from the $_FILES array, filled by either rewrittenPropertyManager or fileService
 	 *
 	 * @var array
+	 * @extensionScannerIgnoreLine
 	 * @transient
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
 	 */
 	protected $uploadData = [];
 
@@ -100,7 +106,9 @@ class File extends AbstractEntity {
 	 * Categories related to this file entity
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $category;
 
@@ -108,7 +116,9 @@ class File extends AbstractEntity {
 	 * User who created this file
 	 *
 	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $feUser;
 

@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -79,8 +79,12 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $link
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("link")
 	 * @return void
 	 */
 	public function newAction(Category $category, Link $link = NULL) {
@@ -93,7 +97,9 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
 	 * @return void
 	 */
 	public function createAction(Category $category, Link $link) {
@@ -126,8 +132,12 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $link
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("link")
 	 * @return void
 	 */
 	public function editAction(Category $category, Link $link) {
@@ -140,7 +150,9 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
 	 * @return void
 	 */
 	public function updateAction(Category $category, Link $link) {
@@ -170,8 +182,12 @@ class LinkController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Link $link
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $link
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("link")
 	 * @return void
 	 */
 	public function deleteAction(Category $category, Link $link) {

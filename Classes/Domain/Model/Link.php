@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -39,7 +39,10 @@ class Link extends AbstractEntity {
 	 * Link URI
 	 *
 	 * @var string
+	 * @extensionScannerIgnoreLine
 	 * @validate NotEmpty,\Innologi\Fileman\Domain\Validator\LinkUriValidator
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("\Innologi\Fileman\Domain\Validator\LinkUriValidator")
 	 */
 	protected $linkUri;
 
@@ -47,7 +50,9 @@ class Link extends AbstractEntity {
 	 * Name of link
 	 *
 	 * @var string
+	 * @extensionScannerIgnoreLine
 	 * @validate Text
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("Text")
 	 */
 	protected $linkName;
 
@@ -55,7 +60,9 @@ class Link extends AbstractEntity {
 	 * Link description
 	 *
 	 * @var string
+	 * @extensionScannerIgnoreLine
 	 * @validate Text
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("Text")
 	 */
 	protected $description = '';
 
@@ -63,7 +70,9 @@ class Link extends AbstractEntity {
 	 * User who created this file
 	 *
 	 * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $feUser; #@TODO some of these things are shared between different models, so might as well extend from an abstract
 
@@ -71,7 +80,9 @@ class Link extends AbstractEntity {
 	 * Categories related to this link entity
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $category;
 

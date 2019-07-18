@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Domain\Model;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -39,7 +39,10 @@ class Category extends AbstractEntity {
 	 * Category title
 	 *
 	 * @var string
+	 * @extensionScannerIgnoreLine
 	 * @validate NotEmpty,Text
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("Text")
 	 */
 	protected $title;
 
@@ -47,7 +50,9 @@ class Category extends AbstractEntity {
 	 * Category description
 	 *
 	 * @var string
+	 * @extensionScannerIgnoreLine
 	 * @validate Text
+	 * @TYPO3\CMS\Extbase\Annotation\Validate("Text")
 	 */
 	protected $description = '';
 
@@ -55,7 +60,9 @@ class Category extends AbstractEntity {
 	 * Subcategories
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $subCategory;
 
@@ -63,7 +70,9 @@ class Category extends AbstractEntity {
 	 * Files within this category
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\File>
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $file;
 
@@ -71,7 +80,9 @@ class Category extends AbstractEntity {
 	 * Links within this category
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Link>
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $link;
 
@@ -79,7 +90,9 @@ class Category extends AbstractEntity {
 	 * Parent-categories
 	 *
 	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Innologi\Fileman\Domain\Model\Category>
+	 * @extensionScannerIgnoreLine
 	 * @lazy
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
 	 */
 	protected $parentCategory;
 
@@ -87,7 +100,9 @@ class Category extends AbstractEntity {
 	 * Sum of $link and $file counts
 	 *
 	 * @var Integer
+	 * @extensionScannerIgnoreLine
 	 * @transient
+	 * @TYPO3\CMS\Extbase\Annotation\ORM\Transient
 	 */
 	protected $count;
 

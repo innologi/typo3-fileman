@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Mvc\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2013 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2013-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -216,6 +216,7 @@ class ActionController extends ErrorOnDebugController {
 	 * - Model-based validators (validate annotations in the model)
 	 * - Custom model validator classes
 	 *
+	 * @extensionScannerIgnoreLine
 	 * This override allows to truly ignore validation for @ignorevalidation
 	 * action method arguments.
 	 *
@@ -256,7 +257,9 @@ class ActionController extends ErrorOnDebugController {
 	 *
 	 * @param string $sorting
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
 	 * @return void
 	 */
 	public function sortAction($sorting, \Innologi\Fileman\Domain\Model\Category $category = NULL) {

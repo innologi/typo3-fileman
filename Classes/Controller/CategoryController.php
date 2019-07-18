@@ -3,7 +3,7 @@ namespace Innologi\Fileman\Controller;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012-2016 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
+ *  (c) 2012-2019 Frenck Lutke <typo3@innologi.nl>, www.innologi.nl
  *
  *  All rights reserved
  *
@@ -103,8 +103,12 @@ class CategoryController extends ActionController {
 	 *
 	 * @param $category
 	 * @param $parentCategory
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $parentCategory
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("parentCategory")
 	 * @return void
 	 */
 	public function newAction(Category $category = NULL, Category $parentCategory = NULL) {
@@ -125,7 +129,9 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $parentCategory
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("parentCategory")
 	 * @return void
 	 */
 	public function createAction(Category $category, Category $parentCategory = NULL) {
@@ -152,8 +158,12 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $parentCategory
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("parentCategory")
 	 * @return void
 	 */
 	public function editAction(Category $category, Category $parentCategory = NULL) {
@@ -182,7 +192,9 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $parentCategory
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("parentCategory")
 	 * @return void
 	 */
 	public function updateAction(Category $category, Category $parentCategory = NULL) {
@@ -204,8 +216,12 @@ class CategoryController extends ActionController {
 	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\Category $parentCategory
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
+	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $parentCategory
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
+	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("parentCategory")
 	 * @return void
 	 */
 	public function deleteAction(Category $category, Category $parentCategory = NULL) {
