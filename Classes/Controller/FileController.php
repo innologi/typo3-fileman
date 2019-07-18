@@ -290,8 +290,6 @@ class FileController extends ActionController {
 	/**
 	 * action new
 	 *
-	 * Requires @dontverifyrequesthash because of the forward when a validation error occurs @ create action.
-	 *
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
 	 * @extensionScannerIgnoreLine
@@ -300,7 +298,6 @@ class FileController extends ActionController {
 	 * @ignorevalidation $files
 	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
 	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("files")
-	 * @dontverifyrequesthash
 	 * @return void
 	 */
 	public function newAction(Category $category, FileStorage $files = NULL) {
@@ -333,14 +330,11 @@ class FileController extends ActionController {
 	/**
 	 * action create
 	 *
-	 * Because the new action allows us to alter the form, we have to issue a @dontverifyrequesthash here.
-	 *
 	 * @param \Innologi\Fileman\Domain\Model\FileStorage $files
 	 * @param \Innologi\Fileman\Domain\Model\Category $category
 	 * @extensionScannerIgnoreLine
 	 * @ignorevalidation $category
 	 * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("category")
-	 * @dontverifyrequesthash
 	 * @return void
 	 */
 	public function createAction(FileStorage $files, Category $category) {
