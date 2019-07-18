@@ -280,7 +280,7 @@ class FileService implements SingletonInterface {
 				//file might have been renamed because of duplicate
 				$file->setFileUri(basename($finalPath));
 				$success = rename($tmpFile,$finalPath); //I've had some serious caching issues in several browsers when testing changes here, so be wary
-				if (!success) {
+				if (!$success) {
 					$success = copy($tmpFile, $finalPath);
 					try {
 						unlink($tmpFile);
