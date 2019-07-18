@@ -372,17 +372,10 @@ class FileService implements SingletonInterface {
 	 * @return	boolean		True on success, false on failure
 	 */
 	protected function checkAndCreateDir($dirpath) {
-		//split the dirpath for use by mkdir_deep
-		$matches = array();
-		$pattern = '=^(([a-z]:)?/)(.*)$=i'; //.. thus windows-paths are assumed to have been corrected!
-		preg_match($pattern,$dirpath,$matches);
-		//if dir doesn't exist, mkdir_deep creates every nonexisting directory from its second argument..
-		if (!is_dir($dirpath) && !is_null(GeneralUtility::mkdir_deep($matches[1],$matches[3]))) {
-			#$temp = t3lib_div::mkdir_deep($matches[1],$matches[3]);
-			#var_dump($temp);die();
-			//mkdir_deep only returns something on errors
-			return FALSE;
-		}
+	    if (!is_dir($dirpath)) {
+	        // if dir doesn't exist, mkdir_deep creates every nonexisting directory
+	        GeneralUtility::mkdir_deep($dirpath);
+	    }
 		return TRUE;
 	}
 
