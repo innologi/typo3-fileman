@@ -79,6 +79,10 @@
 }
 
 
+.tx-fileman a.file-not-found {
+	text-decoration: line-through;
+}
+
 .tx-fileman .file-type-info {
 	font-size:0.8em;
 	opacity:0.9;

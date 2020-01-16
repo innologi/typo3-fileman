@@ -75,12 +75,13 @@ class DownloadViewHelper extends AbstractTagBasedViewHelper {
 		if ($validSitepath) {
 			$this->tag->addAttribute('href', $validSitepath);
 		} else {
+		    $this->tag->addAttribute('class', 'file-not-found');
 			// @TODO this is likely not to work in T3v8, looking at the FALSE useCacheHash
 				// either way, this part isn't used as long as we only allow uploads via FAL to public locations
 				// so it's not worth checking until we add the private-file feature back in
 
 			//since the file isn't accessible from docroot, we need to feed the file through a specialized download action
-			$uriBuilder = $this->controllerContext->getUriBuilder();
+			/*$uriBuilder = $this->controllerContext->getUriBuilder();
 			$uri = $uriBuilder->reset()
 				->setUseCacheHash(FALSE)
 				->setCreateAbsoluteUri(TRUE)
@@ -89,7 +90,7 @@ class DownloadViewHelper extends AbstractTagBasedViewHelper {
 					array_merge($this->arguments['noDocrootArguments'], ['file' => $file]),
 					$this->arguments['noDocrootController']
 				);
-			$this->tag->addAttribute('href', $uri);
+			$this->tag->addAttribute('href', $uri);*/
 		}
 
 		$this->tag->setContent($this->renderChildren());
@@ -111,7 +112,7 @@ class DownloadViewHelper extends AbstractTagBasedViewHelper {
 		}
 
 		//filepath is already a valid sitepath
-		$siteUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
+		/*$siteUrl = GeneralUtility::getIndpEnv('TYPO3_SITE_URL');
 		if (strpos($filepath, $siteUrl) === 0) {
 			return $filepath;
 		}
@@ -133,7 +134,7 @@ class DownloadViewHelper extends AbstractTagBasedViewHelper {
 		//returns the sitepath only if the filepath lies within document root
 		if (strpos($filepath, $docroot) === 0) {
 			return $siteUrl . str_replace($docroot, '', $filepath);
-		}
+		}*/
 
 		//could not resolve sitepath to filepath
 		return FALSE;
