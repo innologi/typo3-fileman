@@ -2,7 +2,7 @@
 	"name": "innologi/typo3-fileman",
 	"type": "typo3-cms-extension",
 	"description": "File manager for category-based uploading, viewing and managing files on frontend. Includes complete management in backend.",
-	"license": "GPL-2.0+",
+	"license": "GPL-2.0-or-later",
 	"authors": [{
 			"name": "Frenck Lutke",
 			"email": "typo3@innologi.nl",
@@ -22,7 +22,6 @@
 		}
 	},
 	"replace": {
-		"fileman": "self.version",
 		"typo3-ter/fileman": "self.version"
 	}
 }
