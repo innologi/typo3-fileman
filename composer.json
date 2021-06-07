@@ -16,13 +16,17 @@
 		"typo3/cms-felogin": "~8.7.0 || ~9.5.0",
 		"innologi/typo3-asset-provider": "~0.3.1 || dev-develop"
 	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "fileman"
+		}
+	},
 	"autoload": {
 		"psr-4": {
 			"Innologi\\Fileman\\": "Classes/"
 		}
 	},
 	"replace": {
-		"fileman": "self.version",
 		"typo3-ter/fileman": "self.version"
 	}
 }
